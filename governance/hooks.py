@@ -84,7 +84,15 @@ def governance_hook(module_name: str, endpoint: str = ""):
             # ── Step 1: Pre-inference Data Quality Gate ───────────────────────
             try:
                 gate = _get_quality_gate()
-                quality_report = gate.validate(module_name, kwargs)
+                payload = dict(kwargs)
+                for arg in args:
+                    if hasattr(arg, "model_dump"):
+                        payload.update(arg.model_dump())
+                        break
+                    elif isinstance(arg, dict):
+                        payload.update(arg)
+                        break
+                quality_report = gate.validate(module_name, payload)
                 schema_valid = quality_report.get("valid", True)
                 schema_violations = quality_report.get("violations", [])
                 if not schema_valid:

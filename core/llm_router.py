@@ -173,13 +173,23 @@ class LLMRouter:
         t0 = time.perf_counter()
         prompt_lower = prompt.lower()
 
-        # Route to appropriate fallback handler based on prompt context
-        if any(kw in prompt_lower for kw in ["travel plan", "journey", "from", "ticket", "route", "itinerary"]):
-            result = self._fallback.plan_travel(prompt)
-            content = self._format_itinerary(result)
-        elif any(kw in prompt_lower for kw in ["pnr", "refund", "cancel", "policy", "help", "support", "query", "question"]):
+        # Route to appropriate fallback handler based on prompt context & task hints
+        task = kwargs.get("task", "")
+        if task == "support":
             response = self._fallback.support_query(prompt)
             content = response.content
+        elif task == "planner":
+            result = self._fallback.plan_travel(prompt)
+            content = self._format_itinerary(result)
+        elif task == "rca":
+            result = self._fallback.analyze_rca(kwargs.get("alert_type", "default"), prompt)
+            content = self._format_rca(result)
+        elif any(kw in prompt_lower for kw in ["refund", "cancel", "policy", "rules", "rule", "pnr", "tatkal", "berth", "chart", "how to", "what is", "can i", "help", "support", "faq"]):
+            response = self._fallback.support_query(prompt)
+            content = response.content
+        elif any(kw in prompt_lower for kw in ["travel plan", "itinerary", "find train", "trains from", "going from", "route", "book train"]):
+            result = self._fallback.plan_travel(prompt)
+            content = self._format_itinerary(result)
         elif any(kw in prompt_lower for kw in ["root cause", "rca", "degraded", "alert", "failure"]):
             result = self._fallback.analyze_rca("default", prompt)
             content = self._format_rca(result)

@@ -108,10 +108,10 @@ class DataQualityGate:
             if field not in flat or flat[field] is None:
                 violations.append(f"Missing required field: '{field}'")
 
-        # 2. Type / null check
-        for k, v in flat.items():
-            if v is None:
-                violations.append(f"Null value detected for field: '{k}'")
+        # 2. Null check (only for required fields; optional fields can be None)
+        for field in required:
+            if flat.get(field) is None and f"Missing required field: '{field}'" not in violations:
+                violations.append(f"Required field '{field}' cannot be null")
 
         # 3. Range check
         bounds = _DEFAULT_BOUNDS.get(module_name, {})

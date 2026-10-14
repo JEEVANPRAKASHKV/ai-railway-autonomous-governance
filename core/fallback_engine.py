@@ -18,6 +18,7 @@ from __future__ import annotations
 import os
 import re
 import math
+import time
 import pickle
 import logging
 from datetime import datetime, date
@@ -215,7 +216,7 @@ class FallbackEngine:
     def support_query(self, query: str, language: str = "en") -> LLMResponse:
         """TF-IDF similarity search over FAQ corpus. Returns best-match answer."""
         _load_faq()
-        t0 = datetime.utcnow()
+        t0 = time.perf_counter()
 
         if _tfidf_vectorizer is None or not _faq_questions:
             answer = self._static_support_response(query)
@@ -233,7 +234,7 @@ class FallbackEngine:
             except Exception:
                 answer = self._static_support_response(query)
 
-        elapsed = (datetime.utcnow() - t0).total_seconds() * 1000
+        elapsed = (time.perf_counter() - t0) * 1000
         return LLMResponse(content=answer, mode="fallback", latency_ms=elapsed)
 
     def _static_support_response(self, query: str) -> str:

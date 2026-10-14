@@ -55,17 +55,19 @@ class TelemetryBus:
         self.emit(event)
         return event
 
-    def get_recent(self, n: int = 100) -> List[TelemetryEvent]:
+    def get_recent(self, n: int = 100, limit: Optional[int] = None) -> List[TelemetryEvent]:
         """Get the n most recent events."""
+        count = limit if limit is not None else n
         with self._lock:
             events = list(self._events)
-        return events[-n:]
+        return events[-count:]
 
-    def get_by_module(self, module: str, n: int = 200) -> List[TelemetryEvent]:
+    def get_by_module(self, module: str, n: int = 200, limit: Optional[int] = None) -> List[TelemetryEvent]:
         """Get the n most recent events for a specific module."""
+        count = limit if limit is not None else n
         with self._lock:
             events = [e for e in self._events if e.module == module]
-        return events[-n:]
+        return events[-count:]
 
     def get_all(self) -> List[TelemetryEvent]:
         with self._lock:
