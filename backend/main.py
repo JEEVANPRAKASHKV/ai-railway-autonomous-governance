@@ -99,6 +99,7 @@ def read_root() -> Dict[str, str]:
 
 
 @app.get("/api/health", summary="Comprehensive subsystem health check")
+@app.get("/health", summary="Health check alias for monitoring tools")
 def health_check() -> JSONResponse:
     art_dir = settings.models_artifacts_dir
     models_ready = os.path.exists(art_dir) and any(f.endswith(".pkl") for f in os.listdir(art_dir))

@@ -55,6 +55,22 @@ class TelemetryBus:
         self.emit(event)
         return event
 
+    def publish(
+        self,
+        module_id: str,
+        event_type: str,
+        payload: Optional[Dict[str, Any]] = None,
+        severity: str = "INFO",
+        latency_ms: float = 0.0,
+        **kwargs,
+    ) -> TelemetryEvent:
+        """Alias for publishing structured events to the bus."""
+        return self.emit_dict(
+            module=module_id,
+            latency_ms=latency_ms,
+            **kwargs,
+        )
+
     def get_recent(self, n: int = 100, limit: Optional[int] = None) -> List[TelemetryEvent]:
         """Get the n most recent events."""
         count = limit if limit is not None else n

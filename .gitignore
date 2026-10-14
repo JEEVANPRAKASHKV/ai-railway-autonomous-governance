@@ -94,6 +94,7 @@ chroma_db/
 *.sqlite3
 *.db
 
-# --- Runtime Logs ---
+# --- Runtime Logs & Generated Reports ---
 logs/
 *.log
+governance/reports/RPT-*

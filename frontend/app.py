@@ -28,11 +28,26 @@ from typing import Any, Dict, List, Optional
 import requests
 import streamlit as st
 
+try:
+    from frontend.components.telemetry_badge import render_telemetry_badge
+    from frontend.components.shap_chart import render_shap_chart
+    from frontend.components.chaos_simulator import render_chaos_simulator_panel
+    from frontend.components.governance_sidebar import render_sidebar_governance_widget
+except ImportError:
+    import sys
+    import os
+    sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    from frontend.components.telemetry_badge import render_telemetry_badge
+    from frontend.components.shap_chart import render_shap_chart
+    from frontend.components.chaos_simulator import render_chaos_simulator_panel
+    from frontend.components.governance_sidebar import render_sidebar_governance_widget
+
 # ──────────────────────────────────────────────────────────────────────────────
 # Configuration
 # ──────────────────────────────────────────────────────────────────────────────
 
 API_BASE = "http://localhost:8000"
+API_V1 = f"{API_BASE}/api/v1"
 PAGE_REFRESH_INTERVAL = 30  # seconds
 
 st.set_page_config(
@@ -298,18 +313,18 @@ st.markdown(
 # API Client helpers
 # ──────────────────────────────────────────────────────────────────────────────
 
-def api_get(path: str, params: Optional[dict] = None) -> Optional[Any]:
+def api_get(path: str, params: Optional[dict] = None, base: str = API_V1) -> Optional[Any]:
     try:
-        r = requests.get(f"{API_BASE}{path}", params=params, timeout=8)
+        r = requests.get(f"{base}{path}", params=params, timeout=8)
         r.raise_for_status()
         return r.json()
     except Exception:
         return None
 
 
-def api_post(path: str, payload: Optional[dict] = None) -> Optional[Any]:
+def api_post(path: str, payload: Optional[dict] = None, base: str = API_V1) -> Optional[Any]:
     try:
-        r = requests.post(f"{API_BASE}{path}", json=payload or {}, timeout=10)
+        r = requests.post(f"{base}{path}", json=payload or {}, timeout=10)
         r.raise_for_status()
         return r.json()
     except Exception as e:
@@ -318,7 +333,7 @@ def api_post(path: str, payload: Optional[dict] = None) -> Optional[Any]:
 
 def backend_online() -> bool:
     try:
-        r = requests.get(f"{API_BASE}/health", timeout=3)
+        r = requests.get(f"{API_BASE}/api/health", timeout=3)
         return r.status_code == 200
     except Exception:
         return False
@@ -369,9 +384,13 @@ with st.sidebar:
             "🔄 Model Lifecycle",
             "📋 Governance Reports",
             "🧪 Chaos Engineering Lab",
-            "🤖 AI Travel Assistant",
             "🎫 Ticket Predictor",
             "🚄 Train Recommender",
+            "⏱️ Delay Predictor",
+            "🤖 AI Travel Assistant",
+            "💰 Dynamic Fare Predictor",
+            "💬 Multilingual Support",
+            "🔐 Fraud & Bot Detection",
         ],
         label_visibility="collapsed",
     )
@@ -380,16 +399,7 @@ with st.sidebar:
 
     # API Status indicator
     online = backend_online()
-    if online:
-        st.markdown(
-            '<div class="alert-success" style="font-size:0.8rem;">🟢 <b>API Online</b> — All systems operational</div>',
-            unsafe_allow_html=True,
-        )
-    else:
-        st.markdown(
-            '<div class="alert-warning" style="font-size:0.8rem;">🟡 <b>API Offline</b> — Start the FastAPI server with <code>python run_platform.py</code></div>',
-            unsafe_allow_html=True,
-        )
+    render_sidebar_governance_widget(online)
 
     st.markdown(
         f"""
@@ -595,7 +605,7 @@ if page == "🏠 Executive Overview":
     with col_btn1:
         if st.button("📋 Generate Governance Report"):
             with st.spinner("Generating full audit report..."):
-                report = api_post("/governance/supervisor/report")
+                report = api_post("/governance/supervisor/report", base=API_V1)
             if report and "report_id" in report:
                 st.success(f"✅ Report generated: **{report['report_id']}** — Risk: `{report.get('overall_risk_level', 'N/A')}`")
             else:
@@ -1061,6 +1071,7 @@ elif page == "🧪 Chaos Engineering Lab":
         '<p style="color:#94a3b8;">Inject controlled faults to test autonomous governance, circuit breakers, and remediation loops.</p>',
         unsafe_allow_html=True,
     )
+    render_chaos_simulator_panel(api_post, api_get)
 
     st.markdown(
         '<div class="alert-warning">⚠️ <b>Chaos Engineering</b> — These injections simulate real faults to validate governance resilience. '
@@ -1186,7 +1197,7 @@ elif page == "🤖 AI Travel Assistant":
                 "travel_class": travel_class,
                 "persona": persona,
             }
-            result = api_post("/m4/plan", payload)
+            result = api_post("/agent/plan", payload)
 
         if result and "error" not in result:
             st.markdown('<div class="alert-success">✅ Journey plan ready!</div>', unsafe_allow_html=True)
@@ -1242,7 +1253,7 @@ elif page == "🎫 Ticket Predictor":
                 "is_holiday": False,
                 "festival_flag": False,
             }
-            result = api_post("/m1/predict", payload)
+            result = api_post("/predict/ticket", payload)
 
         if result and "confirmation_probability" in result:
             prob = result.get("confirmation_probability", 0)
@@ -1257,8 +1268,8 @@ elif page == "🎫 Ticket Predictor":
             st.progress(prob)
 
             if result.get("shap_explanation"):
-                st.markdown('<div class="section-header">🔍 SHAP Explanation</div>', unsafe_allow_html=True)
-                st.json(result["shap_explanation"])
+                render_shap_chart(result["shap_explanation"], title="Waitlist Confirmation Drivers (SHAP)")
+            render_telemetry_badge(result.get("governance_telemetry"))
         else:
             st.error(f"Prediction failed: {result}")
 
@@ -1297,7 +1308,7 @@ elif page == "🚄 Train Recommender":
                 "preferred_class": travel_class,
                 "max_results": max_results,
             }
-            result = api_post("/m2/recommend", payload)
+            result = api_post("/recommend/trains", payload)
 
         if result and "recommendations" in result:
             recs = result["recommendations"]
@@ -1325,8 +1336,378 @@ elif page == "🚄 Train Recommender":
                 for i, r in enumerate(recs)
             ])
             st.dataframe(rec_df, use_container_width=True, hide_index=True)
+            render_telemetry_badge(result.get("governance_telemetry"))
         else:
             st.error(f"Recommendation failed: {result}")
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Page: Delay & Disruption Predictor (Module 3)
+# ──────────────────────────────────────────────────────────────────────────────
+
+elif page == "⏱️ Delay Predictor":
+    st.markdown(
+        '<h1 style="color:#e2e8f0;">⏱️ Train Delay & Disruption Predictor</h1>'
+        '<p style="color:#94a3b8;">Forecast intermediate arrival delays, platform congestion, and proactive alternative routes.</p>',
+        unsafe_allow_html=True,
+    )
+
+    with st.form("delay_form"):
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            train_number = st.text_input("Train Number", value="12002")
+            station_code = st.text_input("Station Code", value="BPL")
+        with col2:
+            journey_date = st.date_input("Journey Date", key="delay_journey_date")
+            distance_km = st.number_input("Distance from Origin (km)", min_value=10.0, max_value=4000.0, value=500.0, step=50.0)
+        with col3:
+            weather_index = st.slider("Adverse Weather Index", 0.0, 1.0, 0.25, step=0.05, help="0.0 = clear skies, 1.0 = heavy fog/flooding")
+            congestion_index = st.slider("Station Congestion Index", 0.0, 1.0, 0.45, step=0.05, help="0.0 = free platform, 1.0 = gridlock")
+
+        submitted = st.form_submit_button("⏱️ Forecast Arrival Delay")
+
+    if submitted:
+        with st.spinner("Calculating arrival delay forecast & bottleneck probability..."):
+            payload = {
+                "train_number": train_number,
+                "station_code": station_code,
+                "journey_date": str(journey_date),
+                "weather_index": weather_index,
+                "congestion_index": congestion_index,
+                "distance_from_origin_km": distance_km,
+            }
+            result = api_post("/predict/delay", payload)
+
+        if result and "predicted_delay_minutes" in result:
+            delay_min = result.get("predicted_delay_minutes", 0.0)
+            ci = result.get("confidence_interval", {})
+            congestion = result.get("congestion_level", "Moderate")
+            alert_text = result.get("proactive_alert", "On-schedule operation.")
+
+            col1, col2, col3 = st.columns(3)
+            col1.metric("Predicted Delay", f"{delay_min:.1f} mins")
+            col2.metric("Congestion Level", congestion)
+            ci_str = f"[{ci.get('lower_bound', 0):.0f} – {ci.get('upper_bound', 0):.0f} min]" if ci else "±5 min"
+            col3.metric("90% Confidence Interval", ci_str)
+
+            alert_class = "alert-success" if delay_min <= 15 else "alert-warning" if delay_min <= 60 else "alert-critical"
+            st.markdown(f'<div class="{alert_class}">📢 <b>Advisory:</b> {alert_text}</div>', unsafe_allow_html=True)
+
+            alts = result.get("alternative_options", [])
+            if alts:
+                st.markdown('<div class="section-header">🔄 Recommended Alternative Trains</div>', unsafe_allow_html=True)
+                for alt in alts:
+                    st.markdown(
+                        f"""
+                        <div class="kpi-card" style="display:flex; justify-content:space-between; align-items:center;">
+                            <div>
+                                <b style="color:#60a5fa;">{alt.get('train_name')} ({alt.get('train_number')})</b><br>
+                                <span style="font-size:0.85rem; color:#94a3b8;">Departs: {alt.get('departure_time')} | Arrives: {alt.get('arrival_time')}</span><br>
+                                <span style="font-size:0.8rem; color:#34d399;">💡 {alt.get('reason')}</span>
+                            </div>
+                            <div style="text-align:right;">
+                                <span class="badge-healthy">Save ~{alt.get('delay_advantage_minutes', 0):.0f} mins</span>
+                            </div>
+                        </div>
+                        """,
+                        unsafe_allow_html=True,
+                    )
+
+            if result.get("delay_drivers"):
+                st.markdown('<div class="section-header">🔍 Delay Root-Cause Factors</div>', unsafe_allow_html=True)
+                st.json(result["delay_drivers"])
+
+            render_telemetry_badge(result.get("governance_telemetry"))
+        else:
+            st.error(f"Delay prediction failed: {result}")
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Page: Dynamic Fare Predictor (Module 5)
+# ──────────────────────────────────────────────────────────────────────────────
+
+elif page == "💰 Dynamic Fare Predictor":
+    st.markdown(
+        '<h1 style="color:#e2e8f0;">💰 Dynamic Fare Predictor & Booking Window Advisor</h1>'
+        '<p style="color:#94a3b8;">Forecast dynamic pricing surges, 30-day price trajectories, and cost-saving alternatives.</p>',
+        unsafe_allow_html=True,
+    )
+
+    with st.form("fare_form"):
+        col1, col2 = st.columns(2)
+        with col1:
+            train_number = st.text_input("Train Number", value="12951")
+            travel_class = st.selectbox("Travel Class", ["3A", "2A", "1A", "SL", "CC"])
+        with col2:
+            journey_date = st.date_input("Journey Date", key="fare_journey_date")
+            tatkal = st.checkbox("Book under Tatkal Quota", value=False)
+
+        submitted = st.form_submit_button("💰 Forecast Dynamic Fare")
+
+    if submitted:
+        with st.spinner("Analyzing demand curves and dynamic fare trajectory..."):
+            payload = {
+                "train_number": train_number,
+                "journey_class": travel_class,
+                "journey_date": str(journey_date),
+                "tatkal_flag": tatkal,
+            }
+            result = api_post("/predict/fare", payload)
+
+        if result and "current_predicted_fare_inr" in result:
+            pred_fare = result.get("current_predicted_fare_inr", 0.0)
+            base_fare = result.get("base_fare_inr", 0.0)
+            surge = result.get("surge_multiplier", 1.0)
+            demand = result.get("demand_level", "Moderate")
+            opt_window = result.get("optimal_booking_window", "14–21 days prior")
+
+            col1, col2, col3, col4 = st.columns(4)
+            col1.metric("Current Dynamic Fare", f"₹{pred_fare:,.0f}")
+            col2.metric("Base Benchmark Fare", f"₹{base_fare:,.0f}")
+            col3.metric("Surge Multiplier", f"{surge:.2f}x")
+            col4.metric("Demand Pressure", demand)
+
+            st.markdown(
+                f'<div class="alert-info">💡 <b>Optimal Booking Advisory:</b> Best purchase window is <b>{opt_window}</b>. Book early to lock in baseline rates.</div>',
+                unsafe_allow_html=True,
+            )
+
+            # 30-Day Forecast Line Chart
+            curve = result.get("forecast_curve", [])
+            if curve:
+                import plotly.graph_objects as go
+                import pandas as pd
+                c_df = pd.DataFrame(curve)
+                if "forecast_date" in c_df.columns and "predicted_fare_inr" in c_df.columns:
+                    fig = go.Figure()
+                    fig.add_trace(go.Scatter(
+                        x=c_df["forecast_date"],
+                        y=c_df["predicted_fare_inr"],
+                        mode="lines+markers",
+                        name="Predicted Fare (₹)",
+                        line=dict(color="#60a5fa", width=3),
+                        marker=dict(size=6, color="#3b82f6"),
+                    ))
+                    fig.add_hline(y=base_fare, line_dash="dash", line_color="#34d399",
+                                  annotation_text=f"Base Fare (₹{base_fare:.0f})", annotation_position="bottom right")
+                    fig.update_layout(
+                        title="30-Day Dynamic Fare Projection & Surge Horizon",
+                        paper_bgcolor="rgba(0,0,0,0)",
+                        plot_bgcolor="#0d1530",
+                        xaxis=dict(title="Projection Date", gridcolor="#1e2d52", tickfont=dict(color="#94a3b8")),
+                        yaxis=dict(title="Fare (INR ₹)", gridcolor="#1e2d52", tickfont=dict(color="#cbd5e1")),
+                        margin=dict(l=10, r=20, t=40, b=30),
+                        height=280,
+                    )
+                    st.plotly_chart(fig, use_container_width=True)
+
+            alts = result.get("cost_saving_alternatives", [])
+            if alts:
+                st.markdown('<div class="section-header">🏷️ Cost-Saving Alternatives</div>', unsafe_allow_html=True)
+                for alt in alts:
+                    st.markdown(
+                        f"""
+                        <div class="kpi-card" style="display:flex; justify-content:space-between; align-items:center;">
+                            <div>
+                                <b style="color:#60a5fa;">{alt.get('alternative_type')}</b> — {alt.get('description')}<br>
+                                <span style="font-size:0.85rem; color:#94a3b8;">Recommended Fare: ₹{alt.get('recommended_fare_inr', 0):,.0f}</span>
+                            </div>
+                            <div style="text-align:right;">
+                                <span class="badge-healthy">Save ₹{alt.get('potential_savings_inr', 0):,.0f}</span>
+                            </div>
+                        </div>
+                        """,
+                        unsafe_allow_html=True,
+                    )
+
+            if result.get("fare_drivers"):
+                render_shap_chart(result["fare_drivers"], title="Dynamic Fare Drivers (SHAP Attribution)", target_metric="₹ Impact")
+
+            render_telemetry_badge(result.get("governance_telemetry"))
+        else:
+            st.error(f"Fare prediction failed: {result}")
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Page: Multilingual Support Assistant (Module 6)
+# ──────────────────────────────────────────────────────────────────────────────
+
+elif page == "💬 Multilingual Support":
+    st.markdown(
+        '<h1 style="color:#e2e8f0;">💬 Multilingual Customer Support Assistant</h1>'
+        '<p style="color:#94a3b8;">Policy & booking concierge powered by RAG with automated Hallucination & Faithfulness auditing.</p>',
+        unsafe_allow_html=True,
+    )
+
+    col_lang, col_presets = st.columns([1, 3])
+    with col_lang:
+        selected_lang = st.selectbox("Response Language", ["auto", "en", "hi", "hinglish"], index=0)
+
+    st.markdown("**Sample Railway Policy Queries (Click to test):**")
+    pcol1, pcol2, pcol3 = st.columns(3)
+    preset_query = ""
+    if pcol1.button("🚆 Refund on WL Ticket"):
+        preset_query = "What happens if my waitlist ticket is not confirmed before chart preparation? Will I get full refund?"
+    if pcol2.button("🇮🇳 Tatkal Policy (Hindi)"):
+        preset_query = "तत्काल टिकट रद्द करने पर क्या कोई रिफंड मिलता है? IRCTC का क्या नियम है?"
+    if pcol3.button("⚡ RAC Rules (Hinglish)"):
+        preset_query = "Kya RAC passenger 3A coach me travel kar sakta hai aur berth kaise allot hoti hai?"
+
+    query_input = st.text_area(
+        "Enter your railway inquiry",
+        value=preset_query or "Can I transfer my confirmed train ticket to a family member?",
+        height=90,
+    )
+
+    if st.button("💬 Ask Support Concierge", type="primary"):
+        with st.spinner("Retrieving verified IRCTC policy chunks & auditing response faithfulness..."):
+            payload = {
+                "query": query_input,
+                "language": selected_lang,
+                "user_id": "passenger_web_session",
+            }
+            result = api_post("/support/query", payload)
+
+        if result and "response" in result:
+            ans = result.get("response", "")
+            det_lang = result.get("detected_language", "English")
+            faith = result.get("faithfulness_score", 0.95)
+            hallucinated = result.get("hallucination_flag", False)
+            sentiment = result.get("sentiment", "Neutral")
+            escalate = result.get("escalation_recommended", False)
+
+            st.markdown(
+                f"""
+                <div style="background: linear-gradient(135deg, #131c38 0%, #1a274e 100%);
+                            border: 1px solid #3b82f6; border-radius: 12px; padding: 20px; margin: 16px 0;">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                        <span class="badge-healthy">🌐 Language: {det_lang.upper()}</span>
+                        <span class="{'badge-critical' if hallucinated else 'badge-healthy'}">
+                            {'🔴 LOW FAITHFULNESS' if hallucinated else '✅ FAITHFUL & AUDITED'}
+                        </span>
+                    </div>
+                    <div style="font-size: 1.05rem; line-height: 1.6; color: #f1f5f9;">
+                        {ans}
+                    </div>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+
+            col1, col2, col3 = st.columns(3)
+            col1.metric("Faithfulness Score", f"{faith:.1%}")
+            col2.metric("User Sentiment", sentiment)
+            col3.metric("Escalation Gate", "🚨 Escalate to Human" if escalate else "✅ Self-Resolved")
+
+            chunks = result.get("retrieved_contexts", [])
+            if chunks:
+                with st.expander(f"📚 Retrieved IRCTC Policy Evidence Chunks ({len(chunks)} verified sources)"):
+                    for c in chunks:
+                        sim = c.get("similarity_score", 0.0)
+                        st.markdown(
+                            f"""
+                            <div style="background:#0d1530; border:1px solid #1e2d52; border-radius:8px; padding:12px; margin-bottom:8px;">
+                                <div style="display:flex; justify-content:space-between; font-size:0.78rem; color:#94a3b8; margin-bottom:4px;">
+                                    <b>Source:</b> {c.get('source_file')} | <b>Chunk ID:</b> {c.get('chunk_id')}
+                                    <span style="color:#34d399;">Cosine Sim: {sim:.3f}</span>
+                                </div>
+                                <div style="font-size:0.88rem; color:#cbd5e1;">{c.get('text')}</div>
+                            </div>
+                            """,
+                            unsafe_allow_html=True,
+                        )
+
+            render_telemetry_badge(result.get("governance_telemetry"))
+        else:
+            st.error(f"Support query failed: {result}")
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Page: Fraud & Bot Detection (Module 7)
+# ──────────────────────────────────────────────────────────────────────────────
+
+elif page == "🔐 Fraud & Bot Detection":
+    st.markdown(
+        '<h1 style="color:#e2e8f0;">🔐 Fraud, Security & Bot Detection</h1>'
+        '<p style="color:#94a3b8;">Real-time automated bot scoring, Tatkal abuse mitigation, and suspicious session isolation.</p>',
+        unsafe_allow_html=True,
+    )
+
+    with st.form("fraud_form"):
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            session_id = st.text_input("Session ID", value="SESS-TATKAL-9921")
+            ip_hash = st.text_input("IP Hash", value="a9b8c7d6e5f4")
+            rpm = st.slider("Requests Per Minute", 1.0, 150.0, 85.0, step=5.0)
+            unique_pnr = st.number_input("Unique PNR Lookups", min_value=1, max_value=50, value=12)
+        with col2:
+            tatkal = st.checkbox("During 10:00–10:15 Tatkal Window", value=True)
+            account_age = st.number_input("Account Age (Days)", min_value=0, max_value=2000, value=3)
+            payments = st.number_input("Payment Attempts", min_value=1, max_value=20, value=4)
+        with col3:
+            captchas = st.slider("Failed Captchas", 0, 10, 3)
+            bulk_booking = st.checkbox("Bulk Passenger Count (>= 6)", value=True)
+            ip_risk = st.slider("Subnet IP Risk Score", 0.0, 1.0, 0.65, step=0.05)
+
+        submitted = st.form_submit_button("🔐 Score Session Security Risk")
+
+    if submitted:
+        with st.spinner("Executing real-time bot classification & behavioural audit..."):
+            payload = {
+                "session_id": session_id,
+                "ip_hash": ip_hash,
+                "requests_per_minute": rpm,
+                "unique_pnr_attempts": unique_pnr,
+                "tatkal_flag": tatkal,
+                "account_age_days": account_age,
+                "payment_attempts": payments,
+                "failed_captcha_count": captchas,
+                "booking_time_hour": 10,
+                "is_bulk_booking": bulk_booking,
+                "ip_risk_score": ip_risk,
+            }
+            result = api_post("/security/score", payload)
+
+        if result and "fraud_risk_score" in result:
+            score = result.get("fraud_risk_score", 0.0)
+            category = result.get("risk_category", "Safe")
+            action = result.get("recommended_action", "ALLOW")
+
+            cat_badge = (
+                '<span class="badge-critical">🔴 BOT DETECTED</span>' if "Bot" in category
+                else '<span class="badge-critical">🟠 HIGH RISK</span>' if "High" in category
+                else '<span class="badge-warning">🟡 SUSPICIOUS</span>' if "Suspicious" in category
+                else '<span class="badge-healthy">🟢 SAFE</span>'
+            )
+
+            col1, col2, col3 = st.columns(3)
+            col1.metric("Fraud Risk Score", f"{score:.1f} / 100")
+            col2.markdown(f"**Threat Category:**<br>{cat_badge}", unsafe_allow_html=True)
+            col3.metric("Automated Action", action)
+
+            st.progress(min(1.0, score / 100.0))
+
+            inv = result.get("investigation_features", [])
+            if inv:
+                st.markdown('<div class="section-header">🔍 Threat Investigation Dossier</div>', unsafe_allow_html=True)
+                import pandas as pd
+                idf = pd.DataFrame([
+                    {
+                        "Feature": it.get("feature"),
+                        "Observed Value": it.get("value"),
+                        "Anomaly Severity": it.get("severity"),
+                        "Finding": it.get("description"),
+                    }
+                    for it in inv
+                ])
+                st.dataframe(idf, use_container_width=True, hide_index=True)
+
+            if result.get("shap_risk_drivers"):
+                render_shap_chart(result["shap_risk_drivers"], title="Fraud Risk Feature Contribution (SHAP)", target_metric="Risk Multiplier")
+
+            render_telemetry_badge(result.get("governance_telemetry"))
+        else:
+            st.error(f"Fraud scoring failed: {result}")
 
 # ──────────────────────────────────────────────────────────────────────────────
 # Footer
