@@ -1,0 +1,64 @@
+# =============================================================================
+# .gitignore — AI Railway Governance Platform
+# =============================================================================
+
+# Environment & secrets
+.env
+*.env
+
+# Generated data (reproducible via generate_synthetic_data.py)
+data/raw/
+data/baseline_distributions.pkl
+data/*.pkl
+
+# Generated model artifacts (reproducible via train_all_models.py)
+models/artifacts/
+!models/artifacts/.gitkeep
+!models/registry/model_registry.json
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+*.pyo
+*.pyc
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ChromaDB vector store (regenerated at startup)
+chroma_db/
+*.sqlite3
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
