@@ -1,64 +1,99 @@
 # =============================================================================
-# .gitignore — AI Railway Governance Platform
+# .gitignore — AI Railway Autonomous Governance Platform
+# Enterprise Monorepo Clean Architecture Standard
 # =============================================================================
 
-# Environment & secrets
+# --- Environment & Secret Configuration ---
 .env
 *.env
+!.env.example
 
-# Generated data (reproducible via generate_synthetic_data.py)
-data/raw/
-data/baseline_distributions.pkl
-data/*.pkl
-
-# Generated model artifacts (reproducible via train_all_models.py)
-models/artifacts/
-!models/artifacts/.gitkeep
-!models/registry/model_registry.json
-
-# Python
+# --- Python Bytecode & Runtime Caches ---
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
 .Python
-*.egg
-*.egg-info/
-dist/
 build/
+develop-eggs/
+dist/
+downloads/
 eggs/
-*.pyo
-*.pyc
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
 
-# Virtual environments
+# --- Virtual Environments ---
 .venv/
 venv/
 env/
 ENV/
+env.bak/
+venv.bak/
 
-# IDE
+# --- Testing, Linting & Coverage ---
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.mypy_cache/
+.ruff_cache/
+
+# --- IDE & Editor Artifacts ---
 .vscode/
 .idea/
+*.sublime-project
+*.sublime-workspace
 *.swp
 *.swo
+*~
+*.bak
 
-# ChromaDB vector store (regenerated at startup)
-chroma_db/
-*.sqlite3
-
-# Logs
-*.log
-logs/
-
-# OS
+# --- Operating System Junk ---
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
+desktop.ini
 
-# Jupyter
+# --- Jupyter Notebook Checkpoints ---
 .ipynb_checkpoints/
 *.ipynb
 
-# Testing
-.pytest_cache/
-.coverage
-htmlcov/
+# --- Application Specific Data (Deterministic & Reproducible via Scripts) ---
+data/raw/
+!data/raw/.gitkeep
+data/baseline_distributions.pkl
+data/*.pkl
+
+# --- Pre-Trained ML Artifacts (Reproducible via models/train_all_models.py) ---
+models/artifacts/
+!models/artifacts/.gitkeep
+!models/registry/model_registry.json
+
+# --- Local Vector Database & Databases ---
+chroma_db/
+*.sqlite
+*.sqlite3
+*.db
+
+# --- Runtime Logs ---
+logs/
+*.log
