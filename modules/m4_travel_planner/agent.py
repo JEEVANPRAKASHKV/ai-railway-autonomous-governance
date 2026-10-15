@@ -79,6 +79,38 @@ class TravelPlannerAgent:
             elif re.search(r"\b(to|reach|dest|arrive|towards)\s+" + re.escape(word) + r"\b", low):
                 dst = code
 
+        # Match travel date
+        target_date = date.today() + timedelta(days=7)
+        if "tomorrow" in low:
+            target_date = date.today() + timedelta(days=1)
+        elif "day after tomorrow" in low:
+            target_date = date.today() + timedelta(days=2)
+        elif "next week" in low:
+            target_date = date.today() + timedelta(days=7)
+        else:
+            date_match = re.search(r"\b(202\d-[01]\d-[0-3]\d|\d{1,2}[/-]\d{1,2}[/-]\d{2,4})\b", low)
+            if date_match:
+                try:
+                    from dateutil.parser import parse as parse_date
+                    target_date = parse_date(date_match.group(1)).date()
+                except Exception:
+                    pass
+
+        # Match arrival time constraint (e.g. "before 10:00 AM", "by 10 AM", "morning")
+        arrival_before = None
+        time_match = re.search(r"(?:before|by|reach by|arrive by)\s*(\d{1,2})(?::(\d{2}))?\s*(am|pm)?", low)
+        if time_match:
+            hr = int(time_match.group(1))
+            mn = int(time_match.group(2) or 0)
+            ampm = time_match.group(3)
+            if ampm == "pm" and hr < 12:
+                hr += 12
+            elif ampm == "am" and hr == 12:
+                hr = 0
+            arrival_before = f"{hr:02d}:{mn:02d}"
+        elif "morning" in low:
+            arrival_before = "11:00"
+
         # Match budget
         budget_match = re.search(r"(?:budget|under|below|max|rs\.?|inr|₹)\s*(\d{3,5})", low)
         budget = float(budget_match.group(1)) if budget_match else 2500.0
@@ -95,6 +127,8 @@ class TravelPlannerAgent:
             "destination": dst,
             "budget": budget,
             "preferred_class": preferred_class,
+            "travel_date": target_date.isoformat(),
+            "arrival_before": arrival_before,
         }
 
     @governance_hook("m4_travel_planner", endpoint="/api/v1/agent/plan")
@@ -167,6 +201,14 @@ class TravelPlannerAgent:
                 pros.append(f"Minimal forecasted delay ({pred_delay:.0f} min)")
             else:
                 cons.append(f"Likely corridor delay of {pred_delay:.0f} min")
+
+            arr_cutoff = constraints.get("arrival_before")
+            arr_time = str(train.get("arrival_time", "22:30"))
+            if arr_cutoff:
+                if arr_time <= arr_cutoff:
+                    pros.append(f"Meets arrival cutoff ({arr_time} ≤ {arr_cutoff})")
+                else:
+                    cons.append(f"Arrives at {arr_time} (after requested {arr_cutoff})")
 
             itineraries.append(
                 PlannedItineraryOption(

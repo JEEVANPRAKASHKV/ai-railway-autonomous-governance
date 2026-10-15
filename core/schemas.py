@@ -38,6 +38,9 @@ class TelemetryEvent(BaseModel):
     module: str
     endpoint: str = ""
     latency_ms: float
+    event_type: str = "INFERENCE"
+    severity: str = "INFO"
+    payload: Dict[str, Any] = {}
     schema_valid: bool = True
     schema_violations: List[str] = []
     confidence_score: Optional[float] = None
@@ -49,6 +52,15 @@ class TelemetryEvent(BaseModel):
     llm_mode: str = "fallback"
     timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     extra: Dict[str, Any] = {}
+
+    def get(self, key: str, default: Any = None) -> Any:
+        """Dict-like access compatibility for legacy governance handlers."""
+        if hasattr(self, key):
+            val = getattr(self, key)
+            return val if val is not None else default
+        if key == "module_id":
+            return self.module
+        return self.extra.get(key, default)
 
 
 # =============================================================================

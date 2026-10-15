@@ -641,15 +641,22 @@ if page == "🏠 Executive Overview":
         # ── Governance Pillars Status ─────────────────────────────────────────
         st.markdown('<div class="section-header">🏛️ Governance Pillar Status</div>', unsafe_allow_html=True)
 
+        drift_status = "WARNING" if drift_sum.get("recent_drift_events", 0) > 0 else "STABLE"
+        bias_status = "WARNING" if bias_summary.get("adverse_impact_count", 0) > 0 else "FAIR"
+        hall_status = "WARNING" if hall_stats.get("total_quarantined", 0) > 0 else "STABLE"
+        rca_status = "INCIDENT" if rca_sum.get("open_incidents", 0) > 0 else "HEALTHY"
+        lifecycle_status = "RETRAINING" if len(lifecycle.get("retraining_queue", [])) > 0 else "HEALTHY"
+        supervisor_status = "ACTIVE" if dashboard.get("supervisor_running") else "IDLE"
+
         pillars = [
             ("📊", "Health Monitor", "SLA & Circuit Breaker", platform_status),
-            ("📉", "Drift Detector", f"{drift_sum.get('recent_drift_events', 0)} drift events", "STABLE"),
-            ("⚖️", "Bias Auditor", "DIR / DPD / EOD", "FAIR"),
-            ("🧠", "Hallucination Guard", f"{hall_stats.get('total_quarantined', 0)} quarantined", "STABLE"),
-            ("🚨", "RCA Engine", f"{rca_sum.get('total_incidents', 0)} total incidents", "HEALTHY"),
-            ("🔄", "Lifecycle Manager", f"{len(lifecycle.get('models_registered', []))} models tracked", "HEALTHY"),
+            ("📉", "Drift Detector", f"{drift_sum.get('recent_drift_events', 0)} drift events", drift_status),
+            ("⚖️", "Bias Auditor", "DIR / DPD / EOD", bias_status),
+            ("🧠", "Hallucination Guard", f"{hall_stats.get('total_quarantined', 0)} quarantined", hall_status),
+            ("🚨", "RCA Engine", f"{rca_sum.get('open_incidents', 0)} open incidents", rca_status),
+            ("🔄", "Lifecycle Manager", f"{len(lifecycle.get('models_registered', []))} models tracked", lifecycle_status),
             ("📋", "Report Generator", "Auto-report enabled", "HEALTHY"),
-            ("🤖", "Supervisor Agent", "Running" if dashboard.get("supervisor_running") else "Idle", "HEALTHY"),
+            ("🤖", "Supervisor Agent", "Autonomous Loop", supervisor_status),
         ]
 
         cols = st.columns(4)
@@ -676,8 +683,13 @@ if page == "🏠 Executive Overview":
         if recent_tel:
             import pandas as pd
             tel_df = pd.DataFrame(recent_tel)
+            if "module" in tel_df.columns and "module_id" not in tel_df.columns:
+                tel_df = tel_df.rename(columns={"module": "module_id"})
             if "module_id" in tel_df.columns:
-                display_cols = ["module_id", "event_type", "severity", "timestamp"]
+                display_cols = [
+                    "module_id", "event_type", "severity", "endpoint",
+                    "latency_ms", "confidence_score", "timestamp"
+                ]
                 show_cols = [c for c in display_cols if c in tel_df.columns]
                 st.dataframe(
                     tel_df[show_cols].tail(15),
@@ -1395,6 +1407,14 @@ elif page in ("🤖 AI Travel Assistant", "🧭 AI Travel Planner"):
             unsafe_allow_html=True,
         )
 
+        booking = st.session_state.get("booking_result")
+        if booking and (booking.get("request_id") == req_id or booking.get("booking_id")):
+            st.success(
+                f"🎉 **Booking Confirmed!** Booking ID: `{booking.get('booking_id', booking.get('booking_reference', 'N/A'))}` | "
+                f"PNR: `{booking.get('pnr_number', booking.get('pnr', 'N/A'))}` | "
+                f"Allocated Berth: **{booking.get('allocated_berth', 'Confirmed')}**"
+            )
+
         # Human-in-the-Loop Actions
         if status == "PENDING_APPROVAL" and not st.session_state.get("approval_confirmed"):
             st.markdown("#### 🛡️ Human-in-the-Loop (HITL) Gate — Explicit Passenger Decision")
@@ -1409,10 +1429,10 @@ elif page in ("🤖 AI Travel Assistant", "🧭 AI Travel Planner"):
                             "passenger_age": 30,
                             "passenger_gender": "M",
                         })
-                    if conf_res and "booking_reference" in conf_res:
+                    if conf_res and ("booking_id" in conf_res or "booking_reference" in conf_res):
                         st.session_state["approval_confirmed"] = True
                         st.session_state["active_approval"]["status"] = "APPROVED"
-                        st.success(f"🎉 Booking Confirmed! Ref: **{conf_res.get('booking_reference')}** | PNR: **{conf_res.get('pnr')}**")
+                        st.session_state["booking_result"] = conf_res
                         st.rerun()
                     else:
                         st.error(f"Confirmation failed: {conf_res}")

@@ -44,11 +44,40 @@ BACKEND_URL = os.getenv("BACKEND_URL", "http://127.0.0.1:8000").rstrip("/")
 
 
 def _is_backend_alive(url: str = BACKEND_URL) -> bool:
+    """True if the API process answers at all (a 503 'degraded' reply still means it is up)."""
     try:
-        r = requests.get(f"{url}/api/health", timeout=1.5)
-        return r.status_code == 200
+        requests.get(f"{url}/api/health", timeout=1.5)
+        return True
     except Exception:
         return False
+
+
+def _ensure_artifacts() -> None:
+    """
+    data/raw/ and models/artifacts/ are git-ignored, so a fresh cloud checkout has neither.
+    Generate the synthetic datasets and train the models once, BEFORE the backend imports
+    the services (they load artifacts at import time).
+    """
+    import subprocess
+
+    raw = os.path.join(PROJECT_ROOT, "data", "raw")
+    art = os.path.join(PROJECT_ROOT, "models", "artifacts")
+    need_data = not all(
+        os.path.exists(os.path.join(raw, f)) for f in ("trains.csv", "pnr_history.csv", "railway_faq.txt")
+    )
+    need_models = not all(
+        os.path.exists(os.path.join(art, f))
+        for f in ("wl_predictor_v1.0.pkl", "delay_predictor_v1.0.pkl",
+                  "fare_predictor_v1.0.pkl", "fraud_detector_v1.0.pkl")
+    )
+    if need_data:
+        logger.info("Generating synthetic datasets (first launch)...")
+        subprocess.run([sys.executable, os.path.join(PROJECT_ROOT, "data", "generate_synthetic_data.py")],
+                       cwd=PROJECT_ROOT, check=True)
+    if need_models:
+        logger.info("Training ML models (first launch)...")
+        subprocess.run([sys.executable, os.path.join(PROJECT_ROOT, "models", "train_all_models.py")],
+                       cwd=PROJECT_ROOT, check=True)
 
 
 def _start_background_backend():
@@ -58,6 +87,7 @@ def _start_background_backend():
 
     try:
         import uvicorn
+        _ensure_artifacts()
         from backend.main import app as fastapi_app
 
         def _serve():

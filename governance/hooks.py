@@ -158,6 +158,48 @@ def governance_hook(module_name: str, endpoint: str = ""):
                 )
                 telemetry_bus.emit(event)
 
+                # ── Step 5b: Wire Live Pillar Telemetry ────────────────────────
+                try:
+                    from governance.health_monitor import health_monitor
+                    health_monitor.record_request(
+                        module_id=module_name,
+                        latency_ms=latency_ms,
+                        success=(error_str is None),
+                    )
+                except Exception as hm_err:
+                    logger.debug(f"[Governance/{module_name}] Health monitor error: {hm_err}")
+
+                try:
+                    from governance.drift_detector import drift_detector
+                    num_features = {
+                        k: float(v) for k, v in payload.items()
+                        if isinstance(v, (int, float)) and not isinstance(v, bool)
+                    }
+                    if num_features:
+                        drift_detector.observe(
+                            model_id=module_name,
+                            features=num_features,
+                            prediction=confidence,
+                        )
+                except Exception as dd_err:
+                    logger.debug(f"[Governance/{module_name}] Drift detector error: {dd_err}")
+
+                try:
+                    from governance.bias_auditor import bias_auditor
+                    prot_keys = {"gender", "passenger_gender", "travel_class", "booking_method", "city_tier"}
+                    matched_prot = {
+                        k.replace("passenger_", ""): str(v)
+                        for k, v in payload.items() if k in prot_keys or f"passenger_{k}" in prot_keys
+                    }
+                    if matched_prot and confidence is not None:
+                        bias_auditor.observe(
+                            module_id=module_name,
+                            protected_attrs=matched_prot,
+                            prediction=confidence,
+                        )
+                except Exception as ba_err:
+                    logger.debug(f"[Governance/{module_name}] Bias auditor error: {ba_err}")
+
                 # ── Step 6: Log AuditEntry ────────────────────────────────────
                 flags = []
                 if not schema_valid:

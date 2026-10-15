@@ -140,16 +140,30 @@ class DriftDetector:
             try:
                 with open(BASELINE_PATH, "rb") as f:
                     data = pickle.load(f)
-                # Expected format: {"model_id": {"feature_name": np.ndarray, ...}}
                 if isinstance(data, dict):
-                    for model_id, features in data.items():
-                        if isinstance(features, dict):
-                            self._baselines[model_id] = {
-                                k: np.array(v) for k, v in features.items()
-                                if isinstance(v, (list, np.ndarray))
-                            }
-            except Exception:
-                pass  # Graceful degradation if baseline unavailable
+                    for k, v in data.items():
+                        if "." in k and isinstance(v, dict):
+                            model_id, feat_name = k.split(".", 1)
+                            mean = float(v.get("mean", 0.0))
+                            std = float(v.get("std", 1.0)) or 1.0
+                            low = float(v.get("min", mean - 3 * std))
+                            high = float(v.get("max", mean + 3 * std))
+                            rng = np.random.default_rng(42)
+                            samples = np.clip(rng.normal(mean, std, 300), low, high)
+                            self._baselines.setdefault(model_id, {})[feat_name] = samples
+                        elif isinstance(v, dict):
+                            for feat_name, feat_val in v.items():
+                                if isinstance(feat_val, (list, np.ndarray)):
+                                    self._baselines.setdefault(k, {})[feat_name] = np.array(feat_val)
+                                elif isinstance(feat_val, dict):
+                                    mean = float(feat_val.get("mean", 0.0))
+                                    std = float(feat_val.get("std", 1.0)) or 1.0
+                                    low = float(feat_val.get("min", mean - 3 * std))
+                                    high = float(feat_val.get("max", mean + 3 * std))
+                                    rng = np.random.default_rng(42)
+                                    self._baselines.setdefault(k, {})[feat_name] = np.clip(rng.normal(mean, std, 300), low, high)
+            except Exception as e:
+                logger.debug(f"[DriftDetector] Baseline loading notice: {e}")
 
     def register_baseline(
         self,

@@ -135,6 +135,22 @@ class SupportAssistantService:
             faithfulness = self._compute_faithfulness(final_answer, combined_context_text)
             hallucination_flag = bool(faithfulness < settings.governance_hallucination_threshold)
 
+        # ── Pillar 4: Record in Governance Hallucination Monitor ───────────────
+        try:
+            from governance.hallucination_monitor import hallucination_monitor
+            context_docs = [c.text for c in retrieved_contexts] if retrieved_contexts else [combined_context_text]
+            eval_res = hallucination_monitor.evaluate(
+                module_id="m6_support_assistant",
+                query=request.query,
+                response=final_answer,
+                context_docs=context_docs,
+            )
+            if eval_res.get("faithfulness_score") is not None:
+                faithfulness = round(float(eval_res["faithfulness_score"]), 3)
+            hallucination_flag = bool(eval_res.get("hallucination_detected", hallucination_flag))
+        except Exception as hm_err:
+            logger.debug(f"[M6 Governance] Hallucination evaluation notice: {hm_err}")
+
         # If Hinglish / Hindi requested and fallback answer is English, add helpful bilingual notice
         if lang == "hi" and not re.search(r"[\u0900-\u097F]", final_answer):
             final_answer = f"[हिंदी सेवा / Hindi Support]: {final_answer}"

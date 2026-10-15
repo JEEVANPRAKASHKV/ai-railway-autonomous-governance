@@ -68,6 +68,9 @@ class TelemetryBus:
         return self.emit_dict(
             module=module_id,
             latency_ms=latency_ms,
+            event_type=event_type,
+            severity=severity,
+            payload=payload or {},
             **kwargs,
         )
 

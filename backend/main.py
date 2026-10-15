@@ -57,7 +57,22 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
         seeded = telemetry_bus.seed_baseline(50)
         logger.info(f" Cold-start mitigation: Seeded {seeded} baseline telemetry events.")
 
+    # Start autonomous AI Supervisor Agent loop (Pillar 8)
+    try:
+        from governance.supervisor_agent import supervisor_agent
+        supervisor_agent.start()
+        logger.info(" Autonomous AI Supervisor Agent background polling loop started.")
+    except Exception as sa_err:
+        logger.warning(f" Could not start supervisor agent: {sa_err}")
+
     yield
+
+    try:
+        from governance.supervisor_agent import supervisor_agent
+        supervisor_agent.stop()
+        logger.info(" Autonomous AI Supervisor Agent stopped.")
+    except Exception:
+        pass
 
     logger.info(" Shutting down AI Railway Platform gracefully.")
 

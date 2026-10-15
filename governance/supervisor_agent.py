@@ -167,15 +167,14 @@ class SupervisorAgent:
         for dr in drift_results:
             if dr.get("overall_drift_detected"):
                 lifecycle_manager.queue_retraining(dr["model_id"])
+                retrain_res = lifecycle_manager.execute_retraining(dr["model_id"])
                 self._log_action(
                     GovernanceAction(
-                        action_type="RETRAINING_QUEUED",
+                        action_type="AUTONOMOUS_RETRAIN_DEPLOY",
                         module_id=dr["model_id"],
                         trigger="DRIFT_DETECTED",
-                        payload={"drifted_features": [
-                            f["feature"] for f in dr.get("feature_drift", [])
-                            if f.get("drift_detected")
-                        ]},
+                        payload=retrain_res,
+                        executor="supervisor_auto",
                     )
                 )
 
