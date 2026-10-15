@@ -23,6 +23,15 @@ from dotenv import load_dotenv
 # Ensure live credentials and environment variables are loaded
 load_dotenv(override=True)
 
+# Bridge Streamlit Cloud secrets into os.environ so FastAPI daemon & core settings can read them
+try:
+    import streamlit as st
+    for _k, _v in st.secrets.items():
+        if isinstance(_v, (str, int, float, bool)):
+            os.environ[str(_k)] = str(_v)
+except Exception:
+    pass
+
 # Ensure project root is in sys.path
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 if PROJECT_ROOT not in sys.path:
