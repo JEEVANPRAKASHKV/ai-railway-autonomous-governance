@@ -337,28 +337,29 @@ XGBoost real-time session risk scorer with Tatkal bot protection.
 
 ---
 
-## 🔀 Dual-Mode LLM Resilience (Zero-Crash Guarantee)
+## 🔀 Tri-Mode LLM Resilience (Zero-Crash Guarantee)
 
 ```
 ┌──────────────────────────────────────────────────────────────┐
 │                    LLM Router Decision Tree                  │
 │                                                              │
-│  Azure OpenAI credentials in .env?                          │
-│          │                                                   │
-│    YES ──┼── Initialize AzureChatOpenAI (GPT-4o-mini)       │
-│          │   ├── 15-second timeout with 2 retries           │
-│          │   └── On failure → auto-fallback (transparent)   │
-│          │                                                   │
-│    NO  ──┼── Activate Rule-Based Fallback Engine            │
-│              ├── M4 Travel Planner: Regex + greedy search   │
-│              │   over trains.csv                            │
-│              ├── M6 Support: TF-IDF cosine similarity over  │
-│              │   railway_faq.txt (top-1 answer)             │
-│              └── Governance RCA: Decision-tree diagnosis    │
+│  1. GEMINI_API_KEY present?                                  │
+│     ├── YES ──► Initialize Google Gemini 1.5/2.0 Flash       │
+│     │           Ultra-low latency (~400ms), Indic multilingual│
+│     │                                                        │
+│  2. AZURE_OPENAI_KEY present?                                │
+│     ├── YES ──► Initialize AzureChatOpenAI (GPT-4o-mini)     │
+│     │           15-second timeout with auto-cascading        │
+│     │                                                        │
+│  3. Neither key present or external API call fails?          │
+│     └── YES ──► Activate Intelligent Fallback Engine         │
+│                 ├── M4 Travel Planner: Constraint evaluator  │
+│                 ├── M6 Support: TF-IDF RAG over railway FAQ  │
+│                 └── Governance RCA: Causal 5-Why reasoning   │
 └──────────────────────────────────────────────────────────────┘
 ```
 
-**The mode switch is completely transparent** — the same API endpoints, same response schemas, and unified UI. Operators see `Mode: Rule-Based Fallback 🔧` in the sidebar when running standalone.
+**The mode switch is completely transparent** — the same API endpoints, same response schemas, and unified UI. Operators see the active mode in the sidebar with a zero-crash safety net.
 
 ---
 
