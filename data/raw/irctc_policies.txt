@@ -1,0 +1,154 @@
+IRCTC RAILWAY BOOKING & TRAVEL POLICIES — Synthetic Reference Document
+=======================================================================
+Version: 2026.1 | Last Updated: October 2026
+
+SECTION 1: CANCELLATION POLICY
+-------------------------------
+1.1 General Cancellation Rules
+All cancellations must be done before the charting of the train. Once charting is done, online cancellation is not permitted.
+
+1.2 Cancellation Charges (Non-Tatkal Tickets)
+- More than 48 hours before departure:
+  * AC First Class (1A) / Executive Class (EC): ₹240 flat fee
+  * AC 2-Tier (2A) / AC Chair Car (CC): ₹200 flat fee
+  * AC 3-Tier (3A): ₹180 flat fee
+  * Sleeper Class (SL): ₹120 flat fee
+  * Second Class (2S): ₹60 flat fee
+  Minimum cancellation charge: 25% of fare
+
+- 12 to 48 hours before departure:
+  * 25% of total fare (subject to minimum flat fee above)
+
+- Less than 12 hours and up to 4 hours before departure:
+  * 50% of total fare
+
+- Less than 4 hours before departure or after departure:
+  * No refund permitted
+
+1.3 RAC Ticket Cancellation
+RAC tickets cancelled before charting: Full refund minus ₹60 cancellation fee.
+
+1.4 Waitlist (WL) Ticket Cancellation
+If WL ticket not confirmed at time of charting, full refund is automatically processed. No action needed.
+If WL ticket confirmed and then cancelled, normal cancellation charges apply.
+
+SECTION 2: TATKAL BOOKING
+--------------------------
+2.1 Tatkal Booking Windows
+- AC Classes (1A, 2A, 3A, CC, EC): Opens at 10:00 AM, one day before journey date
+- Non-AC Classes (SL, 2S): Opens at 11:00 AM, one day before journey date
+
+2.2 Tatkal Charges (Additional to Base Fare)
+- AC First Class (1A): ₹400 per ticket
+- AC 2-Tier (2A): ₹300 per ticket  
+- AC 3-Tier (3A): ₹200 per ticket
+- AC Chair Car (CC): ₹125 per ticket
+- Sleeper Class (SL): ₹100 per ticket
+- Second Class (2S): ₹10 per ticket
+
+2.3 Tatkal Cancellation Policy
+Tatkal tickets are generally non-refundable. No refund for cancellations.
+Exception: If train is cancelled or runs late by more than 3 hours, full refund is provided.
+
+2.4 Tatkal Quota
+Tatkal quota is approximately 30% of total coach capacity reserved separately.
+Booking restricted to 2 passengers per PNR under Tatkal quota.
+
+SECTION 3: WAITLIST (WL) AND RAC POLICY
+-----------------------------------------
+3.1 Waitlist Categories
+- WL (General Waitlist): Standard waitlist
+- RLWL (Remote Location Waitlist): For stations not covered by General Quota
+- PQWL (Pooled Quota Waitlist): For certain intermediate stations
+- GNWL (General Quota Waitlist): Most common type
+
+3.2 WL Confirmation Process
+Waitlist tickets get confirmed as confirmed ticket holders cancel their bookings.
+Confirmation depends on: initial WL number, class, quota, season, route popularity.
+Low WL numbers (1-15) have highest confirmation probability (70-90%).
+High WL numbers (>60) have low probability (<30%).
+
+3.3 RAC (Reservation Against Cancellation)
+RAC passengers get a guaranteed seat (side berth shared between 2 passengers).
+RAC confirms to berth if one of the confirmed passengers cancels.
+
+SECTION 4: REFUND POLICY
+-------------------------
+4.1 Automatic Refunds
+- Cancelled trains: Full refund automatically credited to original payment method within 7 days
+- WL tickets not confirmed at charting: Full refund within 5 business days
+- Technical failures: Full refund within 7 days
+
+4.2 Manual Refund Claims
+For partial journey not performed due to train failure: Submit TDR (Ticket Deposit Receipt) within 72 hours.
+TDR can be filed on IRCTC website under "My Bookings" section.
+
+4.3 Refund Timeline
+- Credit/Debit Card: 5-7 business days
+- Net Banking: 3-5 business days
+- IRCTC Wallet: Instant
+- UPI: 1-3 business days
+
+SECTION 5: SENIOR CITIZEN CONCESSION
+--------------------------------------
+5.1 Eligibility
+- Male passengers aged 60 years and above
+- Female passengers aged 58 years and above
+
+5.2 Discount
+- 50% discount on Sleeper Class, AC 3-Tier, and AC 2-Tier base fare
+- 40% discount on AC First Class
+- Note: Tatkal surcharge is not discounted
+
+5.3 Berth Preference
+Senior citizens are entitled to Lower Berth allocation preferentially.
+System automatically allocates lower berths when available.
+
+SECTION 6: PERSONS WITH DISABILITY (PWD) CONCESSION
+-----------------------------------------------------
+6.1 Eligibility and Discount
+- 75% discount on all classes for persons with specified disabilities
+- Escort accompanying PWD passenger also gets concession
+
+6.2 Required Documentation
+Valid disability certificate from Government-approved medical authority required at time of travel.
+
+SECTION 7: PNR STATUS AND TRAIN TRACKING
+-----------------------------------------
+7.1 Checking PNR Status
+- IRCTC website: www.irctc.co.in → "PNR Status" section
+- NTES website: www.enquiry.indianrail.gov.in
+- SMS: Send PNR number to 139
+- Helpline: Call 14646 (24x7)
+
+7.2 Train Running Status
+- Real-time train tracking available on NTES
+- "Where is my Train" feature on IRCTC Rail Connect app
+- Status updates every 15 minutes at major stations
+
+SECTION 8: DYNAMIC PRICING
+---------------------------
+8.1 Flexi Fare System
+Premium trains (Rajdhani, Shatabdi, Duronto, Humsafar, Tejas, Gatimaan, Vande Bharat) follow dynamic pricing.
+Base fare charged for initial 10% of seats. Fare increases by 10% for every 10% of seats sold.
+Maximum fare: 1.5× base fare for these trains.
+
+8.2 Demand-Based Pricing Factors
+- Days to departure (nearer = higher demand)
+- Season (peak season = higher prices)
+- Route popularity
+- Class-specific demand
+
+SECTION 9: BOOKING RULES
+--------------------------
+9.1 Maximum Tickets Per User Per Transaction
+- Normal quota: 6 passengers per PNR
+- Tatkal quota: 2 passengers per PNR
+
+9.2 Advance Reservation Period
+- Trains can be booked up to 120 days in advance (excluding day of departure)
+- Tatkal: 1 day before journey
+
+9.3 ID Proof Requirements
+At least one of the following for adults:
+Aadhaar Card, PAN Card, Voter ID, Driving License, Passport

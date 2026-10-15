@@ -1,0 +1,176 @@
+station_code,station_name,zone,state,tier,baseline_congestion,platforms,latitude,longitude
+NDLS,New Delhi,NR,Delhi,Metro,71,18,26.7237,68.7253
+CSTM,Chhatrapati Shivaji Terminus Mumbai,CR,Maharashtra,Metro,68,18,16.3383,74.4731
+HWH,Howrah Junction,ER,West Bengal,Metro,72,18,29.4894,87.6243
+MAS,Chennai Central,SR,Tamil Nadu,Metro,69,18,33.9271,70.5212
+SBC,Bengaluru City Junction,SWR,Karnataka,Metro,71,18,20.5248,68.8641
+SC,Secunderabad Junction,SCR,Telangana,Metro,74,18,14.7312,82.6553
+PUNE,Pune Junction,CR,Maharashtra,A1,52,12,9.2563,73.7663
+ADI,Ahmedabad Junction,WR,Gujarat,A1,56,12,27.0217,83.8033
+JP,Jaipur Junction,NWR,Rajasthan,A1,57,12,14.7826,85.0887
+LKO,Lucknow Charbagh NR,NR,Uttar Pradesh,A1,54,12,31.5688,68.1885
+CNB,Kanpur Central,NCR,Uttar Pradesh,A1,53,12,31.4658,88.246
+PRYJ,Prayagraj Junction,NCR,Uttar Pradesh,A,47,8,18.1971,72.5089
+BSB,Varanasi Junction,NER,Uttar Pradesh,A,47,8,35.7806,77.7612
+PATNA,Patna Junction,ECR,Bihar,A1,52,12,11.1433,70.8048
+GHY,Guwahati,NFR,Assam,A,45,8,32.6536,85.5081
+BBS,Bhubaneswar,ECOR,Odisha,A,44,8,31.5032,89.1622
+NGP,Nagpur Junction,CR,Maharashtra,A,41,8,23.7825,96.2204
+INDB,Indore Junction BG,WR,Madhya Pradesh,A,47,8,19.2882,84.0092
+BPL,Bhopal Junction,WCR,Madhya Pradesh,A,45,8,32.138,85.9371
+JAT,Jammu Tawi,NR,J&K,A,41,8,33.0586,84.7432
+AMRITSAR,Amritsar Junction,NR,Punjab,A,44,8,28.5803,69.3289
+LDH,Ludhiana Junction,NR,Punjab,A,40,8,14.9951,76.3923
+ASR,Amritsar Junction,NR,Punjab,A,49,8,10.7741,74.7509
+UDZ,Udaipur City,NWR,Rajasthan,B,30,5,11.3785,76.0612
+JU,Jodhpur Junction,NWR,Rajasthan,A,48,8,26.617,78.5801
+AII,Ajmer Junction,NWR,Rajasthan,A,40,8,19.0502,74.0757
+KOTA,Kota Junction,WCR,Rajasthan,A,49,8,16.1089,95.163
+RTM,Ratlam Junction,WR,Madhya Pradesh,A,42,8,26.969,85.6648
+BCT,Mumbai Central,WR,Maharashtra,Metro,71,18,13.3775,89.1447
+VSKP,Visakhapatnam Junction,ECOR,Andhra Pradesh,A,43,8,13.157,79.0042
+GNT,Guntur Junction,SCR,Andhra Pradesh,B,33,5,36.7014,86.56
+TVM,Thiruvananthapuram Central,SR,Kerala,A,42,8,24.3731,87.8538
+ERS,Ernakulam Junction,SR,Kerala,A,44,8,32.5213,90.504
+CBE,Coimbatore Junction,SR,Tamil Nadu,A,42,8,15.0279,68.9309
+MDU,Madurai Junction,SR,Tamil Nadu,A,46,8,17.4904,75.7645
+TPJ,Tiruchirappalli Junction,SR,Tamil Nadu,A,44,8,14.513,95.3444
+SA,Salem Junction,SR,Tamil Nadu,B,33,5,33.4765,77.1257
+RPM,Perambur,SR,Tamil Nadu,B,31,5,27.18,79.4733
+MS,Chennai Egmore,SR,Tamil Nadu,A,41,8,34.5646,81.3067
+DLI,Delhi Junction,NR,Delhi,A,43,8,16.0491,75.1522
+GZB,Ghaziabad Junction,NR,Uttar Pradesh,B,33,5,24.499,75.6195
+AGC,Agra Cantt,NCR,Uttar Pradesh,A,41,8,25.1607,94.0369
+MTJ,Mathura Junction,NCR,Uttar Pradesh,A,49,8,19.8829,74.3603
+AF,Agra Fort,NCR,Uttar Pradesh,B,33,5,36.9298,82.7763
+GWL,Gwalior Junction,NCR,Madhya Pradesh,A,49,8,11.0909,69.3664
+JHS,Jhansi Junction,NCR,Uttar Pradesh,A,44,8,11.625,86.1959
+STA,Satna,WCR,Madhya Pradesh,B,26,5,31.0743,80.2426
+KGKP,Kathgodam,NER,Uttarakhand,B,28,5,10.3105,79.067
+DDN,Dehradun,NR,Uttarakhand,A,46,8,36.8895,83.3443
+HW,Haridwar Junction,NR,Uttarakhand,A,47,8,36.1757,92.9626
+RKSH,Rishikesh,NR,Uttarakhand,C,17,3,8.8272,88.9009
+UHL,Una Himachal,NR,Himachal Pradesh,C,15,3,27.9287,83.5721
+SHM,Shimla,NR,Himachal Pradesh,B,28,5,16.1045,86.5879
+KLK,Kalka,NR,Haryana,B,26,5,11.6792,80.6082
+UMB,Ambala Cant Junction,NR,Haryana,A,47,8,21.4311,95.6607
+ROK,Rohtak Junction,NR,Haryana,B,28,5,33.4618,75.6383
+RE,Rewari Junction,NR,Haryana,B,26,5,22.7667,73.1809
+GGN,Gurgaon,NR,Haryana,B,30,5,34.5099,93.245
+FDKD,Faridabad,NR,Haryana,B,30,5,17.0057,86.5295
+PANIPAT,Panipat Junction,NR,Haryana,B,34,5,25.8557,72.4323
+KRK,Kurukshetra Junction,NR,Haryana,B,28,5,30.2316,83.642
+AMBALA,Ambala City,NR,Haryana,B,30,5,30.6909,83.3803
+BRC,Vadodara Junction,WR,Gujarat,A,41,8,8.5163,77.4005
+ST,Surat,WR,Gujarat,A,49,8,9.0551,94.9439
+ANND,Anand Junction,WR,Gujarat,B,26,5,33.5436,92.1183
+NKDA,Navsari,WR,Gujarat,C,24,3,17.2642,69.6798
+JT,Jetpur Junction,WR,Gujarat,B,28,5,33.5233,95.4615
+RJT,Rajkot Junction,WR,Gujarat,A,47,8,10.9411,82.0937
+BVP,Bhavnagar Terminus,WR,Gujarat,B,31,5,10.4726,90.0575
+JAM,Jamnagar,WR,Gujarat,B,33,5,30.3263,71.7234
+OKHA,Okha,WR,Gujarat,C,22,3,22.0455,83.9443
+VAPI,Vapi,WR,Gujarat,B,29,5,16.0541,93.3006
+DDAR,Dahanu Road,WR,Maharashtra,C,16,3,20.5594,74.1421
+KYN,Kalyan Junction,CR,Maharashtra,A,44,8,23.8699,89.168
+LNL,Lonavala,CR,Maharashtra,B,32,5,14.2328,77.0398
+DD,Dadar Central,CR,Maharashtra,A,49,8,36.8618,86.8465
+DR,Mumbai Dadar WR,WR,Maharashtra,A,48,8,20.9859,83.0097
+BSL,Bhusaval Junction,CR,Maharashtra,A,48,8,11.9486,74.5162
+AWB,Aurangabad,CR,Maharashtra,A,40,8,18.1354,85.061
+SOT,Sholapur Junction,CR,Maharashtra,A,48,8,15.0583,74.3863
+WD,Wadi Junction,SCR,Karnataka,B,31,5,10.5233,86.302
+UBL,Hubli Junction,SWR,Karnataka,A,48,8,15.0248,94.2572
+MYS,Mysuru Junction,SWR,Karnataka,A,47,8,32.9996,70.0549
+BANG,Yesvantpur Junction,SWR,Karnataka,A,40,8,15.2831,87.4004
+DWR,Dharwad,SWR,Karnataka,B,32,5,14.6057,71.837
+GDG,Gadag Junction,SWR,Karnataka,B,32,5,35.1622,84.5602
+BJP,Vijayapura,SWR,Karnataka,B,27,5,21.9711,90.754
+GR,Gulbarga,SCR,Karnataka,B,25,5,31.5137,73.5219
+BIDAR,Bidar,SCR,Karnataka,C,22,3,11.2625,80.5005
+NED,Nanded,SCR,Maharashtra,B,27,5,20.572,81.5437
+PBN,Parbhani Junction,SCR,Maharashtra,B,27,5,29.2787,87.5276
+MUE,Mudkhed Junction,SCR,Maharashtra,C,15,3,36.5487,70.8541
+HYB,Hyderabad Deccan,SCR,Telangana,A,44,8,19.9747,77.8398
+KCG,Kacheguda,SCR,Telangana,A,49,8,33.0577,75.211
+FM,Faizabad Junction,NER,Uttar Pradesh,B,31,5,13.921,81.0098
+GKP,Gorakhpur Junction,NER,Uttar Pradesh,A,49,8,20.5236,76.0778
+NJP,New Jalpaiguri,NFR,West Bengal,A,48,8,15.6195,94.7747
+MLDT,Malda Town,ER,West Bengal,B,31,5,21.1292,92.9791
+BWN,Bardhaman Junction,ER,West Bengal,B,33,5,24.1843,69.4671
+SDAH,Sealdah,ER,West Bengal,Metro,72,18,36.9796,92.2448
+BGP,Bhagalpur Junction,ECR,Bihar,A,41,8,36.1164,94.8646
+RJPB,Rajendra Nagar Bihar,ECR,Bihar,B,25,5,32.6878,72.823
+DNKD,Danapur,ECR,Bihar,A,46,8,22.3408,74.1987
+MFP,Muzaffarpur Junction,ECR,Bihar,A,46,8,19.9296,69.7004
+SPJ,Samastipur Junction,ECR,Bihar,B,32,5,19.3007,96.574
+RXL,Raxaul Junction,ECR,Bihar,B,29,5,16.0583,90.738
+DBG,Darbhanga Junction,ECR,Bihar,B,27,5,21.4677,80.2672
+JYG,Jaynagar,ECR,Bihar,C,22,3,35.7836,96.8673
+SHC,Sitamarhi,ECR,Bihar,C,20,3,24.3394,88.8338
+SGR,Siliguri Junction,NFR,West Bengal,B,27,5,12.9117,76.6045
+AGTL,Agartala,NFR,Tripura,B,25,5,36.1082,84.7962
+LMG,Lumding Junction,NFR,Assam,B,27,5,23.9526,89.6913
+DBRG,Dibrugarh,NFR,Assam,A,44,8,10.1292,84.9412
+TGM,Tangla,NFR,Assam,C,17,3,22.8312,92.7289
+RNG,Rangiya Junction,NFR,Assam,B,25,5,12.9868,95.8626
+JTTN,Jiribam,NFR,Manipur,C,24,3,25.4585,87.5812
+TPTY,Tirupati,SCR,Andhra Pradesh,A,46,8,15.2033,71.4767
+GTL,Guntakal Junction,SCR,Andhra Pradesh,A,46,8,33.8732,75.1402
+RU,Renigunta Junction,SCR,Andhra Pradesh,B,33,5,25.4438,85.9621
+QLN,Kollam Junction,SR,Kerala,A,49,8,20.4479,84.9265
+ALLP,Alappuzha,SR,Kerala,B,34,5,23.3993,95.1065
+TCR,Thrissur,SR,Kerala,A,42,8,14.3214,88.7696
+CLT,Kozhikode,SR,Kerala,A,46,8,15.3025,79.4778
+SRR,Shoranur Junction,SR,Kerala,B,25,5,27.6432,76.6999
+CAN,Kannur,SR,Kerala,B,28,5,17.5111,89.8041
+MAJN,Mangaluru Junction,SR,Karnataka,A,43,8,10.5675,81.2903
+MAQ,Mangaluru Central,SR,Karnataka,A,46,8,10.5879,74.1815
+KUDA,Kundapura,SR,Karnataka,C,21,3,16.0582,95.0645
+BKLN,Bhatkal,SR,Karnataka,C,18,3,33.6046,93.4988
+GOA,Madgaon Junction,KR,Goa,A,46,8,19.0315,72.5747
+PANAJI,Karmali,KR,Goa,B,27,5,32.2617,88.4027
+THVM,Thivim,KR,Goa,B,30,5,25.9328,96.6298
+RN,Ratnagiri,KR,Maharashtra,B,26,5,27.1383,68.2269
+CHI,Chiplun,KR,Maharashtra,B,34,5,31.7875,76.682
+KED,Khed,KR,Maharashtra,C,23,3,27.4066,95.229
+RWP,Roha,KR,Maharashtra,C,19,3,12.3273,71.3474
+PEN,Pen,CR,Maharashtra,C,20,3,11.5505,84.0435
+PANVEL,Panvel Junction,CR,Maharashtra,A,43,8,16.2619,85.5401
+VR,Vasai Road,WR,Maharashtra,B,34,5,28.9519,73.9043
+BVI,Borivali,WR,Maharashtra,B,31,5,26.5758,75.6555
+ANDHERI,Andheri,WR,Maharashtra,B,33,5,22.4232,94.2548
+PNVL,Panvel,CR,Maharashtra,A,46,8,32.614,70.6767
+TL,Titwala,CR,Maharashtra,C,15,3,20.5719,76.0237
+AMBV,Ambivli,CR,Maharashtra,C,15,3,8.6011,90.3625
+BR,Badlapur,CR,Maharashtra,C,23,3,26.6577,75.5967
+VB,Vangani,CR,Maharashtra,C,23,3,29.6251,83.9987
+SRD,Shahapur,CR,Maharashtra,C,18,3,20.6891,68.2804
+KJT,Khopoli,CR,Maharashtra,C,23,3,10.6445,93.6101
+THANE,Thane,CR,Maharashtra,A,46,8,32.286,84.8928
+CSMT,Mumbai CST,CR,Maharashtra,Metro,70,18,12.7207,71.6959
+KOLHAPUR,Kolhapur,CR,Maharashtra,B,33,5,31.1895,92.9604
+SNG,Sangli,CR,Maharashtra,B,29,5,34.1194,74.0922
+MRJ,Miraj Junction,CR,Maharashtra,B,25,5,15.6116,70.981
+KOP,Kopargaon,CR,Maharashtra,C,17,3,30.7333,93.6399
+KWV,Kurduvadi Junction,CR,Maharashtra,B,30,5,33.1413,96.31
+KHURDA,Khurda Road,ECOR,Odisha,B,25,5,31.6064,75.7374
+CTC,Cuttack Junction,ECOR,Odisha,A,49,8,30.9402,71.1348
+RGDA,Rayagada,ECOR,Odisha,B,28,5,33.3568,92.8992
+TIG,Titlagarh Junction,ECOR,Odisha,B,31,5,14.8394,91.681
+ROU,Rourkela Junction,SER,Odisha,A,41,8,21.6186,76.8505
+JSG,Jharsuguda Junction,SER,Odisha,B,27,5,31.1673,74.6003
+IB,Ib,SER,Odisha,C,15,3,9.1744,73.6008
+BSPB,Bilaspur Junction,SECR,Chhattisgarh,A,44,8,17.8555,93.0662
+R,Raipur Junction,SECR,Chhattisgarh,A,40,8,36.0563,76.0946
+DURG,Durg Junction,SECR,Chhattisgarh,A,47,8,26.7822,79.5907
+RIG,Rajnandgaon,SECR,Chhattisgarh,B,25,5,36.4628,83.5503
+GGP,Gondia Junction,SECR,Maharashtra,B,25,5,35.2683,71.3449
+WADI,Wadi,SCR,Karnataka,B,26,5,36.1564,73.1785
+RGA,Raichur,SCR,Karnataka,B,26,5,35.9322,75.6985
+DMM,Dharmavaram Junction,SCR,Andhra Pradesh,B,30,5,11.5895,80.6023
+AK,Akola Junction,CR,Maharashtra,A,46,8,29.2635,77.0966
+WR,Wardha Junction,CR,Maharashtra,B,29,5,25.777,82.8313
+SWV,Sawantwadi Road,KR,Maharashtra,C,15,3,19.4781,84.7211
+KUDAL,Kudal,KR,Maharashtra,C,15,3,15.7596,88.5548
+KADAM,Kadamba,KR,Maharashtra,C,17,3,8.5482,94.8417

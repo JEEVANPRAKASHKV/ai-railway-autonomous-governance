@@ -78,14 +78,17 @@ desktop.ini
 *.ipynb
 
 # --- Application Specific Data (Deterministic & Reproducible via Scripts) ---
-data/raw/
-!data/raw/.gitkeep
-data/baseline_distributions.pkl
+# Raw data & baselines included for instant deployment & evaluator reproducibility
+# data/raw/
 data/*.pkl
+!data/baseline_distributions.pkl
 
 # --- Pre-Trained ML Artifacts (Reproducible via models/train_all_models.py) ---
-models/artifacts/
-!models/artifacts/.gitkeep
+# Pre-trained artifacts included for zero-cold-start cloud deployment
+# models/artifacts/
+!models/artifacts/*.pkl
+!models/artifacts/*.json
+!models/artifacts/shap_explainers/*.pkl
 !models/registry/model_registry.json
 
 # --- Local Vector Database & Databases ---

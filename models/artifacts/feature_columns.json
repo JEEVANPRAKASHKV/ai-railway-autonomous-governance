@@ -1,0 +1,54 @@
+{
+  "wl_predictor": [
+    "initial_wl_number",
+    "class_enc",
+    "quota_enc",
+    "days_to_departure",
+    "month",
+    "day_of_week",
+    "is_peak_season",
+    "season_factor",
+    "seniority_flag",
+    "disability_flag"
+  ],
+  "berth_estimator": [
+    "initial_wl_number",
+    "class_enc",
+    "quota_enc",
+    "days_to_departure",
+    "month",
+    "is_peak_season",
+    "seniority_flag",
+    "disability_flag"
+  ],
+  "delay_predictor": [
+    "weather_index",
+    "congestion_at_station",
+    "distance_from_origin_km",
+    "month",
+    "season_factor"
+  ],
+  "fare_predictor": [
+    "base_fare",
+    "class_enc",
+    "days_to_departure",
+    "demand_index",
+    "tatkal_flag",
+    "season_factor",
+    "route_popularity",
+    "month",
+    "day_of_week",
+    "is_peak_season"
+  ],
+  "fraud_detector": [
+    "requests_per_minute",
+    "unique_pnr_attempts",
+    "tatkal_flag",
+    "account_age_days",
+    "payment_attempts",
+    "failed_captcha_count",
+    "booking_time_hour",
+    "is_bulk_booking",
+    "ip_risk_score"
+  ]
+}
