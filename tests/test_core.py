@@ -18,7 +18,7 @@ from core.schemas import TelemetryEvent
 def test_platform_settings():
     """Verify platform settings load default values properly."""
     assert os.path.exists(settings.project_root)
-    assert settings.llm_mode in ["azure_openai", "fallback"]
+    assert settings.llm_mode in ["gemini", "azure_openai", "fallback"]
     assert settings.fastapi_port == 8000
     assert settings.streamlit_port == 8501
 

@@ -75,7 +75,7 @@ class SupervisorAlert(BaseModel):
 
 class LLMResponse(BaseModel):
     content: str
-    mode: Literal["azure_openai", "fallback"]
+    mode: Literal["gemini", "azure_openai", "fallback"]
     model: str = ""
     tokens_used: int = 0
     latency_ms: float = 0.0

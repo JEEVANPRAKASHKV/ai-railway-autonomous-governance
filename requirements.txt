@@ -22,6 +22,7 @@ joblib==1.4.2
 imbalanced-learn==0.12.3
 
 # --- LLM & Agentic ---
+google-generativeai>=0.7.0
 langchain==0.2.5
 langgraph==0.1.1
 langchain-openai==0.1.8

@@ -12,6 +12,10 @@ from pydantic import Field
 
 
 class PlatformSettings(BaseSettings):
+    # ── Google Gemini ────────────────────────────────────────────────────────
+    gemini_api_key: str = Field(default="", alias="GEMINI_API_KEY")
+    gemini_model: str = Field(default="gemini-1.5-flash", alias="GEMINI_MODEL")
+
     # ── Azure OpenAI ────────────────────────────────────────────────────────
     azure_openai_endpoint: str = Field(default="", alias="AZURE_OPENAI_ENDPOINT")
     azure_openai_key: str = Field(default="", alias="AZURE_OPENAI_KEY")
@@ -48,18 +52,35 @@ class PlatformSettings(BaseSettings):
 
     # ── Computed Properties ────────────────────────────────────────────────────
     @property
-    def llm_available(self) -> bool:
+    def gemini_available(self) -> bool:
+        """Returns True if GEMINI_API_KEY is configured and non-placeholder."""
+        key = self.gemini_api_key.strip()
+        return bool(key and not key.startswith("your-") and not key.startswith("AIzaSyYourKey"))
+
+    @property
+    def azure_available(self) -> bool:
         """Returns True only if all three Azure OpenAI variables are set and non-empty."""
         return bool(
             self.azure_openai_endpoint.strip()
             and self.azure_openai_key.strip()
             and self.azure_openai_deployment_name.strip()
             and not self.azure_openai_endpoint.startswith("https://your-resource")
+            and not self.azure_openai_key.startswith("your-")
         )
 
     @property
+    def llm_available(self) -> bool:
+        """Returns True if either Gemini or Azure OpenAI is configured."""
+        return self.gemini_available or self.azure_available
+
+    @property
     def llm_mode(self) -> str:
-        return "azure_openai" if self.llm_available else "fallback"
+        """Returns active LLM provider mode: 'gemini', 'azure_openai', or 'fallback'."""
+        if self.gemini_available:
+            return "gemini"
+        if self.azure_available:
+            return "azure_openai"
+        return "fallback"
 
     # ── Path helpers ───────────────────────────────────────────────────────────
     @property

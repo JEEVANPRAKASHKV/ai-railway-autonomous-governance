@@ -98,12 +98,16 @@ The repository features a self-contained root deployment entrypoint ([`streamlit
    - **Branch:** `main`
    - **Main file path:** `streamlit_app.py`
    - **App URL:** Customize your subdomain (e.g. `ai-railway-governance.streamlit.app`)
-3. *(Optional)* Click **Advanced Settings** → **Secrets** if you wish to attach live Azure OpenAI credentials:
+3. *(Optional)* Click **Advanced Settings** → **Secrets** to attach live LLM credentials:
    ```toml
-   AZURE_OPENAI_API_KEY = "your-api-key"
+   # Recommended: Google Gemini 1.5 Flash (Instant free key: aistudio.google.com/app/apikey)
+   GEMINI_API_KEY = "AIzaSyYourGeminiApiKeyHere"
+   GEMINI_MODEL = "gemini-1.5-flash"
+
+   # Optional Alternative: Azure OpenAI
+   AZURE_OPENAI_KEY = "your-azure-key"
    AZURE_OPENAI_ENDPOINT = "https://your-resource.openai.azure.com/"
-   AZURE_OPENAI_DEPLOYMENT = "gpt-4o"
-   AZURE_OPENAI_API_VERSION = "2024-02-15-preview"
+   AZURE_OPENAI_DEPLOYMENT_NAME = "gpt-4o-mini"
    ```
    > **Note:** If no secrets are provided, the platform automatically boots into **Standalone Intelligent Rule-Based Fallback Mode** with 100% feature availability and zero crashes.
 4. Click **"Deploy!"** — Within 60 seconds, your dual-plane platform will be live globally.
