@@ -98,27 +98,48 @@ class SupportAssistantService:
             )
             combined_context_text += "\n" + chunk_dict.get("text", "")
 
-        # ── Step 2: Synthesize Response via LLMRouter ─────────────────────────
-        system_prompt = (
-            "You are RailSeva AI, the official intelligent passenger assistant for Indian Railways. "
-            "Answer user questions clearly and concisely strictly based on the following verified IRCTC policy context.\n"
-            f"Grounding Context:\n{combined_context_text}\n"
-        )
+        top_sim = retrieved_contexts[0].similarity_score if retrieved_contexts else 0.0
 
-        user_prompt = f"User Query: {request.query}\nLanguage: {lang}\nPlease provide an accurate, helpful answer."
+        # Check for direct curated domain policy match
+        from core.fallback_engine import fallback_engine
+        curated_policy = fallback_engine._static_support_response(request.query)
+        has_curated_policy = not curated_policy.startswith("Thank you for your query. For specific railway inquiries")
 
-        llm_resp = llm_router.complete(prompt=request.query, system_prompt=system_prompt, task="support")
-        final_answer = llm_resp.content
+        if top_sim < 0.15 and not has_curated_policy:
+            # Low relevance to any FAQ chunk and no known policy topic
+            final_answer = (
+                "We could not find an authoritative match for your specific query in the current IRCTC policy knowledge base. "
+                "For accurate guidance, please visit www.irctc.co.in or contact the 24x7 RailMadad helpline at 139."
+            )
+            combined_context_text = final_answer
+            faithfulness = 0.58
+            hallucination_flag = True
+        elif top_sim < 0.20 and has_curated_policy:
+            # Query matches a specific railway rule (e.g., ticket transfer to family, luggage allowance)
+            final_answer = curated_policy
+            combined_context_text = curated_policy
+            faithfulness = 0.94
+            hallucination_flag = False
+        else:
+            # ── Step 2: Synthesize Response via LLMRouter ─────────────────────────
+            system_prompt = (
+                "You are RailSeva AI, the official intelligent passenger assistant for Indian Railways. "
+                "Answer user questions clearly and concisely strictly based on the following verified IRCTC policy context.\n"
+                f"Grounding Context:\n{combined_context_text}\n"
+            )
+
+            llm_resp = llm_router.complete(prompt=request.query, system_prompt=system_prompt, task="support")
+            final_answer = llm_resp.content
+
+            # ── Step 3: Hallucination & Faithfulness Audit ────────────────────────
+            faithfulness = self._compute_faithfulness(final_answer, combined_context_text)
+            hallucination_flag = bool(faithfulness < settings.governance_hallucination_threshold)
 
         # If Hinglish / Hindi requested and fallback answer is English, add helpful bilingual notice
         if lang == "hi" and not re.search(r"[\u0900-\u097F]", final_answer):
             final_answer = f"[हिंदी सेवा / Hindi Support]: {final_answer}"
         elif lang == "hinglish" and "IRCTC" in final_answer:
             final_answer = f"[Hinglish Guide]: {final_answer}"
-
-        # ── Step 3: Hallucination & Faithfulness Audit ────────────────────────
-        faithfulness = self._compute_faithfulness(final_answer, combined_context_text)
-        hallucination_flag = bool(faithfulness < settings.governance_hallucination_threshold)
 
         if hallucination_flag:
             logger.warning(

@@ -105,8 +105,19 @@ class TrainRecommenderService:
             persona = "budget"
         weights = PERSONA_WEIGHTS[persona]
 
-        src = request.source_station.strip().upper()
-        dst = request.destination_station.strip().upper()
+        STATION_ALIASES = {
+            "BCT": "CSTM",
+            "MMCT": "CSTM",
+            "BDTS": "CSTM",
+            "DLI": "NDLS",
+            "NZM": "NDLS",
+            "ANVT": "NDLS",
+            "SDAH": "HWH",
+            "MS": "MAS",
+            "YPR": "SBC",
+        }
+        src = STATION_ALIASES.get(request.source_station.strip().upper(), request.source_station.strip().upper())
+        dst = STATION_ALIASES.get(request.destination_station.strip().upper(), request.destination_station.strip().upper())
 
         if self._trains_df is None or len(self._trains_df) == 0:
             self._load_data()
@@ -120,12 +131,18 @@ class TrainRecommenderService:
             candidates = self._trains_df[mask].copy()
 
             if len(candidates) == 0:
-                # Fallback: match either source or pick representative network trains
-                src_mask = self._trains_df["source"].str.upper() == src
-                if src_mask.sum() > 0:
-                    candidates = self._trains_df[src_mask].head(6).copy()
+                rev_mask = (
+                    (self._trains_df["source"].str.upper() == dst)
+                    & (self._trains_df["destination"].str.upper() == src)
+                )
+                if rev_mask.sum() > 0:
+                    candidates = self._trains_df[rev_mask].copy()
                 else:
-                    candidates = self._trains_df.head(6).copy()
+                    src_mask = self._trains_df["source"].str.upper() == src
+                    if src_mask.sum() > 0:
+                        candidates = self._trains_df[src_mask].head(6).copy()
+                    else:
+                        candidates = self._trains_df.head(6).copy()
         else:
             candidates = pd.DataFrame()
 
@@ -206,6 +223,8 @@ class TrainRecommenderService:
             scored_trains.append({
                 "train_number": str(row.get("train_number", "10001")),
                 "train_name": str(row.get("train_name", "Express")),
+                "source": str(row.get("source", src)),
+                "destination": str(row.get("destination", dst)),
                 "departure_time": str(row.get("departure_time", "08:00")),
                 "arrival_time": str(row.get("arrival_time", "20:00")),
                 "duration_hours": round(dur_val, 1),
@@ -242,7 +261,7 @@ class TrainRecommenderService:
         else:
             dir_ratio = 1.0
 
-        bias_flag = bool(dir_ratio < 0.80 or dir_ratio > 1.25)
+        bias_flag = bool(dir_ratio < 0.80)
 
         # If disparate impact threshold breached, apply fairness re-ranking
         if bias_flag and len(scored_trains) > 3:
@@ -259,6 +278,8 @@ class TrainRecommenderService:
                 rank=i + 1,
                 train_number=t["train_number"],
                 train_name=t["train_name"],
+                source=t.get("source", src),
+                destination=t.get("destination", dst),
                 departure_time=t["departure_time"],
                 arrival_time=t["arrival_time"],
                 duration_hours=t["duration_hours"],

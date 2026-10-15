@@ -39,6 +39,8 @@ class TrainRecommendation(BaseModel):
     comfort_score: float = Field(..., description="Coach cleanliness & amenities score (0.0 to 1.0)")
     composite_score: float = Field(..., description="Multi-factor weighted match score (0.0 to 1.0)")
     recommendation_reason: str
+    source: str = Field(default="", description="Origin station")
+    destination: str = Field(default="", description="Destination station")
     tags: List[str] = Field(default_factory=list)
 
 

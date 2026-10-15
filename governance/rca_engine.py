@@ -307,6 +307,16 @@ class RCAEngine:
                 return True
             return False
 
+    def resolve_all_incidents(self) -> int:
+        """Resolve all open incidents."""
+        with self._lock:
+            count = 0
+            for incident in self._incidents.values():
+                if not incident.resolved:
+                    incident.resolved = True
+                    count += 1
+            return count
+
     def get_open_incidents(self) -> List[dict]:
         with self._lock:
             return [i.to_dict() for i in self._incidents.values() if not i.resolved]

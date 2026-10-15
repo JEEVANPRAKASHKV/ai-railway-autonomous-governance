@@ -67,12 +67,11 @@ def render_shap_chart(
     fig.update_layout(
         title=dict(text=f"<b>{title}</b>", font=dict(size=14, color="#e2e8f0")),
         xaxis=dict(
-            title=f"{target_metric} (Impact on Prediction)",
+            title=dict(text=f"{target_metric} (Impact on Prediction)", font=dict(color="#cbd5e1")),
             gridcolor="#1e2d52",
             zerolinecolor="#60a5fa",
             zerolinewidth=2,
             tickfont=dict(color="#94a3b8"),
-            titlefont=dict(color="#cbd5e1"),
         ),
         yaxis=dict(
             tickfont=dict(color="#e2e8f0"),

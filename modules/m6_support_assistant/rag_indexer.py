@@ -127,7 +127,9 @@ class LocalRAGIndexer:
             return results
         except Exception as e:
             logger.error(f"[RAG Indexer] Retrieval error: {e}")
-            return [(self.chunks[0], 0.70)] if self.chunks else []
+    def rebuild(self) -> None:
+        """Force re-indexing of policies and FAQ documents."""
+        self._build_index()
 
 
 rag_indexer = LocalRAGIndexer()

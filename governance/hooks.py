@@ -130,6 +130,17 @@ def governance_hook(module_name: str, endpoint: str = ""):
                                 confidence = float(val)
                             break
 
+                    if hasattr(result, "bias_flag"):
+                        bias_flag = bool(getattr(result, "bias_flag"))
+                    if hasattr(result, "drift_detected"):
+                        drift_flag = bool(getattr(result, "drift_detected"))
+                    elif hasattr(result, "drift_flag"):
+                        drift_flag = bool(getattr(result, "drift_flag"))
+                    if hasattr(result, "hallucination_flag"):
+                        hallucination_flag = bool(getattr(result, "hallucination_flag"))
+                    elif hasattr(result, "is_hallucination"):
+                        hallucination_flag = bool(getattr(result, "is_hallucination"))
+
                 # ── Step 5: Emit TelemetryEvent ───────────────────────────────
                 event = TelemetryEvent(
                     event_id=audit_id,

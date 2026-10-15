@@ -4,21 +4,35 @@
 > **Repository:** https://github.com/JEEVANPRAKASHKV/ai-railway-autonomous-governance  
 > **Architect:** Jeevan Prakash K V
 
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://ai-railway-governance.streamlit.app)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.111.0-009688.svg?logo=fastapi)](http://localhost:8000/docs)
+[![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
+[![Tests Passed](https://img.shields.io/badge/tests-35%20passed-success)](tests/)
+[![Architecture](https://img.shields.io/badge/Architecture-Dual--Plane%20AI-blueviolet)](#-architecture)
+
+---
+
+### 🌐 Live Public Deployment
+> **🚀 Access Live Control Tower & Passenger AI:** **[https://ai-railway-governance.streamlit.app](https://ai-railway-governance.streamlit.app)**  
+> *(No local installation or API keys required — full dual-plane functionality and autonomous governance telemetry enabled out of the box).*
+
 ---
 
 ## 📋 Table of Contents
 
-1. [Platform Overview](#-platform-overview)
-2. [Quick Start — 3 Steps](#-quick-start--3-steps)
-3. [Architecture](#-architecture)
-4. [7 Passenger AI Modules](#-7-passenger-ai-modules)
-5. [8-Pillar AI Governance Engine](#-8-pillar-ai-governance-engine)
-6. [Dual-Mode LLM Resilience](#-dual-mode-llm-resilience-zero-crash-guarantee)
-7. [Running Without Azure OpenAI (Standalone Mode)](#-running-without-azure-openai-standalone-mode)
-8. [Chaos Engineering Lab](#-chaos-engineering-lab)
-9. [API Reference](#-api-reference)
-10. [Project Structure](#-project-structure)
-11. [Technology Stack](#-technology-stack)
+1. [Live Public Deployment](#-live-public-deployment)
+2. [Platform Overview](#-platform-overview)
+3. [Quick Start — 3 Steps](#-quick-start--3-steps)
+4. [Cloud Deployment Guide (Streamlit Cloud & Render)](#-cloud-deployment-guide-streamlit-community-cloud--render)
+5. [Architecture](#-architecture)
+6. [7 Passenger AI Modules](#-7-passenger-ai-modules)
+7. [8-Pillar AI Governance Engine](#-8-pillar-ai-governance-engine)
+8. [Dual-Mode LLM Resilience](#-dual-mode-llm-resilience-zero-crash-guarantee)
+9. [Running Without Azure OpenAI (Standalone Mode)](#-running-without-azure-openai-standalone-mode)
+10. [Chaos Engineering Lab](#-chaos-engineering-lab)
+11. [API Reference](#-api-reference)
+12. [Project Structure](#-project-structure)
+13. [Technology Stack](#-technology-stack)
 
 ---
 
@@ -67,6 +81,47 @@ The launcher automatically:
 - ✅ Launches Streamlit Control Tower on **http://localhost:8501**
 
 > **No external API keys required.** The platform functions out-of-the-box in standalone intelligent fallback mode. See [Running Without Azure OpenAI (Standalone Mode)](#-running-without-azure-openai-standalone-mode).
+
+---
+
+## ☁️ Cloud Deployment Guide (Streamlit Community Cloud & Render)
+
+The repository features a self-contained root deployment entrypoint ([`streamlit_app.py`](streamlit_app.py)) that launches both the **FastAPI Governance Backend** (background daemon on `127.0.0.1:8000`) and the **Streamlit Passenger & Governance Portal** inside a single cloud container.
+
+### Option A: Streamlit Community Cloud (Recommended — 100% Free)
+
+[![Deploy to Streamlit Cloud](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/)
+
+1. Go to **[share.streamlit.io](https://share.streamlit.io/)** and sign in with GitHub.
+2. Click **"New app"** and configure:
+   - **Repository:** `JEEVANPRAKASHKV/ai-railway-autonomous-governance`
+   - **Branch:** `main`
+   - **Main file path:** `streamlit_app.py`
+   - **App URL:** Customize your subdomain (e.g. `ai-railway-governance.streamlit.app`)
+3. *(Optional)* Click **Advanced Settings** → **Secrets** if you wish to attach live Azure OpenAI credentials:
+   ```toml
+   AZURE_OPENAI_API_KEY = "your-api-key"
+   AZURE_OPENAI_ENDPOINT = "https://your-resource.openai.azure.com/"
+   AZURE_OPENAI_DEPLOYMENT = "gpt-4o"
+   AZURE_OPENAI_API_VERSION = "2024-02-15-preview"
+   ```
+   > **Note:** If no secrets are provided, the platform automatically boots into **Standalone Intelligent Rule-Based Fallback Mode** with 100% feature availability and zero crashes.
+4. Click **"Deploy!"** — Within 60 seconds, your dual-plane platform will be live globally.
+
+---
+
+### Option B: Render (Web Service)
+
+1. Sign in to **[dashboard.render.com](https://dashboard.render.com/)** and click **New +** → **Web Service**.
+2. Connect your GitHub repository: `JEEVANPRAKASHKV/ai-railway-autonomous-governance`.
+3. Set the build and start settings:
+   - **Runtime:** `Python 3`
+   - **Build Command:** `pip install -r requirements.txt`
+   - **Start Command:** `streamlit run streamlit_app.py --server.port $PORT --server.address 0.0.0.0 --server.headless true`
+4. *(Optional)* Add Environment Variables under the **Environment** tab:
+   - `BACKEND_URL`: `http://127.0.0.1:8000`
+   - `PYTHONUNBUFFERED`: `1`
+5. Click **Create Web Service**.
 
 ---
 

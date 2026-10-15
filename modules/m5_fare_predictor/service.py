@@ -128,6 +128,10 @@ class FarePredictorService:
             surge = 1.0 + (0.35 if days_to_dept < 5 else 0.15 if days_to_dept < 14 else 0.0)
             current_fare = round(base_fare * surge * season_factor, 2)
 
+        # Enforce Indian Railways Flexi-Fare Policy: Capped at 1.5x base fare unless Tatkal surcharge
+        if not request.tatkal_flag:
+            current_fare = min(current_fare, round(base_fare * 1.50, 2))
+
         surge_mult = round(current_fare / max(1.0, base_fare), 2)
         if surge_mult >= 1.4:
             demand_level = "Surge"
@@ -141,10 +145,10 @@ class FarePredictorService:
         # ── Build 30-Day Forecast Curve ───────────────────────────────────────
         curve: List[FareForecastPoint] = []
         min_curve_fare = float("inf")
-        best_day_before = 20
+        best_day_before = min(20, max(3, days_to_dept))
 
-        for d_ahead in range(30, -1, -2):
-            d_date = request.journey_date - timedelta(days=d_ahead)
+        for d_ahead in range(min(30, max(14, days_to_dept)), -1, -2):
+            d_date = max(b_date, request.journey_date - timedelta(days=d_ahead))
             d_demand = 1.0 + (0.45 if d_ahead <= 2 else 0.20 if d_ahead <= 7 else 0.0)
             d_feats = {
                 "base_fare": float(base_fare),
@@ -168,7 +172,10 @@ class FarePredictorService:
                 f_surge = 1.0 + (0.40 if d_ahead <= 2 else 0.18 if d_ahead <= 7 else 0.0)
                 f_pred = round(base_fare * f_surge * season_factor, 0)
 
-            if f_pred < min_curve_fare and d_ahead >= 7:
+            if not request.tatkal_flag:
+                f_pred = min(f_pred, round(base_fare * 1.50, 0))
+
+            if f_pred < min_curve_fare and d_ahead >= 3:
                 min_curve_fare = f_pred
                 best_day_before = d_ahead
 
@@ -183,8 +190,15 @@ class FarePredictorService:
                 )
             )
 
-        optimal_date = request.journey_date - timedelta(days=best_day_before)
-        optimal_window_str = f"{best_day_before - 3} to {best_day_before + 3} days before departure ({optimal_date.strftime('%d %b %Y')})"
+        if days_to_dept <= 0:
+            optimal_date = b_date
+            optimal_window_str = f"Immediate Booking Window (Departing Today: {optimal_date.strftime('%d %b %Y')})"
+            optimal_booking_days = 0
+        else:
+            lead = min(best_day_before, days_to_dept)
+            optimal_date = max(b_date, request.journey_date - timedelta(days=lead))
+            optimal_window_str = f"{lead} days before journey ({optimal_date.strftime('%d %b %Y')})"
+            optimal_booking_days = lead
 
         # ── Cost-Saving Alternatives ──────────────────────────────────────────
         savings: List[CostSavingAlternative] = []

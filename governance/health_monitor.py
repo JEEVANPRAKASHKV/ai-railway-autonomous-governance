@@ -281,6 +281,11 @@ class HealthMonitor:
             if module_id in self._modules:
                 self._modules[module_id] = ModuleStats(module_id=module_id)
 
+    def reset_all(self) -> None:
+        with self._lock:
+            for mid in list(self._modules.keys()):
+                self._modules[mid] = ModuleStats(module_id=mid)
+
 
 # ── Singleton export ──────────────────────────────────────────────────────────
 health_monitor = HealthMonitor()

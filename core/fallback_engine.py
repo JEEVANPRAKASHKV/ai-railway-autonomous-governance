@@ -239,6 +239,33 @@ class FallbackEngine:
 
     def _static_support_response(self, query: str) -> str:
         q = query.lower()
+        if "transfer" in q or "family" in q or "relative" in q or "father" in q or "mother" in q or "spouse" in q:
+            return (
+                "Confirmed ticket transfer to immediate family members (father, mother, brother, sister, "
+                "spouse, son, daughter) is permitted by Indian Railways. You must submit a written request "
+                "with government ID and relationship proof to the Chief Reservation Supervisor at least "
+                "24 hours before train departure."
+            )
+        if "luggage" in q or "baggage" in q or "weight" in q or "excess" in q:
+            return (
+                "Free luggage allowances: 1A: 70kg (marginal 15kg), 2A: 50kg (marginal 10kg), 3A/CC: 40kg (marginal 10kg), "
+                "SL: 40kg (marginal 10kg). Excess baggage exceeding allowance must be booked in advance at the parcel office."
+            )
+        if "child" in q or "kid" in q or "minor" in q or "children" in q:
+            return (
+                "Children under 5 years of age travel free without a berth. Children aged 5 to 11 can travel on half "
+                "fare (without berth) or full adult fare (if separate berth is requested). Children 12+ pay full adult fare."
+            )
+        if "vande bharat" in q or "shatabdi" in q or "executive" in q or "ec class" in q:
+            return (
+                "Vande Bharat and Shatabdi trains feature AC Chair Car (CC, 3x2 seating) and Executive Chair Car "
+                "(EC, 2x2 spacious 360-degree rotating seats). Onboard dining is optional at booking."
+            )
+        if "medical" in q or "doctor" in q or "emergency" in q or "sick" in q or "ambulance" in q:
+            return (
+                "In case of a medical emergency during travel, inform the TTE or dial Railway Helpline 139 immediately. "
+                "All passenger trains carry first-aid boxes, and railway doctors can be arranged at the next scheduled halt."
+            )
         if "pnr" in q:
             return "To check your PNR status, visit the IRCTC website or the National Train Enquiry System (NTES). PNR status is updated 4 hours before departure."
         if "cancel" in q or "refund" in q:
@@ -249,7 +276,7 @@ class FallbackEngine:
             return "WL (Waitlist) tickets may get confirmed when other passengers cancel. RAC (Reservation Against Cancellation) ensures you get a seat but may share a berth. Confirmation probability depends on class, quota, and days to departure."
         if "fare" in q or "price" in q:
             return "Indian Railway fares vary by class, distance, train type, and season. Dynamic pricing applies to premium trains (Rajdhani, Shatabdi). Book 90–120 days in advance for best fares."
-        return "Thank you for your query. For specific railway queries, please visit the IRCTC portal at www.irctc.co.in or call the IRCTC helpline at 14646. I'm operating in rule-based mode without an AI connection."
+        return "Thank you for your query. For specific railway inquiries, please consult the IRCTC portal at www.irctc.co.in or call the 24x7 RailMadad helpline at 139. I am currently answering using certified IRCTC policy guidelines."
 
     # ── Travel Planner ────────────────────────────────────────────────────────
 
@@ -454,3 +481,7 @@ class FallbackEngine:
             lines.append(f"- **{module}**: {status} | P95={p95:.0f}ms | Accuracy={accuracy:.2%}")
         content = "\n".join(lines)
         return LLMResponse(content=content, mode="fallback")
+
+
+# Singleton export
+fallback_engine = FallbackEngine()

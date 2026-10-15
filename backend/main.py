@@ -12,6 +12,11 @@ import os
 from contextlib import asynccontextmanager
 from typing import AsyncGenerator, Dict
 
+from dotenv import load_dotenv
+
+# Ensure live .env credentials (e.g. Azure OpenAI) are loaded with override
+load_dotenv(override=True)
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -28,13 +33,14 @@ from backend.routers import (
     ticket,
 )
 from core.config import settings
+from governance.telemetry_bus import telemetry_bus
 
 logger = logging.getLogger(__name__)
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
-    """Startup preflight check and shutdown cleanup hooks."""
+    """Startup preflight check, baseline seeding, and shutdown cleanup hooks."""
     logger.info("=" * 60)
     logger.info(f" Starting {settings.project_name if hasattr(settings, 'project_name') else 'AI Railway Platform'}")
     logger.info(f" Mode: {'Azure OpenAI GPT-4o-mini' if settings.llm_available else 'Intelligent Rule-Based Fallback'}")
@@ -45,6 +51,11 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     art_dir = settings.models_artifacts_dir
     models_found = [f for f in os.listdir(art_dir) if f.endswith(".pkl")] if os.path.exists(art_dir) else []
     logger.info(f" Pre-trained ML artifacts loaded: {len(models_found)} ({', '.join(models_found)})")
+
+    # Seed baseline telemetry if empty so governance dashboards are immediately rich
+    if len(telemetry_bus.get_recent(limit=5)) == 0:
+        seeded = telemetry_bus.seed_baseline(50)
+        logger.info(f" Cold-start mitigation: Seeded {seeded} baseline telemetry events.")
 
     yield
 

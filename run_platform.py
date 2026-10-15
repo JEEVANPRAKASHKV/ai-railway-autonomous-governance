@@ -21,6 +21,15 @@ import threading
 import time
 import logging
 
+if sys.platform == "win32":
+    try:
+        if sys.stdout and hasattr(sys.stdout, "reconfigure"):
+            sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+        if sys.stderr and hasattr(sys.stderr, "reconfigure"):
+            sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s │ %(levelname)s │ %(message)s",
@@ -45,7 +54,7 @@ BANNER = r"""
 REQUIRED_PACKAGES = [
     "fastapi", "uvicorn", "streamlit", "pydantic", "dotenv",
     "sklearn", "xgboost", "lightgbm", "pandas", "numpy", "shap",
-    "scipy", "plotly", "chromadb",
+    "scipy", "plotly",
 ]
 
 REQUIRED_MIN_PYTHON = (3, 10)

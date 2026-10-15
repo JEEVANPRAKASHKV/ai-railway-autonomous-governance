@@ -374,3 +374,34 @@ def get_report_history(n: int = Query(default=10, ge=1, le=50)) -> List[Dict[str
 def get_report(report_id: str) -> Dict[str, Any]:
     result = report_generator.load_report(report_id)
     return result or {"error": "Report not found", "report_id": report_id}
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Stage 4 — Platform Health Reset & Telemetry Seeder
+# ──────────────────────────────────────────────────────────────────────────────
+
+@router.post("/supervisor/reset", summary="Reset platform to healthy state")
+def reset_platform(bus: TelemetryBus = Depends(get_telemetry_bus)) -> Dict[str, Any]:
+    resolved_alerts = bus.resolve_all_alerts()
+    resolved_incidents = rca_engine.resolve_all_incidents()
+    health_monitor.reset_all()
+    return {
+        "success": True,
+        "message": "Platform state successfully reset to Healthy.",
+        "resolved_alerts": resolved_alerts,
+        "resolved_incidents": resolved_incidents,
+        "platform_status": "HEALTHY",
+    }
+
+
+@router.post("/telemetry/seed", summary="Seed 50 baseline telemetry events across M1-M7")
+def seed_telemetry(
+    count: int = Query(default=50, ge=10, le=200),
+    bus: TelemetryBus = Depends(get_telemetry_bus),
+) -> Dict[str, Any]:
+    seeded = bus.seed_baseline(count=count)
+    return {
+        "success": True,
+        "seeded_count": seeded,
+        "message": f"Successfully seeded {seeded} realistic baseline telemetry events across M1–M7.",
+    }
