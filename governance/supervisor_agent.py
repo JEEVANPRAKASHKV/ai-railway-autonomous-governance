@@ -325,6 +325,7 @@ class SupervisorAgent:
         """Return comprehensive state dict for the Streamlit Control Tower."""
         health = health_monitor.get_platform_health()
         drift_summary = drift_detector.get_summary()
+        bias_summary = bias_auditor.get_summary()
         rca_summary = rca_engine.get_summary()
         lifecycle_status = lifecycle_manager.get_platform_status()
         hallucination_stats = hallucination_monitor.get_platform_stats()
@@ -336,6 +337,7 @@ class SupervisorAgent:
             "supervisor_running": self._running,
             "platform_health": health,
             "drift_summary": drift_summary,
+            "bias_summary": bias_summary,
             "rca_summary": rca_summary,
             "lifecycle": lifecycle_status,
             "hallucination_stats": hallucination_stats,

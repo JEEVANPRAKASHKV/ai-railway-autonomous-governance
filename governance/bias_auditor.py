@@ -274,6 +274,19 @@ class BiasAuditor:
             recs.append("Investigate training data quality for under-represented groups.")
         return " | ".join(recs) if recs else "No action required."
 
+    def get_summary(self) -> dict:
+        with self._lock:
+            modules_audited = len(self._observations)
+            total_adverse = len(self._audit_history)
+            recent_flags = [h.get("flags", []) for h in self._audit_history[-5:]]
+            flat_flags = [item for sublist in recent_flags for item in sublist]
+            return {
+                "modules_monitored": modules_audited,
+                "adverse_impact_count": total_adverse,
+                "recent_flags_count": len(flat_flags),
+                "is_fair": total_adverse == 0,
+            }
+
     def get_audit_history(self, n: int = 20) -> List[dict]:
         with self._lock:
             return self._audit_history[-n:]

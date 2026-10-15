@@ -551,15 +551,16 @@ if page == "🏠 Executive Overview":
             """
         )
 
-    dashboard = api_get("/governance/supervisor/dashboard")
+    dashboard = api_get("/governance/supervisor/dashboard") or {}
+    gov_score = dashboard.get("governance_score", 0)
+    health = dashboard.get("platform_health", {})
+    rca_sum = dashboard.get("rca_summary", {})
+    lifecycle = dashboard.get("lifecycle", {})
+    drift_sum = dashboard.get("drift_summary", {})
+    hall_stats = dashboard.get("hallucination_stats", {})
+    bias_summary = dashboard.get("bias_summary", {})
 
     if dashboard:
-        gov_score = dashboard.get("governance_score", 0)
-        health = dashboard.get("platform_health", {})
-        rca_sum = dashboard.get("rca_summary", {})
-        lifecycle = dashboard.get("lifecycle", {})
-        drift_sum = dashboard.get("drift_summary", {})
-        hall_stats = dashboard.get("hallucination_stats", {})
 
         # ── KPI Row ───────────────────────────────────────────────────────────
         col1, col2, col3, col4, col5 = st.columns(5)
