@@ -14,7 +14,7 @@ from pydantic import Field
 class PlatformSettings(BaseSettings):
     # ── Google Gemini ────────────────────────────────────────────────────────
     gemini_api_key: str = Field(default="", alias="GEMINI_API_KEY")
-    gemini_model: str = Field(default="gemini-1.5-flash", alias="GEMINI_MODEL")
+    gemini_model: str = Field(default="gemini-3.5-flash-lite", alias="GEMINI_MODEL")
 
     # ── Azure OpenAI ────────────────────────────────────────────────────────
     azure_openai_endpoint: str = Field(default="", alias="AZURE_OPENAI_ENDPOINT")
@@ -55,7 +55,7 @@ class PlatformSettings(BaseSettings):
     def gemini_available(self) -> bool:
         """Returns True if GEMINI_API_KEY is configured and non-placeholder."""
         key = self.gemini_api_key.strip()
-        return bool(key and not key.startswith("your-") and not key.startswith("AIzaSyYourKey"))
+        return bool(len(key) > 20 and not key.startswith("your-") and not key.startswith("AIzaSyYourKey"))
 
     @property
     def azure_available(self) -> bool:

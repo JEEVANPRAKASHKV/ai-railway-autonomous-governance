@@ -4,8 +4,10 @@ core/llm_router.py
 Tri-mode LLM router — Golden Rule 2: Zero-Crash Guarantee.
 
 Transparently routes LLM calls to:
-  - PRIMARY:   Google Gemini 1.5 Flash (when GEMINI_API_KEY is configured)
-  - SECONDARY: Azure OpenAI GPT-4o-mini (when Azure credentials are configured)
+  - PRIMARY:   Google Gemini via the REST API (when GEMINI_API_KEY is configured). A model chain is tried in
+               order (configured model -> current Flash-Lite -> current Flash), so a retired or rate-limited
+               model never takes the platform down.
+  - SECONDARY: Azure OpenAI (optional, only when Azure credentials are configured)
   - FALLBACK:  Intelligent rule-based FallbackEngine (always available, 0 external deps)
 
 Usage:
@@ -17,14 +19,23 @@ Usage:
 from __future__ import annotations
 
 import logging
+import threading
 import time
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Tuple
+
+import requests
 
 from core.config import settings
 from core.schemas import LLMResponse
 from core.fallback_engine import FallbackEngine
 
 logger = logging.getLogger(__name__)
+
+GEMINI_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
+# Model families Google has retired — configuring one of these must not cost a failed call on every request.
+GEMINI_RETIRED_PREFIXES = ("gemini-1.0", "gemini-1.5", "gemini-pro", "gemini-2.0")
+GEMINI_DEFAULT_CHAIN = ("gemini-3.5-flash-lite", "gemini-3.1-flash-lite", "gemini-3.8-flash")
+GEMINI_TIMEOUT_S = 12.0
 
 
 class LLMRouter:
@@ -41,6 +52,13 @@ class LLMRouter:
         self._fallback = FallbackEngine()
         self._client: Optional[Any] = None
         self._gemini_client: Optional[Any] = None
+        self._gemini_chain: List[str] = []
+        self._cooldown: Dict[str, float] = {}
+        self._lock = threading.Lock()
+        self._stats: Dict[str, Any] = {
+            "requests": 0, "gemini_ok": 0, "fallback_used": 0,
+            "last_model": None, "last_error": None, "last_latency_ms": None,
+        }
 
         if self._mode == "gemini":
             self._init_gemini_client()
@@ -56,19 +74,16 @@ class LLMRouter:
     # ── Initialization ────────────────────────────────────────────────────────
 
     def _init_gemini_client(self) -> None:
-        try:
-            import google.generativeai as genai
-            genai.configure(api_key=settings.gemini_api_key)
-            self._gemini_client = genai
-            logger.info(f"[LLMRouter] Google Gemini initialized successfully with model '{settings.gemini_model}'.")
-        except Exception as e:
-            logger.warning(f"[LLMRouter] Gemini init failed: {e}. Checking Azure / falling back.")
-            if settings.azure_available:
-                self._mode = "azure_openai"
-                self._init_azure_client()
-            else:
-                self._mode = "fallback"
-                self._gemini_client = None
+        """Gemini is called over plain HTTPS (no SDK to break); this just builds the model chain."""
+        chain: List[str] = []
+        for m in [settings.gemini_model.strip(), *GEMINI_DEFAULT_CHAIN]:
+            m = m.replace("models/", "")
+            if m and m not in chain and not m.startswith(GEMINI_RETIRED_PREFIXES):
+                chain.append(m)
+        self._gemini_chain = chain
+        self._gemini_client = True  # truthy flag: REST client is ready
+        self._cooldown: Dict[str, float] = {}
+        logger.info(f"[LLMRouter] Gemini ready. Model chain: {' -> '.join(chain)}")
 
     def _init_azure_client(self) -> None:
         try:
@@ -137,7 +152,89 @@ class LLMRouter:
         prompt = "\n".join(f"{m['role'].upper()}: {m['content']}" for m in messages)
         return self._call_fallback(prompt)
 
-    # ── Google Gemini Call ────────────────────────────────────────────────────
+    # ── Google Gemini (REST) ──────────────────────────────────────────────────
+
+    def _gemini_generate(
+        self,
+        contents: List[Dict[str, Any]],
+        system_prompt: Optional[str],
+        temperature: float,
+        max_tokens: int,
+    ) -> Tuple[str, str, int]:
+        """Try each model in the chain; return (text, model, tokens). Raises RuntimeError if all fail."""
+        errors: List[str] = []
+        now = time.time()
+        for model in self._gemini_chain:
+            if self._cooldown.get(model, 0) > now:
+                continue
+            for with_thinking_off in ((True, False) if not model.endswith("lite") else (False,)):
+                gen_cfg: Dict[str, Any] = {"temperature": temperature, "maxOutputTokens": max(max_tokens, 512)}
+                if with_thinking_off:
+                    gen_cfg["thinkingConfig"] = {"thinkingBudget": 0}  # keep latency low, keep the budget for the answer
+                body: Dict[str, Any] = {"contents": contents, "generationConfig": gen_cfg}
+                if system_prompt:
+                    body["systemInstruction"] = {"parts": [{"text": system_prompt}]}
+                try:
+                    r = requests.post(
+                        GEMINI_ENDPOINT.format(model=model),
+                        headers={"x-goog-api-key": settings.gemini_api_key.strip(), "content-type": "application/json"},
+                        json=body,
+                        timeout=GEMINI_TIMEOUT_S,
+                    )
+                except requests.RequestException as e:
+                    errors.append(f"{model}: network {type(e).__name__}")
+                    self._cooldown[model] = time.time() + 15
+                    break
+                if r.status_code == 200:
+                    data = r.json()
+                    parts = (data.get("candidates") or [{}])[0].get("content", {}).get("parts", [])
+                    text = "".join(p.get("text", "") for p in parts if not p.get("thought")).strip()
+                    if text:
+                        tokens = int((data.get("usageMetadata") or {}).get("totalTokenCount", 0) or 0)
+                        return text, model, tokens
+                    errors.append(f"{model}: empty response")
+                    break
+                msg = ""
+                try:
+                    msg = r.json().get("error", {}).get("message", "")[:160]
+                except Exception:
+                    pass
+                if r.status_code == 400 and with_thinking_off:
+                    continue  # this model rejects the thinking override — retry without it
+                errors.append(f"{model}: HTTP {r.status_code} {msg}".strip())
+                if r.status_code == 404:
+                    self._cooldown[model] = time.time() + 3600      # retired / unavailable
+                elif r.status_code == 429:
+                    self._cooldown[model] = time.time() + 60        # rate limited (free tier) — rotate model
+                elif r.status_code in (401, 403):
+                    for m in self._gemini_chain:
+                        self._cooldown[m] = time.time() + 300       # bad key: don't hammer
+                else:
+                    self._cooldown[model] = time.time() + 20
+                break
+        raise RuntimeError("; ".join(errors) or "all Gemini models cooling down")
+
+    def _record(self, ok: bool, model: Optional[str] = None, error: Optional[str] = None, latency_ms: Optional[float] = None) -> None:
+        with self._lock:
+            self._stats["requests"] += 1
+            if ok:
+                self._stats["gemini_ok"] += 1
+                self._stats["last_model"] = model
+                self._stats["last_error"] = None
+            else:
+                self._stats["fallback_used"] += 1
+                if not (error or "").startswith("all Gemini models cooling") or not self._stats["last_error"]:
+                    self._stats["last_error"] = error
+            if latency_ms is not None:
+                self._stats["last_latency_ms"] = round(latency_ms, 1)
+
+    def status(self) -> Dict[str, Any]:
+        """Operational view of the LLM layer (used by /health and the UI)."""
+        with self._lock:
+            out = dict(self._stats)
+        out.update({"mode": self._mode, "model_chain": list(self._gemini_chain),
+                    "cooling_down": [m for m, t in self._cooldown.items() if t > time.time()]})
+        return out
 
     def _call_gemini(
         self,
@@ -149,33 +246,15 @@ class LLMRouter:
     ) -> LLMResponse:
         t0 = time.perf_counter()
         try:
-            genai = self._gemini_client
-            generation_config = genai.types.GenerationConfig(
-                temperature=temperature,
-                max_output_tokens=max_tokens,
+            text, model, tokens = self._gemini_generate(
+                [{"role": "user", "parts": [{"text": prompt}]}], system_prompt, temperature, max_tokens
             )
-            model = genai.GenerativeModel(
-                model_name=settings.gemini_model,
-                system_instruction=system_prompt if system_prompt else None,
-                generation_config=generation_config,
-            )
-            response = model.generate_content(prompt)
             elapsed = (time.perf_counter() - t0) * 1000
-
-            content = response.text if hasattr(response, "text") and response.text else ""
-            tokens_used = 0
-            if hasattr(response, "usage_metadata") and response.usage_metadata:
-                tokens_used = getattr(response.usage_metadata, "total_token_count", 0)
-
-            return LLMResponse(
-                content=content,
-                mode="gemini",
-                model=settings.gemini_model,
-                tokens_used=tokens_used,
-                latency_ms=elapsed,
-            )
+            self._record(True, model, latency_ms=elapsed)
+            return LLMResponse(content=text, mode="gemini", model=model, tokens_used=tokens, latency_ms=elapsed)
         except Exception as e:
-            logger.error(f"[LLMRouter] Gemini call failed: {e}. Switching to fallback for this request.")
+            logger.warning(f"[LLMRouter] Gemini unavailable ({e}). Using rule-based fallback for this request.")
+            self._record(False, error=str(e)[:300])
             return self._call_fallback(prompt, error=f"Gemini: {e}", **kwargs)
 
     def _call_gemini_chat(
@@ -185,54 +264,22 @@ class LLMRouter:
         max_tokens: int,
     ) -> LLMResponse:
         t0 = time.perf_counter()
-        try:
-            genai = self._gemini_client
-            system_prompt = None
-            history = []
-            last_user_message = ""
-
-            for m in messages:
-                role, content = m["role"], m["content"]
-                if role == "system":
-                    system_prompt = content
-                elif role == "user":
-                    history.append({"role": "user", "parts": [content]})
-                    last_user_message = content
-                elif role == "assistant":
-                    history.append({"role": "model", "parts": [content]})
-
-            generation_config = genai.types.GenerationConfig(
-                temperature=temperature,
-                max_output_tokens=max_tokens,
-            )
-            model = genai.GenerativeModel(
-                model_name=settings.gemini_model,
-                system_instruction=system_prompt if system_prompt else None,
-                generation_config=generation_config,
-            )
-
-            if history and history[-1]["role"] == "user":
-                chat_session = model.start_chat(history=history[:-1])
-                response = chat_session.send_message(last_user_message)
+        system_prompt = None
+        contents: List[Dict[str, Any]] = []
+        for m in messages:
+            role, content = m["role"], m["content"]
+            if role == "system":
+                system_prompt = content
             else:
-                combined_prompt = "\n".join(f"{m['role'].upper()}: {m['content']}" for m in messages)
-                response = model.generate_content(combined_prompt)
-
+                contents.append({"role": "model" if role == "assistant" else "user", "parts": [{"text": content}]})
+        try:
+            text, model, tokens = self._gemini_generate(contents, system_prompt, temperature, max_tokens)
             elapsed = (time.perf_counter() - t0) * 1000
-            content = response.text if hasattr(response, "text") and response.text else ""
-            tokens_used = 0
-            if hasattr(response, "usage_metadata") and response.usage_metadata:
-                tokens_used = getattr(response.usage_metadata, "total_token_count", 0)
-
-            return LLMResponse(
-                content=content,
-                mode="gemini",
-                model=settings.gemini_model,
-                tokens_used=tokens_used,
-                latency_ms=elapsed,
-            )
+            self._record(True, model, latency_ms=elapsed)
+            return LLMResponse(content=text, mode="gemini", model=model, tokens_used=tokens, latency_ms=elapsed)
         except Exception as e:
-            logger.error(f"[LLMRouter] Gemini chat failed: {e}. Switching to fallback.")
+            logger.warning(f"[LLMRouter] Gemini chat unavailable ({e}). Using fallback.")
+            self._record(False, error=str(e)[:300])
             prompt = "\n".join(f"{m['role'].upper()}: {m['content']}" for m in messages)
             return self._call_fallback(prompt, error=f"Gemini: {e}")
 
@@ -326,10 +373,10 @@ class LLMRouter:
             content = response.content
 
         if error:
-            content += f"\n\n*[Note: Azure OpenAI unavailable ({error}). Using rule-based fallback.]*"
+            logger.info(f"[LLMRouter] fallback engaged: {error}")  # internal detail stays in logs, not in the passenger's answer
 
         elapsed = (time.perf_counter() - t0) * 1000
-        return LLMResponse(content=content, mode="fallback", latency_ms=elapsed)
+        return LLMResponse(content=content, mode="fallback", latency_ms=elapsed, error=error)
 
     def _format_itinerary(self, result: Dict[str, Any]) -> str:
         lines = [f"**Travel Plan (Rule-Based Mode)**\n\nExtracted Constraints: {result.get('extracted_constraints', {})}\n"]

@@ -5,7 +5,7 @@
 # --- Core Framework ---
 fastapi>=0.111.0
 uvicorn[standard]>=0.29.0
-streamlit>=1.35.0
+streamlit>=1.40.0
 pydantic>=2.7.1
 pydantic-settings>=2.2.1
 python-dotenv>=1.0.1
@@ -22,7 +22,6 @@ joblib>=1.4.2
 imbalanced-learn>=0.12.3
 
 # --- LLM & Agentic ---
-google-generativeai>=0.7.0
 langchain>=0.2.5
 langgraph>=0.1.1
 langchain-openai>=0.1.8

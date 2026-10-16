@@ -218,8 +218,12 @@ class FallbackEngine:
         _load_faq()
         t0 = time.perf_counter()
 
-        if _tfidf_vectorizer is None or not _faq_questions:
-            answer = self._static_support_response(query)
+        curated = self._static_support_response(query)
+        has_curated = not curated.startswith("Thank you for your query. For specific railway inquiries")
+        if has_curated:
+            answer = curated
+        elif _tfidf_vectorizer is None or not _faq_questions:
+            answer = curated
         else:
             try:
                 from sklearn.metrics.pairwise import cosine_similarity
@@ -239,6 +243,30 @@ class FallbackEngine:
 
     def _static_support_response(self, query: str) -> str:
         q = query.lower()
+        # Cancelling a CONFIRMED ticket → charges table (not the WL auto-refund rule)
+        if ("cancel" in q or "charge" in q or "cancellation" in q) and not any(
+            w in q for w in ("tatkal", "waitlist", "waiting list", "wl ", "rac", "not confirmed")
+        ) and any(w in q for w in ("confirmed", "charge", "fee", "3a", "2a", "1a", "sl", "sleeper", "hours", "days", "before departure")):
+            return (
+                "Cancelling a confirmed (non-Tatkal) ticket: more than 48 hours before departure the flat fee is "
+                "₹240 (1A/EC), ₹200 (2A/CC), ₹180 (3A), ₹120 (SL) or ₹60 (2S). From 12–48 hours before departure "
+                "25% of the fare is charged, from 4–12 hours 50%, and there is no refund within 4 hours of departure. "
+                "Cancel before chart preparation."
+            )
+        # Train cancelled / badly delayed by Railways → automatic full refund
+        if re.search(r"\btrain\b.{0,25}\bcancel|cancelled train|canceled train|train (is |was )?(very )?(late|delayed)", q) and re.search(r"refund|money|paisa|wapas", q):
+            return (
+                "If Railways cancels your train, you get a full refund automatically with no cancellation charges — it is credited "
+                "to the original payment method within about 7 days. If the train runs more than 3 hours late you can also cancel "
+                "for a full refund (file a TDR within 72 hours on irctc.co.in for a partial journey not performed)."
+            )
+        # Waitlisted ticket that did not confirm by chart preparation → automatic full refund
+        if (re.search(r"\b(waitlist\w*|waiting list|wl)\b", q) or "not confirmed" in q) and re.search(r"refund|chart|cancel|money|paisa|wapas", q):
+            return (
+                "If your waitlisted (WL) ticket is not confirmed by the time the chart is prepared, the ticket is cancelled "
+                "automatically and the full fare is refunded to your original payment method within about 5 business days — "
+                "no action needed."
+            )
         if "transfer" in q or "family" in q or "relative" in q or "father" in q or "mother" in q or "spouse" in q:
             return (
                 "Confirmed ticket transfer to immediate family members (father, mother, brother, sister, "

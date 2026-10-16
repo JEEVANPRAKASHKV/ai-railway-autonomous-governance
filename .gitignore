@@ -101,3 +101,10 @@ chroma_db/
 logs/
 *.log
 governance/reports/RPT-*
+
+# runtime state produced by autonomous retraining
+models/artifacts/challengers/
+models/registry/lifecycle_state.json
+
+# local scratch
+_to_delete/

@@ -81,10 +81,12 @@ class TravelPlannerAgent:
 
         # Match travel date
         target_date = date.today() + timedelta(days=7)
-        if "tomorrow" in low:
-            target_date = date.today() + timedelta(days=1)
-        elif "day after tomorrow" in low:
+        if "day after tomorrow" in low:
             target_date = date.today() + timedelta(days=2)
+        elif "tomorrow" in low:
+            target_date = date.today() + timedelta(days=1)
+        elif "today" in low:
+            target_date = date.today()
         elif "next week" in low:
             target_date = date.today() + timedelta(days=7)
         else:
@@ -129,6 +131,7 @@ class TravelPlannerAgent:
             "preferred_class": preferred_class,
             "travel_date": target_date.isoformat(),
             "arrival_before": arrival_before,
+            "travel_date_obj": target_date,
         }
 
     @governance_hook("m4_travel_planner", endpoint="/api/v1/agent/plan")
@@ -162,6 +165,8 @@ class TravelPlannerAgent:
             "parsed_destination": constraints["destination"],
             "budget_cap": constraints["budget"],
             "preferred_class": constraints["preferred_class"],
+            "travel_date": constraints["travel_date"],
+            "arrival_before": constraints.get("arrival_before"),
         })
 
         # ── Step 2: Route Search ──────────────────────────────────────────────
@@ -176,9 +181,10 @@ class TravelPlannerAgent:
         itineraries: List[PlannedItineraryOption] = []
         travel_class = constraints["preferred_class"]
 
+        days_ahead = max(1, (constraints["travel_date_obj"] - date.today()).days)
         for i, train in enumerate(candidates[:4]):
             fare = self.fare_tool.run(train, travel_class=travel_class)
-            wl_prob = self.wl_tool.run(current_wl=10 + i * 5, days_ahead=12, travel_class=travel_class)
+            wl_prob = self.wl_tool.run(current_wl=10 + i * 5, days_ahead=days_ahead, travel_class=travel_class)
             pred_delay = self.delay_tool.run(
                 train_number=str(train.get("train_number")),
                 station_code=constraints["destination"],
@@ -204,8 +210,11 @@ class TravelPlannerAgent:
 
             arr_cutoff = constraints.get("arrival_before")
             arr_time = str(train.get("arrival_time", "22:30"))
+            dur_h = float(train.get("duration_hours", 14.5) or 0)
             if arr_cutoff:
-                if arr_time <= arr_cutoff:
+                if dur_h > 24:
+                    cons.append(f"Multi-day journey ({dur_h:.0f} h) — arrival cutoff {arr_cutoff} not guaranteed")
+                elif arr_time <= arr_cutoff:
                     pros.append(f"Meets arrival cutoff ({arr_time} ≤ {arr_cutoff})")
                 else:
                     cons.append(f"Arrives at {arr_time} (after requested {arr_cutoff})")

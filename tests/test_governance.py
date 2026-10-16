@@ -158,3 +158,28 @@ def test_pillar8_agentic_supervisor():
     )
     assert chaos_res is not None
     assert chaos_res.get("success") is True
+
+
+def test_rca_ingest_is_idempotent_and_folds_repeats():
+    """The same event re-polled by the supervisor must not create duplicate incidents."""
+    ev = {"event_id": "evt-dedupe-1", "module_id": "m_dedupe_test", "event_type": "SLA_BREACH",
+          "timestamp": "2026-10-16T00:00:00Z", "latency_ms": 9000}
+    first = rca_engine.ingest_event(ev)
+    assert first is not None
+    assert rca_engine.ingest_event(ev) is None  # exact replay ignored
+    ev2 = dict(ev, event_id="evt-dedupe-2")
+    assert rca_engine.ingest_event(ev2) == first  # repeat fault folds into the open incident
+    open_for_module = [i for i in rca_engine.get_open_incidents() if i.get("module_id") == "m_dedupe_test"]
+    assert len(open_for_module) == 1
+
+
+def test_lifecycle_retrain_rule_based_module_is_not_applicable():
+    """Rule-based services have no trained weights, so retraining is reported honestly as not applicable."""
+    res = lifecycle_manager.retrain("m6_support_assistant")
+    assert res["success"] is True
+    assert res["outcome"] == "not_applicable"
+
+
+def test_lifecycle_promote_without_challenger_fails_cleanly():
+    res = lifecycle_manager.promote_challenger("model_that_does_not_exist")
+    assert res["success"] is False

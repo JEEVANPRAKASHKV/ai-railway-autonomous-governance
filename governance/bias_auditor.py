@@ -291,6 +291,11 @@ class BiasAuditor:
         with self._lock:
             return self._audit_history[-n:]
 
+    def reset_all(self) -> None:
+        with self._lock:
+            self._observations.clear()
+            self._audit_history.clear()
+
     def reset_module(self, module_id: str) -> None:
         with self._lock:
             if module_id in self._observations:

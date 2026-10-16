@@ -168,15 +168,16 @@ class SupervisorAgent:
             if dr.get("overall_drift_detected"):
                 lifecycle_manager.queue_retraining(dr["model_id"])
                 retrain_res = lifecycle_manager.execute_retraining(dr["model_id"])
-                self._log_action(
-                    GovernanceAction(
-                        action_type="AUTONOMOUS_RETRAIN_DEPLOY",
-                        module_id=dr["model_id"],
-                        trigger="DRIFT_DETECTED",
-                        payload=retrain_res,
-                        executor="supervisor_auto",
+                if retrain_res.get("started"):
+                    self._log_action(
+                        GovernanceAction(
+                            action_type="AUTONOMOUS_RETRAIN",
+                            module_id=dr["model_id"],
+                            trigger="DRIFT_DETECTED",
+                            payload=retrain_res,
+                            executor="supervisor_auto",
+                        )
                     )
-                )
 
         # 5. Compute governance score
         self._update_governance_score()
@@ -191,8 +192,11 @@ class SupervisorAgent:
         score -= min(error_rate * 2, 20)
 
         open_incidents = rca_engine.get_open_incidents()
-        score -= len([i for i in open_incidents if i.get("priority") == "CRITICAL"]) * 10
-        score -= len([i for i in open_incidents if i.get("priority") == "HIGH"]) * 5
+        n_crit = len([i for i in open_incidents if i.get("priority") == "CRITICAL"])
+        n_high = len([i for i in open_incidents if i.get("priority") == "HIGH"])
+        n_med = len([i for i in open_incidents if i.get("priority") == "MEDIUM"])
+        # Capped so a burst of incidents degrades the score without flat-lining it.
+        score -= min(n_crit * 10, 35) + min(n_high * 5, 15) + min(n_med * 2, 6)
 
         lifecycle_st = lifecycle_manager.get_platform_status()
         score -= len(lifecycle_st.get("retraining_queue", [])) * 3

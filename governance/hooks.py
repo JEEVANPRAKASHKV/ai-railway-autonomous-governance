@@ -36,6 +36,25 @@ logger = logging.getLogger(__name__)
 _data_quality_gate: Optional[Any] = None
 
 
+
+# Request-field → baseline-feature aliases used by live drift monitoring
+_FEATURE_ALIASES = {
+    "current_wl_number": "initial_wl_number",
+    "congestion_index": "congestion_at_station",
+}
+
+# Request fields treated as protected attributes by the fairness auditor
+_PROTECTED_FIELDS = {
+    "seniority_flag":   ("age_group", lambda v: "senior_60plus" if v else "under_60"),
+    "disability_flag":  ("disability_status", lambda v: "divyangjan" if v else "none"),
+    "quota":            ("quota", str),
+    "journey_class":    ("travel_class", str),
+    "preferred_class":  ("travel_class", str),
+    "persona":          ("traveller_persona", str),
+    "passenger_gender": ("gender", str),
+    "gender":           ("gender", str),
+}
+
 def _get_quality_gate():
     global _data_quality_gate
     if _data_quality_gate is None:
@@ -130,6 +149,13 @@ def governance_hook(module_name: str, endpoint: str = ""):
                                 confidence = float(val)
                             break
 
+                    # Recommender returns a ranked list rather than a single score
+                    if confidence is None and getattr(result, "recommendations", None):
+                        try:
+                            confidence = float(result.recommendations[0].composite_score)
+                        except Exception:
+                            pass
+
                     if hasattr(result, "bias_flag"):
                         bias_flag = bool(getattr(result, "bias_flag"))
                     if hasattr(result, "drift_detected"):
@@ -175,6 +201,17 @@ def governance_hook(module_name: str, endpoint: str = ""):
                         k: float(v) for k, v in payload.items()
                         if isinstance(v, (int, float)) and not isinstance(v, bool)
                     }
+                    # Map request field names onto the feature names the baselines were trained on
+                    for src, dst in _FEATURE_ALIASES.items():
+                        if src in num_features:
+                            num_features[dst] = num_features[src]
+                    jd, bd = payload.get("journey_date"), payload.get("booking_date")
+                    if jd is not None and "days_to_departure" not in num_features:
+                        try:
+                            from datetime import date as _date
+                            num_features["days_to_departure"] = float(max(0, (jd - (bd or _date.today())).days))
+                        except Exception:
+                            pass
                     if num_features:
                         drift_detector.observe(
                             model_id=module_name,
@@ -186,11 +223,10 @@ def governance_hook(module_name: str, endpoint: str = ""):
 
                 try:
                     from governance.bias_auditor import bias_auditor
-                    prot_keys = {"gender", "passenger_gender", "travel_class", "booking_method", "city_tier"}
-                    matched_prot = {
-                        k.replace("passenger_", ""): str(v)
-                        for k, v in payload.items() if k in prot_keys or f"passenger_{k}" in prot_keys
-                    }
+                    matched_prot = {}
+                    for key, (attr, fn) in _PROTECTED_FIELDS.items():
+                        if key in payload and payload[key] is not None:
+                            matched_prot[attr] = fn(payload[key])
                     if matched_prot and confidence is not None:
                         bias_auditor.observe(
                             module_id=module_name,

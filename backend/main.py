@@ -10,7 +10,7 @@ from __future__ import annotations
 import logging
 import os
 from contextlib import asynccontextmanager
-from typing import AsyncGenerator, Dict
+from typing import Any, AsyncGenerator, Dict
 
 from dotenv import load_dotenv
 
@@ -124,6 +124,16 @@ def read_root() -> Dict[str, str]:
     }
 
 
+def _llm_status() -> Dict[str, Any]:
+    try:
+        from core.llm_router import llm_router
+        st = llm_router.status()
+        st.pop("model_chain", None)
+        return st
+    except Exception:
+        return {}
+
+
 @app.get("/api/health", summary="Comprehensive subsystem health check")
 @app.get("/health", summary="Health check alias for monitoring tools")
 def health_check() -> JSONResponse:
@@ -139,6 +149,7 @@ def health_check() -> JSONResponse:
             "models_loaded": models_ready,
             "synthetic_data_ready": data_ready,
             "llm_mode": settings.llm_mode,
+            "llm": _llm_status(),
             "port": settings.fastapi_port,
         },
     )

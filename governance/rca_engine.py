@@ -154,6 +154,8 @@ class Incident:
         self.remediation: str = ""
         self.priority: str = "MEDIUM"
         self.resolved: bool = False
+        self.occurrences: int = 1
+        self.last_seen = self.timestamp
 
     def to_dict(self) -> dict:
         return {
@@ -168,6 +170,8 @@ class Incident:
             "five_whys": self.five_whys,
             "remediation_playbook": self.remediation,
             "trigger_payload": self.trigger_payload,
+            "occurrences": self.occurrences,
+            "last_seen": self.last_seen.isoformat(),
         }
 
 
@@ -187,6 +191,8 @@ class RCAEngine:
         self._incidents: Dict[str, Incident] = {}
         self._incident_history: deque = deque(maxlen=200)
         self._event_buffer: deque = deque(maxlen=2000)
+        self._seen_keys: set = set()
+        self._seen_order: deque = deque(maxlen=5000)
 
     def ingest_event(self, event: dict) -> Optional[str]:
         """
@@ -194,9 +200,28 @@ class RCAEngine:
         Returns incident_id if an incident was created, else None.
         """
         with self._lock:
+            # Idempotent ingestion: the supervisor re-polls the same recent events every
+            # cycle, so an event must only ever be processed once.
+            key = event.get("event_id") or (
+                event.get("module_id"), event.get("event_type"), str(event.get("timestamp"))
+            )
+            if key in self._seen_keys:
+                return None
+            if len(self._seen_order) == self._seen_order.maxlen:
+                self._seen_keys.discard(self._seen_order[0])
+            self._seen_order.append(key)
+            self._seen_keys.add(key)
+
             self._event_buffer.append(event)
             event_type = event.get("event_type", "")
             if event_type in CRITICAL_EVENT_TYPES:
+                # Fold repeats of the same fault on the same module into one open incident.
+                for inc in self._incidents.values():
+                    if (not inc.resolved and inc.module_id == event.get("module_id")
+                            and inc.primary_event_type == event_type):
+                        inc.occurrences += 1
+                        inc.last_seen = datetime.now(timezone.utc)
+                        return inc.incident_id
                 return self._create_incident(event)
             return None
 

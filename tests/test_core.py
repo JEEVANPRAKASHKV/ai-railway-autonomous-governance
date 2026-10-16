@@ -23,9 +23,14 @@ def test_platform_settings():
     assert settings.streamlit_port == 8501
 
 
-def test_llm_router_fallback():
+def test_llm_router_fallback(monkeypatch):
     """Verify LLMRouter functions in fallback mode without exceptions."""
-    resp = llm_router.complete("How do I cancel my Tatkal ticket?")
+    from core.llm_router import LLMRouter
+    from core.config import settings
+    monkeypatch.setattr(settings, "gemini_api_key", "")
+    monkeypatch.setattr(settings, "azure_openai_key", "")
+    router = LLMRouter()
+    resp = router.complete("How do I cancel my Tatkal ticket?")
     assert resp.content is not None
     assert len(resp.content) > 0
     assert resp.mode == "fallback"
@@ -82,3 +87,49 @@ def test_model_registry_json():
     with open(registry_path, "r", encoding="utf-8") as f:
         data = json.load(f)
     assert "models" in data or isinstance(data, list)
+
+
+# ── Gemini REST router (no network: requests.post is stubbed) ─────────────────
+
+class _FakeResp:
+    def __init__(self, status, payload):
+        self.status_code, self._p = status, payload
+
+    def json(self):
+        return self._p
+
+
+def _router_with_chain(monkeypatch, handler):
+    from core import llm_router as lr
+    monkeypatch.setattr(lr.settings, "gemini_api_key", "test-key-" + "x" * 30)
+    monkeypatch.setattr(lr.settings, "gemini_model", "gemini-1.5-flash")  # retired name must be ignored
+    monkeypatch.setattr(lr.requests, "post", handler)
+    r = lr.LLMRouter()
+    return lr, r
+
+
+def test_gemini_retired_model_is_dropped_and_chain_rotates_on_404(monkeypatch):
+    calls = []
+
+    def handler(url, **kw):
+        calls.append(url)
+        if "gemini-3.5-flash-lite" in url:
+            return _FakeResp(404, {"error": {"message": "gone"}})
+        return _FakeResp(200, {"candidates": [{"content": {"parts": [{"text": "Hello from Gemini"}]}}],
+                               "usageMetadata": {"totalTokenCount": 7}})
+
+    lr, r = _router_with_chain(monkeypatch, handler)
+    assert "gemini-1.5-flash" not in r._gemini_chain
+    res = r.complete("hi", system_prompt="s")
+    assert res.mode == "gemini" and res.content == "Hello from Gemini"
+    assert "gemini-3.1-flash-lite" in res.model
+    n = len(calls)
+    r.complete("again")  # 404'd model is on cooldown -> not retried
+    assert not any("gemini-3.5-flash-lite" in u for u in calls[n:])
+
+
+def test_gemini_total_failure_degrades_to_fallback_without_raising(monkeypatch):
+    lr, r = _router_with_chain(monkeypatch, lambda url, **kw: _FakeResp(429, {"error": {"message": "quota"}}))
+    res = r.complete("What is the refund policy for cancelled tickets?", task="support")
+    assert res.mode == "fallback" and res.content
+    assert r.status()["fallback_used"] >= 1

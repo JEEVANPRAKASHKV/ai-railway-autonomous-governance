@@ -29,6 +29,31 @@ HINGLISH_WORDS: Set[str] = {
     "pnr", "tatkal", "cancle", "refund", "train", "seat", "mil", "gaya",
 }
 
+
+# Hindi / Hinglish → English retrieval terms (the policy corpus is English). Lets TF-IDF retrieval
+# work for multilingual queries; the answer is still labelled in the passenger's language.
+GLOSSARY = {
+    "तत्काल": "tatkal", "टिकट": "ticket", "रद्द": "cancel cancellation", "रिफंड": "refund", "वापसी": "refund",
+    "पैसे": "refund money", "नियम": "rules policy", "प्रतीक्षा": "waiting list", "वेटिंग": "waiting list waitlist",
+    "आरक्षण": "reservation", "सीट": "seat berth", "बर्थ": "berth", "ट्रेन": "train", "देरी": "delay",
+    "लेट": "delay", "पीएनआर": "pnr", "चार्ट": "chart", "बच्चे": "child children", "वरिष्ठ": "senior citizen",
+    "सामान": "luggage baggage", "ट्रांसफर": "transfer", "रिफंड": "refund", "कन्फर्म": "confirmed",
+    "आरएसी": "rac", "कोच": "coach", "सफर": "travel journey", "यात्रा": "travel journey",
+    "cancle": "cancel", "cancel": "cancel cancellation", "kaise": "how", "kab": "when", "milega": "refund get",
+    "karna": "do", "kar": "do", "sakta": "can", "allot": "allot allotment", "kitna": "how much", "paisa": "refund money",
+    "wapas": "refund return", "badal": "change", "nam": "name", "badalna": "change name",
+}
+
+
+def to_english_query(query: str) -> str:
+    """Append English equivalents of known Hindi/Hinglish tokens so retrieval can match the English corpus."""
+    extra = []
+    for tok in re.findall(r"[\u0900-\u097F]+|[A-Za-z]+", query):
+        t = tok.lower() if tok.isascii() else tok
+        if t in GLOSSARY:
+            extra.append(GLOSSARY[t])
+    return (query + " " + " ".join(extra)).strip() if extra else query
+
 FRUSTRATION_KEYWORDS: Set[str] = {
     "scam", "cheat", "worst", "horrible", "refund not received", "money deducted",
     "fraud", "complaint", "harassment", "stolen", "useless", "pathetic", "lost money",
@@ -83,7 +108,8 @@ class SupportAssistantService:
         escalate = bool(sentiment == "Frustrated")
 
         # ── Step 1: Retrieve Grounding Context ────────────────────────────────
-        retrieved_raw = rag_indexer.retrieve(request.query, top_k=3)
+        retrieval_query = to_english_query(request.query)
+        retrieved_raw = rag_indexer.retrieve(retrieval_query, top_k=3)
         retrieved_contexts: List[RetrievedContextChunk] = []
         combined_context_text = ""
 
@@ -102,7 +128,7 @@ class SupportAssistantService:
 
         # Check for direct curated domain policy match
         from core.fallback_engine import fallback_engine
-        curated_policy = fallback_engine._static_support_response(request.query)
+        curated_policy = fallback_engine._static_support_response(retrieval_query)
         has_curated_policy = not curated_policy.startswith("Thank you for your query. For specific railway inquiries")
 
         if top_sim < 0.15 and not has_curated_policy:
@@ -124,11 +150,13 @@ class SupportAssistantService:
             # ── Step 2: Synthesize Response via LLMRouter ─────────────────────────
             system_prompt = (
                 "You are RailSeva AI, the official intelligent passenger assistant for Indian Railways. "
-                "Answer user questions clearly and concisely strictly based on the following verified IRCTC policy context.\n"
+                "Answer user questions clearly and concisely (under 120 words) strictly based on the following verified IRCTC policy context. "
+                "Reply in the same language the passenger used (English, Hindi or Hinglish). "
+                "If the context does not contain the answer, say so and point to irctc.co.in or RailMadad 139 — never guess amounts or rules.\n"
                 f"Grounding Context:\n{combined_context_text}\n"
             )
 
-            llm_resp = llm_router.complete(prompt=request.query, system_prompt=system_prompt, task="support")
+            llm_resp = llm_router.complete(prompt=retrieval_query, system_prompt=system_prompt, task="support")
             final_answer = llm_resp.content
 
             # ── Step 3: Hallucination & Faithfulness Audit ────────────────────────
@@ -139,6 +167,8 @@ class SupportAssistantService:
         try:
             from governance.hallucination_monitor import hallucination_monitor
             context_docs = [c.text for c in retrieved_contexts] if retrieved_contexts else [combined_context_text]
+            if has_curated_policy:   # verified rule text is part of the knowledge base the answer is grounded in
+                context_docs = context_docs + [curated_policy]
             eval_res = hallucination_monitor.evaluate(
                 module_id="m6_support_assistant",
                 query=request.query,
@@ -147,7 +177,7 @@ class SupportAssistantService:
             )
             if eval_res.get("faithfulness_score") is not None:
                 faithfulness = round(float(eval_res["faithfulness_score"]), 3)
-            hallucination_flag = bool(eval_res.get("hallucination_detected", hallucination_flag))
+            hallucination_flag = eval_res.get("severity") in ("WARNING", "CRITICAL") if eval_res.get("severity") else hallucination_flag
         except Exception as hm_err:
             logger.debug(f"[M6 Governance] Hallucination evaluation notice: {hm_err}")
 

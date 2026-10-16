@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import pickle
 import threading
+import time
 from collections import defaultdict, deque
 from datetime import datetime, timezone
 from pathlib import Path
@@ -94,7 +95,8 @@ class _FeatureWindow:
             abs(current_mean - baseline_mean) / (abs(baseline_mean) + 1e-9) * 100
         )
 
-        drift_detected = ks_stat > KS_DRIFT_THRESHOLD or psi > PSI_WARNING_THRESHOLD
+        drift_detected = bool(ks_stat > KS_DRIFT_THRESHOLD or psi > PSI_WARNING_THRESHOLD)
+        psi = float(psi)
 
         return {
             "feature": self.feature_name,
@@ -249,7 +251,7 @@ class DriftDetector:
                 if len(pred_win) >= 30:
                     ks_stat, ks_pval = scipy_stats.ks_2samp(pred_base, pred_win)
                     pred_shift = abs(np.mean(pred_win) - np.mean(pred_base))
-                    pred_drift_detected = ks_stat > PREDICTION_DRIFT_THRESHOLD
+                    pred_drift_detected = bool(ks_stat > PREDICTION_DRIFT_THRESHOLD)
                     pred_drift = {
                         "ks_statistic": round(float(ks_stat), 4),
                         "ks_pvalue": round(float(ks_pval), 4),
@@ -269,7 +271,12 @@ class DriftDetector:
                 "features_monitored": len(feature_reports),
             }
 
-            if any_drift:
+            now = time.time()
+            last_pub = getattr(self, "_last_drift_pub", {}).get(model_id, 0.0)
+            if any_drift and now - last_pub >= 60:      # one alert per model per minute, not one per poll
+                if not hasattr(self, "_last_drift_pub"):
+                    self._last_drift_pub = {}
+                self._last_drift_pub[model_id] = now
                 self._drift_history.append(result)
                 telemetry_bus.publish(
                     module_id=model_id,
@@ -291,6 +298,15 @@ class DriftDetector:
         """Run drift analysis across all registered models."""
         model_ids = list(self._baselines.keys())
         return [self.analyze_model(mid) for mid in model_ids]
+
+    def reset(self) -> None:
+        """Clear live observation windows (baselines are kept). Used by 'Reset to healthy'."""
+        with self._lock:
+            self._feature_windows.clear()
+            self._prediction_windows.clear()
+            self._drift_history.clear()
+            if hasattr(self, "_last_drift_pub"):
+                self._last_drift_pub.clear()
 
     def get_drift_history(self, n: int = 20) -> List[dict]:
         with self._lock:

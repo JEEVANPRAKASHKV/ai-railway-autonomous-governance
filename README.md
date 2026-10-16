@@ -1,437 +1,410 @@
-# 🚄 AI-Powered Intelligent Railway Travel & Autonomous AI Governance Platform
+<div align="center">
 
-> **Enterprise Railway AI Ecosystem** — Dual-Plane Passenger Intelligence & Autonomous AI Governance Platform  
-> **Repository:** https://github.com/JEEVANPRAKASHKV/ai-railway-autonomous-governance  
-> **Architect:** Jeevan Prakash K V
+# 🚆 Railway Buddy
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://ai-railway-governance.streamlit.app)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.111.0-009688.svg?logo=fastapi)](http://localhost:8000/docs)
-[![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
-[![Tests Passed](https://img.shields.io/badge/tests-35%20passed-success)](tests/)
-[![Architecture](https://img.shields.io/badge/Architecture-Dual--Plane%20AI-blueviolet)](#-architecture)
+### AI-Powered Intelligent Railway Travel & Autonomous AI Governance Platform
+
+**[🌐 Live Demo → ai-railway-governance.streamlit.app](https://ai-railway-governance.streamlit.app)**
+
+*Seven AI services for Indian Railways passengers, watched over by an autonomous "AI-monitoring-AI" governance layer.*
+
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Streamlit-1D4ED8?logo=streamlit&logoColor=white)](https://ai-railway-governance.streamlit.app)
+[![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/API-FastAPI-009688?logo=fastapi&logoColor=white)](#-api-reference)
+[![Gemini](https://img.shields.io/badge/LLM-Google%20Gemini-4285F4?logo=googlegemini&logoColor=white)](#-llm-layer--gemini-first-never-crashes)
+[![Tests](https://img.shields.io/badge/tests-40%20passing-2E7D32)](#-testing)
+
+[Live Demo](https://ai-railway-governance.streamlit.app) ·
+[Screenshots](#-screenshots) ·
+[Architecture](#-architecture) ·
+[Quick Start](#-quick-start) ·
+[API](#-api-reference) ·
+[Governance](#-the-ai-governance-layer)
+
+</div>
 
 ---
 
-### 🌐 Live Public Deployment
-> **🚀 Access Live Control Tower & Passenger AI:** **[https://ai-railway-governance.streamlit.app](https://ai-railway-governance.streamlit.app)**  
-> *(No local installation or API keys required — full dual-plane functionality and autonomous governance telemetry enabled out of the box).*
+## 📑 Table of Contents
 
----
-
-## 📋 Table of Contents
-
-1. [Live Public Deployment](#-live-public-deployment)
-2. [Platform Overview](#-platform-overview)
-3. [Quick Start — 3 Steps](#-quick-start--3-steps)
-4. [Cloud Deployment Guide (Streamlit Cloud & Render)](#-cloud-deployment-guide-streamlit-community-cloud--render)
-5. [Architecture](#-architecture)
-6. [7 Passenger AI Modules](#-7-passenger-ai-modules)
-7. [8-Pillar AI Governance Engine](#-8-pillar-ai-governance-engine)
-8. [Dual-Mode LLM Resilience](#-dual-mode-llm-resilience-zero-crash-guarantee)
-9. [Running Without Azure OpenAI (Standalone Mode)](#-running-without-azure-openai-standalone-mode)
-10. [Chaos Engineering Lab](#-chaos-engineering-lab)
+1. [Overview](#-overview)
+2. [Live Demo & Evaluator Walkthrough](#-live-demo--evaluator-walkthrough)
+3. [Screenshots](#-screenshots)
+4. [Passenger AI Services](#-passenger-ai-services)
+5. [The AI Governance Layer](#-the-ai-governance-layer)
+6. [Architecture](#-architecture)
+7. [LLM Layer — Gemini-first, never crashes](#-llm-layer--gemini-first-never-crashes)
+8. [Quick Start](#-quick-start)
+9. [Configuration](#-configuration)
+10. [Deployment](#-deployment)
 11. [API Reference](#-api-reference)
-12. [Project Structure](#-project-structure)
-13. [Technology Stack](#-technology-stack)
+12. [Model Performance & Honest Limitations](#-model-performance--honest-limitations)
+13. [Synthetic Dataset](#-synthetic-dataset)
+14. [Testing](#-testing)
+15. [Project Structure](#-project-structure)
+16. [Technology Stack](#-technology-stack)
+17. [Extending the Platform](#-extending-the-platform)
+18. [Author](#-author)
 
 ---
 
-## 🎯 Platform Overview
+## 🎯 Overview
 
-This platform is an enterprise-grade **dual-plane AI ecosystem** engineered for intelligent railway passenger services and real-time autonomous AI governance:
+**Railway Buddy** is a dual-plane AI platform:
 
-| Plane | Purpose | Entry |
+| Plane | What it is | Where |
 |---|---|---|
-| **Passenger Experience** | 7 intelligent AI services for Indian Railways travelers | Streamlit Tabs 1–7 · FastAPI `/api/v1/*` |
-| **AI Governance Control Tower** | Autonomous "AI monitoring AI" cockpit — 8 governance pillars | Streamlit Tab 8 · FastAPI `/api/v1/governance/*` |
+| **Passenger plane** | Seven AI services for travellers — ticket confirmation, train recommendation, delay forecast, an agentic travel planner, fare forecast, multilingual support and fraud/bot shielding. | Streamlit *Railway Buddy* pages · `/api/v1/*` |
+| **Governance plane** | A *Control Tower* in which autonomous agents monitor every model for health, drift, bias and hallucination, diagnose faults with root-cause analysis, retrain models and roll back — logging every action. | Streamlit *Governance Control Tower* · `/api/v1/governance/*` |
 
-### Platform Golden Rules
+### Design principles
 
-| Rule | Implementation |
+| Principle | How it is implemented |
 |---|---|
-| **Self-Contained** | Deterministic synthetic data generator (seed=42) produces all 10 datasets · Models train in-repo |
-| **Zero-Crash LLM** | Dual-mode router: Azure OpenAI primary → rule-based fallback (auto-switches, no code change) |
-| **Single-Command Launch** | `python run_platform.py` — validates, generates data, trains models, starts both servers |
-| **Embedded Governance** | `@governance_hook` decorator on every module · telemetry bus · autonomous supervisor agent |
+| **Explainable** | SHAP reasons and confidence on every prediction; faithfulness score on every chat answer. |
+| **Governed by default** | A `@governance_hook` decorator wraps every module; real request traffic feeds the drift, fairness, hallucination and SLA monitors. |
+| **Human in the loop** | The travel planner never books anything without an explicit approval; high-risk governance actions go through an approval gate. |
+| **Never crashes** | Gemini → model chain → rule-based engine; the app works with no API key at all. |
+| **Self-contained** | Deterministic synthetic data (`seed=42`) and in-repo model training — nothing to download. |
 
 ---
 
-## ⚡ Quick Start — 3 Steps
+## 🌐 Live Demo & Evaluator Walkthrough
 
-### Prerequisites
-- Python 3.10 or higher
-- ~2 GB disk space (for ML models and synthetic data)
+**Live app: [https://ai-railway-governance.streamlit.app](https://ai-railway-governance.streamlit.app)** — no sign-in, no setup.
 
-```bash
-# 1. Clone the repository
-git clone https://github.com/JEEVANPRAKASHKV/ai-railway-autonomous-governance.git
-cd ai-railway-autonomous-governance
+> The first load may take a few seconds while the platform warms up and pushes a little real traffic through the models so every governance panel has live data.
 
-# 2. Install dependencies
-pip install -r requirements.txt
+A suggested 3-minute tour:
 
-# 3. Launch the full platform (one command)
-python run_platform.py
+| # | Where | Try this | What to look for |
+|---|---|---|---|
+| 1 | **Home** | Open the app | Live platform status and governance score pulled from the Control Tower. |
+| 2 | **Ticket Confirmation** | Predict a waitlisted ticket | Probability, verdict, SHAP "why", governance badge. |
+| 3 | **AI Travel Planner** | *"I want to travel from Pune to Delhi tomorrow under ₹1500 and reach before 10:00 AM."* | Agent plan with pros/cons, then the **human approval gate**. |
+| 4 | **Support Assistant** | Click *Refund on waitlist ticket*, or ask in Hindi / Hinglish | Grounded answer, language detection, faithfulness score, sources. |
+| 5 | **Governance Control Tower** | Press **Normal traffic**, then **Shifted traffic** in the *Chaos lab* | Drift detected → incident with 5-Why root cause → retraining queued → supervisor action log. |
+| 6 | **Control Tower → Model lifecycle** | **Retrain now**, then **Promote challenger** | Real training run, champion-vs-challenger comparison, hot-swap into serving. |
+
+---
+
+## 📸 Screenshots
+
+| Home | Ticket Confirmation |
+|---|---|
+| ![Home](docs/screenshots/01-home.png) | ![Ticket Confirmation](docs/screenshots/02-ticket.png) |
+
+| AI Travel Planner (human-in-the-loop) | Support Assistant |
+|---|---|
+| ![AI Travel Planner](docs/screenshots/03-planner.png) | ![Support Assistant](docs/screenshots/04-support.png) |
+
+**Governance Control Tower — one scrollable page**
+
+![Governance Control Tower](docs/screenshots/05-governance-tower-overview.png)
+
+---
+
+## 🚆 Passenger AI Services
+
+| # | Service | Endpoint | Model / method | Governance |
+|---|---|---|---|---|
+| 1 | **Ticket Confirmation** | `POST /api/v1/predict/ticket` | XGBoost + SHAP; berth estimator | Rolling accuracy, drift, fairness (DIR) |
+| 2 | **Train Recommender** | `POST /api/v1/recommend/trains` | Persona-weighted multi-factor scoring | Disparate-impact audit on top-3 |
+| 3 | **Delay & Disruption** | `POST /api/v1/predict/delay` | LightGBM + confidence interval | KS-test / PSI drift on congestion features |
+| 4 | **AI Travel Planner** | `POST /api/v1/agent/plan` · `/confirm` · `/reject` | Multi-tool agent + **HITL gate** | Prompt-injection scan, full execution trace |
+| 5 | **Fare Forecast** | `POST /api/v1/predict/fare` | XGBoost 30-day trajectory | Anomaly flag, MAPE tracking |
+| 6 | **Support Assistant** | `POST /api/v1/support/query` | RAG over IRCTC policy text + Gemini | Faithfulness / hallucination monitor |
+| 7 | **Fraud & Bot Shield** | `POST /api/v1/security/score` | XGBoost session-risk classifier | Live confusion-matrix tracking |
+
+<details>
+<summary><b>Service details</b></summary>
+
+**1 · Ticket Confirmation** — Predicts whether a waitlist/RAC ticket will clear. Output: probability, verdict (Likely confirmed / Borderline / Likely waitlisted), berth hint and SHAP feature contributions.
+
+**2 · Train Recommender** — `Score = w₁·(1/Fare) + w₂·Punctuality + w₃·Availability + w₄·Duration + w₅·Comfort + w₆·PersonaMatch`. Personas: budget, business, family, senior, tourist. The governance layer audits whether budget trains are under-represented in the top results.
+
+**3 · Delay & Disruption** — Predicts delay minutes with a confidence interval, congestion level and alternative trains when the delay is large.
+
+**4 · AI Travel Planner** — Pipeline: *security scan → constraint parsing (stations, date, budget, class, arrival cut-off) → route search → fare, confirmation-odds and delay tools → ranking → approval gate*. Nothing is booked until the passenger approves; rejecting triggers a re-plan.
+
+**5 · Fare Forecast** — 30-day fare curve, best day to book, demand level (Low / Medium / High / Surge) and SHAP fare drivers.
+
+**6 · Support Assistant** — English, हिन्दी and Hinglish (auto-detected). Pipeline: language detection → glossary-assisted TF-IDF retrieval over `irctc_policies.txt` and `railway_faq.txt` → Gemini answer constrained to the retrieved text → faithfulness check → disclaimer if weakly grounded.
+
+**7 · Fraud & Bot Shield** — Scores a session (request rate, PNR-attempt velocity, Tatkal-window behaviour, CAPTCHA failures, bulk-booking pattern) as safe / suspicious / high-risk / bot with a mitigation note.
+
+</details>
+
+---
+
+## 🛡️ The AI Governance Layer
+
+The **Governance Control Tower** is a single scrollable page — *Needs attention → Pillars → Incidents → Health → Drift → Fairness → Hallucination → Lifecycle → Supervisor → Reports → Chaos lab* — with a sticky section navigator. Each section answers *"what is wrong, why, and what has been done about it?"*
+
+| Pillar | Module | What it does |
+|---|---|---|
+| 📊 **Model health** | `health_monitor.py` | P50/P95/P99 latency, error rate, **circuit breaker** (closed → open → half-open), SLA: P95 < 3000 ms, errors < 5 %. |
+| 🧪 **Data quality** | `data_quality_gate.py` | Pre-inference schema, range and z-score validation against training baselines. |
+| 📉 **Drift** | `drift_detector.py` | Per-feature **KS test** and **PSI** (stable < 0.10 · warning < 0.20 · critical ≥ 0.20) over rolling windows of real traffic. |
+| ⚖️ **Bias & fairness** | `bias_auditor.py` | **Disparate Impact Ratio** (80 % rule), **Demographic Parity** gap and **Equal Opportunity** gap per protected group. |
+| 🧠 **Hallucination guard** | `hallucination_monitor.py` | Scores answers by how much of their content and every number is supported by the retrieved policy text; weak answers are flagged / quarantined. |
+| 🚨 **Root-cause analysis** | `rca_engine.py` | De-duplicated incidents, **5-Why** reasoning, causal dependencies and prioritised remediation playbooks. |
+| 🔄 **Model lifecycle** | `lifecycle_manager.py` | Version registry, **real retraining**, champion/challenger comparison, canary, **hot-swap promotion and rollback**. |
+| 🤖 **Supervisor agent** | `supervisor_agent.py` | 30-second autonomous loop over every pillar; opens incidents, queues retraining, triggers rollback; approval gate for high-risk actions; full audit trail. |
+
+Supporting pieces: `telemetry_bus.py` (thread-safe event bus), `hooks.py` (`@governance_hook`), `report_generator.py` (JSON + Markdown audit reports).
+
+### The autonomous loop
+
+```mermaid
+flowchart LR
+    T[Real traffic] --> H["@governance_hook"]
+    H --> M[Drift · Bias · Hallucination · SLA monitors]
+    M -->|signal| R[RCA engine<br/>5-Why + playbook]
+    R --> S[Supervisor agent]
+    S -->|drift confirmed| L[Lifecycle manager<br/>retrain challenger]
+    L -->|beats champion| P[Canary → promote / rollback]
+    S -->|high risk| A([Human approval gate])
+    S --> LOG[(Audit trail)]
 ```
 
-The launcher automatically:
-- ✅ Generates 10 synthetic datasets (~400K rows total) if not present
-- ✅ Trains 5 ML models (XGBoost, LightGBM) with SHAP explainers if not present
-- ✅ Starts FastAPI backend on **http://localhost:8000**
-- ✅ Launches Streamlit Control Tower on **http://localhost:8501**
+**Real retraining, honestly reported.** `POST /api/v1/governance/lifecycle/retrain` trains a challenger with the project's own pipeline on a fresh split, evaluates it on held-out data and registers it as a canary **only if it beats the production champion** (otherwise it is recorded as *rejected*). `POST …/lifecycle/promote` hot-swaps the served model; the supervisor can also trigger retraining on its own (10-minute cooldown per model). Rule-based services (planner, support assistant) have no weights and are reported as *not applicable* rather than faked.
 
-> **No external API keys required.** The platform functions out-of-the-box in standalone intelligent fallback mode. See [Running Without Azure OpenAI (Standalone Mode)](#-running-without-azure-openai-standalone-mode).
+### Chaos & traffic lab
 
----
-
-## ☁️ Cloud Deployment Guide (Streamlit Community Cloud & Render)
-
-The repository features a self-contained root deployment entrypoint ([`streamlit_app.py`](streamlit_app.py)) that launches both the **FastAPI Governance Backend** (background daemon on `127.0.0.1:8000`) and the **Streamlit Passenger & Governance Portal** inside a single cloud container.
-
-### Option A: Streamlit Community Cloud (Recommended — 100% Free)
-
-[![Deploy to Streamlit Cloud](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/)
-
-1. Go to **[share.streamlit.io](https://share.streamlit.io/)** and sign in with GitHub.
-2. Click **"New app"** and configure:
-   - **Repository:** `JEEVANPRAKASHKV/ai-railway-autonomous-governance`
-   - **Branch:** `main`
-   - **Main file path:** `streamlit_app.py`
-   - **App URL:** Customize your subdomain (e.g. `ai-railway-governance.streamlit.app`)
-3. *(Optional)* Click **Advanced Settings** → **Secrets** to attach live LLM credentials:
-   ```toml
-   # Recommended: Google Gemini 1.5 Flash (Instant free key: aistudio.google.com/app/apikey)
-   GEMINI_API_KEY = "AIzaSyYourGeminiApiKeyHere"
-   GEMINI_MODEL = "gemini-1.5-flash"
-
-   # Optional Alternative: Azure OpenAI
-   AZURE_OPENAI_KEY = "your-azure-key"
-   AZURE_OPENAI_ENDPOINT = "https://your-resource.openai.azure.com/"
-   AZURE_OPENAI_DEPLOYMENT_NAME = "gpt-4o-mini"
-   ```
-   > **Note:** If no secrets are provided, the platform automatically boots into **Standalone Intelligent Rule-Based Fallback Mode** with 100% feature availability and zero crashes.
-4. Click **"Deploy!"** — Within 60 seconds, your dual-plane platform will be live globally.
-
----
-
-### Option B: Render (Web Service)
-
-1. Sign in to **[dashboard.render.com](https://dashboard.render.com/)** and click **New +** → **Web Service**.
-2. Connect your GitHub repository: `JEEVANPRAKASHKV/ai-railway-autonomous-governance`.
-3. Set the build and start settings:
-   - **Runtime:** `Python 3`
-   - **Build Command:** `pip install -r requirements.txt`
-   - **Start Command:** `streamlit run streamlit_app.py --server.port $PORT --server.address 0.0.0.0 --server.headless true`
-4. *(Optional)* Add Environment Variables under the **Environment** tab:
-   - `BACKEND_URL`: `http://127.0.0.1:8000`
-   - `PYTHONUNBUFFERED`: `1`
-5. Click **Create Web Service**.
+| Action | Injects | Governance response |
+|---|---|---|
+| **Normal traffic** | Realistic requests through the live API | Baseline health, drift and fairness data |
+| **Shifted traffic** | Requests with a changed feature distribution | Drift on affected models → incidents → retraining queue |
+| `latency_spike` | 5 000 ms responses | SLA breach → incident with root cause |
+| `error_surge` | Consecutive failures | Circuit opens, auto-recovery probe |
+| `drift_simulation` | Synthetic drift event | Retraining queued, supervisor logs the action |
 
 ---
 
 ## 🏗️ Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────────────────┐
-│                     PASSENGER EXPERIENCE PLANE                          │
-│                                                                         │
-│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐ │
-│  │ M1:Ticket│  │M2:Trains │  │ M3:Delay │  │M4:Planner│  │ M5:Fare  │ │
-│  │Predictor │  │Recommend │  │Predictor │  │ (Agentic)│  │Predictor │ │
-│  └──────────┘  └──────────┘  └──────────┘  └──────────┘  └──────────┘ │
-│  ┌──────────┐  ┌──────────┐                                             │
-│  │M6:Support│  │M7:Fraud  │  ← All wrapped with @governance_hook        │
-│  │Assistant │  │Detector  │                                             │
-│  └──────────┘  └──────────┘                                             │
-└─────────────────────────────┬───────────────────────────────────────────┘
-                              │ TelemetryEvent (latency, schema, confidence)
-                              ▼
-┌─────────────────────────────────────────────────────────────────────────┐
-│              GOVERNANCE TELEMETRY BUS (in-memory, 5000 events)          │
-└─────────────────────────────┬───────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────────────┐
-│                  AI GOVERNANCE CONTROL TOWER (8 Pillars)                │
-│                                                                         │
-│  [1] Health Monitor    [2] Drift Detector    [3] Bias Auditor           │
-│      SLA · P95 · CB        KS-test · PSI         DIR · DPD · EOD       │
-│                                                                         │
-│  [4] Hallucination     [5] RCA Engine        [6] Lifecycle Manager      │
-│      Monitor               5-Why · DAG           Canary · Rollback      │
-│      Faithfulness                                                        │
-│                                                                         │
-│  [7] Report Generator  [8] Supervisor Agent                             │
-│      JSON · Markdown       Autonomous loop ← polls all 8 pillars        │
-│                            HITL Gate · Chaos Injection                  │
-└─────────────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────────────┐
-│              DUAL-MODE LLM ROUTER (core/llm_router.py)                  │
-│                                                                         │
-│  Primary: Azure OpenAI GPT-4o-mini ──────────────── 15s timeout        │
-│      ↓ (if unavailable / timeout)                                       │
-│  Fallback: Rule-Based Engine ─── TF-IDF RAG · Regex · Greedy Search    │
-│                                  Zero crash · Full functionality        │
-└─────────────────────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────────────┐
+│                         STREAMLIT  (Railway Buddy)                        │
+│   Home · Ticket · Trains · Delay · Planner · Fares · Support · Security   │
+│                    └──────── Governance Control Tower ────────┘           │
+└───────────────────────────────┬──────────────────────────────────────────┘
+                                │ REST
+┌───────────────────────────────▼──────────────────────────────────────────┐
+│                           FASTAPI  /api/v1/*                              │
+│  M1 Ticket │ M2 Trains │ M3 Delay │ M4 Planner │ M5 Fare │ M6 Support │ M7 │
+│                 every service wrapped by @governance_hook                 │
+└──────────┬─────────────────────────────────────────────────┬─────────────┘
+           │ telemetry (latency · schema · confidence · features)             │
+┌──────────▼─────────────────────────────────┐    ┌──────────▼─────────────┐
+│          GOVERNANCE TELEMETRY BUS           │    │       LLM ROUTER        │
+└──────────┬─────────────────────────────────┘    │ Gemini model chain      │
+           │                                      │   ↓ (any failure)       │
+┌──────────▼─────────────────────────────────┐    │ Rule-based engine       │
+│  Health · Data quality · Drift · Bias ·     │    └────────────────────────┘
+│  Hallucination · RCA · Lifecycle ·          │
+│  Supervisor agent  →  Reports / Audit trail │
+└─────────────────────────────────────────────┘
 ```
-
-### Data Flow (Mermaid)
 
 ```mermaid
 flowchart TD
-    U([User]) -->|HTTP Request| ST[Streamlit :8501]
-    ST -->|REST API| FA[FastAPI :8000]
-    FA --> GH[@governance_hook decorator]
-    GH --> DQ[Data Quality Gate]
-    GH --> ML[ML Model / LLM Router]
-    GH --> TB[Telemetry Bus]
-    ML -->|Azure OpenAI| AZ[Azure GPT-4o-mini]
-    ML -->|Fallback| FB[Rule-Based Engine]
-    TB --> SA[Supervisor Agent]
-    SA --> HM[Health Monitor]
-    SA --> DD[Drift Detector]
-    SA --> BA[Bias Auditor]
-    SA --> HLM[Hallucination Monitor]
-    SA --> RCA[RCA Engine]
-    SA --> LM[Lifecycle Manager]
-    SA --> RG[Report Generator]
-    SA -->|HITL Gate| OP([Human Operator])
+    U([Passenger / Operator]) --> ST[Streamlit UI]
+    ST -->|REST| FA[FastAPI]
+    FA --> GH["@governance_hook"]
+    GH --> DQ[Data-quality gate]
+    GH --> ML[Model or LLM router]
+    GH --> TB[Telemetry bus]
+    ML -->|primary| GM[Google Gemini]
+    ML -->|fallback| FB[Rule-based engine]
+    TB --> SA[Supervisor agent]
+    SA --> HM[Health] & DD[Drift] & BA[Bias] & HL[Hallucination]
+    SA --> RCA[RCA engine] --> LM[Lifecycle manager]
+    SA -->|HITL gate| OP([Human operator])
 ```
 
----
-
-## 🤖 7 Passenger AI Modules
-
-### Module 1 — Intelligent Ticket Confirmation Predictor
-**Endpoint:** `POST /api/v1/predict/ticket`
-
-Predicts waitlist/RAC clearance probability using XGBoost with full SHAP explainability.
-
-- **Input:** Train ID, class, quota, WL number, days to departure, booking history
-- **Output:** Confirmation probability, verdict (Likely Confirmed / Borderline / Likely WL), berth recommendation, SHAP feature contributions, governance badge
-- **Governance:** Rolling accuracy monitor, auto-retrain trigger at accuracy < 0.80
+On Streamlit Cloud both tiers run in **one container**: `streamlit_app.py` starts FastAPI on `127.0.0.1:8000` in a daemon thread, waits for health, then hands control to the Streamlit app.
 
 ---
 
-### Module 2 — Smart Train Recommendation Engine
-**Endpoint:** `POST /api/v1/recommend/trains`
+## 🤖 LLM Layer — Gemini-first, never crashes
 
-Multi-factor persona-based scoring with built-in fairness auditing.
-
-- **Scoring Formula:** `Score = w₁×(1/Fare) + w₂×Punctuality + w₃×Availability + w₄×Duration + w₅×Comfort + w₆×PersonaMatch`
-- **Personas:** Budget (price-first) · Business (speed-first) · Family (availability-first) · Senior · Tourist
-- **Governance:** Disparate Impact Ratio (DIR) — flags if budget trains under-represented in top-3
-
----
-
-### Module 3 — Train Delay & Disruption Predictor
-**Endpoint:** `POST /api/v1/predict/delay`
-
-LightGBM delay forecasting with confidence intervals and proactive alternative routing.
-
-- **Output:** Predicted delay (minutes), confidence interval, congestion level, alternative routes (if delay > 60 min)
-- **Governance:** KS-test + PSI drift monitoring on congestion features. PSI > 0.25 → P0-Critical + retrain
-
----
-
-### Module 4 — Agentic AI Travel Planner *(Human-in-the-Loop)*
-**Endpoints:** `POST /api/v1/agent/plan` · `POST /api/v1/agent/confirm` · `POST /api/v1/agent/reject`
-
-Multi-tool AI agent with mandatory Human-in-the-Loop booking gate.
-
-**Agent Tools:** Route Search → Fare Estimator → WL Predictor → Delay Checker → Itinerary Optimizer → **HITL Gate** (blocks until human confirms)
-
-- **Governance:** Prompt injection scanner, loop detection (>3 iterations → abort), full execution trace audit
-
----
-
-### Module 5 — Dynamic Fare Prediction Engine
-**Endpoint:** `POST /api/v1/predict/fare`
-
-XGBoost 30-day fare trajectory with optimal booking window identification.
-
-- **Output:** Current fare, 30-day forecast curve, optimal booking day, demand level (Low/Medium/High/Surge), SHAP fare drivers
-- **Governance:** MAPE tracker + anomaly flag if predicted fare > 2.5× or < 0.5× base fare
-
----
-
-### Module 6 — Multilingual Customer Support Assistant
-**Endpoint:** `POST /api/v1/support/query`
-
-RAG pipeline over IRCTC policies with multilingual support and hallucination monitoring.
-
-**Pipeline:** Query → Language Detection → TF-IDF Retrieval (railway_faq.txt / irctc_policies.txt) → LLM/Fallback Generation → **Faithfulness Check** → Response
-
-- **Languages:** English · Hindi · Hinglish (auto-detected)
-- **Governance:** Faithfulness score (TF-IDF cosine vs. retrieved context). Score < 0.35 → quarantine + fallback
-
----
-
-### Module 7 — Fraud, Security & Bot Detection
-**Endpoint:** `POST /api/v1/security/score`
-
-XGBoost real-time session risk scorer with Tatkal bot protection.
-
-- **Risk Features:** Requests/minute, PNR attempt velocity, Tatkal window flag, CAPTCHA failures, bulk booking pattern
-- **Output:** Fraud risk score (0–100), risk category (Safe/Suspicious/High Risk/Bot Detected), mitigation dossier
-- **Governance:** Live confusion matrix tracker, threat model rule updater
-
----
-
-## 🛡️ 8-Pillar AI Governance Engine
-
-> *"AI monitoring AI"* — The governance layer autonomously supervises all 7 passenger modules with zero human intervention required.
-
-### Pillar 1 — System Health Monitor (`health_monitor.py`)
-- Per-module latency percentiles: P50 / P95 / P99
-- **Circuit Breaker** pattern: CLOSED → OPEN (after 5 consecutive failures) → HALF-OPEN (recovery probe after 60s)
-- SLA compliance tracking: P95 < 3000ms, error rate < 5%
-- Publishes `SLA_BREACH` events to telemetry bus
-
-### Pillar 2 — Data Quality Gate (`data_quality_gate.py`)
-- Pre-inference schema validation against `feature_columns.json`
-- Numeric range bounds checking (e.g., WL number ∈ [1, 500])
-- Z-score anomaly detection (z > 3.5 vs. training baselines)
-- Modules still serve with warning badge — no hard block
-
-### Pillar 3 — Statistical Drift Detector (`drift_detector.py`)
-- **Kolmogorov-Smirnov (KS) test** per numeric feature vs. training baseline
-- **Population Stability Index (PSI):** 0.0–0.10 Stable · 0.10–0.20 Warning · >0.20 Critical
-- Rolling 200-sample windows; prediction distribution drift detection
-- Triggers retraining queue on drift detection
-
-### Pillar 4 — Bias & Fairness Auditor (`bias_auditor.py`)
-- **Disparate Impact Ratio (DIR)** — EEOC 4/5ths rule (DIR < 0.8 → adverse impact)
-- **Demographic Parity Difference (DPD)** — positive rate gap across groups
-- **Equal Opportunity Difference (EOD)** — TPR gap when ground truth available
-- Protected attributes: gender, age group, class preference, booking method, city tier
-
-### Pillar 5 — Root Cause Analysis Engine (`rca_engine.py`)
-- Event-driven fault tree construction from telemetry stream
-- **Automated 5-Why reasoning** chains per incident type
-- Causal dependency graph traversal
-- Prioritized remediation playbooks (IMMEDIATE / HIGH / MEDIUM)
-- Incident lifecycle: Create → Correlate → Analyze → Resolve
-
-### Pillar 6 — Model Lifecycle Manager (`lifecycle_manager.py`)
-- Full version registry (staging → canary → production → archived)
-- **Canary deployment** with configurable traffic split (default 10%)
-- **Champion/Challenger A-B testing** framework
-- **Automatic rollback** triggered by governance events (SLA_BREACH, DRIFT_DETECTED)
-- Retraining queue management
-
-### Pillar 7 — Automated Report Generator (`report_generator.py`)
-- Generates comprehensive audit reports on demand
-- **JSON** (machine-readable API response) + **Markdown** (human-readable, Git-friendly)
-- Executive summary · risk assessment · critical flags · ranked recommendations
-- Saved to `governance/reports/` with timestamp-based IDs
-
-### Pillar 8 — Autonomous Supervisor Agent (`supervisor_agent.py`)
-- Background polling loop (every 30 seconds) orchestrating all 7 pillars
-- **HITL (Human-in-the-Loop) approval gates** for high-risk actions (promotions, mass rollbacks)
-- Chaos injection for resilience testing: `latency_spike` · `error_surge` · `drift_simulation`
-- Unified dashboard state API powering the Streamlit Control Tower
-- Governance action audit trail (last 500 actions)
-
----
-
-## 🔀 Tri-Mode LLM Resilience (Zero-Crash Guarantee)
+The Support Assistant is answered by **Google Gemini**, constrained to retrieved IRCTC policy text. The router (`core/llm_router.py`) calls Gemini over plain HTTPS (no SDK to break) and is built so that the app **never errors out**:
 
 ```
-┌──────────────────────────────────────────────────────────────┐
-│                    LLM Router Decision Tree                  │
-│                                                              │
-│  1. GEMINI_API_KEY present?                                  │
-│     ├── YES ──► Initialize Google Gemini 1.5/2.0 Flash       │
-│     │           Ultra-low latency (~400ms), Indic multilingual│
-│     │                                                        │
-│  2. AZURE_OPENAI_KEY present?                                │
-│     ├── YES ──► Initialize AzureChatOpenAI (GPT-4o-mini)     │
-│     │           15-second timeout with auto-cascading        │
-│     │                                                        │
-│  3. Neither key present or external API call fails?          │
-│     └── YES ──► Activate Intelligent Fallback Engine         │
-│                 ├── M4 Travel Planner: Constraint evaluator  │
-│                 ├── M6 Support: TF-IDF RAG over railway FAQ  │
-│                 └── Governance RCA: Causal 5-Why reasoning   │
-└──────────────────────────────────────────────────────────────┘
+GEMINI_MODEL (if current)  →  gemini-3.5-flash-lite  →  gemini-3.1-flash-lite  →  gemini-3.8-flash  →  rule-based engine
 ```
 
-**The mode switch is completely transparent** — the same API endpoints, same response schemas, and unified UI. Operators see the active mode in the sidebar with a zero-crash safety net.
+- Retired models (`gemini-1.0 / 1.5 / 2.0`) are skipped automatically.
+- A `404` or `429` puts only that model on a cooldown; the next one in the chain answers.
+- If every model fails (no key, network, quota) the **rule-based engine answers** — same endpoints, same schema.
+- Every answer, whichever engine produced it, is scored by the hallucination monitor.
+- The live engine is shown in the sidebar and in `GET /api/health → llm`.
+- Azure OpenAI remains available as an optional secondary provider.
+
+All predictive models (M1–M3, M5, M7) run locally — they never call a cloud API.
 
 ---
 
-## 🚫 Running Without Azure OpenAI (Standalone Mode)
+## ⚡ Quick Start
 
-**No external cloud API required. Standalone execution is supported natively.**
+**Prerequisites:** Python 3.11 (3.10+ works) and roughly 2 GB of disk space.
 
-1. Leave `.env` as-is (placeholder values trigger fallback mode automatically)
-2. Run `python run_platform.py`
-3. Streamlit sidebar shows: `🔧 Rule-Based Fallback` indicator
+```bash
+git clone https://github.com/JEEVANPRAKASHKV/ai-railway-autonomous-governance.git
+cd ai-railway-autonomous-governance
+pip install -r requirements.txt
 
-All 7 modules and all 8 governance pillars work identically. The only difference:
-- **M4 Planner:** Uses regex + greedy itinerary builder instead of GPT-4o-mini
-- **M6 Support:** Returns TF-IDF top-1 answer instead of LLM-generated response
+python run_platform.py        # generates data, trains models if missing, starts API + UI
+```
 
-All ML predictions (M1, M2, M3, M5, M7) are **always local** — never use any cloud API.
+| Service | URL |
+|---|---|
+| Railway Buddy (Streamlit) | http://localhost:8501 |
+| FastAPI backend | http://localhost:8000 |
+| Interactive API docs (Swagger) | http://localhost:8000/docs |
+
+No API key is required — without one the platform runs on its rule-based engine. To enable Gemini, copy `.env.example` to `.env` and set `GEMINI_API_KEY`.
 
 ---
 
-## 🌪️ Chaos Engineering Lab
+## ⚙️ Configuration
 
-The platform includes a built-in chaos simulator to demonstrate autonomous governance resilience:
+Configuration is read from environment variables / `.env` (locally) or **Secrets** (Streamlit Cloud).
 
-| Chaos Type | What it injects | Expected governance response |
+| Variable | Default | Purpose |
 |---|---|---|
-| `latency_spike` | Simulates 5000ms responses | Circuit breaker → SLA_BREACH event → RCA incident created |
-| `error_surge` | Injects 8 consecutive failures | Circuit opens → OPEN state → auto-recovery attempt after 60s |
-| `drift_simulation` | Publishes synthetic drift event | Drift detected → retraining queued → supervisor logs action |
+| `GEMINI_API_KEY` | — | Enables Gemini for the Support Assistant. Free key: [aistudio.google.com/app/apikey](https://aistudio.google.com/app/apikey). |
+| `GEMINI_MODEL` | `gemini-3.5-flash-lite` | First model tried; the rest of the chain follows automatically. |
+| `AZURE_OPENAI_ENDPOINT` / `_KEY` / `_DEPLOYMENT_NAME` | — | Optional secondary provider. |
+| `BACKEND_URL` | `http://127.0.0.1:8000` | Where the UI finds the API. |
+| `RANDOM_SEED` | `42` | Deterministic data generation and training. |
+| `GOVERNANCE_ALERT_THRESHOLD_P95_LATENCY_MS` | `3000` | SLA latency threshold. |
+| `GOVERNANCE_DRIFT_PSI_THRESHOLD` | `0.15` | PSI drift threshold. |
+| `GOVERNANCE_BIAS_DIR_THRESHOLD` | `0.80` | Disparate-impact threshold. |
+| `GOVERNANCE_HALLUCINATION_THRESHOLD` | `0.65` | Faithfulness threshold. |
 
-**How to use:**
-1. Open Streamlit → **🧪 Chaos Engineering Lab** page
-2. Select target module and chaos type
-3. Click **Inject Chaos**
-4. Navigate to **📊 Platform Health** and **🚨 Incidents & RCA** to see governance response
+> Never commit real keys. `.env` is git-ignored; use Secrets for cloud deployments.
 
-The entire loop (inject → detect → alert → remediate) completes in **< 5 seconds**.
+---
+
+## ☁️ Deployment
+
+### Streamlit Community Cloud (used for the live demo)
+
+1. Sign in at [share.streamlit.io](https://share.streamlit.io/) with GitHub and choose **New app**.
+2. Repository `JEEVANPRAKASHKV/ai-railway-autonomous-governance`, branch `main`, **main file `streamlit_app.py`**.
+3. *(Optional)* **Advanced settings → Secrets**:
+   ```toml
+   GEMINI_API_KEY = "your-gemini-api-key"
+   GEMINI_MODEL = "gemini-3.5-flash-lite"
+   ```
+4. Deploy. The root entrypoint boots FastAPI and Streamlit together; pre-trained artifacts are tracked in the repo for an instant cold start.
+
+### Render (Web Service)
+
+| Setting | Value |
+|---|---|
+| Build command | `pip install -r requirements.txt` |
+| Start command | `streamlit run streamlit_app.py --server.port $PORT --server.address 0.0.0.0 --server.headless true` |
+| Environment | `PYTHONUNBUFFERED=1` (+ optional Gemini variables) |
 
 ---
 
 ## 📡 API Reference
 
-All endpoints available at **http://localhost:8000/docs** (Swagger UI)
+Interactive documentation is served at `/docs`. Health: `GET /api/health` (includes the live LLM status).
 
-### Passenger Experience APIs
+### Passenger APIs
 
-| Method | Endpoint | Module |
+| Method | Endpoint | Service |
 |---|---|---|
-| POST | `/api/v1/predict/ticket` | M1 — Ticket Predictor |
-| POST | `/api/v1/recommend/trains` | M2 — Train Recommender |
-| POST | `/api/v1/predict/delay` | M3 — Delay Predictor |
-| POST | `/api/v1/agent/plan` | M4 — Travel Planner |
-| POST | `/api/v1/agent/confirm` | M4 — HITL Confirm |
-| POST | `/api/v1/agent/reject` | M4 — HITL Reject |
-| POST | `/api/v1/predict/fare` | M5 — Fare Predictor |
-| POST | `/api/v1/support/query` | M6 — Support Assistant |
-| POST | `/api/v1/security/score` | M7 — Fraud Detector |
+| POST | `/api/v1/predict/ticket` | Ticket Confirmation |
+| POST | `/api/v1/recommend/trains` | Train Recommender |
+| POST | `/api/v1/predict/delay` | Delay & Disruption |
+| POST | `/api/v1/agent/plan` | Travel Planner — create plan (stops at approval gate) |
+| POST | `/api/v1/agent/confirm` · `/api/v1/agent/reject` | Travel Planner — approve / reject |
+| GET | `/api/v1/agent/request/{request_id}` | Travel Planner — request status |
+| POST | `/api/v1/predict/fare` | Fare Forecast |
+| POST | `/api/v1/support/query` | Support Assistant |
+| POST | `/api/v1/security/score` | Fraud & Bot Shield |
 
-### Governance Control Tower APIs (30+ endpoints)
+### Governance APIs (`/api/v1/governance/…`, 35 endpoints)
 
-| Method | Endpoint | Purpose |
+| Area | Endpoints |
+|---|---|
+| **Supervisor** | `GET /supervisor/dashboard` · `GET /supervisor/actions` · `POST /supervisor/report` · `POST /supervisor/chaos` · `POST /supervisor/rollback` · `GET /supervisor/hitl/pending` · `POST /supervisor/hitl/decide` · `POST /supervisor/reset` |
+| **Health** | `GET /health/platform` · `GET /health/module/{id}` · `GET /health/sla` |
+| **Drift** | `GET /drift/all` · `GET /drift/model/{id}` · `GET /drift/history` |
+| **Bias** | `GET /bias/audit/all` · `GET /bias/audit/{module}` · `GET /bias/history` |
+| **Hallucination** | `GET /hallucination/stats` · `GET /hallucination/recent` |
+| **Incidents / RCA** | `GET /incidents/open` · `GET /incidents/summary` · `GET /incidents/{id}` · `POST /incidents/{id}/resolve` |
+| **Lifecycle** | `GET /lifecycle/platform` · `GET /lifecycle/model/{id}` · `POST /lifecycle/retrain` · `POST /lifecycle/promote` · `GET /lifecycle/retraining-queue` |
+| **Reports & telemetry** | `GET /reports/history` · `GET /reports/{id}` · `POST /telemetry/seed` · `GET /telemetry` |
+
+<details>
+<summary><b>Example: plan a journey, then approve it</b></summary>
+
+```bash
+curl -X POST http://localhost:8000/api/v1/agent/plan \
+  -H "Content-Type: application/json" \
+  -d '{"query": "Travel from Pune to Delhi tomorrow under 1500, reach before 10:00 AM"}'
+
+curl -X POST http://localhost:8000/api/v1/agent/confirm \
+  -H "Content-Type: application/json" \
+  -d '{"request_id": "PLAN-XXXXXXXX", "selected_option_id": "OPT-1"}'
+```
+</details>
+
+---
+
+## 📊 Model Performance & Honest Limitations
+
+Training data is **synthetic**, so these metrics describe the simulator — not real Indian Railways traffic. They are published as measured, and the confidence shown to passengers reflects them.
+
+| Model | Held-out metric | Reading |
 |---|---|---|
-| GET | `/api/v1/governance/supervisor/dashboard` | Full dashboard state |
-| POST | `/api/v1/governance/supervisor/report` | Generate audit report |
-| POST | `/api/v1/governance/supervisor/rollback` | Manual model rollback |
-| POST | `/api/v1/governance/supervisor/chaos` | Chaos injection |
-| GET | `/api/v1/governance/health/platform` | Platform health |
-| GET | `/api/v1/governance/drift/all` | Drift analysis (all models) |
-| GET | `/api/v1/governance/bias/audit/all` | Fairness audit |
-| GET | `/api/v1/governance/hallucination/stats` | LLM faithfulness |
-| GET | `/api/v1/governance/incidents/open` | Open incidents |
-| GET | `/api/v1/governance/lifecycle/platform` | Model lifecycle |
-| GET | `/api/v1/governance/telemetry` | Live telemetry stream |
+| Fare predictor | R² 0.9997 · MAPE 0.93 % | Near-perfect because fares are formula-derived in the synthetic data. |
+| Fraud detector | Accuracy 0.9995 | Synthetic classes are cleanly separable; expect lower on real traffic. |
+| WL/RAC ticket predictor | Accuracy 0.616 (3 classes) | Modest — probability is shown with its uncertainty. |
+| Delay predictor | MAE 14.7 min · R² 0.15 | Weak signal — presented as a forecast with an interval, not a promise. |
+| Berth estimator | Accuracy 0.277 | Close to chance — shown as a hint only. |
+
+**Other limitations**
+
+- The planner searches the bundled synthetic timetable; it does not query live IRCTC data and never books real tickets.
+- The Gemini free tier is rate-limited; when it is exhausted the rule-based engine answers instead.
+- The governance state is held in memory and resets when the container restarts.
+
+---
+
+## 🗂️ Synthetic Dataset
+
+Generated deterministically (`RANDOM_SEED=42`) by `data/generate_synthetic_data.py` — reproducible on any machine.
+
+| Dataset | Rows | Description |
+|---|---|---|
+| `trains.csv` | 500 | Routes, classes and quota types |
+| `stations.csv` | 200 | Stations with zone, tier and baseline congestion |
+| `pnr_history.csv` | 50,000 | WL / RAC / confirmed records with final status |
+| `pricing_history.csv` | 100,000 | Fare-date-class records with dynamic curves |
+| `user_profiles.csv` | 5,000 | Six personas: budget, premium, student, senior, business, family |
+| `congestion_logs.csv` | 73,000 | 365 days × 200 stations congestion index |
+| `delay_logs.csv` | 200,000 | Historical delay per train per station |
+| `fraud_events.csv` | 10,000 | Labelled sessions (80 % legitimate, 5 % bot, 15 % suspicious) |
+| `irctc_policies.txt` | ~3,000 lines | Cancellation, refund, Tatkal and waitlist policies (RAG corpus) |
+| `railway_faq.txt` | 500 Q&A | PNR, refund and booking queries (RAG corpus) |
+
+---
+
+## 🧪 Testing
+
+```bash
+pytest -q          # 40 tests: data generator, modules, governance pillars, LLM router, API
+```
+
+Notable coverage: governance pillars and the supervisor, idempotent incident handling (RCA de-duplication), lifecycle retraining behaviour, the Gemini model-chain / cooldown / fallback logic (network stubbed), and end-to-end API contracts.
 
 ---
 
@@ -439,64 +412,38 @@ All endpoints available at **http://localhost:8000/docs** (Swagger UI)
 
 ```
 ai-railway-autonomous-governance/
+├── streamlit_app.py            # Cloud entrypoint: starts FastAPI + Streamlit in one container
+├── run_platform.py             # Local single-command launcher
+├── requirements.txt · runtime.txt · .env.example
 │
-├── run_platform.py                     # Single-command launcher
-├── .env.example                        # Config template (no keys needed)
-├── requirements.txt                    # All pinned dependencies
-├── README.md                           # This file
+├── frontend/                   # Railway Buddy UI
+│   ├── app.py                  #   navigation shell, branding, warm-up
+│   ├── ui.py                   #   blue/white design system, API helpers, charts
+│   ├── passenger.py            #   Home + the seven passenger services
+│   ├── tower.py                #   single-page Governance Control Tower
+│   ├── components/             #   SHAP chart, telemetry badge
+│   └── assets/                 #   logo and icon
 │
-├── data/
-│   ├── generate_synthetic_data.py      # Deterministic generator (seed=42)
-│   ├── raw/                            # Generated datasets (10 files, ~400K rows)
-│   └── baseline_distributions.pkl     # Feature stats for drift detection
+├── backend/                    # FastAPI
+│   ├── main.py · middleware.py · dependencies.py
+│   └── routers/                #   ticket · recommend · delay · planner · fare · support · fraud · governance
 │
-├── models/
-│   ├── train_all_models.py             # Trains 5 ML models with SHAP
-│   ├── artifacts/                      # Serialized models + SHAP explainers
-│   └── registry/model_registry.json   # Version table with metrics
+├── modules/                    # The seven AI services
+│   ├── m1_ticket_predictor/    ├── m2_train_recommender/   ├── m3_delay_predictor/
+│   ├── m4_travel_planner/      ├── m5_fare_predictor/      ├── m6_support_assistant/
+│   └── m7_fraud_detector/
 │
-├── core/
-│   ├── llm_router.py                   # Dual-mode LLM router
-│   ├── fallback_engine.py              # Rule-based fallback (TF-IDF + regex)
-│   ├── config.py                       # PlatformSettings (pydantic)
-│   └── schemas.py                      # Shared Pydantic V2 schemas
+├── governance/                 # The governance layer
+│   ├── telemetry_bus.py · hooks.py · data_quality_gate.py
+│   ├── health_monitor.py · drift_detector.py · bias_auditor.py · hallucination_monitor.py
+│   ├── rca_engine.py · lifecycle_manager.py · report_generator.py · supervisor_agent.py
+│   └── reports/
 │
-├── governance/                         # 8-pillar governance engine
-│   ├── telemetry_bus.py                # Thread-safe ring buffer (5000 events)
-│   ├── hooks.py                        # @governance_hook decorator
-│   ├── data_quality_gate.py            # Pre-inference schema validator
-│   ├── health_monitor.py               # SLA + circuit breaker (Pillar 1)
-│   ├── drift_detector.py               # KS-test + PSI (Pillar 2+3)
-│   ├── bias_auditor.py                 # DIR + DPD + EOD (Pillar 4)
-│   ├── hallucination_monitor.py        # LLM faithfulness (Pillar 4)
-│   ├── rca_engine.py                   # 5-Why + fault tree (Pillar 5)
-│   ├── lifecycle_manager.py            # Canary + rollback (Pillar 6)
-│   ├── report_generator.py             # JSON + Markdown reports (Pillar 7)
-│   ├── supervisor_agent.py             # Autonomous meta-agent (Pillar 8)
-│   └── reports/                        # Generated audit reports
-│
-├── modules/                            # 7 ML service modules
-│   ├── m1_ticket_predictor/service.py
-│   ├── m2_train_recommender/service.py
-│   ├── m3_delay_predictor/service.py
-│   ├── m4_travel_planner/agent.py
-│   ├── m5_fare_predictor/service.py
-│   ├── m6_support_assistant/service.py
-│   └── m7_fraud_detector/service.py
-│
-├── backend/
-│   ├── main.py                         # FastAPI app entry point
-│   ├── middleware.py                   # Telemetry capture middleware
-│   ├── dependencies.py                 # Shared FastAPI dependencies
-│   └── routers/                        # 8 router files (M1–M7 + governance)
-│
-├── frontend/
-│   └── app.py                          # Streamlit Control Tower (12 pages)
-│
-└── tests/
-    ├── test_data_generator.py
-    ├── test_modules.py
-    └── test_governance.py
+├── core/                       # config, schemas, llm_router.py (Gemini chain), fallback_engine.py
+├── models/                     # train_all_models.py, artifacts/, registry/model_registry.json
+├── data/                       # synthetic data generator + generated datasets
+├── docs/screenshots/           # README images
+└── tests/                      # pytest suite
 ```
 
 ---
@@ -505,50 +452,34 @@ ai-railway-autonomous-governance/
 
 | Layer | Technology |
 |---|---|
-| **Web Framework** | FastAPI 0.111 · Uvicorn · Pydantic V2 |
-| **Frontend** | Streamlit 1.35 · Plotly · Premium dark CSS |
-| **ML Models** | XGBoost 2.0 · LightGBM 4.3 · scikit-learn 1.5 |
-| **Explainability** | SHAP 0.45 (TreeExplainer per model) |
-| **Drift Detection** | SciPy KS-test · PSI (Population Stability Index) |
-| **LLM (Primary)** | Azure OpenAI GPT-4o-mini via LangChain |
-| **LLM (Fallback)** | TF-IDF cosine similarity · regex rule engine |
-| **Agentic Framework** | LangGraph · LangChain tools |
-| **Governance Bus** | Custom thread-safe in-memory ring buffer |
-| **Data** | Pandas · NumPy · deterministic synthetic generator |
-| **Config** | pydantic-settings · python-dotenv |
+| **Frontend** | Streamlit (multipage navigation, fragments) · Plotly · custom blue/white design system |
+| **Backend** | FastAPI · Uvicorn · Pydantic v2 · pydantic-settings |
+| **ML** | XGBoost · LightGBM · scikit-learn · imbalanced-learn |
+| **Explainability** | SHAP (TreeExplainer per model) |
+| **Drift & statistics** | SciPy (KS test) · PSI · NumPy · Pandas |
+| **LLM** | Google Gemini (REST, model chain) · optional Azure OpenAI · TF-IDF RAG · rule-based fallback |
+| **Governance** | Custom telemetry bus, circuit breaker, RCA engine, lifecycle manager, supervisor agent |
+| **Language handling** | Devanagari and Hinglish detection with a Hindi/Hinglish → English retrieval glossary |
 
 ---
 
-## 📊 Synthetic Dataset Summary
+## 🧩 Extending the Platform
 
-| Dataset | Rows | Description |
-|---|---|---|
-| `trains.csv` | 500 | Indian railway routes, classes, quota types |
-| `stations.csv` | 200 | Stations with zone, tier, baseline congestion |
-| `pnr_history.csv` | 50,000 | WL/RAC/Confirmed records with final status |
-| `pricing_history.csv` | 100,000 | Fare-date-class records with dynamic curves |
-| `user_profiles.csv` | 5,000 | 6 personas: budget, premium, student, senior, business, family |
-| `congestion_logs.csv` | 73,000 | 365 days × 200 stations congestion index |
-| `delay_logs.csv` | 200,000 | Historical delay per train per station |
-| `fraud_events.csv` | 10,000 | Labeled sessions (80% legit, 5% bot, 15% suspicious) |
-| `irctc_policies.txt` | ~3,000 lines | Cancellation, refund, Tatkal, waitlist policies |
-| `railway_faq.txt` | 500 Q&A | PNR, refund, booking queries |
+Adding a new AI service takes four steps, and **no governance code needs to change**:
 
-All data generated deterministically with `RANDOM_SEED=42` — reproducible across all machines.
+1. Create `modules/m8_new_module/service.py`.
+2. Decorate the entry point with `@governance_hook("m8_new_module", endpoint="/api/v1/…")`.
+3. Add `backend/routers/new_module.py` and include it in `backend/main.py`.
+4. Add a page function in `frontend/passenger.py` and register it in `frontend/app.py`.
+
+The telemetry bus, health, drift, fairness and incident pipelines pick the new module up automatically.
 
 ---
 
-## 🤝 Contributing / Extending
+## 👤 Author
 
-The platform is modular by design. To add a new AI module:
+**Jeevan Prakash K V**
+Repository: [github.com/JEEVANPRAKASHKV/ai-railway-autonomous-governance](https://github.com/JEEVANPRAKASHKV/ai-railway-autonomous-governance)
+Live demo: [ai-railway-governance.streamlit.app](https://ai-railway-governance.streamlit.app)
 
-1. Create `modules/m8_new_module/service.py`
-2. Add `@governance_hook(module_id="m8_new_module")` to the service function
-3. Create `backend/routers/new_module.py` and register in `backend/main.py`
-4. Add a Streamlit page in `frontend/app.py`
-
-The governance layer automatically picks up the new module's telemetry — **no governance code changes needed**.
-
----
-
-*AI-Powered Intelligent Railway Travel & Autonomous AI Governance Platform — Enterprise Reference Architecture.*
+<sub>Built as a reference architecture for governed, explainable AI in public-transport services. All data is synthetic; no real passenger information is used.</sub>

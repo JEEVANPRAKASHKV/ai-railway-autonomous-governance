@@ -200,7 +200,7 @@ class HealthMonitor:
             stats.total_requests += 1
             stats.total_latency_ms += latency_ms
             stats.latency_samples.append(latency_ms)
-            stats.last_request_at = time.monotonic()
+            stats.last_request_at = time.time()
 
             if success:
                 stats.circuit.record_success()

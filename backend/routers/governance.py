@@ -356,6 +356,20 @@ def get_model_lifecycle(model_id: str) -> Dict[str, Any]:
     return lifecycle_manager.get_model_status(model_id)
 
 
+class RetrainRequest(BaseModel):
+    model_id: str
+
+
+@router.post("/lifecycle/retrain", summary="Retrain a model: train challenger, evaluate vs champion")
+def retrain_model(req: RetrainRequest) -> Dict[str, Any]:
+    return lifecycle_manager.retrain(req.model_id, reason="operator_request")
+
+
+@router.post("/lifecycle/promote", summary="Promote the registered challenger to production (hot-swap)")
+def promote_challenger(req: RetrainRequest) -> Dict[str, Any]:
+    return lifecycle_manager.promote_challenger(req.model_id)
+
+
 @router.get("/lifecycle/retraining-queue", summary="Models queued for retraining")
 def get_retraining_queue() -> List[str]:
     return lifecycle_manager.get_retraining_queue()
@@ -385,6 +399,10 @@ def reset_platform(bus: TelemetryBus = Depends(get_telemetry_bus)) -> Dict[str, 
     resolved_alerts = bus.resolve_all_alerts()
     resolved_incidents = rca_engine.resolve_all_incidents()
     health_monitor.reset_all()
+    drift_detector.reset()
+    bias_auditor.reset_all()
+    hallucination_monitor.reset()
+    lifecycle_manager.clear_retraining_queue()
     return {
         "success": True,
         "message": "Platform state successfully reset to Healthy.",

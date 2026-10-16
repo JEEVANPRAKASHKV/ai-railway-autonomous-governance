@@ -45,6 +45,34 @@ HARMFUL_PATTERNS = [
 ]
 HISTORY_SIZE = 500
 
+# Words that carry no factual claim (English + Hinglish function words + assistant boilerplate).
+_STOPWORDS = frozenset("""
+the and for are was were you your yours not but with this that these those from have has had will would can could should may might
+any all its into out over under than then them they their there here what when which while who whom how why also only more most
+some such each per via been being does did doing done get gets got use used using one two within without about after before
+please visit contact call details detail information info help helpline website irctc railmadad railway railways indian
+yes sure note kindly thank thanks regards ticket tickets passenger passengers
+hai hain ka ki ke ko se me mein par pe aur ya toh to bhi nahi nahin kya kyun kyu jab tab agar aap aapka aapki aapke aapko apna apni
+yeh ye woh wo is us isko usko hota hoti hote hua hui hue kar karo karein karna karne kiya liye lie sakte sakta sakti milta milti milega
+mil jata jati jate raha rahi rahe wala wali wale tak sath saath jaankari zyaada zyada sampark depend karta baat baar
+""".split())
+
+
+def _stem(w: str) -> str:
+    for suf in ("ing", "ed", "es", "s"):
+        if len(w) > len(suf) + 3 and w.endswith(suf):
+            return w[: -len(suf)]
+    return w
+
+
+def _content_tokens(text: str) -> List[str]:
+    toks = re.findall(r"[a-z0-9]+", text.lower().replace(",", ""))
+    return [_stem(t) for t in toks if (len(t) >= 3 or t.isdigit()) and t not in _STOPWORDS]
+
+
+def _numbers(text: str) -> List[str]:
+    return re.findall(r"\d+(?:\.\d+)?", text.replace(",", ""))
+
 
 # ──────────────────────────────────────────────────────────────────────────────
 # Hallucination Monitor
@@ -65,23 +93,35 @@ class HallucinationMonitor:
 
     # ── Scoring Primitives ────────────────────────────────────────────────────
 
+    def reset(self) -> None:
+        with self._lock:
+            self._history.clear()
+            self._module_stats.clear()
+
+    def _support(self, text: str, context_docs: List[str]) -> Tuple[float, float, int]:
+        """Return (content-token support, numeric-fact support, n_numbers) of `text` against the context union."""
+        ctx = " ".join(context_docs)
+        ctx_tokens = set(_content_tokens(ctx))
+        toks = _content_tokens(text)
+        support = (sum(1 for t in toks if t in ctx_tokens) / len(toks)) if toks else 1.0
+        nums = _numbers(text)
+        ctx_nums = set(_numbers(ctx))
+        num_support = (sum(1 for n in nums if n in ctx_nums) / len(nums)) if nums else 1.0
+        return support, num_support, len(nums)
+
     def _compute_faithfulness(self, response: str, context_docs: List[str]) -> float:
         """
-        Faithfulness = max cosine similarity between response and any context doc.
-        Uses TF-IDF vectors on unigrams+bigrams.
+        Faithfulness = how much of what the response *claims* is supported by the retrieved context:
+        70% content-word support + 30% numeric-fact support (amounts, hours, days must appear in the source).
+        An unsupported number caps the score — invented figures are the classic hallucination.
         """
         if not context_docs:
             return 0.0
-
-        all_texts = context_docs + [response]
-        try:
-            tfidf_matrix = self._vectorizer.fit_transform(all_texts)
-            context_vecs = tfidf_matrix[:-1]
-            response_vec = tfidf_matrix[-1]
-            sims = cosine_similarity(response_vec, context_vecs)[0]
-            return float(round(np.max(sims), 4))
-        except Exception:
-            return 0.0
+        support, num_support, n_nums = self._support(response, context_docs)
+        score = 0.7 * support + 0.3 * num_support
+        if n_nums and num_support < 1.0:
+            score = min(score, 0.5 * (1 + num_support) * 0.7)
+        return float(round(min(score, 1.0), 4))
 
     def _compute_token_overlap(self, response: str, context: str) -> float:
         """Word-level Jaccard overlap as a secondary signal."""
@@ -119,24 +159,18 @@ class HallucinationMonitor:
         to at least one context document (similarity ≥ GROUNDEDNESS_THRESHOLD).
         Returns (score, ungrounded_sentences).
         """
-        sentences = [s.strip() for s in re.split(r"[.!?]", response) if len(s.strip()) > 20]
+        sentences = [s.strip() for s in re.split(r"(?<=[.!?])\s+|\n+", response) if len(_content_tokens(s)) >= 4]
         if not sentences or not context_docs:
             return 1.0, []
 
         ungrounded = []
         for sent in sentences:
-            try:
-                texts = context_docs + [sent]
-                mat = TfidfVectorizer(ngram_range=(1, 2), max_features=3000, stop_words="english").fit_transform(texts)
-                sims = cosine_similarity(mat[-1], mat[:-1])[0]
-                if np.max(sims) < GROUNDEDNESS_THRESHOLD:
-                    ungrounded.append(sent)
-            except Exception:
-                pass
+            support, num_support, n_nums = self._support(sent, context_docs)
+            if support < 0.5 or (n_nums and num_support < 1.0):
+                ungrounded.append(sent)
 
         grounded_count = len(sentences) - len(ungrounded)
-        score = round(grounded_count / len(sentences), 4) if sentences else 1.0
-        return score, ungrounded
+        return round(grounded_count / len(sentences), 4), ungrounded
 
     # ── Main Evaluation ───────────────────────────────────────────────────────
 
@@ -173,9 +207,7 @@ class HallucinationMonitor:
         )
 
         # Composite score
-        composite = round(
-            0.5 * faithfulness + 0.3 * groundedness_score + 0.2 * overlap, 4
-        )
+        composite = round(0.6 * faithfulness + 0.4 * groundedness_score, 4)
 
         contradictions = self._detect_contradictions(response, context_docs)
         harmful = self._detect_harmful_content(response)
