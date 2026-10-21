@@ -32,7 +32,21 @@ CRITICAL_EVENT_TYPES = {
     "SLA_BREACH", "MODEL_DRIFT_DETECTED", "BIAS_DETECTED",
     "HALLUCINATION_DETECTED", "FRAUD_SPIKE", "CIRCUIT_OPEN",
     "DATA_QUALITY_VIOLATION", "PREDICTION_FAILURE",
+    "PERFORMANCE_DEGRADED", "RETRAIN_FAILED", "AGENT_ANOMALY", "PRICING_ANOMALY",
 }
+
+# Service dependency graph (who calls whom). Used to trace a symptom in one service back to an
+# upstream root cause in another — e.g. a degraded delay model makes the travel planner's plans worse.
+SERVICE_DEPENDENCIES: Dict[str, List[str]] = {
+    "m4_travel_planner": ["m1_ticket_predictor", "m3_delay_predictor", "m5_fare_predictor"],
+    "m6_support_assistant": ["m2_train_recommender"],
+    "m2_train_recommender": [],
+    "m1_ticket_predictor": [], "m3_delay_predictor": [], "m5_fare_predictor": [], "m7_fraud_detector": [],
+}
+
+
+def _downstream_of(module: str) -> List[str]:
+    return [m for m, deps in SERVICE_DEPENDENCIES.items() if module in deps]
 
 # Causal dependency graph: event_type → likely upstream causes
 CAUSAL_MAP: Dict[str, List[str]] = {
@@ -43,6 +57,10 @@ CAUSAL_MAP: Dict[str, List[str]] = {
     "FRAUD_SPIKE": ["DATA_QUALITY_VIOLATION", "BOT_ATTACK"],
     "PREDICTION_FAILURE": ["MODEL_DRIFT_DETECTED", "SLA_BREACH", "CIRCUIT_OPEN"],
     "CIRCUIT_OPEN": ["SLA_BREACH", "PREDICTION_FAILURE"],
+    "PERFORMANCE_DEGRADED": ["MODEL_DRIFT_DETECTED", "CONCEPT_DRIFT", "DATA_QUALITY_VIOLATION"],
+    "RETRAIN_FAILED": ["TRAINING_PIPELINE_ERROR", "DATA_QUALITY_VIOLATION"],
+    "AGENT_ANOMALY": ["PROMPT_INJECTION", "TOOL_FAILURE", "UPSTREAM_MODEL_DEGRADED"],
+    "PRICING_ANOMALY": ["MODEL_DRIFT_DETECTED", "DATA_QUALITY_VIOLATION"],
 }
 
 # 5-Why templates per event type
@@ -81,6 +99,27 @@ FIVE_WHY_TEMPLATES: Dict[str, List[str]] = {
         "Why have adversarial attack patterns changed?",
         "Why wasn't the fraud model retrained on recent attack vectors?",
         "Why were anomalous velocity signals not flagged earlier?",
+    ],
+    "PERFORMANCE_DEGRADED": [
+        "Why did live accuracy fall below the training baseline?",
+        "Why do real outcomes now differ from what the model predicts for the same inputs?",
+        "Why has the relationship between inputs and outcomes changed (concept drift)?",
+        "Why was the model trained only on historical patterns that no longer hold?",
+        "Why were recent labelled outcomes not yet part of the training data?",
+    ],
+    "AGENT_ANOMALY": [
+        "Why did the planner agent behave abnormally?",
+        "Why did it need unusually many tool calls, or why were its decisions rejected?",
+        "Why did a tool return unusable or failing results?",
+        "Why was the user request ambiguous or adversarial?",
+        "Why did the guardrails not resolve it earlier in the pipeline?",
+    ],
+    "PRICING_ANOMALY": [
+        "Why is the predicted fare outside the historical range for this class and lead time?",
+        "Why did the model extrapolate beyond its training data?",
+        "Why were the inputs (base fare, demand) unusual?",
+        "Why did the data-quality gate not block the inputs?",
+        "Why is there no hard pricing guardrail for this case?",
     ],
     "DEFAULT": [
         "Why did this event occur?",
@@ -123,6 +162,23 @@ REMEDIATION_PLAYBOOKS: Dict[str, str] = {
         "3. Retrain fraud model on latest fraud event logs. "
         "4. Flag suspicious sessions for manual review."
     ),
+    "PERFORMANCE_DEGRADED": (
+        "1. Retrain with the latest labelled outcomes (supervisor does this automatically). "
+        "2. Evaluate the challenger on the fixed hold-out AND recent outcomes. "
+        "3. Run a 10% canary on live traffic. 4. Promote only after human approval; auto-rollback if it regresses."
+    ),
+    "AGENT_ANOMALY": (
+        "1. Inspect the execution trace in the audit log. 2. Check upstream model health (ticket / delay / fare). "
+        "3. Tighten the injection guard or tool-call budget. 4. Keep the human approval gate mandatory."
+    ),
+    "PRICING_ANOMALY": (
+        "1. Serve the policy-capped fare instead of the raw prediction. 2. Check the input base fare and demand. "
+        "3. Investigate drift on fare features. 4. Retrain if the anomaly rate stays high."
+    ),
+    "RETRAIN_FAILED": (
+        "1. Read the failure reason in the lifecycle history. 2. Fix the pipeline / data issue. "
+        "3. Re-run retraining. The current production model keeps serving meanwhile."
+    ),
     "DEFAULT": (
         "1. Investigate telemetry event stream for correlated signals. "
         "2. Review module logs and feature inputs. "
@@ -156,6 +212,12 @@ class Incident:
         self.resolved: bool = False
         self.occurrences: int = 1
         self.last_seen = self.timestamp
+        self.evidence: List[str] = []
+        self.upstream_suspects: List[dict] = []
+        self.downstream_impact: List[str] = []
+        self.root_cause_module: str = module_id
+        self.resolution: str = ""
+        self.resolved_at = None
 
     def to_dict(self) -> dict:
         return {
@@ -172,6 +234,12 @@ class Incident:
             "trigger_payload": self.trigger_payload,
             "occurrences": self.occurrences,
             "last_seen": self.last_seen.isoformat(),
+            "evidence": self.evidence,
+            "root_cause_module": self.root_cause_module,
+            "upstream_suspects": self.upstream_suspects,
+            "downstream_impact": self.downstream_impact,
+            "resolution": self.resolution,
+            "resolved_at": self.resolved_at.isoformat() if self.resolved_at else None,
         }
 
 
@@ -255,6 +323,21 @@ class RCAEngine:
             incident.primary_event_type, REMEDIATION_PLAYBOOKS["DEFAULT"]
         )
 
+        # Evidence: the concrete numbers behind this incident
+        incident.evidence = self._evidence(incident.primary_event_type, incident.trigger_payload)
+
+        # Dependency tracing: is an UPSTREAM service already failing? Then that is the likelier root cause.
+        for dep in SERVICE_DEPENDENCIES.get(incident.module_id, []):
+            open_dep = [i for i in self._incidents.values() if not i.resolved and i.module_id == dep]
+            if open_dep:
+                incident.upstream_suspects.append({"module_id": dep, "incident_id": open_dep[0].incident_id,
+                                                   "event_type": open_dep[0].primary_event_type})
+        if incident.upstream_suspects:
+            incident.root_cause_module = incident.upstream_suspects[0]["module_id"]
+            incident.inferred_causes = [f"Upstream {incident.root_cause_module} "
+                                        f"{incident.upstream_suspects[0]['event_type']}"] + incident.inferred_causes
+        incident.downstream_impact = _downstream_of(incident.module_id)
+
         # Priority: CRITICAL if multiple correlated events
         if len(incident.correlated_events) >= 3:
             incident.priority = "CRITICAL"
@@ -279,6 +362,35 @@ class RCAEngine:
         )
 
         return incident_id
+
+    @staticmethod
+    def _evidence(event_type: str, p: dict) -> List[str]:
+        ev: List[str] = []
+        try:
+            if event_type == "MODEL_DRIFT_DETECTED":
+                feats = p.get("drifted_features") or []
+                if feats:
+                    ev.append("Drifted features: " + ", ".join(map(str, feats)))
+                if p.get("prediction_drift", {}) and p["prediction_drift"].get("drift_detected"):
+                    ev.append(f"Prediction distribution also shifted (KS {p['prediction_drift'].get('ks_statistic')})")
+            elif event_type == "SLA_BREACH":
+                ev.append(f"P95 latency {p.get('p95_ms', 0):.0f} ms; error rate {p.get('error_rate_pct', 0):.1f}%")
+                for b in p.get("breaches", [])[:3]:
+                    ev.append(str(b))
+            elif event_type == "PERFORMANCE_DEGRADED":
+                ev.append(str(p.get("reason", "")))
+                ev.append(f"Live metrics {p.get('metrics')} vs baseline {p.get('baseline')} over {p.get('n_outcomes')} outcomes")
+            elif event_type == "BIAS_DETECTED":
+                ev.extend(map(str, (p.get("adverse_flags") or [])[:3]))
+            elif event_type == "DATA_QUALITY_VIOLATION":
+                ev.extend(map(str, (p.get("violations") or [])[:3]))
+            elif event_type in ("HALLUCINATION_DETECTED", "LOW_FAITHFULNESS"):
+                ev.append(f"Composite grounding score {p.get('composite_score')}")
+            elif event_type in ("AGENT_ANOMALY", "PRICING_ANOMALY", "RETRAIN_FAILED"):
+                ev.extend(f"{k}: {v}" for k, v in list(p.items())[:4])
+        except Exception:
+            pass
+        return [e for e in ev if e]
 
     def _correlate_events(self, trigger_event: dict, window_seconds: int) -> List[dict]:
         """Find events in buffer within time window that may be related."""
@@ -324,11 +436,14 @@ class RCAEngine:
                     new_incidents.append({"incident_id": inc_id, "event": ev})
         return new_incidents
 
-    def resolve_incident(self, incident_id: str) -> bool:
+    def resolve_incident(self, incident_id: str, resolution: str = "Resolved by operator") -> bool:
         with self._lock:
             incident = self._incidents.get(incident_id)
-            if incident:
+            if incident and not incident.resolved:
                 incident.resolved = True
+                incident.resolution = resolution
+                incident.resolved_at = datetime.now(timezone.utc)
+                self._incident_history.append(incident.to_dict())
                 return True
             return False
 

@@ -31,6 +31,7 @@ from governance.telemetry_bus import telemetry_bus
 DIR_ADVERSE_IMPACT_THRESHOLD = 0.8    # EEOC 4/5ths rule: DIR < 0.8 → adverse impact
 DPD_THRESHOLD = 0.1                   # Demographic parity difference > 0.1 → flagged
 EOD_THRESHOLD = 0.1                   # Equal opportunity difference > 0.1 → flagged
+MIN_GROUP_N = 20                      # a group needs this many observations before it is compared
 
 PROTECTED_ATTRIBUTES = [
     "gender",
@@ -118,6 +119,8 @@ class BiasAuditor:
             lambda: defaultdict(lambda: defaultdict(_GroupMetrics.__new__))
         )
         self._audit_history: List[dict] = []
+        # Ground-truth observations kept separately so outcome feedback does not double-count predictions
+        self._gt_observations: Dict[str, Dict[str, Dict[str, _GroupMetrics]]] = {}
 
     def _get_or_create(
         self,
@@ -151,9 +154,18 @@ class BiasAuditor:
                 gm = self._get_or_create(module_id, attr, str(group_val))
                 gm.add(prediction, ground_truth)
 
+    def observe_outcome(self, module_id: str, protected_attrs: Dict[str, str], prediction: float,
+                        ground_truth: int) -> None:
+        """Record a real outcome for a prediction (enables Equal Opportunity Difference)."""
+        with self._lock:
+            for attr, group_val in protected_attrs.items():
+                groups = self._gt_observations.setdefault(module_id, {}).setdefault(attr, {})
+                gm = groups.setdefault(str(group_val), _GroupMetrics(str(group_val)))
+                gm.add(prediction, int(ground_truth))
+
     def _compute_dir(self, groups: Dict[str, _GroupMetrics]) -> Tuple[float, str, str]:
         """Disparate Impact Ratio: min(positive rate) / max(positive rate)."""
-        rates = {g: m.positive_rate for g, m in groups.items() if m.n > 0}
+        rates = {g: m.positive_rate for g, m in groups.items() if m.n >= MIN_GROUP_N}
         if len(rates) < 2:
             return 1.0, "", ""
         min_group = min(rates, key=lambda k: rates[k])
@@ -186,11 +198,13 @@ class BiasAuditor:
                 dir_val, minority_group, majority_group = self._compute_dir(groups)
 
                 # DPD — max pairwise difference in positive rates
-                rates = [m.positive_rate for m in groups.values() if m.n > 0]
+                rates = [m.positive_rate for m in groups.values() if m.n >= MIN_GROUP_N]
                 dpd = round(max(rates) - min(rates), 4) if len(rates) >= 2 else 0.0
 
-                # EOD (if ground truth available)
-                tprs = [m.true_positive_rate for m in groups.values() if m.ground_truths]
+                # EOD — needs real outcomes (fed by the performance monitor when ground truth arrives)
+                gt_groups = self._gt_observations.get(module_id, {}).get(attr_name, {})
+                tprs = [m.true_positive_rate for m in gt_groups.values()
+                        if sum(1 for g in m.ground_truths if g == 1) >= 10]
                 eod = round(max(tprs) - min(tprs), 4) if len(tprs) >= 2 else None
 
                 # Flag adverse impact
@@ -207,6 +221,8 @@ class BiasAuditor:
                 attr_report = {
                     "attribute": attr_name,
                     "groups": {g: m.to_dict() for g, m in groups.items()},
+                "groups_compared": [g for g, m in groups.items() if m.n >= MIN_GROUP_N],
+                "min_group_size": MIN_GROUP_N,
                     "dir": dir_val,
                     "dpd": dpd,
                     "eod": eod,
@@ -294,6 +310,7 @@ class BiasAuditor:
     def reset_all(self) -> None:
         with self._lock:
             self._observations.clear()
+            self._gt_observations.clear()
             self._audit_history.clear()
 
     def reset_module(self, module_id: str) -> None:

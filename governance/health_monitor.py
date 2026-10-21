@@ -35,7 +35,8 @@ DEFAULT_SLA = {
 }
 
 CIRCUIT_FAILURE_THRESHOLD = 5    # consecutive errors to OPEN circuit
-CIRCUIT_RECOVERY_TIMEOUT_S = 60  # seconds before attempting HALF-OPEN
+CIRCUIT_RECOVERY_TIMEOUT_S = 30  # seconds before attempting HALF-OPEN
+SLA_EVENT_COOLDOWN_S = 60        # publish an SLA breach at most once a minute per module
 LATENCY_WINDOW_SIZE = 500        # rolling window for latency samples
 
 
@@ -54,16 +55,33 @@ class CircuitBreaker:
     state: CircuitState = CircuitState.CLOSED
     consecutive_failures: int = 0
     last_opened_at: Optional[float] = None
+    open_seconds_total: float = 0.0
+    probe_in_flight: bool = False
+    times_opened: int = 0
+
+    def _close(self) -> None:
+        if self.state != CircuitState.CLOSED and self.last_opened_at:
+            self.open_seconds_total += time.monotonic() - self.last_opened_at
+        self.state = CircuitState.CLOSED
+        self.probe_in_flight = False
 
     def record_success(self) -> None:
         self.consecutive_failures = 0
-        self.state = CircuitState.CLOSED
+        self._close()
 
-    def record_failure(self) -> None:
+    def record_failure(self) -> bool:
+        """Returns True when this failure OPENED the circuit."""
         self.consecutive_failures += 1
-        if self.consecutive_failures >= CIRCUIT_FAILURE_THRESHOLD:
+        self.probe_in_flight = False
+        if self.state == CircuitState.HALF_OPEN or (
+            self.state == CircuitState.CLOSED and self.consecutive_failures >= CIRCUIT_FAILURE_THRESHOLD
+        ):
+            was_closed = self.state == CircuitState.CLOSED
             self.state = CircuitState.OPEN
             self.last_opened_at = time.monotonic()
+            self.times_opened += 1 if was_closed else 0
+            return was_closed
+        return False
 
     def allow_request(self) -> bool:
         if self.state == CircuitState.CLOSED:
@@ -72,9 +90,13 @@ class CircuitBreaker:
             elapsed = time.monotonic() - (self.last_opened_at or 0)
             if elapsed >= CIRCUIT_RECOVERY_TIMEOUT_S:
                 self.state = CircuitState.HALF_OPEN
+                self.probe_in_flight = True
                 return True
             return False
-        # HALF_OPEN: allow exactly one probe
+        # HALF_OPEN: exactly one probe at a time; its result closes or re-opens the circuit
+        if self.probe_in_flight:
+            return False
+        self.probe_in_flight = True
         return True
 
 
@@ -93,6 +115,8 @@ class ModuleStats:
     started_at: float = field(default_factory=time.monotonic)
     sla_breaches: int = 0
     last_request_at: Optional[float] = None
+    cpu_ms_total: float = 0.0
+    last_sla_event_at: float = 0.0
 
     # ── derived metrics ──────────────────────────────────────────────────────
 
@@ -132,9 +156,10 @@ class ModuleStats:
         elapsed = time.monotonic() - self.started_at
         if elapsed <= 0:
             return 100.0
-        # Simplified: uptime degrades proportional to open-circuit time
-        circuit_down = self.circuit.last_opened_at or 0
-        return round(max(0.0, 100.0 - (circuit_down / elapsed * 100)), 2)
+        down = self.circuit.open_seconds_total
+        if self.circuit.state != CircuitState.CLOSED and self.circuit.last_opened_at:
+            down += time.monotonic() - self.circuit.last_opened_at
+        return round(max(0.0, 100.0 - (down / elapsed * 100)), 2)
 
     def sla_status(self, sla: dict = DEFAULT_SLA) -> dict:
         breaches = []
@@ -159,6 +184,8 @@ class ModuleStats:
             "p99_ms": self.p99_ms,
             "uptime_pct": self.uptime_pct,
             "circuit_state": self.circuit.state.value,
+            "circuit_opened_count": self.circuit.times_opened,
+            "avg_cpu_ms": round(self.cpu_ms_total / self.total_requests, 2) if self.total_requests else 0.0,
             "sla_breaches_total": self.sla_breaches,
             "last_request_at": (
                 datetime.fromtimestamp(self.last_request_at, tz=timezone.utc).isoformat()
@@ -171,6 +198,38 @@ class ModuleStats:
 # ──────────────────────────────────────────────────────────────────────────────
 # Health Monitor (Singleton)
 # ──────────────────────────────────────────────────────────────────────────────
+
+_PROC = None
+
+
+def resource_usage() -> dict:
+    """Resource utilisation of the serving process and host (psutil when available)."""
+    global _PROC
+    try:
+        import psutil
+        if _PROC is None:
+            _PROC = psutil.Process()
+            _PROC.cpu_percent(None)
+        vm = psutil.virtual_memory()
+        return {
+            "process_cpu_pct": round(_PROC.cpu_percent(None), 1),
+            "process_memory_mb": round(_PROC.memory_info().rss / 1e6, 1),
+            "process_threads": _PROC.num_threads(),
+            "host_cpu_pct": round(psutil.cpu_percent(None), 1),
+            "host_memory_pct": round(vm.percent, 1),
+            "host_cpus": psutil.cpu_count(),
+            "source": "psutil",
+        }
+    except Exception:
+        try:
+            import os
+            import resource
+            la = os.getloadavg()
+            return {"process_memory_mb": round(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024, 1),
+                    "load_avg_1m": round(la[0], 2), "host_cpus": os.cpu_count(), "source": "stdlib"}
+        except Exception:
+            return {"source": "unavailable"}
+
 
 class HealthMonitor:
     """Thread-safe, singleton health monitor for all platform modules."""
@@ -194,6 +253,7 @@ class HealthMonitor:
         module_id: str,
         latency_ms: float,
         success: bool = True,
+        cpu_ms: Optional[float] = None,
     ) -> None:
         with self._lock:
             stats = self._get_or_create(module_id)
@@ -201,17 +261,26 @@ class HealthMonitor:
             stats.total_latency_ms += latency_ms
             stats.latency_samples.append(latency_ms)
             stats.last_request_at = time.time()
+            if cpu_ms is not None:
+                stats.cpu_ms_total += cpu_ms
 
             if success:
                 stats.circuit.record_success()
             else:
                 stats.total_errors += 1
-                stats.circuit.record_failure()
+                if stats.circuit.record_failure():
+                    telemetry_bus.publish(module_id=module_id, event_type="CIRCUIT_OPEN",
+                                          payload={"consecutive_failures": stats.circuit.consecutive_failures,
+                                                   "recovery_probe_after_s": CIRCUIT_RECOVERY_TIMEOUT_S},
+                                          severity="CRITICAL")
 
-            # SLA breach check
+            # SLA breach check (counted every time, published at most once a minute)
             sla_result = stats.sla_status(self._sla_config)
             if not sla_result["compliant"]:
                 stats.sla_breaches += 1
+                if time.time() - stats.last_sla_event_at < SLA_EVENT_COOLDOWN_S:
+                    return
+                stats.last_sla_event_at = time.time()
                 telemetry_bus.publish(
                     module_id=module_id,
                     event_type="SLA_BREACH",
@@ -257,6 +326,7 @@ class HealthMonitor:
                 ),
                 "open_circuits": open_circuits,
                 "modules": modules,
+                "resources": resource_usage(),
             }
 
     def get_sla_report(self) -> List[dict]:

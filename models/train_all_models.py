@@ -18,7 +18,7 @@ import pickle
 import logging
 import warnings
 from datetime import date
-from typing import Dict, List, Tuple, Any
+from typing import Any, Dict, List, Tuple
 
 import numpy as np
 import pandas as pd
@@ -45,8 +45,40 @@ os.makedirs(ARTIFACTS_DIR, exist_ok=True)
 os.makedirs(os.path.join(ARTIFACTS_DIR, "shap_explainers"), exist_ok=True)
 os.makedirs(REGISTRY_DIR, exist_ok=True)
 
-RANDOM_SEED = 42
+RANDOM_SEED = 42          # model seed (varied by autonomous retraining)
+SPLIT_SEED = 42           # hold-out split seed — FIXED so every model version is scored on the same test set
 np.random.seed(RANDOM_SEED)
+
+# Labelled production outcomes (features exactly as the model saw them + actual outcome), injected by the
+# lifecycle manager when it retrains after concept drift. They are added to the TRAINING split only, so
+# the fixed hold-out set stays comparable across versions.
+EXTRA_TRAINING_ROWS: Dict[str, List[Tuple[dict, Any]]] = {}
+LAST_EXTRA_ROWS_USED: Dict[str, int] = {}
+
+
+def _append_extra(model_key: str, X_train: pd.DataFrame, y_train, encoder=None):
+    rows = EXTRA_TRAINING_ROWS.get(model_key) or []
+    LAST_EXTRA_ROWS_USED[model_key] = 0
+    if not rows:
+        return X_train, y_train
+    feats, ys = [], []
+    for f, y in rows:
+        if all(c in f for c in X_train.columns):
+            try:
+                ys.append(int(encoder.transform([str(y)])[0]) if encoder is not None else float(y))
+                feats.append([float(f[c]) for c in X_train.columns])
+            except Exception:
+                continue
+    if not feats:
+        return X_train, y_train
+    X_extra = pd.DataFrame(feats, columns=X_train.columns)
+    # Up-weight recent reality a little by repeating it (production outcomes are scarce vs history).
+    reps = max(1, min(5, len(X_train) // (len(feats) * 50) or 1))
+    X_new = pd.concat([X_train] + [X_extra] * reps, ignore_index=True)
+    y_arr = np.concatenate([np.asarray(y_train)] + [np.asarray(ys)] * reps)
+    LAST_EXTRA_ROWS_USED[model_key] = len(feats)
+    logger.info(f"  + {len(feats)} labelled production outcomes added to training (x{reps})")
+    return X_new, y_arr
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s │ %(levelname)s │ %(message)s")
 logger = logging.getLogger(__name__)
@@ -169,8 +201,9 @@ def train_wl_predictor() -> Dict:
     y = target_enc.fit_transform(df["final_status"].fillna("WL"))
 
     X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=RANDOM_SEED, stratify=y
+        X, y, test_size=0.2, random_state=SPLIT_SEED, stratify=y
     )
+    X_train, y_train = _append_extra("wl_predictor", X_train, y_train, target_enc)
 
     model = xgb.XGBClassifier(
         n_estimators=300, max_depth=6, learning_rate=0.05,
@@ -236,7 +269,7 @@ def train_berth_estimator() -> Dict:
     y = berth_enc.fit_transform(df["berth_type"])
 
     X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=RANDOM_SEED
+        X, y, test_size=0.2, random_state=SPLIT_SEED
     )
 
     model = xgb.XGBClassifier(
@@ -288,8 +321,9 @@ def train_delay_predictor() -> Dict:
     y = df["delay_minutes"].fillna(0).clip(0, 300)
 
     X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=RANDOM_SEED
+        X, y, test_size=0.2, random_state=SPLIT_SEED
     )
+    X_train, y_train = _append_extra("delay_predictor", X_train, y_train)
 
     model = lgb.LGBMRegressor(
         n_estimators=400, max_depth=6, learning_rate=0.05,
@@ -341,8 +375,9 @@ def train_fare_predictor() -> Dict:
     y = df["dynamic_fare"].fillna(0)
 
     X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=RANDOM_SEED
+        X, y, test_size=0.2, random_state=SPLIT_SEED
     )
+    X_train, y_train = _append_extra("fare_predictor", X_train, y_train)
 
     model = xgb.XGBRegressor(
         n_estimators=400, max_depth=6, learning_rate=0.05,
@@ -395,8 +430,9 @@ def train_fraud_detector() -> Dict:
     y = label_enc.fit_transform(df["label"].fillna("legitimate"))
 
     X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=RANDOM_SEED, stratify=y
+        X, y, test_size=0.2, random_state=SPLIT_SEED, stratify=y
     )
+    X_train, y_train = _append_extra("fraud_detector", X_train, y_train, label_enc)
 
     # Scale class weights for imbalanced dataset
     from sklearn.utils.class_weight import compute_sample_weight

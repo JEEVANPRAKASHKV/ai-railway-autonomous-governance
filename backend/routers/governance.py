@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import uuid
 from typing import Any, Dict, List, Optional
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends, Header, HTTPException, Query
 import numpy as np
 from pydantic import BaseModel, Field
 
@@ -26,6 +26,12 @@ from governance.hallucination_monitor import hallucination_monitor
 from governance.rca_engine import rca_engine
 from governance.lifecycle_manager import lifecycle_manager
 from governance.report_generator import report_generator
+from governance.performance_monitor import performance_monitor
+from governance.audit_store import audit_store
+from backend.security import Principal, require_role
+
+OPERATOR = Depends(require_role("operator"))
+ADMIN = Depends(require_role("admin"))
 
 router = APIRouter(prefix="/governance", tags=["AI Governance Control Tower"])
 
@@ -55,6 +61,23 @@ class RollbackRequest(BaseModel):
 class HITLDecisionRequest(BaseModel):
     request_id: str
     approved: bool
+    note: str = Field(default="", max_length=500)
+
+
+class OutcomeRequest(BaseModel):
+    audit_id: str = Field(..., description="audit_id from the prediction's governance badge")
+    actual: Any = Field(..., description="What really happened (final status / delay minutes / fare / label / chosen train / 1-5 rating)")
+    source: str = Field(default="passenger", description="passenger | railway_system | analyst")
+
+
+class SimulateTrafficRequest(BaseModel):
+    rounds: int = Field(default=20, ge=1, le=200)
+    shifted: bool = Field(default=False, description="True = deliberately changed input distribution")
+
+
+class SimulateOutcomesRequest(BaseModel):
+    mode: str = Field(default="normal", description="'normal' or 'concept_drift'")
+    modules: Optional[List[str]] = None
 
 
 class SupervisorChaosRequest(BaseModel):
@@ -148,6 +171,7 @@ def get_supervisor_alerts(
 def inject_chaos(
     req: ChaosInjectionRequest,
     bus: TelemetryBus = Depends(get_telemetry_bus),
+    who: Principal = OPERATOR,
 ) -> ChaosInjectionResponse:
     event_id = f"CHAOS-{uuid.uuid4().hex[:6].upper()}"
 
@@ -221,18 +245,24 @@ def get_action_log(n: int = Query(default=50, ge=1, le=200)) -> List[Dict[str, A
 
 
 @router.post("/supervisor/report", summary="Trigger a fresh comprehensive governance audit report")
-def trigger_report() -> Dict[str, Any]:
+def trigger_report(who: Principal = OPERATOR) -> Dict[str, Any]:
     return supervisor_agent.trigger_report()
 
 
-@router.post("/supervisor/chaos", summary="Inject controlled chaos via supervisor agent")
-def supervisor_inject_chaos(req: SupervisorChaosRequest) -> Dict[str, Any]:
+@router.post("/supervisor/chaos", summary="Inject controlled chaos via supervisor agent  [operator]")
+def supervisor_inject_chaos(req: SupervisorChaosRequest, who: Principal = OPERATOR) -> Dict[str, Any]:
     return supervisor_agent.inject_chaos(req.module_id, req.chaos_type)
 
 
-@router.post("/supervisor/rollback", summary="Manually trigger a model rollback")
-def manual_rollback(req: RollbackRequest) -> Dict[str, Any]:
-    return supervisor_agent.trigger_rollback(req.model_id, req.reason)
+@router.post("/supervisor/rollback", summary="Roll a model back to its previous version  [operator]")
+def manual_rollback(req: RollbackRequest, who: Principal = OPERATOR) -> Dict[str, Any]:
+    return supervisor_agent.trigger_rollback(req.model_id, req.reason, actor=who.actor)
+
+
+@router.post("/supervisor/cycle", summary="Run one supervisor governance cycle now  [operator]")
+def run_cycle(who: Principal = OPERATOR) -> Dict[str, Any]:
+    supervisor_agent._governance_cycle()
+    return {"success": True, "governance_score": supervisor_agent.get_dashboard_state()["governance_score"]}
 
 
 @router.get("/supervisor/hitl/pending", summary="List pending HITL approval requests")
@@ -240,9 +270,14 @@ def get_hitl_pending() -> List[Dict[str, Any]]:
     return supervisor_agent.get_hitl_pending()
 
 
-@router.post("/supervisor/hitl/decide", summary="Approve or reject a HITL governance action")
-def decide_hitl(req: HITLDecisionRequest) -> Dict[str, Any]:
-    return supervisor_agent.approve_hitl(req.request_id, req.approved)
+@router.get("/supervisor/hitl/history", summary="Decided HITL approval requests")
+def get_hitl_history(n: int = Query(default=20, ge=1, le=100)) -> List[Dict[str, Any]]:
+    return supervisor_agent.get_hitl_history(n=n)
+
+
+@router.post("/supervisor/hitl/decide", summary="Approve or reject a HITL governance action  [admin]")
+def decide_hitl(req: HITLDecisionRequest, who: Principal = ADMIN) -> Dict[str, Any]:
+    return supervisor_agent.approve_hitl(req.request_id, req.approved, decided_by=who.actor, note=req.note)
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -336,10 +371,18 @@ def get_incident(incident_id: str) -> Dict[str, Any]:
     return result or {"error": "Incident not found", "incident_id": incident_id}
 
 
-@router.post("/incidents/{incident_id}/resolve", summary="Mark an incident as resolved")
-def resolve_incident(incident_id: str) -> Dict[str, Any]:
-    success = rca_engine.resolve_incident(incident_id)
+@router.post("/incidents/{incident_id}/resolve", summary="Mark an incident as resolved  [operator]")
+def resolve_incident(incident_id: str, who: Principal = OPERATOR) -> Dict[str, Any]:
+    success = rca_engine.resolve_incident(incident_id, resolution=f"Resolved by {who.actor}")
+    if success:
+        audit_store.append("governance_action", {"action_type": "INCIDENT_RESOLVED", "incident_id": incident_id},
+                           ref=incident_id, actor=who.actor)
     return {"success": success, "incident_id": incident_id}
+
+
+@router.get("/incidents/history/all", summary="Recently opened and resolved incidents")
+def get_incident_history(n: int = Query(default=30, ge=1, le=200)) -> List[Dict[str, Any]]:
+    return rca_engine.get_incident_history(n=n)
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -360,14 +403,30 @@ class RetrainRequest(BaseModel):
     model_id: str
 
 
-@router.post("/lifecycle/retrain", summary="Retrain a model: train challenger, evaluate vs champion")
-def retrain_model(req: RetrainRequest) -> Dict[str, Any]:
-    return lifecycle_manager.retrain(req.model_id, reason="operator_request")
+@router.post("/lifecycle/retrain", summary="Retrain a model: train challenger, evaluate vs champion  [operator]")
+def retrain_model(req: RetrainRequest, who: Principal = OPERATOR) -> Dict[str, Any]:
+    res = lifecycle_manager.retrain(req.model_id, reason=f"operator request ({who.actor})")
+    audit_store.append("governance_action", {"action_type": "OPERATOR_RETRAIN", "result": res},
+                       module=req.model_id, ref="OPERATOR_RETRAIN", actor=who.actor)
+    return res
 
 
-@router.post("/lifecycle/promote", summary="Promote the registered challenger to production (hot-swap)")
-def promote_challenger(req: RetrainRequest) -> Dict[str, Any]:
-    return lifecycle_manager.promote_challenger(req.model_id)
+@router.post("/lifecycle/promote", summary="Request promotion of the challenger — waits for admin approval  [operator]")
+def promote_challenger(req: RetrainRequest, who: Principal = OPERATOR) -> Dict[str, Any]:
+    return supervisor_agent.request_promotion(req.model_id, requested_by=who.actor)
+
+
+@router.post("/lifecycle/canary/stop", summary="Withdraw the challenger from live traffic  [operator]")
+def stop_canary(req: RetrainRequest, who: Principal = OPERATOR) -> Dict[str, Any]:
+    res = lifecycle_manager.stop_canary(req.model_id, reason=f"stopped by {who.actor}")
+    audit_store.append("governance_action", {"action_type": "CANARY_STOPPED", "result": res},
+                       module=req.model_id, ref="CANARY_STOPPED", actor=who.actor)
+    return res
+
+
+@router.get("/lifecycle/retrain-history", summary="Every retraining run with its accept / reject decision")
+def get_retrain_history(n: int = Query(default=20, ge=1, le=50)) -> List[Dict[str, Any]]:
+    return lifecycle_manager.retrain_history(n=n)
 
 
 @router.get("/lifecycle/retraining-queue", summary="Models queued for retraining")
@@ -394,15 +453,18 @@ def get_report(report_id: str) -> Dict[str, Any]:
 # Stage 4 — Platform Health Reset & Telemetry Seeder
 # ──────────────────────────────────────────────────────────────────────────────
 
-@router.post("/supervisor/reset", summary="Reset platform to healthy state")
-def reset_platform(bus: TelemetryBus = Depends(get_telemetry_bus)) -> Dict[str, Any]:
+@router.post("/supervisor/reset", summary="Reset live monitoring windows to a clean state  [admin]")
+def reset_platform(bus: TelemetryBus = Depends(get_telemetry_bus), who: Principal = ADMIN) -> Dict[str, Any]:
     resolved_alerts = bus.resolve_all_alerts()
     resolved_incidents = rca_engine.resolve_all_incidents()
     health_monitor.reset_all()
     drift_detector.reset()
     bias_auditor.reset_all()
     hallucination_monitor.reset()
+    performance_monitor.reset()
     lifecycle_manager.clear_retraining_queue()
+    audit_store.append("governance_action", {"action_type": "PLATFORM_RESET", "resolved_incidents": resolved_incidents},
+                       ref="PLATFORM_RESET", actor=who.actor)
     return {
         "success": True,
         "message": "Platform state successfully reset to Healthy.",
@@ -412,14 +474,72 @@ def reset_platform(bus: TelemetryBus = Depends(get_telemetry_bus)) -> Dict[str, 
     }
 
 
-@router.post("/telemetry/seed", summary="Seed 50 baseline telemetry events across M1-M7")
-def seed_telemetry(
-    count: int = Query(default=50, ge=10, le=200),
-    bus: TelemetryBus = Depends(get_telemetry_bus),
-) -> Dict[str, Any]:
-    seeded = bus.seed_baseline(count=count)
-    return {
-        "success": True,
-        "seeded_count": seeded,
-        "message": f"Successfully seeded {seeded} realistic baseline telemetry events across M1–M7.",
-    }
+# ──────────────────────────────────────────────────────────────────────────────
+# Ground truth, performance, behaviour, audit and compliance
+# ──────────────────────────────────────────────────────────────────────────────
+
+@router.post("/outcomes", summary="Report the real outcome of a prediction (closes the feedback loop)")
+def record_outcome(req: OutcomeRequest, x_api_key: str = Header(default="")) -> Dict[str, Any]:
+    source = req.source if req.source in ("passenger", "railway_system", "analyst") else "passenger"
+    if source != "passenger":
+        require_role("operator")(x_api_key=x_api_key, x_actor="")   # only trusted systems may label as such
+    res = performance_monitor.record_outcome(req.audit_id, req.actual, source=source)
+    if not res.get("accepted"):
+        raise HTTPException(status_code=404 if "Unknown" in res.get("error", "") else 409, detail=res.get("error"))
+    audit_store.append("feedback", {"actual": req.actual, "source": source, "sample": res.get("sample")},
+                       module=res.get("module_id", ""), ref=req.audit_id, actor=source)
+    return res
+
+
+@router.post("/traffic/simulate", summary="Send passenger traffic through the governed services (demo)  [operator]")
+def simulate_traffic(req: SimulateTrafficRequest, who: Principal = OPERATOR) -> Dict[str, Any]:
+    from governance.traffic_simulator import simulate
+    res = simulate(rounds=req.rounds, shifted=req.shifted)
+    audit_store.append("governance_action", {"action_type": "TRAFFIC_SIMULATED", **res}, ref="TRAFFIC_SIMULATED",
+                       actor=who.actor)
+    return res
+
+
+@router.post("/outcomes/simulate", summary="Generate SIMULATED outcomes for recent predictions (demo)  [operator]")
+def simulate_outcomes(req: SimulateOutcomesRequest, who: Principal = OPERATOR) -> Dict[str, Any]:
+    from governance.outcome_simulator import simulate
+    try:
+        res = simulate(mode=req.mode, modules=req.modules)
+    except ValueError as e:
+        raise HTTPException(status_code=422, detail=str(e))
+    audit_store.append("governance_action", {"action_type": "OUTCOMES_SIMULATED", **res}, ref="OUTCOMES_SIMULATED",
+                       actor=who.actor)
+    return res
+
+
+@router.get("/performance", summary="Live model quality from real outcomes vs training baseline")
+def get_performance() -> List[Dict[str, Any]]:
+    return performance_monitor.all_reports()
+
+
+@router.get("/behaviour", summary="User-behaviour change: request mix vs training mix")
+def get_behaviour() -> List[Dict[str, Any]]:
+    return drift_detector.behaviour_report()
+
+
+@router.get("/resources", summary="Resource utilisation of the serving process and host")
+def get_resources() -> Dict[str, Any]:
+    from governance.health_monitor import resource_usage
+    return resource_usage()
+
+
+@router.get("/audit/log", summary="Durable audit trail (personal data masked)")
+def get_audit_log(kind: Optional[str] = Query(default=None), module: Optional[str] = Query(default=None),
+                  ref: Optional[str] = Query(default=None), limit: int = Query(default=50, ge=1, le=500)) -> Dict[str, Any]:
+    return {"counts": audit_store.counts(), "entries": audit_store.query(kind=kind, module=module, ref=ref, limit=limit)}
+
+
+@router.get("/audit/verify", summary="Verify the audit hash chain has not been tampered with")
+def verify_audit() -> Dict[str, Any]:
+    return audit_store.verify()
+
+
+@router.get("/compliance", summary="Live ethical-AI / compliance checks with evidence")
+def get_compliance() -> Dict[str, Any]:
+    from governance.compliance import run_checks
+    return run_checks()

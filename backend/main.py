@@ -21,7 +21,12 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
+from fastapi import Request
+from fastapi.exceptions import RequestValidationError
+
 from backend.middleware import TelemetryMiddleware
+from backend.security import RateLimitMiddleware, using_dev_keys
+from governance.hooks import CircuitOpenError, DataQualityError
 from backend.routers import (
     delay,
     fare,
@@ -43,7 +48,7 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     """Startup preflight check, baseline seeding, and shutdown cleanup hooks."""
     logger.info("=" * 60)
     logger.info(f" Starting {settings.project_name if hasattr(settings, 'project_name') else 'AI Railway Platform'}")
-    logger.info(f" Mode: {'Azure OpenAI GPT-4o-mini' if settings.llm_available else 'Intelligent Rule-Based Fallback'}")
+    logger.info(f" LLM mode: {settings.llm_mode}")
     logger.info(f" FastAPI Port: {settings.fastapi_port} | Streamlit Port: {settings.streamlit_port}")
     logger.info("=" * 60)
 
@@ -52,10 +57,7 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     models_found = [f for f in os.listdir(art_dir) if f.endswith(".pkl")] if os.path.exists(art_dir) else []
     logger.info(f" Pre-trained ML artifacts loaded: {len(models_found)} ({', '.join(models_found)})")
 
-    # Seed baseline telemetry if empty so governance dashboards are immediately rich
-    if len(telemetry_bus.get_recent(limit=5)) == 0:
-        seeded = telemetry_bus.seed_baseline(50)
-        logger.info(f" Cold-start mitigation: Seeded {seeded} baseline telemetry events.")
+    # No synthetic telemetry is seeded: every number on the Control Tower comes from real requests.
 
     # Start autonomous AI Supervisor Agent loop (Pillar 8)
     try:
@@ -90,14 +92,29 @@ app = FastAPI(
 )
 
 # ── Middleware ─────────────────────────────────────────────────────────────────
+_origins = [o.strip() for o in os.getenv("RB_ALLOWED_ORIGINS", "http://localhost:8501,http://127.0.0.1:8501").split(",") if o.strip()]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_origins=_origins,
+    allow_credentials=False,
+    allow_methods=["GET", "POST"],
+    allow_headers=["Content-Type", "X-API-Key", "X-Actor", "X-Correlation-ID"],
 )
+app.add_middleware(RateLimitMiddleware)
 app.add_middleware(TelemetryMiddleware)
+
+
+@app.exception_handler(CircuitOpenError)
+async def _circuit_open(request: Request, exc: CircuitOpenError) -> JSONResponse:
+    return JSONResponse(status_code=503, headers={"Retry-After": "30"},
+                        content={"success": False, "detail": f"{exc.module} is temporarily paused by its circuit "
+                                 "breaker after repeated failures. Please retry shortly.", "module": exc.module})
+
+
+@app.exception_handler(DataQualityError)
+async def _data_quality(request: Request, exc: DataQualityError) -> JSONResponse:
+    return JSONResponse(status_code=422, content={"success": False, "detail": "Input rejected by the data-quality "
+                        "gate, so no unreliable prediction was made.", "violations": exc.violations})
 
 # ── Router Registration ────────────────────────────────────────────────────────
 API_V1_PREFIX = "/api/v1"
@@ -150,6 +167,7 @@ def health_check() -> JSONResponse:
             "synthetic_data_ready": data_ready,
             "llm_mode": settings.llm_mode,
             "llm": _llm_status(),
+            "security": {"rbac": True, "dev_keys_in_use": using_dev_keys()},
             "port": settings.fastapi_port,
         },
     )

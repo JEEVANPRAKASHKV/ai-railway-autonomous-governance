@@ -15,8 +15,14 @@ from typing import Any, Dict, List, Optional
 import numpy as np
 import pandas as pd
 
+import threading
+import time
+from collections import defaultdict, deque
+
 from core.config import settings
+from governance.context import report_inference
 from governance.hooks import governance_hook
+from governance.lifecycle_manager import lifecycle_manager
 from modules.m7_fraud_detector.schema import (
     FraudDetectRequest,
     FraudDetectResponse,
@@ -25,6 +31,15 @@ from modules.m7_fraud_detector.schema import (
 
 logger = logging.getLogger(__name__)
 
+FEATURE_COLS = ["requests_per_minute", "unique_pnr_attempts", "tatkal_flag", "account_age_days",
+                "payment_attempts", "failed_captcha_count", "booking_time_hour", "is_bulk_booking", "ip_risk_score"]
+FRAUD_LABELS = {
+    "requests_per_minute": "Request velocity", "unique_pnr_attempts": "Distinct PNR lookups",
+    "tatkal_flag": "Tatkal window", "account_age_days": "Account age", "payment_attempts": "Payment attempts",
+    "failed_captcha_count": "Failed CAPTCHAs", "booking_time_hour": "Hour of booking",
+    "is_bulk_booking": "Bulk booking", "ip_risk_score": "Network reputation",
+}
+
 
 class FraudDetectorService:
     """Service to compute real-time fraud risk scores, classify threat levels, and prescribe automated countermeasures."""
@@ -32,7 +47,15 @@ class FraudDetectorService:
     def __init__(self) -> None:
         self._bundle: Optional[Dict[str, Any]] = None
         self._explainer: Optional[Any] = None
+        self._iforest = None
+        self._iforest_cut: Optional[float] = None
+        self._lock = threading.Lock()
+        # Behaviour memory for account-misuse detection (hashed identifiers only)
+        self._ip_sessions: Dict[str, deque] = defaultdict(lambda: deque(maxlen=500))
+        self._user_ips: Dict[str, deque] = defaultdict(lambda: deque(maxlen=200))
+        self._alerts: deque = deque(maxlen=300)
         self._load_resources()
+        self._fit_anomaly_detector()
 
     def _load_resources(self) -> None:
         art_dir = settings.models_artifacts_dir
@@ -52,6 +75,68 @@ class FraudDetectorService:
                     self._explainer = pickle.load(f)
             except Exception as e:
                 logger.warning(f"[M7 Service] Could not load fraud SHAP explainer: {e}")
+
+    def _fit_anomaly_detector(self) -> None:
+        """Unsupervised IsolationForest on LEGITIMATE sessions → flags novel patterns the classifier never saw."""
+        try:
+            from sklearn.ensemble import IsolationForest
+            df = pd.read_csv(os.path.join(settings.data_raw_dir, "fraud_events.csv"))
+            cols = (self._bundle or {}).get("feature_cols") or FEATURE_COLS
+            legit = df[df["label"] == "legitimate"][cols].fillna(0)
+            self._iforest = IsolationForest(n_estimators=150, contamination=0.01, random_state=42).fit(legit)
+            self._iforest_cut = float(np.percentile(self._iforest.score_samples(legit), 1))
+        except Exception as e:
+            logger.debug(f"[M7 Service] anomaly detector unavailable: {e}")
+
+    def _misuse_signals(self, req: FraudDetectRequest) -> List[str]:
+        """Account misuse: many sessions behind one IP, or one account hopping across many IPs (10-min window)."""
+        now = time.time()
+        signals: List[str] = []
+        with self._lock:
+            q = self._ip_sessions[req.ip_hash]
+            q.append((now, req.session_id, req.user_id or ""))
+            recent = [x for x in q if now - x[0] <= 600]
+            sessions = {x[1] for x in recent}
+            accounts = {x[2] for x in recent if x[2]}
+            if len(sessions) >= 8:
+                signals.append(f"{len(sessions)} sessions from the same network in 10 min")
+            if len(accounts) >= 4:
+                signals.append(f"{len(accounts)} different accounts from the same network in 10 min")
+            if req.user_id:
+                u = self._user_ips[req.user_id]
+                u.append((now, req.ip_hash))
+                ips = {x[1] for x in u if now - x[0] <= 600}
+                if len(ips) >= 4:
+                    signals.append(f"account used from {len(ips)} different networks in 10 min")
+        return signals
+
+    def _shap_drivers(self, bundle: Dict[str, Any], input_df: pd.DataFrame, cls_idx: int, cls_name: str) -> List[Dict[str, Any]]:
+        explainer = self._explainer if bundle is self._bundle else None
+        try:
+            if explainer is None:
+                import shap
+                explainer = shap.TreeExplainer(bundle["model"])
+            sv = explainer.shap_values(input_df)
+            arr = np.asarray(sv)
+            if isinstance(sv, list):
+                vals = np.asarray(sv[cls_idx])[0]
+            elif arr.ndim == 3:
+                vals = arr[0, :, cls_idx]
+            else:
+                vals = arr[0]
+            out = [{"feature": FRAUD_LABELS.get(c, c), "raw_feature": c, "value": float(input_df.iloc[0][c]),
+                    "impact": round(float(v), 3),
+                    "direction": f"towards '{cls_name}'" if v > 0 else f"away from '{cls_name}'"}
+                   for c, v in zip(input_df.columns, vals)]
+            out.sort(key=lambda d: abs(d["impact"]), reverse=True)
+            return out[:6]
+        except Exception as e:
+            logger.debug(f"[M7 Service] SHAP failed: {e}")
+            return []
+
+    def recent_alerts(self, n: int = 50) -> List[Dict[str, Any]]:
+        with self._lock:
+            return list(self._alerts)[-n:][::-1]
 
     @governance_hook("m7_fraud_detector", endpoint="/api/v1/security/score")
     def score_session(self, request: FraudDetectRequest) -> FraudDetectResponse:
@@ -75,10 +160,14 @@ class FraudDetectorService:
         prob_suspicious = 0.05
         prob_legit = 0.94
 
-        if self._bundle and "model" in self._bundle:
-            model = self._bundle["model"]
-            label_enc = self._bundle.get("label_encoder")
-            cols = self._bundle.get("feature_cols", list(feat_vector.keys()))
+        bundle, version = lifecycle_manager.serving_bundle("m7_fraud_detector", self._bundle)
+        input_df = None
+        classes = ["bot", "legitimate", "suspicious"]
+        probs = None
+        if bundle and "model" in bundle:
+            model = bundle["model"]
+            label_enc = bundle.get("label_encoder")
+            cols = bundle.get("feature_cols", list(feat_vector.keys()))
 
             input_df = pd.DataFrame([[feat_vector[c] for c in cols]], columns=cols)
             probs = model.predict_proba(input_df)[0]
@@ -101,6 +190,25 @@ class FraudDetectorService:
 
         # Risk score (0.0 to 100.0)
         risk_score = round(float(np.clip((prob_bot * 100.0) + (prob_suspicious * 50.0), 0.0, 100.0)), 1)
+        predicted_label = max({"bot": prob_bot, "suspicious": prob_suspicious, "legitimate": prob_legit}.items(),
+                              key=lambda kv: kv[1])[0]
+
+        # Novel-pattern detection and account-misuse signals (not covered by the supervised classifier)
+        anomaly_score = None
+        is_anomalous = False
+        if self._iforest is not None:
+            try:
+                cols_if = (self._bundle or {}).get("feature_cols") or FEATURE_COLS
+                x_if = pd.DataFrame([[feat_vector[c] for c in cols_if]], columns=cols_if)
+                sc = float(self._iforest.score_samples(x_if)[0])
+                anomaly_score = round(sc, 4)
+                is_anomalous = bool(self._iforest_cut is not None and sc < self._iforest_cut)
+            except Exception:
+                pass
+        misuse = self._misuse_signals(request)
+        if (is_anomalous or misuse) and risk_score < 25.0:
+            risk_score = 25.0  # escalate to at least a step-up challenge; the reasons are listed below
+        report_inference(features=feat_vector, prediction=predicted_label, version=version if bundle else "heuristic")
 
         # Category and Action
         if risk_score >= 80.0:
@@ -179,13 +287,32 @@ class FraudDetectorService:
             ),
         }
 
-        # ── SHAP Drivers ──────────────────────────────────────────────────────
-        shap_drivers = [
-            {"feature": "Request Velocity (RPM)", "impact": round((request.requests_per_minute - 15) * 1.2, 2)},
-            {"feature": "Failed Captcha Count", "impact": round(request.failed_captcha_count * 18.0, 2)},
-            {"feature": "Subnet Threat Score", "impact": round((ip_risk - 0.1) * 35.0, 2)},
-            {"feature": "Account Tenure", "impact": round(-10.0 if request.account_age_days > 90 else 15.0, 2)},
-        ]
+        # ── SHAP drivers for the predicted class ──────────────────────────────
+        shap_drivers: List[Dict[str, Any]] = []
+        if input_df is not None:
+            shap_drivers = self._shap_drivers(bundle, input_df, classes.index(predicted_label), predicted_label)
+
+        for m in misuse:
+            investigation.append(FraudInvestigativeFeature(feature="account_misuse", value=1.0,
+                                                           severity="Suspicious", description=m))
+        if is_anomalous:
+            investigation.append(FraudInvestigativeFeature(
+                feature="behaviour_anomaly", value=float(anomaly_score or 0), severity="Suspicious",
+                description="Session pattern is unlike 99% of legitimate sessions (IsolationForest)."))
+        dossier.update({"predicted_label": predicted_label, "anomaly_score": anomaly_score,
+                        "novel_pattern": is_anomalous, "account_misuse_signals": misuse,
+                        "model_version": version if bundle else "heuristic"})
+
+        if action != "ALLOW" or is_anomalous or misuse:
+            with self._lock:
+                self._alerts.append({
+                    "session_id": request.session_id, "ip_hash": request.ip_hash[:6] + "…",
+                    "risk_score": risk_score, "category": category, "action": action,
+                    "predicted_label": predicted_label,
+                    "why": [d["feature"] + (" ↑" if d["impact"] > 0 else " ↓") for d in shap_drivers[:3]] + misuse
+                           + (["novel behaviour pattern"] if is_anomalous else []),
+                    "at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+                })
 
         return FraudDetectResponse(
             session_id=request.session_id,

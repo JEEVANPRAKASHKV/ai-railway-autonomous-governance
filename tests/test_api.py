@@ -136,6 +136,9 @@ def test_api_governance_telemetry_and_chaos():
         "chaos_type": "latency",
         "magnitude": 4200.0,
     }
-    res_chaos = client.post("/api/v1/governance/chaos/inject", json=chaos_payload)
+    # Governance mutations are role-restricted: no key → 401, operator key → allowed
+    assert client.post("/api/v1/governance/chaos/inject", json=chaos_payload).status_code == 401
+    res_chaos = client.post("/api/v1/governance/chaos/inject", json=chaos_payload,
+                            headers={"X-API-Key": "rb-dev-operator-key"})
     assert res_chaos.status_code == 200
     assert res_chaos.json()["success"] is True

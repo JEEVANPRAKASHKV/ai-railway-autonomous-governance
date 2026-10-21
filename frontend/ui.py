@@ -34,13 +34,45 @@ def api_get(path: str, params: Optional[dict] = None) -> Optional[Any]:
         return None
 
 
-def api_post(path: str, payload: Optional[dict] = None) -> Optional[Any]:
+# The UI runs server-side, so it can hold the governance keys; browsers never see them.
+OPERATOR_KEY = os.getenv("RB_OPERATOR_KEY") or "rb-dev-operator-key"
+ADMIN_KEY = os.getenv("RB_ADMIN_KEY") or "rb-dev-admin-key"
+_ADMIN_PATHS = ("/governance/supervisor/hitl/decide", "/governance/supervisor/reset")
+
+
+def api_post(path: str, payload: Optional[dict] = None, timeout: int = 30) -> Optional[Any]:
+    """POST to the API. Governance calls carry the operator (or admin) key and identify the UI as the actor.
+    Errors come back as {"error": <human-readable message>, "status": <code>} instead of raising."""
+    headers = {}
+    if path.startswith("/governance"):
+        headers = {"X-API-Key": ADMIN_KEY if path.startswith(_ADMIN_PATHS) else OPERATOR_KEY,
+                   "X-Actor": "Control Tower UI"}
     try:
-        r = requests.post(f"{API_V1}{path}", json=payload or {}, timeout=15)
-        r.raise_for_status()
+        r = requests.post(f"{API_V1}{path}", json=payload or {}, timeout=timeout, headers=headers)
+    except Exception as exc:
+        return {"error": f"Backend unreachable ({type(exc).__name__}).", "status": 0}
+    if r.status_code >= 400:
+        try:
+            body = r.json()
+            detail = body.get("detail") or body.get("message") or r.reason
+            if isinstance(detail, list):   # FastAPI validation errors
+                detail = "; ".join(str(d.get("msg", d)) for d in detail)
+            if body.get("violations"):
+                detail = f"{detail} — " + "; ".join(map(str, body["violations"][:3]))
+        except Exception:
+            detail = r.reason
+        return {"error": str(detail), "status": r.status_code}
+    try:
         return r.json()
-    except Exception as exc:  # surfaced to the UI instead of crashing
-        return {"error": str(exc)}
+    except Exception:
+        return {"error": "Unexpected response from the API.", "status": r.status_code}
+
+
+def send_outcome(audit_id: Optional[str], actual: Any) -> Optional[dict]:
+    """Report what really happened for a prediction (closes the governance feedback loop)."""
+    if not audit_id:
+        return {"error": "This prediction has no audit id."}
+    return api_post("/governance/outcomes", {"audit_id": audit_id, "actual": actual, "source": "passenger"})
 
 
 def backend_online() -> bool:
@@ -86,11 +118,14 @@ def esc(x: Any) -> str:
 
 def tone_for(status: str) -> str:
     s = str(status).upper()
-    if s in ("HEALTHY", "STABLE", "COMPLIANT", "FAIR", "CLOSED", "OK", "ACTIVE", "SAFE", "PASS", "CLEAR", "ALLOW"):
+    if s in ("HEALTHY", "STABLE", "COMPLIANT", "FAIR", "CLOSED", "OK", "ACTIVE", "SAFE", "PASS", "CLEAR", "ALLOW",
+             "ACCEPTED", "APPROVED", "INTACT", "PASSED", "WITHIN LIMITS"):
         return "ok"
-    if s in ("WARNING", "DEGRADED", "AT_RISK", "HALF_OPEN", "RETRAINING", "SUSPICIOUS", "INCIDENT", "MEDIUM", "HIGH", "REVIEW"):
+    if s in ("WARNING", "DEGRADED", "AT_RISK", "HALF_OPEN", "RETRAINING", "SUSPICIOUS", "INCIDENT", "MEDIUM", "HIGH", "REVIEW",
+             "WARN", "CANARY", "PENDING", "PENDING_APPROVAL", "SHIFT", "NEEDS_CLARIFICATION", "REJECTED"):
         return "warn"
-    if s in ("CRITICAL", "DRIFT", "BIAS_DETECTED", "OPEN", "BOT DETECTED", "HIGH RISK", "BLOCK", "FAIL"):
+    if s in ("CRITICAL", "DRIFT", "BIAS_DETECTED", "OPEN", "BOT DETECTED", "HIGH RISK", "BLOCK", "FAIL", "BLOCKED",
+             "DEGRADED_QUALITY", "BROKEN", "FAILED"):
         return "bad"
     return "info"
 

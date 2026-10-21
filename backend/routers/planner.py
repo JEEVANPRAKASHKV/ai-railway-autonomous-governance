@@ -7,11 +7,13 @@ FastAPI router for Module 4: Agentic AI Travel Planner with HITL Gate.
 from __future__ import annotations
 
 from typing import Dict
+import logging
+
 from fastapi import APIRouter, Depends, HTTPException
 
 from backend.dependencies import get_hitl_gate, get_planner_agent
 from modules.m4_travel_planner.agent import TravelPlannerAgent
-from modules.m4_travel_planner.hitl_gate import HITLApprovalGate
+from modules.m4_travel_planner.hitl_gate import HITLApprovalGate, InvalidOptionError, PlanNotFoundError, PlanStateError
 from modules.m4_travel_planner.schema import (
     ApprovalRequest,
     BookingConfirmRequest,
@@ -19,6 +21,10 @@ from modules.m4_travel_planner.schema import (
     PlanRequest,
     RejectPlanRequest,
 )
+
+from governance.hooks import CircuitOpenError, DataQualityError
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/agent", tags=["Module 4: Agentic Travel Planner"])
 
@@ -34,8 +40,11 @@ def plan_travel_itinerary(
 ) -> ApprovalRequest:
     try:
         return agent.plan(request)
-    except Exception as exc:
-        raise HTTPException(status_code=500, detail=f"Agent travel planning failed: {exc}")
+    except (CircuitOpenError, DataQualityError, HTTPException):
+        raise
+    except Exception:
+        logger.exception("Agent travel planning failed")
+        raise HTTPException(status_code=500, detail="Agent travel planning failed. The error has been logged.")
 
 
 @router.post(
@@ -49,10 +58,17 @@ def confirm_itinerary_booking(
 ) -> BookingPayload:
     try:
         return gate.confirm_plan(request)
-    except ValueError as val_err:
-        raise HTTPException(status_code=404, detail=str(val_err))
-    except Exception as exc:
-        raise HTTPException(status_code=500, detail=f"Booking confirmation failed: {exc}")
+    except PlanStateError as e:
+        raise HTTPException(status_code=409, detail=str(e))
+    except InvalidOptionError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except PlanNotFoundError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except (CircuitOpenError, DataQualityError, HTTPException):
+        raise
+    except Exception:
+        logger.exception("Booking confirmation failed")
+        raise HTTPException(status_code=500, detail="Booking confirmation failed. The error has been logged.")
 
 
 @router.post(
@@ -65,10 +81,15 @@ def reject_itinerary(
 ) -> Dict[str, str]:
     try:
         return gate.reject_plan(request)
-    except ValueError as val_err:
-        raise HTTPException(status_code=404, detail=str(val_err))
-    except Exception as exc:
-        raise HTTPException(status_code=500, detail=f"Rejection handling failed: {exc}")
+    except PlanStateError as e:
+        raise HTTPException(status_code=409, detail=str(e))
+    except PlanNotFoundError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except (CircuitOpenError, DataQualityError, HTTPException):
+        raise
+    except Exception:
+        logger.exception("Rejection handling failed")
+        raise HTTPException(status_code=500, detail="Rejection handling failed. The error has been logged.")
 
 
 @router.get(
@@ -84,3 +105,9 @@ def get_approval_status(
     if not approval:
         raise HTTPException(status_code=404, detail=f"Approval request '{request_id}' not found.")
     return approval
+
+
+@router.get("/metrics", summary="Agent performance & abnormal-behaviour monitor")
+def get_agent_metrics() -> Dict:
+    from modules.m4_travel_planner.agent import agent_monitor
+    return agent_monitor.metrics()

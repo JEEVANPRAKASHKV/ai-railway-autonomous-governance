@@ -35,9 +35,9 @@
       "current_version": "v1.0",
       "versions": {
         "v1.0": {
-          "mae_minutes": 14.733,
-          "r2_score": 0.1481,
-          "train_date": "2026-10-14",
+          "mae_minutes": 8.9619,
+          "r2_score": 0.4805,
+          "train_date": "2026-10-21",
           "status": "production",
           "artifact_path": "models/artifacts/delay_predictor_v1.0.pkl"
         }

@@ -1,0 +1,12 @@
+.git
+.venv
+venv
+__pycache__
+*.pyc
+.pytest_cache
+runtime/
+models/artifacts/challengers/
+models/registry/lifecycle_state.json
+_to_delete/
+.env
+docs/screenshots/

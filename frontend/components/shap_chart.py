@@ -33,8 +33,11 @@ def render_shap_chart(
     else:
         for e in shap_data:
             if isinstance(e, dict):
-                name = e.get("feature_name") or e.get("feature") or e.get("name") or "Unknown"
-                val = e.get("contribution", e.get("value", e.get("importance", 0.0)))
+                if e.get("feature") == "base_value" or e.get("type") == "Baseline":
+                    continue
+                name = e.get("feature_name") or e.get("factor") or e.get("driver") or e.get("feature") or e.get("name") or "Unknown"
+                val = next((e[k] for k in ("contribution", "contribution_inr", "impact", "impact_minutes", "importance")
+                            if e.get(k) is not None), 0.0)
                 try:
                     items.append({"feature": str(name), "contribution": float(val)})
                 except (TypeError, ValueError):

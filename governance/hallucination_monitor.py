@@ -70,6 +70,24 @@ def _content_tokens(text: str) -> List[str]:
     return [_stem(t) for t in toks if (len(t) >= 3 or t.isdigit()) and t not in _STOPWORDS]
 
 
+_NEGATION_WORDS = frozenset({"not", "no", "never", "cannot", "non", "without", "nahi", "nahin", "na", "nor",
+                             "none", "neither", "cant", "wont", "isnt", "arent", "dont", "doesnt", "unavailable",
+                             "ineligible", "prohibited"})
+
+
+_CLAUSE_SPLIT = re.compile(r"(?<=[.!?])\s+|\n+|[;:,()]\s*|\s+(?:but|however|although|though|except|unless|whereas|lekin|magar)\s+",
+                           re.IGNORECASE)
+
+
+def _clauses(text: str) -> List[str]:
+    return [c.strip() for c in _CLAUSE_SPLIT.split(text) if c and len(c.strip()) > 3]
+
+
+def _negated(text: str) -> bool:
+    words = re.findall(r"[a-z]+", text.lower().replace("'", ""))
+    return sum(1 for w in words if w in _NEGATION_WORDS) % 2 == 1
+
+
 def _numbers(text: str) -> List[str]:
     return re.findall(r"\d+(?:\.\d+)?", text.replace(",", ""))
 
@@ -135,13 +153,28 @@ class HallucinationMonitor:
 
     def _detect_contradictions(self, response: str, context_docs: List[str]) -> List[str]:
         """
-        Heuristic contradiction detection:
-        - Flags contradiction marker phrases in the response
-        - Returns list of detected contradiction signals
+        Polarity check: for each answer sentence, find the policy sentence that talks about the same
+        thing (high content-word overlap) and flag it when exactly one of them is negated
+        ("refundable" vs "non-refundable", "a full refund" vs "no refund"). Word-overlap scores alone
+        cannot see this — an answer with the opposite meaning but the same words used to score 1.0.
         """
-        response_lower = response.lower()
-        detected = [kw for kw in CONTRADICTION_KEYWORDS if kw in response_lower]
-        return detected
+        ctx_sents = [c.strip() for doc in context_docs for c in _clauses(doc)]
+        found: List[str] = []
+        for sent in _clauses(response):
+            st = set(_content_tokens(sent)) - _NEGATION_WORDS
+            if len(st) < 2:
+                continue
+            best, best_j = None, 0.0
+            for cs in ctx_sents:
+                ct = set(_content_tokens(cs)) - _NEGATION_WORDS
+                if not ct:
+                    continue
+                j = len(st & ct) / len(st | ct)
+                if j > best_j:
+                    best, best_j = cs, j
+            if best is not None and best_j >= 0.4 and _negated(sent) != _negated(best):
+                found.append(f"'{sent.strip()[:90]}' contradicts policy: '{best.strip()[:90]}'")
+        return found
 
     def _detect_harmful_content(self, response: str) -> List[str]:
         """Regex-based harmful content / policy violation detection."""
@@ -211,6 +244,9 @@ class HallucinationMonitor:
 
         contradictions = self._detect_contradictions(response, context_docs)
         harmful = self._detect_harmful_content(response)
+        if contradictions:
+            # A direct contradiction of policy is the most harmful kind of hallucination.
+            composite = round(min(composite, 0.15), 4)
 
         quarantine = composite < QUARANTINE_THRESHOLD or bool(harmful)
         severity = (

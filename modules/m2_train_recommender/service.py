@@ -15,6 +15,7 @@ import numpy as np
 import pandas as pd
 
 from core.config import settings
+from governance.context import report_inference
 from governance.hooks import governance_hook
 from modules.m2_train_recommender.schema import (
     RecommendRequest,
@@ -71,235 +72,230 @@ PERSONA_WEIGHTS: Dict[str, Dict[str, float]] = {
 }
 
 TRAIN_TYPE_COMFORT = {
-    "Vande Bharat Express": 0.95,
-    "Rajdhani Express": 0.92,
-    "Shatabdi Express": 0.90,
-    "Duronto Express": 0.85,
-    "Garib Rath Express": 0.70,
-    "Superfast Express": 0.75,
-    "Mail/Express": 0.65,
-    "Passenger": 0.50,
+    "Vande Bharat Express": 0.95, "Rajdhani Express": 0.92, "Tejas Express": 0.9, "Shatabdi Express": 0.9,
+    "Duronto Express": 0.85, "Humsafar Express": 0.82, "Queen Express": 0.8, "Superfast Express": 0.75,
+    "Sampark Kranti": 0.74, "Jan Shatabdi": 0.72, "Garib Rath": 0.7, "Intercity Express": 0.7,
+    "Express": 0.66, "Mail": 0.64, "Passenger": 0.5,
 }
+FACTORS = ("price", "punctuality", "availability", "duration", "comfort")
+LEARNING_RATE = 0.05
+MIN_WEIGHT = 0.03
+
+
+def _hhmm(t: str) -> int:
+    try:
+        h, m = str(t).split(":")[:2]
+        return int(h) * 60 + int(m)
+    except Exception:
+        return -1
 
 
 class TrainRecommenderService:
-    """Service to score, rank, and fairly recommend trains based on traveler persona."""
+    """Scores, ranks and fairly recommends trains; personalises from history; learns from passenger choices."""
 
     def __init__(self) -> None:
         self._trains_df: Optional[pd.DataFrame] = None
+        self._profiles: Dict[str, dict] = {}
+        self._confirm_rate: Dict[tuple, float] = {}
+        self._weights: Dict[str, Dict[str, float]] = {p: dict(w) for p, w in PERSONA_WEIGHTS.items()}
+        self._weights_version = 0
+        self._last_shown: Dict[str, dict] = {}
         self._load_data()
 
     def _load_data(self) -> None:
-        path = os.path.join(settings.data_raw_dir, "trains.csv")
-        if os.path.exists(path):
-            try:
-                self._trains_df = pd.read_csv(path)
-            except Exception as e:
-                logger.error(f"[M2 Service] Failed to load trains.csv: {e}")
+        raw = settings.data_raw_dir
+        try:
+            self._trains_df = pd.read_csv(os.path.join(raw, "trains.csv"))
+        except Exception as e:
+            logger.error(f"[M2 Service] Failed to load trains.csv: {e}")
+        try:
+            up = pd.read_csv(os.path.join(raw, "user_profiles.csv"))
+            self._profiles = {r["user_id"]: r for r in up.to_dict(orient="records")}
+        except Exception as e:
+            logger.debug(f"[M2 Service] user_profiles.csv: {e}")
+        try:
+            h = pd.read_csv(os.path.join(raw, "pnr_history.csv"), usecols=["train_number", "journey_class", "final_status"])
+            g = h.assign(ok=(h["final_status"] == "Confirmed")).groupby(["train_number", "journey_class"])["ok"]
+            for k, v in g.agg(["mean", "count"]).iterrows():
+                if v["count"] >= 10:
+                    self._confirm_rate[(str(k[0]), str(k[1]))] = float(v["mean"])
+            for k, v in h.assign(ok=(h["final_status"] == "Confirmed")).groupby("journey_class")["ok"].mean().items():
+                self._confirm_rate[("*", str(k))] = float(v)
+        except Exception as e:
+            logger.debug(f"[M2 Service] confirmation history: {e}")
+        try:
+            from governance.performance_monitor import performance_monitor
+            performance_monitor.add_listener("m2_train_recommender", self._learn_from_choice)
+        except Exception:
+            pass
+
+    # ── Continuous optimisation from relevance feedback ───────────────────────
+
+    def _learn_from_choice(self, record: dict, chosen: str) -> None:
+        """Nudge the persona's weights towards the factors of the train the passenger actually picked."""
+        pred = record.get("prediction") or {}
+        factors = pred.get("factors") or {}
+        persona = pred.get("persona")
+        if str(chosen) not in factors or persona not in self._weights or len(factors) < 2:
+            return
+        mean = {f: float(np.mean([v[f] for v in factors.values()])) for f in FACTORS}
+        w = self._weights[persona]
+        for f in FACTORS:
+            w[f] = max(MIN_WEIGHT, w[f] + LEARNING_RATE * (factors[str(chosen)][f] - mean[f]))
+        total = sum(w.values())
+        for f in FACTORS:
+            w[f] = round(w[f] / total, 4)
+        self._weights_version += 1
+
+    def current_weights(self) -> dict:
+        return {"version": self._weights_version, "weights": self._weights, "initial": PERSONA_WEIGHTS}
+
+    # ── Inference ─────────────────────────────────────────────────────────────
 
     @governance_hook("m2_train_recommender", endpoint="/api/v1/recommend/trains")
     def recommend(self, request: RecommendRequest) -> RecommendResponse:
-        """Filter candidate trains, score according to persona, audit fairness, and rank."""
-        persona = request.persona.lower()
-        if persona not in PERSONA_WEIGHTS:
-            persona = "budget"
-        weights = PERSONA_WEIGHTS[persona]
-
-        STATION_ALIASES = {
-            "BCT": "CSTM",
-            "MMCT": "CSTM",
-            "BDTS": "CSTM",
-            "DLI": "NDLS",
-            "NZM": "NDLS",
-            "ANVT": "NDLS",
-            "SDAH": "HWH",
-            "MS": "MAS",
-            "YPR": "SBC",
-        }
+        """Filter candidate trains, score according to persona and history, audit fairness, and rank."""
+        STATION_ALIASES = {"BCT": "CSTM", "MMCT": "CSTM", "BDTS": "CSTM", "DLI": "NDLS", "NZM": "NDLS",
+                           "ANVT": "NDLS", "SDAH": "HWH", "MS": "MAS", "YPR": "SBC"}
         src = STATION_ALIASES.get(request.source_station.strip().upper(), request.source_station.strip().upper())
         dst = STATION_ALIASES.get(request.destination_station.strip().upper(), request.destination_station.strip().upper())
 
+        # ── Personalisation from the passenger's profile / travel history ────
+        persona = (request.persona or "budget").lower()
+        pref_class = (request.preferred_class or "").upper() or None
+        max_budget = request.max_budget
+        personal: Dict[str, Any] = {}
+        prof = self._profiles.get((request.user_id or "").strip().upper()) if request.user_id else None
+        if prof:
+            personal = {"user_id": prof["user_id"], "persona_from_history": prof["persona"],
+                        "usual_class": prof["preferred_class"], "usual_budget_max": prof["budget_max"],
+                        "frequent_routes": prof["frequent_routes"]}
+            if not request.persona or request.persona.lower() == "budget":
+                persona = str(prof["persona"]).lower()
+            pref_class = pref_class or str(prof["preferred_class"]).upper()
+            max_budget = max_budget or float(prof["budget_max"])
+        if persona not in self._weights:
+            persona = "budget"
+        weights = self._weights[persona]
+        pref_class = pref_class or "3A"
+        frequent = set(str(personal.get("frequent_routes", "")).split("|")) if personal else set()
+
         if self._trains_df is None or len(self._trains_df) == 0:
             self._load_data()
+        df = self._trains_df if self._trains_df is not None else pd.DataFrame()
+        candidates = df[(df["source"].str.upper() == src) & (df["destination"].str.upper() == dst)].copy() if len(df) else df
 
-        candidates: pd.DataFrame
-        if self._trains_df is not None:
-            mask = (
-                (self._trains_df["source"].str.upper() == src)
-                & (self._trains_df["destination"].str.upper() == dst)
-            )
-            candidates = self._trains_df[mask].copy()
-
-            if len(candidates) == 0:
-                rev_mask = (
-                    (self._trains_df["source"].str.upper() == dst)
-                    & (self._trains_df["destination"].str.upper() == src)
-                )
-                if rev_mask.sum() > 0:
-                    candidates = self._trains_df[rev_mask].copy()
-                else:
-                    src_mask = self._trains_df["source"].str.upper() == src
-                    if src_mask.sum() > 0:
-                        candidates = self._trains_df[src_mask].head(6).copy()
-                    else:
-                        candidates = self._trains_df.head(6).copy()
-        else:
-            candidates = pd.DataFrame()
+        def empty(msg: str) -> RecommendResponse:
+            return RecommendResponse(recommendations=[], persona_applied=persona, weights_used=weights,
+                                     disparate_impact_ratio=1.0, bias_flag=False, personalisation=personal,
+                                     weights_version=self._weights_version, message=msg)
 
         if len(candidates) == 0:
-            return RecommendResponse(
-                recommendations=[],
-                persona_applied=persona,
-                weights_used=weights,
-                disparate_impact_ratio=1.0,
-                bias_flag=False,
-            )
+            return empty(f"No direct trains run from {src} to {dst} in the timetable. "
+                         "The AI Travel Planner can search one-change connections.")
 
-        # ── Compute factor scores per train ───────────────────────────────────
-        scored_trains: List[Dict[str, Any]] = []
-
-        # Find fare based on preferred class or default 3A / SL
-        pref_class = (request.preferred_class or "3A").upper()
         fare_col = f"base_fare_{pref_class.lower()}"
         if fare_col not in candidates.columns:
             fare_col = "base_fare_3a"
-
         fares = candidates[fare_col].replace(0, np.nan).fillna(candidates["base_fare_sl"] + 250).values
         durations = candidates["duration_hours"].values
-        punctualities = candidates["punctuality_pct"].values / 100.0
-
         min_fare, max_fare = np.min(fares), max(np.max(fares), np.min(fares) + 1.0)
         min_dur, max_dur = np.min(durations), max(np.max(durations), np.min(durations) + 1.0)
+        deadline = _hhmm(request.arrival_deadline) if request.arrival_deadline else -1
 
-        for idx, row in candidates.iterrows():
-            f_val = float(row.get(fare_col, 0))
+        scored: List[Dict[str, Any]] = []
+        over_budget = 0
+        for _, row in candidates.iterrows():
+            f_val = float(row.get(fare_col, 0) or 0)
             if f_val <= 0:
                 f_val = float(row.get("base_fare_sl", 350)) + 200
-
-            # Filter out budget violations if requested
-            if request.max_budget and f_val > request.max_budget:
+            if max_budget and f_val > max_budget:
+                over_budget += 1
                 continue
-
             dur_val = float(row.get("duration_hours", 12.0))
             punc_val = float(row.get("punctuality_pct", 80)) / 100.0
-            t_type = str(row.get("train_type", "Mail/Express"))
-            comfort_val = TRAIN_TYPE_COMFORT.get(t_type, 0.70)
-            avail_val = 0.85 if "3A" in str(row.get("classes", "")) else 0.70
+            comfort_val = TRAIN_TYPE_COMFORT.get(str(row.get("train_type", "Express")), 0.66)
+            classes_list = str(row.get("classes", "SL|3A|2A")).split("|")
+            odds = self._confirm_rate.get((str(row["train_number"]), pref_class),
+                                          self._confirm_rate.get(("*", pref_class)))
+            avail_val = float(odds) if odds is not None else 0.5
+            if pref_class not in classes_list:
+                avail_val *= 0.4   # preferred class not offered on this train
 
-            # Normalized factors (0.0 to 1.0, higher is better)
-            norm_price = 1.0 - ((f_val - min_fare) / (max_fare - min_fare + 1e-5))
-            norm_duration = 1.0 - ((dur_val - min_dur) / (max_dur - min_dur + 1e-5))
-            norm_punctuality = punc_val
-            norm_comfort = comfort_val
-            norm_avail = avail_val
-
-            composite = (
-                weights["price"] * norm_price
-                + weights["punctuality"] * norm_punctuality
-                + weights["duration"] * norm_duration
-                + weights["comfort"] * norm_comfort
-                + weights["availability"] * norm_avail
-            )
-
-            # Build tag list
-            tags = []
-            if norm_price > 0.75:
+            fs = {"price": 1.0 - ((f_val - min_fare) / (max_fare - min_fare + 1e-5)),
+                  "punctuality": punc_val,
+                  "availability": avail_val,
+                  "duration": 1.0 - ((dur_val - min_dur) / (max_dur - min_dur + 1e-5)),
+                  "comfort": comfort_val}
+            contrib = {f: round(weights[f] * fs[f], 4) for f in FACTORS}
+            composite = sum(contrib.values())
+            tags, meets = [], True
+            if deadline >= 0 and dur_val < 24 and _hhmm(row.get("arrival_time")) > deadline:
+                composite *= 0.7
+                meets = False
+                tags.append(f"Arrives after {request.arrival_deadline}")
+            route_key = f"{src}-{dst}"
+            if route_key in frequent:
+                composite += 0.02
+                tags.append("On your frequent route")
+            if fs["price"] > 0.75:
                 tags.append("Economical")
             if punc_val >= 0.90:
                 tags.append("Highly Punctual")
             if comfort_val >= 0.90:
-                tags.append("Executive Comfort")
+                tags.append("Premium comfort")
             if dur_val <= min_dur * 1.15:
                 tags.append("Fastest")
+            if pref_class not in classes_list:
+                tags.append(f"No {pref_class}")
 
-            reason = (
-                f"Optimized for {persona.title()} traveler: "
-                f"{'affordable fare' if norm_price > 0.5 else 'speed and comfort'} "
-                f"with {int(punc_val * 100)}% punctuality rating."
-            )
-
-            classes_list = str(row.get("classes", "SL|3A|2A")).split("|")
-
-            scored_trains.append({
-                "train_number": str(row.get("train_number", "10001")),
-                "train_name": str(row.get("train_name", "Express")),
-                "source": str(row.get("source", src)),
-                "destination": str(row.get("destination", dst)),
-                "departure_time": str(row.get("departure_time", "08:00")),
-                "arrival_time": str(row.get("arrival_time", "20:00")),
-                "duration_hours": round(dur_val, 1),
-                "available_classes": classes_list,
-                "fare_estimate_inr": round(f_val, 0),
-                "punctuality_score": round(punc_val, 2),
-                "comfort_score": round(comfort_val, 2),
-                "composite_score": round(composite, 4),
-                "is_affordable": bool(f_val <= np.median(fares)),
-                "recommendation_reason": reason,
-                "tags": tags,
+            top2 = sorted(contrib, key=contrib.get, reverse=True)[:2]
+            reason = (f"Best for a {persona} traveller mainly because of {top2[0]} "
+                      f"({fs[top2[0]]:.0%}) and {top2[1]} ({fs[top2[1]]:.0%}); "
+                      f"{int(punc_val * 100)}% on time, {avail_val:.0%} historical confirmation in {pref_class}.")
+            scored.append({
+                "train_number": str(row.get("train_number")), "train_name": str(row.get("train_name")),
+                "source": str(row.get("source", src)), "destination": str(row.get("destination", dst)),
+                "departure_time": str(row.get("departure_time", "08:00")), "arrival_time": str(row.get("arrival_time", "20:00")),
+                "duration_hours": round(dur_val, 1), "available_classes": classes_list,
+                "fare_estimate_inr": round(f_val, 0), "punctuality_score": round(punc_val, 2),
+                "comfort_score": round(comfort_val, 2), "composite_score": round(composite, 4),
+                "is_affordable": bool(f_val <= np.median(fares)), "recommendation_reason": reason, "tags": tags,
+                "factor_scores": {f: round(v, 3) for f, v in fs.items()}, "factor_contributions": contrib,
+                "confirmation_odds": round(avail_val, 3) if odds is not None else None, "meets_constraints": meets,
             })
 
-        if not scored_trains:
-            return RecommendResponse(
-                recommendations=[],
-                persona_applied=persona,
-                weights_used=weights,
-                disparate_impact_ratio=1.0,
-                bias_flag=False,
-            )
+        if not scored:
+            return empty(f"All {over_budget} trains on this route cost more than ₹{max_budget:.0f} in {pref_class}.")
 
-        # Sort by composite score
-        scored_trains.sort(key=lambda x: x["composite_score"], reverse=True)
+        scored.sort(key=lambda x: x["composite_score"], reverse=True)
 
-        # ── Bias & Fairness Audit (Disparate Impact Ratio) ────────────────────
-        # Measure selection rate of affordable trains in top 3 vs total population
-        top_k = min(3, len(scored_trains))
-        top_affordable = sum(1 for t in scored_trains[:top_k] if t["is_affordable"]) / float(top_k)
-        pop_affordable = sum(1 for t in scored_trains if t["is_affordable"]) / float(len(scored_trains))
-
-        if pop_affordable > 0:
-            dir_ratio = round(top_affordable / pop_affordable, 3)
-        else:
-            dir_ratio = 1.0
-
+        # ── Fairness audit (affordable options must not be crowded out of the top 3) ──
+        top_k = min(3, len(scored))
+        top_aff = sum(1 for t in scored[:top_k] if t["is_affordable"]) / float(top_k)
+        pop_aff = sum(1 for t in scored if t["is_affordable"]) / float(len(scored))
+        dir_ratio = round(top_aff / pop_aff, 3) if pop_aff > 0 else 1.0
         bias_flag = bool(dir_ratio < 0.80)
-
-        # If disparate impact threshold breached, apply fairness re-ranking
-        if bias_flag and len(scored_trains) > 3:
-            # Promote best affordable train into top 3 to guarantee fair socio-economic access
-            for i in range(top_k, len(scored_trains)):
-                if scored_trains[i]["is_affordable"]:
-                    promoted = scored_trains.pop(i)
-                    promoted["recommendation_reason"] += " (Fairness Equity Adjustment Applied)"
-                    scored_trains.insert(top_k - 1, promoted)
+        if bias_flag and len(scored) > 3:
+            for i in range(top_k, len(scored)):
+                if scored[i]["is_affordable"]:
+                    promoted = scored.pop(i)
+                    promoted["recommendation_reason"] += " (Promoted by the affordability fairness rule.)"
+                    promoted["tags"].append("Fairness adjustment")
+                    scored.insert(top_k - 1, promoted)
                     break
 
-        recommendations = [
-            TrainRecommendation(
-                rank=i + 1,
-                train_number=t["train_number"],
-                train_name=t["train_name"],
-                source=t.get("source", src),
-                destination=t.get("destination", dst),
-                departure_time=t["departure_time"],
-                arrival_time=t["arrival_time"],
-                duration_hours=t["duration_hours"],
-                available_classes=t["available_classes"],
-                fare_estimate_inr=t["fare_estimate_inr"],
-                punctuality_score=t["punctuality_score"],
-                comfort_score=t["comfort_score"],
-                composite_score=t["composite_score"],
-                recommendation_reason=t["recommendation_reason"],
-                tags=t["tags"],
-            )
-            for i, t in enumerate(scored_trains[:5])
-        ]
-
+        top = scored[:5]
+        report_inference(prediction={"shown": [t["train_number"] for t in top], "persona": persona,
+                                     "factors": {t["train_number"]: t["factor_scores"] for t in top}},
+                         version=f"weights-v{self._weights_version}")
+        recommendations = [TrainRecommendation(rank=i + 1, **{k: v for k, v in t.items() if k != "is_affordable"})
+                           for i, t in enumerate(top)]
         return RecommendResponse(
-            recommendations=recommendations,
-            persona_applied=persona,
-            weights_used=weights,
-            disparate_impact_ratio=dir_ratio,
-            bias_flag=bias_flag,
+            recommendations=recommendations, persona_applied=persona, weights_used=weights,
+            disparate_impact_ratio=dir_ratio, bias_flag=bias_flag, personalisation=personal,
+            weights_version=self._weights_version,
+            message=(f"{over_budget} train(s) hidden because they exceed your budget." if over_budget else None),
         )
 
 

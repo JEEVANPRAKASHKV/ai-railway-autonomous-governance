@@ -48,6 +48,10 @@ class FarePredictResponse(BaseModel):
     optimal_booking_date: date
     forecast_curve: List[FareForecastPoint] = Field(default_factory=list)
     cost_saving_alternatives: List[CostSavingAlternative] = Field(default_factory=list)
-    fare_drivers: List[Dict[str, Any]] = Field(default_factory=list)
+    fare_drivers: List[Dict[str, Any]] = Field(default_factory=list, description="SHAP contributions in ₹")
+    demand_surge_from_days: Optional[int] = Field(default=None, description="Days before departure when demand turns High/Surge")
+    pricing_anomaly: Optional[str] = Field(default=None, description="Set when the raw prediction is outside the historical range")
+    policy_note: Optional[str] = None
+    model_version: str = "v1.0.0"
     confidence_score: float = Field(default=0.94)
     governance_telemetry: Optional[GovernanceBadge] = None

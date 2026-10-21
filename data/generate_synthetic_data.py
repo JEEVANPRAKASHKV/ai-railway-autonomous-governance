@@ -649,23 +649,30 @@ def generate_delay_logs(trains_df: pd.DataFrame, stations_df: pd.DataFrame) -> p
         sf = season_factor(journey_date)
         month = journey_date.month
 
-        # Base delay by season (monsoon: higher, winter fog: higher, normal: lower)
-        if month in (6, 7, 8, 9):  # Monsoon
-            base_delay = np.random.exponential(25)
-            reason = random.choices(REASON_CODES,
-                weights=[20, 5, 3, 30, 5, 5, 5, 20, 2, 3, 2])[0]
+        # Causal structure (so the model can actually learn it):
+        #   season base delay  +  weather effect  +  station congestion effect  +  distance effect  + noise
+        if month in (6, 7, 8, 9):  # Monsoon: rain / flooding
+            weather = float(np.clip(np.random.normal(6.0, 2.2), 0, 10))
+            base_delay = np.random.exponential(12)
+            reason = random.choices(REASON_CODES, weights=[20, 5, 3, 30, 5, 5, 5, 20, 2, 3, 2])[0]
         elif month in (12, 1):  # Winter fog
-            base_delay = np.random.exponential(20)
-            reason = random.choices(REASON_CODES,
-                weights=[15, 5, 3, 10, 5, 5, 3, 2, 40, 3, 9])[0]
-        else:
+            weather = float(np.clip(np.random.normal(5.5, 2.5), 0, 10))
             base_delay = np.random.exponential(10)
-            reason = random.choices(REASON_CODES,
-                weights=[15, 8, 4, 5, 10, 8, 8, 2, 2, 4, 34])[0]
+            reason = random.choices(REASON_CODES, weights=[15, 5, 3, 10, 5, 5, 3, 2, 40, 3, 9])[0]
+        else:
+            weather = float(np.clip(np.random.normal(2.5, 2.0), 0, 10))
+            base_delay = np.random.exponential(6)
+            reason = random.choices(REASON_CODES, weights=[15, 8, 4, 5, 10, 8, 8, 2, 2, 4, 34])[0]
 
-        delay = max(0, base_delay * sf + np.random.normal(0, 5))
-        if reason == "ON_TIME":
+        congestion = float(np.random.uniform(10, 90) * sf)
+        distance = random.randint(0, 2000)
+        weather_effect = 0.45 * weather ** 1.6           # 0 → ~18 min at 10/10
+        congestion_effect = 0.22 * max(0.0, congestion - 30)   # crowded platforms hold trains
+        distance_effect = distance / 120.0               # delay accumulates along the route
+        delay = base_delay * sf + weather_effect + congestion_effect + distance_effect + np.random.normal(0, 4)
+        if reason == "ON_TIME" and weather < 4 and congestion < 60:
             delay = max(0, np.random.normal(2, 3))
+        delay = max(0.0, delay)
 
         scheduled_hour = random.randint(0, 23)
         scheduled_min = random.choice([0, 15, 30, 45])
@@ -681,9 +688,9 @@ def generate_delay_logs(trains_df: pd.DataFrame, stations_df: pd.DataFrame) -> p
             "actual_arrival": actual_arr.strftime("%H:%M"),
             "delay_minutes": round(delay, 1),
             "reason_code": reason,
-            "weather_index": round(np.random.uniform(0, 10), 1),
-            "congestion_at_station": round(np.random.uniform(10, 90) * sf, 1),
-            "distance_from_origin_km": random.randint(0, 2000),
+            "weather_index": round(weather, 1),
+            "congestion_at_station": round(congestion, 1),
+            "distance_from_origin_km": distance,
             "month": month,
             "season_factor": round(sf, 2),
         })
@@ -1001,7 +1008,7 @@ def save_baseline_distributions(
 
     feature_sets = {
         "m1_ticket_predictor": (pnr_df, ["days_to_departure", "initial_wl_number", "season_factor"]),
-        "m3_delay_predictor":  (delay_df, ["delay_minutes", "congestion_at_station", "weather_index", "distance_from_origin_km"]),
+        "m3_delay_predictor":  (delay_df, ["congestion_at_station", "weather_index", "distance_from_origin_km"]),
         "m5_fare_predictor":   (pricing_df, ["days_to_departure", "base_fare", "dynamic_fare", "demand_index"]),
         "m7_fraud_detector":   (fraud_df, ["requests_per_minute", "unique_pnr_attempts", "account_age_days", "payment_attempts", "failed_captcha_count"]),
     }

@@ -15,6 +15,7 @@ from core.schemas import GovernanceBadge
 class FraudDetectRequest(BaseModel):
     session_id: str = Field(..., description="Unique web/app session identifier")
     ip_hash: str = Field(..., description="Anonymized hash of client IP address")
+    user_id: Optional[str] = Field(default=None, description="Hashed account id (optional; enables account-misuse checks)")
     requests_per_minute: float = Field(..., ge=0.0, description="Observed query/submission velocity")
     unique_pnr_attempts: int = Field(default=1, ge=0, description="Count of distinct PNR or booking lookups")
     tatkal_flag: bool = Field(default=False, description="Whether session is during 10:00-10:15 Tatkal surge")

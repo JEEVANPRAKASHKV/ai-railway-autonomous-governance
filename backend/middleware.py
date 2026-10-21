@@ -38,8 +38,7 @@ class TelemetryMiddleware(BaseHTTPMiddleware):
                 status_code=500,
                 content={
                     "success": False,
-                    "message": "Internal Platform Error",
-                    "error": str(exc),
+                    "message": "Internal Platform Error — the details were logged with this correlation id.",
                     "correlation_id": corr_id,
                     "elapsed_ms": round(elapsed_ms, 2),
                 },

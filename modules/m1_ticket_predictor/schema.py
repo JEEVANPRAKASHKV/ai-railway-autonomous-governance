@@ -40,4 +40,8 @@ class TicketPredictResponse(BaseModel):
     shap_explanation: List[ShapFeatureContribution] = Field(default_factory=list)
     booking_advisory: str = Field(..., description="Actionable travel advisory based on confirmation odds")
     confidence_score: float = Field(default=0.85, description="Model certainty score")
+    status_probabilities: Dict[str, float] = Field(default_factory=dict, description="P(Confirmed / RAC / WL)")
+    historical_insights: Dict[str, Any] = Field(default_factory=dict, description="Booking & cancellation trends from history")
+    berth_estimate_basis: str = Field(default="", description="How the berth estimate was derived")
+    model_version: str = "v1.0.0"
     governance_telemetry: Optional[GovernanceBadge] = None

@@ -257,60 +257,6 @@ class TelemetryBus:
             )
             self.emit(event)
 
-    def seed_baseline(self, count: int = 50) -> int:
-        """Seed realistic baseline telemetry events across all 7 modules (M1–M7)."""
-        import random
-        modules_cfg = [
-            ("m1_ticket_predictor", "/api/v1/predict/confirmation", (25.0, 65.0), 0.88),
-            ("m2_train_recommender", "/api/v1/recommend/trains", (35.0, 75.0), 0.94),
-            ("m3_delay_predictor", "/api/v1/predict/delay", (30.0, 80.0), 0.85),
-            ("m4_travel_planner", "/api/v1/plan/travel", (45.0, 110.0), 0.92),
-            ("m5_fare_predictor", "/api/v1/predict/fare", (20.0, 55.0), 0.96),
-            ("m6_support_assistant", "/api/v1/support/query", (180.0, 420.0), 0.94),
-            ("m7_fraud_detector", "/api/v1/fraud/assess", (15.0, 40.0), 0.99),
-        ]
-
-        events_added = 0
-        now = datetime.utcnow()
-        for _ in range(count):
-            mod, endpoint, lat_range, base_conf = random.choice(modules_cfg)
-            lat = round(random.uniform(*lat_range), 2)
-            conf = round(min(0.99, max(0.70, random.gauss(base_conf, 0.04))), 3)
-            event_time = now - timedelta(minutes=random.uniform(1, 45))
-
-            ev_id = f"{mod[:3].upper()}-{str(uuid.uuid4())[:8].upper()}"
-            event = TelemetryEvent(
-                event_id=ev_id,
-                module=mod,
-                endpoint=endpoint,
-                latency_ms=lat,
-                schema_valid=True,
-                schema_violations=[],
-                confidence_score=conf,
-                drift_flag=False,
-                bias_flag=False,
-                hallucination_flag=False,
-                error=None,
-                timestamp=event_time,
-                llm_mode="intelligent_fallback",
-            )
-            self.emit(event)
-
-            audit = AuditEntry(
-                entry_id=ev_id,
-                timestamp=event_time,
-                module=mod,
-                action="baseline_inference",
-                input_summary="seeded_baseline=True",
-                output_summary=f"status=success, confidence={conf}",
-                governance_flags=[],
-                risk_level="Low",
-            )
-            self.log_audit(audit)
-            events_added += 1
-
-        return events_added
-
     def resolve_all_alerts(self) -> int:
         """Resolve all alerts in the bus."""
         with self._alert_lock:

@@ -65,52 +65,10 @@ SUPPORT_QS = [
 
 
 def simulate_traffic(rounds: int, drifted: bool, quiet: bool = False) -> int:
-    """Send realistic passenger traffic through the live API so every governance pillar sees real data."""
-    from frontend.ui import load_reference
-    trains = list(load_reference()["trains"].values())[:40]
-    stations = ["BPL", "NDLS", "CSTM", "HWH", "SBC", "MAS", "LKO"]
-    personas = ["budget", "premium", "student", "senior", "business", "family"]
-    classes = ["3A", "2A", "1A", "SL", "CC"]
-    rnd = random.Random(time.time_ns())
-    ok = 0
-    bar = None if quiet else st.progress(0.0, text="Sending live passenger traffic through the AI modules…")
-    for i in range(rounds):
-        t = rnd.choice(trains)
-        jd = date.today() + timedelta(days=rnd.randint(1, 60))
-        calls = [
-            ("/predict/ticket", {
-                "train_number": t, "journey_class": rnd.choice(classes), "quota": rnd.choice(["GN", "GN", "TQ", "LADIES", "SENIOR"]),
-                "journey_date": jd.isoformat(), "booking_date": date.today().isoformat(),
-                "current_wl_number": rnd.randint(150, 320) if drifted else max(1, int(rnd.lognormvariate(2.6, 0.8))),
-                "seniority_flag": rnd.random() < 0.25, "disability_flag": rnd.random() < 0.06}),
-            ("/predict/delay", {
-                "train_number": t, "station_code": rnd.choice(stations), "journey_date": jd.isoformat(),
-                "weather_index": round(rnd.uniform(0.75, 1.0) if drifted else rnd.uniform(0.0, 0.45), 2),
-                "congestion_index": round(rnd.uniform(0.7, 1.0) if drifted else rnd.uniform(0.1, 0.6), 2),
-                "distance_from_origin_km": round(rnd.uniform(300, 2200), 0)}),
-            ("/predict/fare", {"train_number": t, "journey_class": rnd.choice(classes), "journey_date": jd.isoformat(),
-                               "tatkal_flag": rnd.random() < 0.2}),
-            ("/security/score", {
-                "session_id": f"SIM-{i}-{rnd.randint(1000, 9999)}", "ip_hash": "sim", "booking_time_hour": rnd.randint(6, 23),
-                "requests_per_minute": round(rnd.uniform(70, 140) if drifted else abs(rnd.gauss(8, 5)) + 1, 1),
-                "unique_pnr_attempts": rnd.randint(8, 30) if drifted else rnd.randint(1, 4),
-                "account_age_days": rnd.randint(0, 20) if drifted else rnd.randint(30, 1500),
-                "payment_attempts": rnd.randint(3, 8) if drifted else 1,
-                "failed_captcha_count": rnd.randint(2, 7) if drifted else 0,
-                "tatkal_flag": drifted, "is_bulk_booking": drifted and rnd.random() < 0.5, "ip_risk_score": round(rnd.random(), 2)}),
-            ("/recommend/trains", {"source_station": "NDLS", "destination_station": "CSTM", "journey_date": jd.isoformat(),
-                                   "persona": rnd.choice(personas), "preferred_class": rnd.choice(classes)}),
-        ]
-        if i % 3 == 0:
-            calls.append(("/support/query", {"query": rnd.choice(SUPPORT_QS), "language": "auto"}))
-        for path, body in calls:
-            r = api_post(path, body)
-            ok += 1 if r and "error" not in r else 0
-        if bar:
-            bar.progress((i + 1) / rounds, text=f"Sent {(i + 1)} of {rounds} passenger sessions…")
-    if bar:
-        bar.empty()
-    return ok
+    """Replay held-out historical requests (normal) or deliberately shifted ones through the governed services.
+    Runs server-side, so it is fast and every request goes through the real governance hooks."""
+    r = api_post("/governance/traffic/simulate", {"rounds": int(rounds), "shifted": bool(drifted)}, timeout=180)
+    return int((r or {}).get("requests_ok", 0))
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -118,9 +76,9 @@ def simulate_traffic(rounds: int, drifted: bool, quiet: bool = False) -> int:
 # ──────────────────────────────────────────────────────────────────────────────
 
 ANCHORS = [
-    ("attention", "Needs attention"), ("pillars", "Pillars"), ("incidents", "1 Incidents"), ("health", "2 Model health"),
-    ("drift", "3 Drift & data"), ("bias", "4 Bias"), ("halluc", "5 Hallucination"), ("lifecycle", "6 Lifecycle"),
-    ("agent", "7 Supervisor"), ("reports", "8 Reports & audit"), ("chaos", "9 Chaos lab"),
+    ("attention", "Needs attention"), ("pillars", "Pillars"), ("incidents", "1 Incidents"), ("quality", "2 Live quality"),
+    ("health", "3 Health & resources"), ("drift", "4 Drift & data"), ("bias", "5 Bias"), ("halluc", "6 Hallucination"),
+    ("lifecycle", "7 Lifecycle"), ("agent", "8 Agents"), ("reports", "9 Compliance & audit"), ("chaos", "10 Chaos lab"),
 ]
 
 
@@ -161,7 +119,9 @@ def _tower_body() -> None:
     bias_raw = api_get("/governance/bias/audit/all")
     drift, bias = drift_raw or [], bias_raw or []
     sla = api_get("/governance/health/sla") or []
-    hitl = api_get("/governance/supervisor/hitl/pending") or []
+    hitl = dash.get("hitl_pending") or api_get("/governance/supervisor/hitl/pending") or []
+    perf = dash.get("performance") or []
+    degraded = [p for p in perf if p.get("degraded")]
     retrain_q = lifecycle.get("retraining_queue", [])
     events = api_get("/governance/telemetry", {"limit": 300}) or []
 
@@ -215,18 +175,29 @@ def _tower_body() -> None:
         items.append(("warn", "Fairness flag", f'{mname(b["module_id"])}: ' + "; ".join(b.get("adverse_impact_flags", [])[:1]), "→ see Bias"))
     if hall.get("total_quarantined"):
         items.append(("warn", "Responses quarantined", f'{hall["total_quarantined"]} support answers were blocked for weak grounding', "→ see Hallucination"))
+    for p_ in degraded:
+        items.append(("bad", "Quality dropped", f'{mname(p_["module_id"])}: {p_.get("status_reason", "")}', "→ see Live quality"))
     for m in retrain_q:
         items.append(("warn", "Retrain queued", f"{mname(m)} is waiting to be retrained", "→ see Lifecycle"))
     items.sort(key=lambda x: SEV_ORDER[x[0]])
 
     if hitl:
         for req in hitl:
+            pl = req.get("payload") or {}
+            ev = (pl.get("evidence") or {}).get("canary_analysis") or {}
+            evtxt = ""
+            if ev:
+                evtxt = (f' · live {esc(ev.get("metric"))}: champion {esc(ev.get("champion", {}).get(ev.get("metric")))} '
+                         f'vs challenger {esc(ev.get("challenger", {}).get(ev.get("metric")))}')
             c1, c2, c3 = st.columns([4, 1, 1])
             c1.markdown(f'<div class="rb-card" style="border-left:4px solid #F59E0B;margin:0">{badge("Approval needed", "warn")} '
-                        f'<b>{esc(req.get("action_type"))}</b> <span class="rb-sub">· {esc(req.get("module_id", ""))} · {esc(req.get("request_id"))}</span></div>',
-                        unsafe_allow_html=True)
+                        f'<b>Promote {esc(mname(pl.get("model_id", "")))} {esc(pl.get("version", ""))} to 100% traffic</b> '
+                        f'<span class="rb-sub">(from {esc(pl.get("from_version", "—"))}) · requested by {esc(req.get("requested_by", ""))} · '
+                        f'{esc(req.get("request_id"))}{evtxt}</span></div>', unsafe_allow_html=True)
             if c2.button("✅ Approve", key=f'ap_{req["request_id"]}', use_container_width=True):
-                api_post("/governance/supervisor/hitl/decide", {"request_id": req["request_id"], "approved": True})
+                r = api_post("/governance/supervisor/hitl/decide", {"request_id": req["request_id"], "approved": True})
+                if r and r.get("error"):
+                    st.error(r["error"])
                 st.rerun()
             if c3.button("❌ Reject", key=f'rj_{req["request_id"]}', use_container_width=True):
                 api_post("/governance/supervisor/hitl/decide", {"request_id": req["request_id"], "approved": False})
@@ -248,7 +219,8 @@ def _tower_body() -> None:
     pillars = [
         ("📊", "Model health", status, f'{health.get("total_requests", 0):,} requests · {len(open_cb)} open circuits'),
         ("🧪", "Data quality", "HEALTHY" if dq_rate >= 98 else "WARNING", f"{dq_rate:.1f}% of inputs passed validation"),
-        ("📉", "Drift & performance", "UNAVAILABLE" if drift_raw is None else "DRIFT" if drifting else "STABLE", "Drift service not responding" if drift_raw is None else f"{len(drifting)} of {len(drift)} models drifting"),
+        ("📉", "Drift & performance", "UNAVAILABLE" if drift_raw is None else "DRIFT" if (drifting or degraded) else "STABLE",
+         "Drift service not responding" if drift_raw is None else f"{len(drifting)} drifting · {len(degraded)} with lower live quality"),
         ("⚖️", "Bias & fairness", "BIAS_DETECTED" if biased else "FAIR", f"{len(bias)} modules audited"),
         ("🧠", "Hallucination guard", "WARNING" if hall.get("total_quarantined") else "STABLE", f'{hall.get("total_quarantined", 0)} of {hq} answers quarantined'),
         ("🚨", "Root-cause analysis", "INCIDENT" if n_open else "HEALTHY", f"{n_open} open incidents"),
@@ -266,15 +238,24 @@ def _tower_body() -> None:
     section("Incidents & root-cause analysis", "Faults are correlated, explained with 5-Why reasoning and paired with a remediation playbook.", "incidents", "1")
     if not incidents:
         callout("No open incidents. Use the <b>Chaos lab</b> at the bottom to see the loop in action.", "ok", "✅")
-    for inc in incidents[:10]:
+    for i_, inc in enumerate(incidents[:10]):
         p = inc.get("priority", "MEDIUM")
         tone = "bad" if p == "CRITICAL" else "warn" if p == "HIGH" else "info"
         with st.expander(f'{p} · {mname(inc.get("module_id", ""))} · {inc.get("primary_event_type", "").replace("_", " ").title()} · {inc["incident_id"]}',
-                         expanded=(p == "CRITICAL")):
+                         expanded=(i_ == 0 and p == "CRITICAL")):
             a, b = st.columns(2)
             with a:
                 st.markdown(f'{badge(p, tone)} &nbsp; opened {_ts(inc.get("timestamp"))} · seen **{inc.get("occurrences", 1)}×** · '
                             f'{inc.get("correlated_events_count", 0)} correlated events', unsafe_allow_html=True)
+                if inc.get("evidence"):
+                    st.markdown("**Evidence**")
+                    for e_ in inc["evidence"]:
+                        st.markdown(f"- {e_}")
+                if inc.get("root_cause_module") and inc.get("root_cause_module") != inc.get("module_id"):
+                    callout(f"<b>Traced upstream:</b> the likely root cause is <b>{esc(mname(inc['root_cause_module']))}</b>, "
+                            f"which {esc(mname(inc.get('module_id', '')))} depends on.", "warn", "🧭")
+                if inc.get("downstream_impact"):
+                    st.caption("Downstream services affected: " + ", ".join(mname(m) for m in inc["downstream_impact"]))
                 st.markdown("**Likely upstream causes**")
                 for c in inc.get("inferred_causes", []):
                     st.markdown(f"- {c.replace('_', ' ').title()}")
@@ -292,15 +273,51 @@ def _tower_body() -> None:
         for inc in incidents:
             api_post(f'/governance/incidents/{inc["incident_id"]}/resolve')
         st.rerun()
+    hist = [h for h in (api_get("/governance/incidents/history/all", {"n": 40}) or []) if h.get("resolved")]
+    if hist:
+        with st.expander(f"✔️ Recently resolved incidents ({len(hist)})"):
+            _df([{"Resolved": _ts(h.get("resolved_at")), "Module": mname(h.get("module_id", "")),
+                  "Incident": h.get("primary_event_type", "").replace("_", " ").title(), "How": h.get("resolution", "")}
+                 for h in reversed(hist[-12:])])
+
+    # ── 2 Live model quality (ground truth) ─────────────────────────────────
+    section("Live model quality", "Measured on real outcomes (final PNR status, actual delay, fare paid, analyst verdicts, "
+            "chosen trains, satisfaction ratings) — this is how concept drift is caught.", "quality", "2")
+    if perf:
+        rows = []
+        for p_ in perf:
+            m = p_.get("metrics") or {}
+            key = p_.get("primary_metric")
+            rows.append({"Module": mname(p_["module_id"]), "Outcome measured": p_.get("outcome"),
+                         "Outcomes": p_.get("n_outcomes", 0), "Live": ", ".join(f"{k}={v}" for k, v in m.items() if v is not None) or "—",
+                         "Baseline": p_.get("baseline"), "Status": "🔴 degraded" if p_.get("degraded") else ("⏳ waiting" if p_.get("n_outcomes", 0) < 30 else "✅ ok"),
+                         "Why": p_.get("status_reason", ""), "Sources": ", ".join(p_.get("sources", []))})
+        _df(rows)
+        canaries = [(p_, v) for p_ in perf for v in (p_.get("by_version") or {}) if len(p_.get("by_version") or {}) > 1]
+        if canaries:
+            st.markdown("**Champion vs canary on live outcomes**")
+            _df([{"Module": mname(p_["module_id"]), "Version": v, **{k: x for k, x in p_["by_version"][v].items()}} for p_, v in canaries])
+        st.caption("Outcomes arrive from passengers (the feedback boxes on each service page), operators and analysts. "
+                   "In this demo you can also generate simulated outcomes in the Chaos lab — they are labelled 'simulated'.")
+    else:
+        callout("No outcomes yet.", "info", "ℹ️")
 
     # ── 2 Model health & SLA ────────────────────────────────────────────────
-    section("Model health & SLA", "Latency percentiles, error rates and circuit breakers per AI module (SLA: P95 < 3000 ms, errors < 5%).", "health", "2")
+    section("Model health & SLA", "Latency percentiles, error rates, circuit breakers and resource use per AI module (SLA: P95 < 3000 ms, errors < 5%).", "health", "3")
+    res_ = health.get("resources") or {}
+    if res_:
+        kpi_row([("Process CPU", f'{res_.get("process_cpu_pct", 0):.0f}%', f'{res_.get("host_cpus", "?")} CPUs on host', ""),
+                 ("Process memory", f'{res_.get("process_memory_mb", 0):,.0f} MB', f'host memory {res_.get("host_memory_pct", "—")}%', ""),
+                 ("Threads", res_.get("process_threads", "—"), "API process", ""),
+                 ("Open circuits", len(open_cb), "requests shed fast (503) while open", "ok" if not open_cb else "bad")])
+        st.markdown("<div style='height:8px'></div>", unsafe_allow_html=True)
     if modules:
         rows = []
         for mid, s in modules.items():
             rows.append({"Module": mname(mid), "Requests": s.get("total_requests", 0), "Error %": s.get("error_rate_pct", 0),
                          "Avg ms": s.get("avg_latency_ms", 0), "P95 ms": s.get("p95_ms", 0), "P99 ms": s.get("p99_ms", 0),
-                         "Uptime %": s.get("uptime_pct", 100), "Circuit": s.get("circuit_state", "—"),
+                         "CPU ms/req": s.get("avg_cpu_ms", 0), "Uptime %": s.get("uptime_pct", 100),
+                         "Circuit": s.get("circuit_state", "—"), "Times opened": s.get("circuit_opened_count", 0),
                          "SLA": "✅" if not any(x["module_id"] == mid for x in sla_bad) else "🔴"})
         l, r = st.columns([1.5, 1])
         with l:
@@ -330,13 +347,16 @@ def _tower_body() -> None:
         callout("No traffic yet — use <b>Generate live traffic</b> in the Chaos lab (or open any Passenger service).", "info", "ℹ️")
 
     # ── 3 Drift & data quality ──────────────────────────────────────────────
-    section("Drift & data quality", "Inputs are validated before inference; live feature distributions are compared with training data (KS test + PSI).", "drift", "3")
+    section("Drift & data quality", "Inputs are validated before inference; live feature distributions are compared with the training data (KS test with p-value + small-sample-corrected PSI).", "drift", "4")
     q1, q2 = st.columns([1, 2.4])
     with q1:
         st.markdown(kpi("Input validation pass rate", f"{dq_rate:.1f}%", f"{len(valid)} recent inferences checked", "ok" if dq_rate >= 98 else "warn"), unsafe_allow_html=True)
     with q2:
-        callout("<b>Data-quality gate</b> checks schema, numeric ranges and z-score outliers on every request <i>before</i> the model runs. "
-                "Bad inputs are flagged on the response and never silently trusted.", "info", "🧪")
+        dqv = [e for e in events if e.get("event_type") == "DATA_QUALITY_VIOLATION"]
+        blocked = sum(1 for e in dqv if (e.get("payload") or {}).get("blocking"))
+        callout("<b>Data-quality gate</b> checks required fields, ranges, corrupted values (NaN / infinity, malformed train numbers, "
+                f"impossible dates) and outliers <i>before</i> the model runs. Recent: <b>{len(dqv)}</b> flagged, "
+                f"<b>{blocked}</b> blocked with HTTP 422 so no unreliable prediction was served.", "info", "🧪")
     if drift_raw is None:
         callout("The drift service did not respond. Press <b>Refresh now</b>; if it persists check the API logs.", "bad", "⚠️")
     for d in drift:
@@ -363,9 +383,21 @@ def _tower_body() -> None:
                 st.caption("No baseline features are registered for this model yet.")
     if not drift:
         callout("Drift windows are empty — generate traffic below.", "info", "ℹ️")
+    beh = api_get("/governance/behaviour") or []
+    if beh:
+        st.markdown("**User-behaviour change** — has the mix of classes, quotas and traveller types people ask about shifted from history?")
+        rows = []
+        for b_ in beh:
+            for f in b_.get("fields", []):
+                if f.get("status") == "INSUFFICIENT_DATA":
+                    continue
+                ch = "; ".join(f'{c["category"]}: {c["baseline_pct"]}% → {c["live_pct"]}%' for c in f.get("largest_changes", []))
+                rows.append({"Service": mname(b_["model_id"]), "Field": f["field"], "PSI": f.get("psi"),
+                             "Shift": "🔴 yes" if f.get("shift_detected") else "✅ no", "Largest changes": ch})
+        _df(rows)
 
     # ── 4 Bias & fairness ───────────────────────────────────────────────────
-    section("Bias & fairness", "Disparate Impact Ratio (≥ 0.80), Demographic Parity gap (≤ 0.10) and Equal Opportunity gap, per protected group.", "bias", "4")
+    section("Bias & fairness", "Disparate Impact Ratio (≥ 0.80), Demographic Parity gap (≤ 0.10) and Equal Opportunity gap (needs outcomes), for protected groups: age, disability, gender. Groups need ≥ 20 observations.", "bias", "5")
     if bias:
         for b in bias:
             fair = b.get("overall_fair", True)
@@ -375,15 +407,15 @@ def _tower_body() -> None:
                 rows = []
                 for a in b.get("attributes_audited", []):
                     rows.append({"Protected attribute": a["attribute"].replace("_", " ").title(), "DIR": a.get("dir"), "DPD": a.get("dpd"),
-                                 "EOD": a.get("eod"), "Groups": ", ".join(f'{g} (n={m.get("n", "?")})' for g, m in a.get("groups", {}).items()),
+                                 "EOD": a.get("eod"), "Groups": ", ".join(f'{g} (n={m.get("n_samples", "?")})' for g, m in a.get("groups", {}).items()),
                                  "Result": "✅ fair" if not a.get("adverse_impact") else "⚠️ review"})
                 _df(rows)
     else:
-        callout("No fairness observations yet. Passenger requests carry protected attributes (age group, quota, class, persona); "
+        callout("No fairness observations yet. Passenger requests carry protected attributes (senior citizen, divyangjan, gender); "
                 "they appear here as soon as traffic flows — use <b>Generate live traffic</b> in the Chaos lab.", "info", "ℹ️")
 
     # ── 5 Hallucination ─────────────────────────────────────────────────────
-    section("Hallucination & response quality", "Every Support Assistant answer is scored for faithfulness to retrieved policy text; weak answers are quarantined.", "halluc", "5")
+    section("Hallucination & response quality", "Every Support Assistant answer is scored for content-word and numeric-fact support against the retrieved policy text, and checked for contradictions (e.g. 'refundable' vs 'non-refundable'); weak answers are flagged.", "halluc", "6")
     tot, quar = hall.get("total_evaluations", 0), hall.get("total_quarantined", 0)
     kpi_row([("Answers evaluated", tot, "", ""), ("Quarantined", quar, "weak grounding", "ok" if not quar else "warn"),
              ("Quarantine rate", f"{(quar / tot * 100):.1f}%" if tot else "0%", "", "ok" if not tot or quar / tot < 0.2 else "warn"),
@@ -392,14 +424,14 @@ def _tower_body() -> None:
     recent = api_get("/governance/hallucination/recent", {"n": 15}) or []
     if recent:
         rows = [{"Time": _ts(e.get("timestamp", "")), "Query": (e.get("query") or "")[:70], "Faithfulness": round(e.get("faithfulness_score", 0), 2),
-                 "Quality score": round(e.get("composite_score", 0), 2), "Blocked": "🔴 yes" if e.get("quarantine") else "✅ no",
-                 "Severity": e.get("severity", "—")} for e in recent]
+                 "Quality score": round(e.get("composite_score", 0), 2), "Contradictions": len(e.get("contradictions_detected") or []),
+                 "Blocked": "🔴 yes" if e.get("quarantine") else "✅ no", "Severity": e.get("severity", "—")} for e in recent]
         _df(rows)
     else:
         st.caption("Ask the Support Assistant a question to populate this table.")
 
     # ── 6 Lifecycle ─────────────────────────────────────────────────────────
-    section("Model lifecycle", "Version registry, champion/challenger canaries, automated retraining and one-click rollback.", "lifecycle", "6")
+    section("Model lifecycle", "Retraining on the fixed hold-out set (+ recent outcomes), minimum-gain rule, 10% live canary, human-approved promotion, one-click rollback.", "lifecycle", "7")
     mids = lifecycle.get("models_registered", [])
     prod, chal = lifecycle.get("production_versions", {}), lifecycle.get("challenger_versions", {})
     rows = []
@@ -408,7 +440,9 @@ def _tower_body() -> None:
         vers = {v["version"]: v for v in st_.get("versions", [])}
         pv = vers.get(prod.get(mid, ""), {})
         met = pv.get("metrics", {})
-        rows.append({"Model": mname(mid), "Production": prod.get(mid, "—"), "Challenger": chal.get(mid, "—"),
+        can = (lifecycle.get("canary") or {}).get(mid)
+        rows.append({"Model": mname(mid), "Production": prod.get(mid, "—"),
+                     "Canary": f'{can["version"]} @ {can["traffic_pct"]}%' if can else "—",
                      "Versions": st_.get("total_versions", 0), "Key metrics": ", ".join(f"{k}: {v}" for k, v in list(met.items())[:3]) or "—",
                      "Retrain queued": "⚠️ yes" if mid in retrain_q else "no"})
     _df(rows)
@@ -420,22 +454,32 @@ def _tower_body() -> None:
             if st.button("Retrain now", disabled=not mids, key="rt_btn", use_container_width=True):
                 with st.spinner("Retraining on fresh data and evaluating against the champion…"):
                     r = api_post("/governance/lifecycle/retrain", {"model_id": rm})
-                if r and r.get("success"):
-                    st.success(f'{mname(rm)}: {r.get("outcome", "retrained")} → {r.get("new_version", "")}')
+                if r and r.get("success") and r.get("outcome") == "not_applicable":
+                    st.info(r.get("detail", "Not applicable."))
+                elif r and r.get("success"):
+                    (st.success if r.get("outcome") == "challenger_better" else st.info)(
+                        f'{mname(rm)}: {r.get("outcome", "").replace("_", " ")} → {r.get("new_version", "")}. {r.get("decision", "")}')
                     for k_, v_ in (r.get("comparison") or {}).items():
                         st.caption(f"{k_}: {v_}")
+                    st.caption(r.get("next_step", ""))
                 else:
-                    st.error(str(r)[:300])
+                    st.error((r or {}).get("error", "Retraining failed."))
             if rm and chal.get(rm):
-                st.caption(f'Challenger **{chal[rm]}** is running as a 10% canary.')
-                if st.button("🚀 Promote challenger to production", key="pr_btn", use_container_width=True):
+                st.caption(f'Challenger **{chal[rm]}** serves 10% of live traffic as a canary.')
+                p1, p2 = st.columns(2)
+                if p1.button("🚀 Request promotion", key="pr_btn", use_container_width=True,
+                             help="Promotion to 100% traffic is risk-increasing, so it waits for an admin approval (see Needs attention)."):
                     r = api_post("/governance/lifecycle/promote", {"model_id": rm})
                     if r and r.get("success"):
-                        st.success(f'{mname(rm)} now serving {r.get("promoted_version")} (hot-swapped, no restart).')
+                        st.success(f'Approval requested ({r.get("request_id")}). Approve it under "Needs your attention".')
                         time.sleep(0.8)
                         st.rerun()
                     else:
-                        st.error(str(r)[:300])
+                        st.error((r or {}).get("error", "Request failed."))
+                if p2.button("⏹ Stop canary", key="sc_btn", use_container_width=True):
+                    r = api_post("/governance/lifecycle/canary/stop", {"model_id": rm})
+                    (st.success if r and r.get("success") else st.error)(r.get("stopped_version", r.get("error", "")) if r else "failed")
+                    st.rerun()
     with l2:
         with st.container(border=True):
             st.markdown("**⏪ Roll back a model**")
@@ -446,10 +490,27 @@ def _tower_body() -> None:
                 if r and r.get("success"):
                     st.success(f'Rolled back {mname(rb)} to {r.get("restored_version")}')
                 else:
-                    st.error(str(r)[:300])
+                    st.error((r or {}).get("error", "Rollback failed."))
+    rh = api_get("/governance/lifecycle/retrain-history", {"n": 12}) or []
+    if rh:
+        st.markdown("**Retraining history** — every run is kept, accepted or not, with the reason")
+        _df([{"When": _ts(h.get("at")), "Model": mname(h.get("model_id", "")), "Version": h.get("version", "—"),
+              "Trigger": h.get("reason", ""), "Decision": "✅ canary" if h.get("accepted") else ("❌ failed" if h.get("failed") else "kept champion"),
+              "Why": h.get("why", ""), "Production rows used": h.get("production_rows_used", 0),
+              "Seconds": h.get("train_seconds")} for h in reversed(rh)])
 
     # ── 7 Supervisor agent ──────────────────────────────────────────────────
-    section("Supervisor agent", "The autonomous meta-agent polls every pillar, opens incidents, queues retraining and rolls back — logging every action.", "agent", "7")
+    section("Agents monitoring agents", "The supervisor polls every pillar each 30 s, retrains on concept drift, stops bad canaries, "
+            "requests approval for promotions and closes incidents once their signal clears. The planner agent is itself monitored.", "agent", "8")
+    am = api_get("/agent/metrics") or {}
+    kpi_row([("Supervisor cycles", dash.get("cycles_completed", 0), f'last {_ts(dash.get("last_cycle_at"))}' if dash.get("last_cycle_at") else "", "ok"),
+             ("Planner plans", am.get("plans", 0), f'{am.get("blocked_injections", 0)} injections blocked', ""),
+             ("Planner approval rate", f'{am["approval_rate"]:.0%}' if am.get("approval_rate") is not None else "—", "passenger decisions", ""),
+             ("Agent anomalies", len(am.get("recent_anomalies") or []), "slow plans, tool overuse, rejection streaks",
+              "warn" if am.get("recent_anomalies") else "ok")])
+    if am.get("recent_anomalies"):
+        _df([{"Time": _ts(a.get("at")), "Anomaly": a.get("kind", "").replace("_", " "),
+              "Detail": ", ".join(f"{k}={v}" for k, v in a.items() if k not in ("kind", "at"))} for a in reversed(am["recent_anomalies"])])
     if actions:
         _df([{"Time": _ts(a.get("timestamp", "")), "Action": str(a.get("action_type", "")).replace("_", " ").title(), "Module": mname(a.get("module_id", "")),
               "Trigger": str(a.get("trigger", "")).replace("_", " ").title(), "Executed by": a.get("executor", ""), "Outcome": a.get("outcome", "")} for a in reversed(actions[-12:])])
@@ -457,7 +518,17 @@ def _tower_body() -> None:
         callout("No autonomous actions yet. They appear when the supervisor detects drift, SLA breaches or incidents — try the Chaos lab.", "info", "🤖")
 
     # ── 8 Reports & audit ───────────────────────────────────────────────────
-    section("Governance reports & audit trail", "Regulator-ready reports (JSON + Markdown) and the immutable stream of governed inferences.", "reports", "8")
+    section("Compliance, reports & audit trail", "Live ethical-AI checks with evidence, a tamper-evident audit trail that survives restarts, "
+            "and downloadable governance reports.", "reports", "9")
+    comp = api_get("/governance/compliance") or {}
+    ver = api_get("/governance/audit/verify") or {}
+    if comp:
+        sm = comp.get("summary", {})
+        kpi_row([("Compliance checks", f'{sm.get("PASS", 0)} pass', f'{sm.get("WARN", 0)} warn · {sm.get("FAIL", 0)} fail', tone_for(comp.get("overall", ""))),
+                 ("Audit chain", "Intact" if ver.get("intact") else "BROKEN", f'{ver.get("entries_checked", 0):,} entries verified', "ok" if ver.get("intact") else "bad"),
+                 ("Audit storage", "Durable" if ver.get("durable") else "Memory", "SQLite, hash-chained", "ok" if ver.get("durable") else "warn")])
+        _df([{"Check": c["check"], "Principle": c["principle"], "Status": {"PASS": "✅ pass", "WARN": "⚠️ warn", "FAIL": "🔴 fail"}[c["status"]],
+              "Evidence": c["evidence"]} for c in comp.get("checks", [])])
     rc1, rc2 = st.columns([1, 3])
     if rc1.button("📋 Generate report", use_container_width=True, type="primary"):
         with st.spinner("Auditing all pillars…"):
@@ -479,7 +550,14 @@ def _tower_body() -> None:
         d1, d2, _ = st.columns([1, 1, 3])
         d1.download_button("⬇ Markdown", md, f'{rep["report_id"]}.md', use_container_width=True)
         d2.download_button("⬇ JSON", json.dumps(rep, indent=2, default=str), f'{rep["report_id"]}.json', use_container_width=True)
-    with st.expander("📜 Live audit trail (most recent governed inferences)"):
+    with st.expander("🗄️ Durable audit log (personal data masked)"):
+        kind = st.selectbox("Entry type", ["governance_action", "hitl_request", "hitl_decision", "booking", "conversation",
+                                            "feedback", "inference", "plan_rejected"], key="aud_kind")
+        al = api_get("/governance/audit/log", {"kind": kind, "limit": 25}) or {}
+        st.caption("Entries by type: " + ", ".join(f"{k}: {v:,}" for k, v in (al.get("counts") or {}).items()))
+        _df([{"Time": _ts(e["ts"]), "Module": mname(e.get("module") or ""), "Ref": e.get("ref"), "Actor": e.get("actor"),
+              "Payload": json.dumps(e.get("payload"), default=str)[:160], "Hash": e.get("hash", "")[:12]} for e in al.get("entries", [])])
+    with st.expander("📜 Live telemetry stream (most recent governed events)"):
         if events:
             ev = pd.DataFrame(events).tail(25).iloc[::-1]
             cols = [c for c in ["timestamp", "module", "event_type", "severity", "latency_ms", "confidence_score", "schema_valid", "event_id"] if c in ev]
@@ -491,13 +569,14 @@ def _tower_body() -> None:
             st.caption("No events yet.")
 
     # ── 9 Chaos lab ─────────────────────────────────────────────────────────
-    section("Chaos lab — watch the loop work", "Create real traffic or inject faults, then scroll up to see detection → root cause → action.", "chaos", "9")
+    section("Chaos lab — watch the loop work", "Create traffic, report outcomes or inject faults, then scroll up to see detection → root cause → action.", "chaos", "10")
     c1, c2 = st.columns(2, gap="large")
     with c1:
         with st.container(border=True):
             st.markdown("**🚦 Generate live traffic**")
-            st.caption("Sends real requests to the actual models so drift, bias, SLA and data-quality pillars have live data.")
-            n = st.slider("Passenger sessions", 20, 80, 45, step=5, key="sim_n")
+            st.caption("Normal = replays held-out historical requests (should NOT drift). Shifted = very long waitlists, storms, "
+                       "last-minute bookings and bot sessions (should drift).")
+            n = st.slider("Passenger sessions", 20, 120, 60, step=10, key="sim_n")
             a, b = st.columns(2)
             if a.button("Normal traffic", use_container_width=True, key="sim_ok"):
                 done = simulate_traffic(n, drifted=False)
@@ -525,6 +604,34 @@ def _tower_body() -> None:
                     st.rerun()
                 else:
                     st.error(str(r)[:200])
-            if b.button("Reset to healthy", use_container_width=True, key="ch_reset"):
+            if b.button("Reset monitors", use_container_width=True, key="ch_reset"):
                 api_post("/governance/supervisor/reset")
+                st.rerun()
+    o1, o2 = st.columns(2, gap="large")
+    with o1:
+        with st.container(border=True):
+            st.markdown("**📬 Report outcomes (simulated ground truth)**")
+            st.caption("Gives every recent prediction its 'real' outcome. Normal = the world behaves as the models learned. "
+                       "Concept drift = same inputs, different outcomes (e.g. delays now much longer) → quality drops → "
+                       "the supervisor retrains with these outcomes and starts a canary.")
+            a, b = st.columns(2)
+            if a.button("Normal outcomes", use_container_width=True, key="out_ok"):
+                r = api_post("/governance/outcomes/simulate", {"mode": "normal"})
+                st.success(f'{(r or {}).get("total", 0)} outcomes recorded.')
+                time.sleep(0.5)
+                st.rerun()
+            if b.button("⚠️ Concept drift", use_container_width=True, key="out_drift"):
+                r = api_post("/governance/outcomes/simulate", {"mode": "concept_drift"})
+                st.warning(f'{(r or {}).get("total", 0)} outcomes recorded under a changed world.')
+                time.sleep(0.5)
+                st.rerun()
+    with o2:
+        with st.container(border=True):
+            st.markdown("**🤖 Run the supervisor now**")
+            st.caption("The supervisor runs every 30 seconds on its own; this triggers one cycle immediately.")
+            if st.button("Run governance cycle", use_container_width=True, key="cyc", type="primary"):
+                with st.spinner("Supervisor is checking every pillar…"):
+                    r = api_post("/governance/supervisor/cycle", {})
+                st.success(f'Cycle complete — governance score {(r or {}).get("governance_score", "—")}.')
+                time.sleep(0.6)
                 st.rerun()

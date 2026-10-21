@@ -14,8 +14,11 @@ from typing import Any, Dict, List, Optional, Set
 
 from core.config import settings
 from core.llm_router import llm_router
+from governance.audit_store import audit_store
+from governance.context import report_inference
 from governance.hooks import governance_hook
 from modules.m6_support_assistant.rag_indexer import rag_indexer
+from modules.m6_support_assistant.tools import support_tools
 from modules.m6_support_assistant.schema import (
     RetrievedContextChunk,
     SupportQueryRequest,
@@ -125,13 +128,36 @@ class SupportAssistantService:
             combined_context_text += "\n" + chunk_dict.get("text", "")
 
         top_sim = retrieved_contexts[0].similarity_score if retrieved_contexts else 0.0
+        answered_by = "rule-based policy engine"
+        tool_meta: Dict[str, Any] = {}
+
+        # ── Step 1b: Tools first — PNR status / refund tracking, train suggestions ──
+        tool_out = support_tools.pnr_record(request.query)
+        if tool_out is None:
+            rt = support_tools.route(retrieval_query)
+            if rt:
+                tool_out = support_tools.train_suggestions(*rt)
+        if tool_out is not None:
+            answer_text, record_text, tool_meta = tool_out
+            retrieved_contexts = [RetrievedContextChunk(chunk_id=tool_meta.get("tool", "tool"),
+                                                        source_file=f"tool:{tool_meta.get('tool')}",
+                                                        text=record_text[:300], similarity_score=1.0)]
+            combined_context_text = record_text
+            top_sim = 1.0
 
         # Check for direct curated domain policy match
         from core.fallback_engine import fallback_engine
         curated_policy = fallback_engine._static_support_response(retrieval_query)
         has_curated_policy = not curated_policy.startswith("Thank you for your query. For specific railway inquiries")
 
-        if top_sim < 0.15 and not has_curated_policy:
+        if tool_out is not None:
+            final_answer = answer_text
+            if support_tools.wants_planning(request.query):
+                final_answer += "\nTo plan the whole journey and book after your approval, use the AI Travel Planner."
+            faithfulness, hallucination_flag = 1.0, False
+            answered_by = f"tool: {tool_meta.get('tool')}"
+            has_curated_policy = False
+        elif top_sim < 0.15 and not has_curated_policy:
             # Low relevance to any FAQ chunk and no known policy topic
             final_answer = (
                 "We could not find an authoritative match for your specific query in the current IRCTC policy knowledge base. "
@@ -158,6 +184,8 @@ class SupportAssistantService:
 
             llm_resp = llm_router.complete(prompt=retrieval_query, system_prompt=system_prompt, task="support")
             final_answer = llm_resp.content
+            answered_by = f"Gemini ({llm_resp.model})" if llm_resp.mode == "gemini" else (
+                "Azure OpenAI" if llm_resp.mode == "azure_openai" else "rule-based policy engine")
 
             # ── Step 3: Hallucination & Faithfulness Audit ────────────────────────
             faithfulness = self._compute_faithfulness(final_answer, combined_context_text)
@@ -166,7 +194,8 @@ class SupportAssistantService:
         # ── Pillar 4: Record in Governance Hallucination Monitor ───────────────
         try:
             from governance.hallucination_monitor import hallucination_monitor
-            context_docs = [c.text for c in retrieved_contexts] if retrieved_contexts else [combined_context_text]
+            context_docs = ([combined_context_text] if tool_out is not None else
+                            [c.text for c in retrieved_contexts] if retrieved_contexts else [combined_context_text])
             if has_curated_policy:   # verified rule text is part of the knowledge base the answer is grounded in
                 context_docs = context_docs + [curated_policy]
             eval_res = hallucination_monitor.evaluate(
@@ -203,7 +232,21 @@ class SupportAssistantService:
                 "Your complaint ticket has been flagged for human railway officer review. You can also dial RailMadad at 139."
             )
 
+        # ── Conversation audit (compliance) + register for satisfaction feedback ──
+        report_inference(prediction="answered", version=answered_by)
+        try:
+            audit_store.append("conversation", {
+                "session_id": request.session_id, "user_id": request.user_id, "language": lang,
+                "query": request.query[:500], "answer": final_answer[:1200], "answered_by": answered_by,
+                "sources": [c.source_file for c in retrieved_contexts], "faithfulness": faithfulness,
+                "hallucination_flag": hallucination_flag, "sentiment": sentiment, "escalated": escalate,
+                "tool": tool_meta or None,
+            }, module="m6_support_assistant", ref=request.session_id or "", actor="passenger")
+        except Exception:
+            pass
+
         return SupportQueryResponse(
+            answered_by=answered_by,
             query=request.query,
             response=final_answer,
             detected_language=lang,

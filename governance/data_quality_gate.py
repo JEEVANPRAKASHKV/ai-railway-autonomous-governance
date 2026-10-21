@@ -9,6 +9,12 @@ Checks:
   2. Range validation (numeric bounds from feature_columns.json)
   3. Null rate check
   4. Distribution anomaly (z-score vs. baseline distributions)
+  5. Corruption checks (NaN / infinity, malformed identifiers, impossible dates)
+
+Violations that would make a prediction meaningless (missing required fields, NaN/inf,
+journey date in the past, booking after journey) are *blocking*: the hook refuses the request
+with a 422 instead of returning a poor-quality prediction. Softer issues are served with a
+warning badge and recorded.
 """
 
 from __future__ import annotations
@@ -18,6 +24,10 @@ import logging
 import os
 import pickle
 from typing import Any, Dict, List, Optional
+
+import math
+import re
+from datetime import date, timedelta
 
 import numpy as np
 
@@ -142,10 +152,45 @@ class DataQualityGate:
                                     f"Field '{field}' z-score={z:.2f} (outlier vs. training distribution)"
                                 )
 
+        # 5. Corruption checks
+        blocking: List[str] = [v for v in violations if v.startswith(("Missing required", "Required field"))]
+        for field, val in flat.items():
+            if isinstance(val, float) and (math.isnan(val) or math.isinf(val)):
+                msg = f"Field '{field}' is corrupted (NaN/infinity)"
+                violations.append(msg); blocking.append(msg)
+        tn = flat.get("train_number")
+        if tn is not None and not re.fullmatch(r"\d{4,5}", str(tn).strip()):
+            violations.append(f"Field 'train_number' is malformed: '{str(tn)[:20]}' (expected 4–5 digits)")
+        jd, bd = flat.get("journey_date"), flat.get("booking_date")
+        if isinstance(jd, date):
+            if jd < date.today() - timedelta(days=1) and module_name in ("m1_ticket_predictor", "m5_fare_predictor"):
+                msg = f"journey_date {jd} is in the past"
+                violations.append(msg); blocking.append(msg)
+            if isinstance(bd, date) and bd > jd:
+                msg = f"booking_date {bd} is after journey_date {jd}"
+                violations.append(msg); blocking.append(msg)
+            if jd > date.today() + timedelta(days=366):
+                violations.append(f"journey_date {jd} is more than a year ahead (outside the training range)")
+        for field in ("query",):
+            q = flat.get(field)
+            if isinstance(q, str) and len(q.strip()) == 0:
+                msg = "Field 'query' is empty"
+                violations.append(msg); blocking.append(msg)
+
         valid = len(violations) == 0
         score = max(0.0, 1.0 - (len(violations) * 0.2 + len(anomaly_flags) * 0.1))
+        if violations:
+            try:
+                from governance.telemetry_bus import telemetry_bus
+                telemetry_bus.publish(module_id=module_name, event_type="DATA_QUALITY_VIOLATION",
+                                      payload={"violations": violations[:5], "blocking": bool(blocking)},
+                                      severity="WARNING")
+            except Exception:
+                pass
 
         return {
+            "blocking": bool(blocking),
+            "blocking_violations": blocking,
             "valid": valid,
             "violations": violations,
             "anomaly_flags": anomaly_flags,

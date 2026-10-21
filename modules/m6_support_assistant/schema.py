@@ -36,4 +36,5 @@ class SupportQueryResponse(BaseModel):
     sentiment: str = Field(default="Neutral", description="'Positive' | 'Neutral' | 'Frustrated'")
     escalation_recommended: bool = Field(default=False, description="True if sentiment frustrated or query unresolved")
     confidence_score: float = Field(default=0.90)
+    answered_by: str = Field(default="", description="Gemini model / rule-based engine / tool that produced the answer")
     governance_telemetry: Optional[GovernanceBadge] = None

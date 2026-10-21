@@ -17,7 +17,10 @@ import numpy as np
 import pandas as pd
 
 from core.config import settings
+from core.seasonality import is_peak, season_factor
+from governance.context import report_inference
 from governance.hooks import governance_hook
+from governance.lifecycle_manager import lifecycle_manager
 from modules.m1_ticket_predictor.schema import (
     ShapFeatureContribution,
     TicketPredictRequest,
@@ -47,7 +50,70 @@ class TicketPredictorService:
         self._wl_bundle: Optional[Dict[str, Any]] = None
         self._berth_bundle: Optional[Dict[str, Any]] = None
         self._explainer: Optional[Any] = None
+        self._history: Optional[pd.DataFrame] = None
         self._load_models()
+        self._load_history()
+
+    def _load_history(self) -> None:
+        try:
+            h = pd.read_csv(os.path.join(settings.data_raw_dir, "pnr_history.csv"),
+                            usecols=["train_number", "journey_class", "quota", "journey_date", "days_to_departure",
+                                     "initial_wl_number", "final_status", "berth_type", "seniority_flag",
+                                     "cancellation_date"])
+            h["month"] = pd.to_datetime(h["journey_date"]).dt.month
+            h["cancelled"] = h["cancellation_date"].notna()
+            self._history = h
+        except Exception as e:
+            logger.debug(f"[M1 Service] booking history unavailable: {e}")
+
+    def historical_insights(self, req: TicketPredictRequest, days_to_dept: int) -> Dict[str, Any]:
+        """Booking & cancellation trends from comparable historical PNRs (same class & quota, similar WL)."""
+        h = self._history
+        if h is None:
+            return {}
+        lo, hi = max(1, req.current_wl_number - 10), req.current_wl_number + 10
+        peers = h[(h["journey_class"] == req.journey_class) & (h["quota"] == req.quota)
+                  & h["initial_wl_number"].between(lo, hi)]
+        scope = f"{req.journey_class} / {req.quota}, WL {lo}–{hi}"
+        if len(peers) < 30:
+            peers = h[(h["journey_class"] == req.journey_class) & h["initial_wl_number"].between(lo, hi)]
+            scope = f"{req.journey_class}, any quota, WL {lo}–{hi}"
+        if not len(peers):
+            return {}
+        rates = peers["final_status"].value_counts(normalize=True)
+        train_peers = h[h["train_number"].astype(str) == str(req.train_number)]
+        monthly = (peers.groupby("month")["final_status"].apply(lambda s: float((s == "Confirmed").mean()))
+                   .round(3).to_dict())
+        closer = peers[peers["days_to_departure"] <= days_to_dept]
+        return {
+            "comparable_bookings": int(len(peers)),
+            "scope": scope,
+            "historical_confirmed_pct": round(float(rates.get("Confirmed", 0)) * 100, 1),
+            "historical_rac_pct": round(float(rates.get("RAC", 0)) * 100, 1),
+            "historical_wl_pct": round(float(rates.get("WL", 0)) * 100, 1),
+            "cancellation_rate_pct": round(float(peers["cancelled"].mean()) * 100, 1),
+            "confirmed_pct_when_booked_this_close": (round(float((closer["final_status"] == "Confirmed").mean()) * 100, 1)
+                                                     if len(closer) >= 20 else None),
+            "this_train_bookings": int(len(train_peers)),
+            "this_train_confirmed_pct": (round(float((train_peers["final_status"] == "Confirmed").mean()) * 100, 1)
+                                         if len(train_peers) >= 20 else None),
+            "confirmed_pct_by_month": {int(k): v for k, v in monthly.items()},
+        }
+
+    def empirical_berth(self, req: TicketPredictRequest) -> Dict[str, Any]:
+        """Berth split of comparable CONFIRMED bookings — calibrated, unlike the weak berth classifier."""
+        h = self._history
+        if h is None:
+            return {}
+        conf = h[(h["final_status"] == "Confirmed") & (h["journey_class"] == req.journey_class)]
+        if req.seniority_flag:
+            sen = conf[conf["seniority_flag"] == 1]
+            conf = sen if len(sen) >= 50 else conf
+        conf = conf[conf["berth_type"].isin(["Lower", "Middle", "Upper", "Side Lower", "Side Upper", "RAC"])]
+        if len(conf) < 30:
+            return {}
+        dist = conf["berth_type"].value_counts(normalize=True).round(3).to_dict()
+        return {"distribution": dist, "n": int(len(conf))}
 
     def _load_models(self) -> None:
         art_dir = settings.models_artifacts_dir
@@ -92,8 +158,8 @@ class TicketPredictorService:
         days_to_dept = max(0, (request.journey_date - b_date).days)
         j_month = request.journey_date.month
         j_dow = request.journey_date.weekday()
-        is_peak = 1 if j_month in [5, 6, 10, 11, 12] else 0
-        season_factor = 1.4 if is_peak else 1.0
+        peak = is_peak(request.journey_date)
+        sf = season_factor(request.journey_date)
 
         class_enc_val = 0
         quota_enc_val = 0
@@ -110,8 +176,8 @@ class TicketPredictorService:
             "days_to_departure": float(days_to_dept),
             "month": float(j_month),
             "day_of_week": float(j_dow),
-            "is_peak_season": float(is_peak),
-            "season_factor": float(season_factor),
+            "is_peak_season": float(peak),
+            "season_factor": float(sf),
             "seniority_flag": float(int(request.seniority_flag)),
             "disability_flag": float(int(request.disability_flag)),
         }
@@ -121,10 +187,12 @@ class TicketPredictorService:
         pnr_status = "Borderline"
         confidence_score = 0.85
 
-        if self._wl_bundle and "model" in self._wl_bundle:
-            model = self._wl_bundle["model"]
-            target_enc = self._wl_bundle.get("target_encoder")
-            feature_cols = self._wl_bundle.get("feature_cols", list(feature_dict.keys()))
+        wl_bundle, version = lifecycle_manager.serving_bundle("m1_ticket_predictor", self._wl_bundle)
+        prob_map: Dict[str, float] = {}
+        if wl_bundle and "model" in wl_bundle:
+            model = wl_bundle["model"]
+            target_enc = wl_bundle.get("target_encoder")
+            feature_cols = wl_bundle.get("feature_cols", list(feature_dict.keys()))
 
             input_df = pd.DataFrame([[feature_dict[c] for c in feature_cols]], columns=feature_cols)
             probs = model.predict_proba(input_df)[0]
@@ -136,6 +204,10 @@ class TicketPredictorService:
             confirm_prob = round(float(np.clip(raw_confirm, 0.02, 0.98)), 4)
 
             confidence_score = round(float(np.max(probs)), 4)
+            report_inference(features=feature_dict,
+                             prediction={"label": max(prob_map, key=prob_map.get), "p_confirm": confirm_prob,
+                                         "probs": {k: round(v, 4) for k, v in prob_map.items()}},
+                             version=version)
         else:
             # Deterministic heuristic fallback if artifact unmounted
             base = 0.85 - (request.current_wl_number * 0.015) + (days_to_dept * 0.005)
@@ -150,42 +222,30 @@ class TicketPredictorService:
         else:
             pnr_status = "Likely WL"
 
-        # ── Predict Berth Type ────────────────────────────────────────────────
-        estimated_berth = "Side Lower" if request.seniority_flag else "Middle"
-        berth_breakdown: Dict[str, float] = {
-            "Lower": 0.20, "Middle": 0.20, "Upper": 0.20,
-            "Side Lower": 0.20, "Side Upper": 0.15, "RAC": 0.05
-        }
-
-        if self._berth_bundle and "model" in self._berth_bundle:
-            b_model = self._berth_bundle["model"]
-            b_enc = self._berth_bundle.get("berth_encoder")
-            b_cols = self._berth_bundle.get("feature_cols", [
-                "initial_wl_number", "class_enc", "quota_enc",
-                "days_to_departure", "month", "is_peak_season",
-                "seniority_flag", "disability_flag",
-            ])
-            b_input = pd.DataFrame([[feature_dict[c] for c in b_cols]], columns=b_cols)
-            b_probs = b_model.predict_proba(b_input)[0]
-            b_classes = list(b_enc.classes_) if b_enc else list(berth_breakdown.keys())
-
-            berth_breakdown = {b_cls: round(float(b_probs[i]), 3) for i, b_cls in enumerate(b_classes)}
-            if request.seniority_flag or request.disability_flag:
-                # Prioritize lower berth quota policy
-                berth_breakdown["Lower"] = min(0.85, berth_breakdown.get("Lower", 0.2) + 0.35)
-                # Re-normalize
-                total = sum(berth_breakdown.values())
-                berth_breakdown = {k: round(v / total, 3) for k, v in berth_breakdown.items()}
-
-            estimated_berth = max(berth_breakdown, key=berth_breakdown.get)
+        # ── Berth estimate ────────────────────────────────────────────────────
+        # The trained berth classifier scores 27.7% accuracy (below always guessing the most common berth),
+        # so it is not served. The estimate is the berth split of comparable confirmed bookings instead.
+        emp = self.empirical_berth(request)
+        berth_breakdown: Dict[str, float] = emp.get("distribution") or {
+            "Lower": 0.2, "Middle": 0.2, "Upper": 0.2, "Side Lower": 0.15, "Side Upper": 0.15, "RAC": 0.1}
+        berth_basis = (f"Share of {emp['n']:,} comparable confirmed bookings" if emp
+                       else "Default split (no comparable history)")
+        estimated_berth = max(berth_breakdown, key=berth_breakdown.get)
 
         # ── Compute SHAP Explainability ───────────────────────────────────────
         shap_explanations: List[ShapFeatureContribution] = []
-        if self._explainer is not None and self._wl_bundle:
+        explainer = self._explainer if wl_bundle is self._wl_bundle else None
+        if explainer is None and wl_bundle is not None:
             try:
-                feature_cols = self._wl_bundle.get("feature_cols", list(feature_dict.keys()))
+                import shap
+                explainer = shap.TreeExplainer(wl_bundle["model"])
+            except Exception:
+                explainer = None
+        if explainer is not None and wl_bundle:
+            try:
+                feature_cols = wl_bundle.get("feature_cols", list(feature_dict.keys()))
                 input_df = pd.DataFrame([[feature_dict[c] for c in feature_cols]], columns=feature_cols)
-                shap_vals = self._explainer.shap_values(input_df)
+                shap_vals = explainer.shap_values(input_df)
 
                 # For multiclass, take Confirmed class if index available or average
                 if isinstance(shap_vals, list) and len(shap_vals) > 0:
@@ -257,7 +317,12 @@ class TicketPredictorService:
                 "Strongly advised to book an alternate train immediately to guarantee travel."
             )
 
+        insights = self.historical_insights(request, days_to_dept)
         return TicketPredictResponse(
+            historical_insights=insights,
+            berth_estimate_basis=berth_basis,
+            status_probabilities={k: round(v, 3) for k, v in prob_map.items()},
+            model_version=version if prob_map else "heuristic",
             pnr_status_prediction=pnr_status,
             confirmation_probability=confirm_prob,
             estimated_berth_type=estimated_berth,

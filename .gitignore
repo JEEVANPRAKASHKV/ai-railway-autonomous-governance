@@ -108,3 +108,6 @@ models/registry/lifecycle_state.json
 
 # local scratch
 _to_delete/
+
+# durable governance state (audit trail, lifecycle) — created at runtime
+runtime/
