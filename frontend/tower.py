@@ -5,7 +5,7 @@ AI Governance Control Tower — ONE scrollable page, ordered by importance:
 
    Command centre → Needs attention → Pillar status → 1 Incidents & RCA → 2 Model health & SLA →
    3 Drift & data quality → 4 Bias & fairness → 5 Hallucination → 6 Model lifecycle →
-   7 Supervisor agent → 8 Reports & audit trail → 9 Chaos lab
+   7 Supervisor agent → 8 Agents → 9 Security & fraud → 10 Compliance & audit trail → 11 Chaos lab
 """
 
 from __future__ import annotations
@@ -43,7 +43,7 @@ def mname(mid: str) -> str:
 
 def _df(rows: List[dict], **kw) -> None:
     if rows:
-        st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True, **kw)
+        st.dataframe(pd.DataFrame(rows), width="stretch", hide_index=True, **kw)
 
 
 def _ts(s: Any) -> str:
@@ -56,13 +56,6 @@ def _ts(s: Any) -> str:
 # ──────────────────────────────────────────────────────────────────────────────
 # Live traffic generator (exercises the REAL models through the governance hooks)
 # ──────────────────────────────────────────────────────────────────────────────
-
-SUPPORT_QS = [
-    "How do I check my PNR status?", "What is the refund if my waitlist ticket is not confirmed?",
-    "Can I transfer my ticket to a family member?", "What are the Tatkal booking rules?",
-    "Kya RAC passenger 3A coach me travel kar sakta hai?", "तत्काल टिकट रद्द करने पर रिफंड मिलता है?",
-]
-
 
 def simulate_traffic(rounds: int, drifted: bool, quiet: bool = False) -> int:
     """Replay held-out historical requests (normal) or deliberately shifted ones through the governed services.
@@ -78,11 +71,12 @@ def simulate_traffic(rounds: int, drifted: bool, quiet: bool = False) -> int:
 ANCHORS = [
     ("attention", "Needs attention"), ("pillars", "Pillars"), ("incidents", "1 Incidents"), ("quality", "2 Live quality"),
     ("health", "3 Health & resources"), ("drift", "4 Drift & data"), ("bias", "5 Bias"), ("halluc", "6 Hallucination"),
-    ("lifecycle", "7 Lifecycle"), ("agent", "8 Agents"), ("reports", "9 Compliance & audit"), ("chaos", "10 Chaos lab"),
+    ("lifecycle", "7 Lifecycle"), ("agent", "8 Agents"), ("security", "9 Security & fraud"),
+    ("reports", "10 Compliance & audit"), ("chaos", "11 Chaos lab"),
 ]
 
 
-def tower() -> None:
+def tower(pages: Dict[str, Any] = None) -> None:
     inject_theme("tower")
     hero(
         "🏛️ AI Governance Control Tower",
@@ -93,15 +87,15 @@ def tower() -> None:
 
     top1, top2, top3 = st.columns([1.2, 1.2, 3])
     live = top1.toggle("Live auto-refresh", value=False, help="Refresh every 10 seconds")
-    if top2.button("🔄 Refresh now", use_container_width=True):
+    if top2.button("🔄 Refresh now", width="stretch"):
         st.rerun()
     top3.caption(f"Engine: **{engine_label()}** · API: `{API_BASE}` · Last updated {datetime.now(timezone.utc).strftime('%H:%M:%S UTC')}")
 
     body = st.fragment(run_every=10 if live else None)(_tower_body)
-    body()
+    body(pages or {})
 
 
-def _tower_body() -> None:
+def _tower_body(pages: Dict[str, Any]) -> None:
     dash = api_get("/governance/supervisor/dashboard")
     if not dash:
         callout("<b>The governance backend isn't reachable.</b> It starts automatically with the app — wait a few seconds and press "
@@ -124,6 +118,8 @@ def _tower_body() -> None:
     degraded = [p for p in perf if p.get("degraded")]
     retrain_q = lifecycle.get("retraining_queue", [])
     events = api_get("/governance/telemetry", {"limit": 300}) or []
+    sec_alerts = api_get("/security/alerts", {"n": 60}) or []
+    blocked_n = sum(1 for a in sec_alerts if a.get("action") == "BLOCK_AND_REPORT")
 
     drifting = [d for d in drift if d.get("overall_drift_detected")]
     biased = [b for b in bias if not b.get("overall_fair", True)]
@@ -138,7 +134,7 @@ def _tower_body() -> None:
         color = "#059669" if score >= 80 else "#D97706" if score >= 60 else "#DC2626"
         st.plotly_chart(gauge(score, "Governance score", "", color=color,
                               steps=[(0, 60, "#FEE2E2"), (60, 80, "#FEF3C7"), (80, 100, "#D1FAE5")], height=220),
-                        use_container_width=True)
+                        width="stretch")
     with k:
         kpi_row([
             ("Platform", esc(status.title()), f"{len(modules)} of 7 modules reporting", tone_for(status)),
@@ -179,6 +175,8 @@ def _tower_body() -> None:
         items.append(("bad", "Quality dropped", f'{mname(p_["module_id"])}: {p_.get("status_reason", "")}', "→ see Live quality"))
     for m in retrain_q:
         items.append(("warn", "Retrain queued", f"{mname(m)} is waiting to be retrained", "→ see Lifecycle"))
+    if blocked_n:
+        items.append(("info", "Security", f"{blocked_n} bot / scalper sessions were blocked and reported recently", "→ see Security & fraud"))
     items.sort(key=lambda x: SEV_ORDER[x[0]])
 
     if hitl:
@@ -194,12 +192,12 @@ def _tower_body() -> None:
                         f'<b>Promote {esc(mname(pl.get("model_id", "")))} {esc(pl.get("version", ""))} to 100% traffic</b> '
                         f'<span class="rb-sub">(from {esc(pl.get("from_version", "—"))}) · requested by {esc(req.get("requested_by", ""))} · '
                         f'{esc(req.get("request_id"))}{evtxt}</span></div>', unsafe_allow_html=True)
-            if c2.button("✅ Approve", key=f'ap_{req["request_id"]}', use_container_width=True):
+            if c2.button("✅ Approve", key=f'ap_{req["request_id"]}', width="stretch"):
                 r = api_post("/governance/supervisor/hitl/decide", {"request_id": req["request_id"], "approved": True})
                 if r and r.get("error"):
                     st.error(r["error"])
                 st.rerun()
-            if c3.button("❌ Reject", key=f'rj_{req["request_id"]}', use_container_width=True):
+            if c3.button("❌ Reject", key=f'rj_{req["request_id"]}', width="stretch"):
                 api_post("/governance/supervisor/hitl/decide", {"request_id": req["request_id"], "approved": False})
                 st.rerun()
     if not items and not hitl:
@@ -290,7 +288,8 @@ def _tower_body() -> None:
             key = p_.get("primary_metric")
             rows.append({"Module": mname(p_["module_id"]), "Outcome measured": p_.get("outcome"),
                          "Outcomes": p_.get("n_outcomes", 0), "Live": ", ".join(f"{k}={v}" for k, v in m.items() if v is not None) or "—",
-                         "Baseline": p_.get("baseline"), "Status": "🔴 degraded" if p_.get("degraded") else ("⏳ waiting" if p_.get("n_outcomes", 0) < 30 else "✅ ok"),
+                         "Baseline": str(p_.get("baseline")) if p_.get("baseline") is not None else (
+                             "FPR ≤ 12% · FNR ≤ 15%" if p_["module_id"] == "m7_fraud_detector" else "—"), "Status": "🔴 degraded" if p_.get("degraded") else ("⏳ waiting" if p_.get("n_outcomes", 0) < 30 else "✅ ok"),
                          "Why": p_.get("status_reason", ""), "Sources": ", ".join(p_.get("sources", []))})
         _df(rows)
         canaries = [(p_, v) for p_ in perf for v in (p_.get("by_version") or {}) if len(p_.get("by_version") or {}) > 1]
@@ -329,7 +328,7 @@ def _tower_body() -> None:
             fig.add_vline(x=3000, line_dash="dash", line_color="#DC2626", annotation_text="SLA 3000 ms")
             fig.update_layout(title="<b>P95 latency vs SLA</b>")
             style_fig(fig, 300)
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width="stretch")
         # resource utilisation proxy from telemetry
         if events:
             ev = pd.DataFrame(events)
@@ -339,10 +338,11 @@ def _tower_body() -> None:
                 if len(ev) > 5:
                     fig = go.Figure()
                     for mod, grp in ev.groupby("module"):
-                        fig.add_trace(go.Scatter(x=grp["t"], y=grp["latency_ms"], mode="lines", name=mname(mod), line=dict(width=1.6)))
+                        fig.add_trace(go.Scatter(x=grp["t"], y=grp["latency_ms"], mode="lines+markers", name=mname(mod),
+                                                 line=dict(width=1.4), marker=dict(size=5)))
                     fig.update_layout(title="<b>Live latency stream</b> (all modules)", yaxis_title="ms")
                     style_fig(fig, 260)
-                    st.plotly_chart(fig, use_container_width=True)
+                    st.plotly_chart(fig, width="stretch")
     else:
         callout("No traffic yet — use <b>Generate live traffic</b> in the Chaos lab (or open any Passenger service).", "info", "ℹ️")
 
@@ -375,7 +375,7 @@ def _tower_body() -> None:
                 fig.add_hline(y=0.2, line_dash="dash", line_color="#DC2626", annotation_text="PSI 0.20 = significant")
                 fig.update_layout(title="<b>Population Stability Index per feature</b>")
                 style_fig(fig, 240)
-                st.plotly_chart(fig, use_container_width=True)
+                st.plotly_chart(fig, width="stretch")
             elif waiting:
                 n = max(f.get("n_samples", 0) for f in waiting)
                 st.progress(min(1.0, n / 30), text=f"Collecting samples… {n}/30 needed for a statistical test")
@@ -394,7 +394,10 @@ def _tower_body() -> None:
                 ch = "; ".join(f'{c["category"]}: {c["baseline_pct"]}% → {c["live_pct"]}%' for c in f.get("largest_changes", []))
                 rows.append({"Service": mname(b_["model_id"]), "Field": f["field"], "PSI": f.get("psi"),
                              "Shift": "🔴 yes" if f.get("shift_detected") else "✅ no", "Largest changes": ch})
-        _df(rows)
+        if rows:
+            _df(rows)
+        else:
+            st.caption("Collecting requests — each field needs enough samples before its mix can be compared with history.")
 
     # ── 4 Bias & fairness ───────────────────────────────────────────────────
     section("Bias & fairness", "Disparate Impact Ratio (≥ 0.80), Demographic Parity gap (≤ 0.10) and Equal Opportunity gap (needs outcomes), for protected groups: age, disability, gender. Groups need ≥ 20 observations.", "bias", "5")
@@ -451,7 +454,7 @@ def _tower_body() -> None:
         with st.container(border=True):
             st.markdown("**🔁 Retrain a model**")
             rm = st.selectbox("Model", mids, format_func=mname, key="rt_model") if mids else None
-            if st.button("Retrain now", disabled=not mids, key="rt_btn", use_container_width=True):
+            if st.button("Retrain now", disabled=not mids, key="rt_btn", width="stretch"):
                 with st.spinner("Retraining on fresh data and evaluating against the champion…"):
                     r = api_post("/governance/lifecycle/retrain", {"model_id": rm})
                 if r and r.get("success") and r.get("outcome") == "not_applicable":
@@ -467,7 +470,7 @@ def _tower_body() -> None:
             if rm and chal.get(rm):
                 st.caption(f'Challenger **{chal[rm]}** serves 10% of live traffic as a canary.')
                 p1, p2 = st.columns(2)
-                if p1.button("🚀 Request promotion", key="pr_btn", use_container_width=True,
+                if p1.button("🚀 Request promotion", key="pr_btn", width="stretch",
                              help="Promotion to 100% traffic is risk-increasing, so it waits for an admin approval (see Needs attention)."):
                     r = api_post("/governance/lifecycle/promote", {"model_id": rm})
                     if r and r.get("success"):
@@ -476,7 +479,7 @@ def _tower_body() -> None:
                         st.rerun()
                     else:
                         st.error((r or {}).get("error", "Request failed."))
-                if p2.button("⏹ Stop canary", key="sc_btn", use_container_width=True):
+                if p2.button("⏹ Stop canary", key="sc_btn", width="stretch"):
                     r = api_post("/governance/lifecycle/canary/stop", {"model_id": rm})
                     (st.success if r and r.get("success") else st.error)(r.get("stopped_version", r.get("error", "")) if r else "failed")
                     st.rerun()
@@ -485,7 +488,7 @@ def _tower_body() -> None:
             st.markdown("**⏪ Roll back a model**")
             rb = st.selectbox("Model", mids, format_func=mname, key="rb_model") if mids else None
             reason = st.text_input("Reason", "operator_request", key="rb_reason")
-            if st.button("Rollback to previous version", disabled=not mids, key="rb_btn", use_container_width=True):
+            if st.button("Rollback to previous version", disabled=not mids, key="rb_btn", width="stretch"):
                 r = api_post("/governance/supervisor/rollback", {"model_id": rb, "reason": reason})
                 if r and r.get("success"):
                     st.success(f'Rolled back {mname(rb)} to {r.get("restored_version")}')
@@ -517,9 +520,33 @@ def _tower_body() -> None:
     else:
         callout("No autonomous actions yet. They appear when the supervisor detects drift, SLA breaches or incidents — try the Chaos lab.", "info", "🤖")
 
-    # ── 8 Reports & audit ───────────────────────────────────────────────────
+    # ── 9 Security & fraud operations ───────────────────────────────────────
+    section("Security & fraud operations", "Module 7 scores every booking session for bots, scalpers and account misuse; "
+            "analyst verdicts measure its live false-positive and false-negative rates.", "security", "9")
+    m7 = modules.get("m7_fraud_detector") or {}
+    m7p = next((p_ for p_ in perf if p_.get("module_id") == "m7_fraud_detector"), {})
+    m7m = m7p.get("metrics") or {}
+    fpr, fnr = m7m.get("fpr"), m7m.get("fnr")
+    kpi_row([("Sessions scored", f'{m7.get("total_requests", 0):,}', "through the governed model", ""),
+             ("Alerts raised", len(sec_alerts), f"{blocked_n} blocked & reported", "warn" if sec_alerts else "ok"),
+             ("False-positive rate", f"{fpr:.1%}" if fpr is not None else "—",
+              f'{m7p.get("n_outcomes", 0)} analyst verdicts · limit 12%', "bad" if fpr is not None and fpr > 0.12 else "ok"),
+             ("False-negative rate", f"{fnr:.1%}" if fnr is not None else "—", "missed threats · limit 15%",
+              "bad" if fnr is not None and fnr > 0.15 else "ok")])
+    st.markdown("<div style='height:8px'></div>", unsafe_allow_html=True)
+    if sec_alerts:
+        _df([{"Time": _ts(a.get("at")), "Session": a.get("session_id"), "Category": a.get("category"),
+              "Action": str(a.get("action", "")).replace("_", " ").title(), "Risk": a.get("risk_score"),
+              "Evidence": ", ".join(a.get("why", [])[:4])} for a in sec_alerts[:12]])
+    else:
+        callout("No security alerts yet. Score a session in the Fraud & Bot Shield, or send <b>Shifted traffic</b> from the Chaos lab "
+                "(it includes bot-like sessions).", "info", "🛡️")
+    if pages.get("fraud"):
+        st.page_link(pages["fraud"], label="Open the Fraud & Bot Shield to score and investigate a session", icon="🛡️")
+
+    # ── 10 Reports & audit ──────────────────────────────────────────────────
     section("Compliance, reports & audit trail", "Live ethical-AI checks with evidence, a tamper-evident audit trail that survives restarts, "
-            "and downloadable governance reports.", "reports", "9")
+            "and downloadable governance reports.", "reports", "10")
     comp = api_get("/governance/compliance") or {}
     ver = api_get("/governance/audit/verify") or {}
     if comp:
@@ -530,7 +557,7 @@ def _tower_body() -> None:
         _df([{"Check": c["check"], "Principle": c["principle"], "Status": {"PASS": "✅ pass", "WARN": "⚠️ warn", "FAIL": "🔴 fail"}[c["status"]],
               "Evidence": c["evidence"]} for c in comp.get("checks", [])])
     rc1, rc2 = st.columns([1, 3])
-    if rc1.button("📋 Generate report", use_container_width=True, type="primary"):
+    if rc1.button("📋 Generate report", width="stretch", type="primary"):
         with st.spinner("Auditing all pillars…"):
             rep = api_post("/governance/supervisor/report")
         if rep and "report_id" in rep:
@@ -548,8 +575,8 @@ def _tower_body() -> None:
              ("\n".join(f"- {f}" for f in rep.get("critical_flags", [])) or "None") + "\n\n## Recommendations\n" + \
              "\n".join(f'{r_["priority"]}. [{r_["urgency"]}] {r_["action"]}' for r_ in rep.get("recommendations", []))
         d1, d2, _ = st.columns([1, 1, 3])
-        d1.download_button("⬇ Markdown", md, f'{rep["report_id"]}.md', use_container_width=True)
-        d2.download_button("⬇ JSON", json.dumps(rep, indent=2, default=str), f'{rep["report_id"]}.json', use_container_width=True)
+        d1.download_button("⬇ Markdown", md, f'{rep["report_id"]}.md', width="stretch")
+        d2.download_button("⬇ JSON", json.dumps(rep, indent=2, default=str), f'{rep["report_id"]}.json', width="stretch")
     with st.expander("🗄️ Durable audit log (personal data masked)"):
         kind = st.selectbox("Entry type", ["governance_action", "hitl_request", "hitl_decision", "booking", "conversation",
                                             "feedback", "inference", "plan_rejected"], key="aud_kind")
@@ -564,12 +591,12 @@ def _tower_body() -> None:
             ev = ev[cols].copy()
             if "module" in ev:
                 ev["module"] = ev["module"].map(mname)
-            st.dataframe(ev, use_container_width=True, hide_index=True)
+            st.dataframe(ev, width="stretch", hide_index=True)
         else:
             st.caption("No events yet.")
 
     # ── 9 Chaos lab ─────────────────────────────────────────────────────────
-    section("Chaos lab — watch the loop work", "Create traffic, report outcomes or inject faults, then scroll up to see detection → root cause → action.", "chaos", "10")
+    section("Chaos lab — watch the loop work", "Create traffic, report outcomes or inject faults, then scroll up to see detection → root cause → action.", "chaos", "11")
     c1, c2 = st.columns(2, gap="large")
     with c1:
         with st.container(border=True):
@@ -578,12 +605,12 @@ def _tower_body() -> None:
                        "last-minute bookings and bot sessions (should drift).")
             n = st.slider("Passenger sessions", 20, 120, 60, step=10, key="sim_n")
             a, b = st.columns(2)
-            if a.button("Normal traffic", use_container_width=True, key="sim_ok"):
+            if a.button("Normal traffic", width="stretch", key="sim_ok"):
                 done = simulate_traffic(n, drifted=False)
                 st.success(f"{done} governed inferences recorded.")
                 time.sleep(0.6)
                 st.rerun()
-            if b.button("⚠️ Shifted traffic", use_container_width=True, key="sim_drift",
+            if b.button("⚠️ Shifted traffic", width="stretch", key="sim_drift",
                         help="Longer waitlists, bad weather, bot-like sessions → should trigger drift detection"):
                 done = simulate_traffic(n, drifted=True)
                 st.warning(f"{done} inferences recorded with shifted input distributions.")
@@ -596,7 +623,7 @@ def _tower_body() -> None:
             kind = st.selectbox("Fault", [("latency_spike", "Latency spike (5 s responses)"), ("error_surge", "Error surge (8 failures)"),
                                           ("drift_simulation", "Data drift event")], format_func=lambda x: x[1], key="ch_kind")
             a, b = st.columns(2)
-            if a.button("Inject fault", type="primary", use_container_width=True, key="ch_go"):
+            if a.button("Inject fault", type="primary", width="stretch", key="ch_go"):
                 r = api_post("/governance/supervisor/chaos", {"module_id": mod, "chaos_type": kind[0]})
                 if r and r.get("success"):
                     st.success(r.get("message", "Injected."))
@@ -604,7 +631,7 @@ def _tower_body() -> None:
                     st.rerun()
                 else:
                     st.error(str(r)[:200])
-            if b.button("Reset monitors", use_container_width=True, key="ch_reset"):
+            if b.button("Reset monitors", width="stretch", key="ch_reset"):
                 api_post("/governance/supervisor/reset")
                 st.rerun()
     o1, o2 = st.columns(2, gap="large")
@@ -615,12 +642,12 @@ def _tower_body() -> None:
                        "Concept drift = same inputs, different outcomes (e.g. delays now much longer) → quality drops → "
                        "the supervisor retrains with these outcomes and starts a canary.")
             a, b = st.columns(2)
-            if a.button("Normal outcomes", use_container_width=True, key="out_ok"):
+            if a.button("Normal outcomes", width="stretch", key="out_ok"):
                 r = api_post("/governance/outcomes/simulate", {"mode": "normal"})
                 st.success(f'{(r or {}).get("total", 0)} outcomes recorded.')
                 time.sleep(0.5)
                 st.rerun()
-            if b.button("⚠️ Concept drift", use_container_width=True, key="out_drift"):
+            if b.button("⚠️ Concept drift", width="stretch", key="out_drift"):
                 r = api_post("/governance/outcomes/simulate", {"mode": "concept_drift"})
                 st.warning(f'{(r or {}).get("total", 0)} outcomes recorded under a changed world.')
                 time.sleep(0.5)
@@ -629,7 +656,7 @@ def _tower_body() -> None:
         with st.container(border=True):
             st.markdown("**🤖 Run the supervisor now**")
             st.caption("The supervisor runs every 30 seconds on its own; this triggers one cycle immediately.")
-            if st.button("Run governance cycle", use_container_width=True, key="cyc", type="primary"):
+            if st.button("Run governance cycle", width="stretch", key="cyc", type="primary"):
                 with st.spinner("Supervisor is checking every pillar…"):
                     r = api_post("/governance/supervisor/cycle", {})
                 st.success(f'Cycle complete — governance score {(r or {}).get("governance_score", "—")}.')

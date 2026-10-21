@@ -1,7 +1,7 @@
 """
 modules/m6_support_assistant/schema.py
 ======================================
-Pydantic schemas for Module 6: Multilingual Customer Support Assistant.
+Pydantic schemas for Module 6: Customer Support Assistant (English).
 """
 
 from __future__ import annotations
@@ -13,8 +13,7 @@ from core.schemas import GovernanceBadge
 
 
 class SupportQueryRequest(BaseModel):
-    query: str = Field(..., description="Passenger query in English, Hindi, or Hinglish")
-    language: Optional[str] = Field(default="auto", description="'auto' or language code ('en', 'hi', 'hinglish')")
+    query: str = Field(..., max_length=2000, description="Passenger question in English")
     user_id: str = Field(default="passenger_guest", description="User ID for session context")
     session_id: Optional[str] = Field(default=None, description="Chat session identifier")
 
@@ -29,7 +28,7 @@ class RetrievedContextChunk(BaseModel):
 class SupportQueryResponse(BaseModel):
     query: str
     response: str
-    detected_language: str
+    detected_language: str = Field(default="en", description="'en', or 'unsupported' when the question was not in English")
     faithfulness_score: float = Field(..., description="RAG faithfulness score (0.0 to 1.0, target >= 0.65)")
     hallucination_flag: bool = Field(default=False, description="Flagged if faithfulness score < 0.65")
     retrieved_contexts: List[RetrievedContextChunk] = Field(default_factory=list)

@@ -18,6 +18,8 @@ from core.config import settings
 from governance.context import report_inference
 from governance.hooks import governance_hook
 from modules.m2_train_recommender.schema import (
+    ConnectionLeg,
+    ConnectionOption,
     RecommendRequest,
     RecommendResponse,
     TrainRecommendation,
@@ -147,6 +149,44 @@ class TrainRecommenderService:
             w[f] = round(w[f] / total, 4)
         self._weights_version += 1
 
+    def connections(self, src: str, dst: str, pref_class: str, max_budget: Optional[float],
+                    limit: int = 3) -> List[ConnectionOption]:
+        """One-change journeys src → X → dst with a 45 min – 8 h layover (same rule as the travel planner),
+        ordered by door-to-door time."""
+        df = self._trains_df
+        if df is None or not len(df):
+            return []
+
+        def fare(row) -> float:
+            col = f"base_fare_{pref_class.lower()}"
+            v = float(row.get(col, 0) or 0) if col in row else 0.0
+            return v if v > 0 else float(row.get("base_fare_sl", 350)) + 200
+
+        firsts = df[(df["source"] == src) & (df["destination"] != dst)]
+        seconds = df[(df["destination"] == dst) & (df["source"] != src)]
+        out = []
+        for _, a in firsts.iterrows():
+            arr_a = _hhmm(a["departure_time"]) + float(a["duration_hours"]) * 60      # minutes from day-0 midnight
+            for _, b in seconds[seconds["source"] == a["destination"]].iterrows():
+                dep_b = _hhmm(b["departure_time"])
+                while dep_b < arr_a + 45:
+                    dep_b += 24 * 60
+                lay = dep_b - arr_a
+                if lay > 8 * 60:
+                    continue
+                total_h = (dep_b + float(b["duration_hours"]) * 60 - _hhmm(a["departure_time"])) / 60
+                legs = [ConnectionLeg(train_number=str(r["train_number"]), train_name=str(r["train_name"]),
+                                      source=str(r["source"]), destination=str(r["destination"]),
+                                      departure_time=str(r["departure_time"]), arrival_time=str(r["arrival_time"]),
+                                      duration_hours=round(float(r["duration_hours"]), 1), fare_inr=round(fare(r), 0))
+                        for r in (a, b)]
+                total_fare = sum(l.fare_inr for l in legs)
+                out.append(ConnectionOption(via=str(a["destination"]), legs=legs, layover_minutes=int(lay),
+                                            total_hours=round(total_h, 1), total_fare_inr=round(total_fare, 0),
+                                            within_budget=not (max_budget and total_fare > max_budget)))
+        out.sort(key=lambda c: (not c.within_budget, c.total_hours))
+        return out[:limit]
+
     def current_weights(self) -> dict:
         return {"version": self._weights_version, "weights": self._weights, "initial": PERSONA_WEIGHTS}
 
@@ -185,14 +225,22 @@ class TrainRecommenderService:
         df = self._trains_df if self._trains_df is not None else pd.DataFrame()
         candidates = df[(df["source"].str.upper() == src) & (df["destination"].str.upper() == dst)].copy() if len(df) else df
 
+        conns = self.connections(src, dst, pref_class, max_budget) if len(candidates) < 3 and src != dst else []
+        if conns and len(candidates):   # only worth showing if not much slower than the fastest direct train
+            fastest = float(candidates["duration_hours"].min())
+            conns = [c for c in conns if c.total_hours <= fastest * 1.5]
+
         def empty(msg: str) -> RecommendResponse:
             return RecommendResponse(recommendations=[], persona_applied=persona, weights_used=weights,
                                      disparate_impact_ratio=1.0, bias_flag=False, personalisation=personal,
-                                     weights_version=self._weights_version, message=msg)
+                                     weights_version=self._weights_version, message=msg, connections=conns)
 
+        if src == dst:
+            return empty("The origin and destination are the same station — pick two different stations.")
         if len(candidates) == 0:
-            return empty(f"No direct trains run from {src} to {dst} in the timetable. "
-                         "The AI Travel Planner can search one-change connections.")
+            return empty(f"No direct trains run from {src} to {dst} in the timetable."
+                         + (f" Showing {len(conns)} one-change connection(s) instead." if conns else
+                            " No one-change connection was found either."))
 
         fare_col = f"base_fare_{pref_class.lower()}"
         if fare_col not in candidates.columns:
@@ -296,6 +344,7 @@ class TrainRecommenderService:
             disparate_impact_ratio=dir_ratio, bias_flag=bias_flag, personalisation=personal,
             weights_version=self._weights_version,
             message=(f"{over_budget} train(s) hidden because they exceed your budget." if over_budget else None),
+            connections=conns,
         )
 
 

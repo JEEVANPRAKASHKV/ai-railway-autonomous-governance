@@ -185,8 +185,10 @@ section[data-testid="stSidebar"] .block-container {{ padding-top: 1rem; }}
 /* Section headings */
 .rb-sec {{ display:flex; align-items:flex-end; justify-content:space-between; gap:12px; margin: 30px 0 10px; padding-bottom:8px;
   border-bottom: 2px solid var(--soft); }}
-.rb-sec .t {{ font-size:1.18rem; font-weight:800; color: var(--deep); }}
-.rb-sec .d {{ font-size:.84rem; color: var(--muted); }}
+.rb-sec {{ flex-wrap: wrap; }}
+.rb-sec > div:first-child {{ flex: none; }}
+.rb-sec .t {{ font-size:1.18rem; font-weight:800; color: var(--deep); white-space: nowrap; }}
+.rb-sec .d {{ font-size:.84rem; color: var(--muted); flex: 1 1 320px; text-align: right; }}
 .rb-sec .n {{ background: var(--accent); color:#fff; border-radius:8px; font-size:.72rem; font-weight:800; padding:2px 8px; margin-right:8px; }}
 
 /* Badges & callouts */
@@ -215,9 +217,11 @@ div[data-testid="stMetric"] {{ background:#fff; border:1px solid var(--line); bo
 div[data-testid="stMetricValue"] {{ color: var(--deep); font-weight:800; }}
 div[data-testid="stMetricLabel"] p {{ color: var(--muted); font-weight:600; }}
 .stButton > button, .stFormSubmitButton > button, .stDownloadButton > button {{ border-radius:11px; font-weight:700; border:1px solid var(--line); }}
-.stButton > button[kind="primary"], .stFormSubmitButton > button[kind="primary"], .stFormSubmitButton > button, .stDownloadButton > button {{
+.stButton > button[kind="primary"], .stFormSubmitButton > button[kind="primaryFormSubmit"], .stDownloadButton > button {{
   background: var(--accent); color:#fff; border-color: var(--accent); }}
-.stButton > button[kind="primary"]:hover, .stFormSubmitButton > button:hover {{ background: var(--deep); border-color: var(--deep); color:#fff; }}
+.stButton > button[kind="primary"]:hover, .stFormSubmitButton > button[kind="primaryFormSubmit"]:hover {{ background: var(--deep); border-color: var(--deep); color:#fff; }}
+.stFormSubmitButton > button[kind="secondaryFormSubmit"] {{ background:#fff; color: var(--deep); border:1px solid var(--line); }}
+.stFormSubmitButton > button[kind="secondaryFormSubmit"]:hover {{ border-color: var(--accent); color: var(--accent); }}
 div[data-testid="stForm"] {{ background:#fff; border:1px solid var(--line); border-radius:16px; padding:18px 20px; }}
 div[data-testid="stExpander"] {{ background:#fff; border:1px solid var(--line); border-radius:14px; }}
 div[data-testid="stVerticalBlockBorderWrapper"] {{ border-radius:16px; }}
@@ -391,6 +395,6 @@ def gauge(value: float, title: str, suffix: str = "%", lo: float = 0, hi: float 
                "bgcolor": "#fff", "borderwidth": 0,
                "steps": [{"range": [a, b], "color": c} for a, b, c in steps]},
     ))
-    fig.update_layout(height=height, margin=dict(l=18, r=18, t=46, b=6), paper_bgcolor="rgba(0,0,0,0)",
+    fig.update_layout(height=height, margin=dict(l=34, r=40, t=46, b=6), paper_bgcolor="rgba(0,0,0,0)",
                       font=dict(family="Plus Jakarta Sans, sans-serif"))
     return fig

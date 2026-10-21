@@ -1,8 +1,8 @@
 """
 modules/m6_support_assistant/service.py
 ======================================
-Inference service for Module 6: Multilingual Customer Support Assistant.
-RAG pipeline with language detection, local semantic retrieval,
+Inference service for Module 6: Customer Support Assistant (English).
+Tools first (PNR status, refunds, train suggestions), then RAG over IRCTC policy text,
 hallucination faithfulness audit, and sentiment-triggered escalation.
 """
 
@@ -27,35 +27,19 @@ from modules.m6_support_assistant.schema import (
 
 logger = logging.getLogger(__name__)
 
-HINGLISH_WORDS: Set[str] = {
-    "kya", "kaise", "kab", "kahan", "kyun", "hoga", "milega", "karna",
-    "pnr", "tatkal", "cancle", "refund", "train", "seat", "mil", "gaya",
-}
+NON_LATIN = re.compile(r"[^\x00-\x7F\u00A0-\u024F\u2000-\u206F\u20B9]")   # anything outside English text (₹ allowed)
+ENGLISH_ONLY_REPLY = ("I can help in English only. Please type your question in English — for example "
+                      "\"What is the refund if my waitlist ticket is not confirmed?\" or \"What is the status of PNR 0000001?\"")
 
 
-# Hindi / Hinglish → English retrieval terms (the policy corpus is English). Lets TF-IDF retrieval
-# work for multilingual queries; the answer is still labelled in the passenger's language.
-GLOSSARY = {
-    "तत्काल": "tatkal", "टिकट": "ticket", "रद्द": "cancel cancellation", "रिफंड": "refund", "वापसी": "refund",
-    "पैसे": "refund money", "नियम": "rules policy", "प्रतीक्षा": "waiting list", "वेटिंग": "waiting list waitlist",
-    "आरक्षण": "reservation", "सीट": "seat berth", "बर्थ": "berth", "ट्रेन": "train", "देरी": "delay",
-    "लेट": "delay", "पीएनआर": "pnr", "चार्ट": "chart", "बच्चे": "child children", "वरिष्ठ": "senior citizen",
-    "सामान": "luggage baggage", "ट्रांसफर": "transfer", "रिफंड": "refund", "कन्फर्म": "confirmed",
-    "आरएसी": "rac", "कोच": "coach", "सफर": "travel journey", "यात्रा": "travel journey",
-    "cancle": "cancel", "cancel": "cancel cancellation", "kaise": "how", "kab": "when", "milega": "refund get",
-    "karna": "do", "kar": "do", "sakta": "can", "allot": "allot allotment", "kitna": "how much", "paisa": "refund money",
-    "wapas": "refund return", "badal": "change", "nam": "name", "badalna": "change name",
-}
+def is_english(query: str) -> bool:
+    """True when the query is written in English (Latin script). Railway Buddy supports English only."""
+    letters = re.findall(r"[^\W\d_]", query)
+    if not letters:
+        return True
+    foreign = len(NON_LATIN.findall(query))
+    return foreign / max(1, len(letters)) < 0.2
 
-
-def to_english_query(query: str) -> str:
-    """Append English equivalents of known Hindi/Hinglish tokens so retrieval can match the English corpus."""
-    extra = []
-    for tok in re.findall(r"[\u0900-\u097F]+|[A-Za-z]+", query):
-        t = tok.lower() if tok.isascii() else tok
-        if t in GLOSSARY:
-            extra.append(GLOSSARY[t])
-    return (query + " " + " ".join(extra)).strip() if extra else query
 
 FRUSTRATION_KEYWORDS: Set[str] = {
     "scam", "cheat", "worst", "horrible", "refund not received", "money deducted",
@@ -64,17 +48,7 @@ FRUSTRATION_KEYWORDS: Set[str] = {
 
 
 class SupportAssistantService:
-    """Service to handle multilingual passenger queries using grounded RAG and hallucination checks."""
-
-    def _detect_language(self, query: str) -> str:
-        # Check Devanagari unicode range
-        if re.search(r"[\u0900-\u097F]", query):
-            return "hi"
-        # Check Hinglish token overlap
-        words = set(re.findall(r"\b[a-zA-Z]+\b", query.lower()))
-        if len(words.intersection(HINGLISH_WORDS)) >= 2:
-            return "hinglish"
-        return "en"
+    """Service to handle passenger queries (English) using grounded RAG and hallucination checks."""
 
     def _detect_sentiment(self, query: str) -> str:
         low = query.lower()
@@ -103,15 +77,19 @@ class SupportAssistantService:
     @governance_hook("m6_support_assistant", endpoint="/api/v1/support/query")
     def query(self, request: SupportQueryRequest) -> SupportQueryResponse:
         """Process passenger query through grounded RAG pipeline and validate against hallucination."""
-        lang = request.language
-        if not lang or lang == "auto":
-            lang = self._detect_language(request.query)
+        lang = "en"
+        if not is_english(request.query):
+            report_inference(prediction="english_only_notice", version="language guard")
+            return SupportQueryResponse(
+                answered_by="language guard", query=request.query, response=ENGLISH_ONLY_REPLY,
+                detected_language="unsupported", faithfulness_score=1.0, hallucination_flag=False,
+                retrieved_contexts=[], sentiment="Neutral", escalation_recommended=False, confidence_score=1.0)
 
         sentiment = self._detect_sentiment(request.query)
         escalate = bool(sentiment == "Frustrated")
 
         # ── Step 1: Retrieve Grounding Context ────────────────────────────────
-        retrieval_query = to_english_query(request.query)
+        retrieval_query = request.query
         retrieved_raw = rag_indexer.retrieve(retrieval_query, top_k=3)
         retrieved_contexts: List[RetrievedContextChunk] = []
         combined_context_text = ""
@@ -177,7 +155,7 @@ class SupportAssistantService:
             system_prompt = (
                 "You are RailSeva AI, the official intelligent passenger assistant for Indian Railways. "
                 "Answer user questions clearly and concisely (under 120 words) strictly based on the following verified IRCTC policy context. "
-                "Reply in the same language the passenger used (English, Hindi or Hinglish). "
+                "Always reply in clear, simple English. "
                 "If the context does not contain the answer, say so and point to irctc.co.in or RailMadad 139 — never guess amounts or rules.\n"
                 f"Grounding Context:\n{combined_context_text}\n"
             )
@@ -209,12 +187,6 @@ class SupportAssistantService:
             hallucination_flag = eval_res.get("severity") in ("WARNING", "CRITICAL") if eval_res.get("severity") else hallucination_flag
         except Exception as hm_err:
             logger.debug(f"[M6 Governance] Hallucination evaluation notice: {hm_err}")
-
-        # If Hinglish / Hindi requested and fallback answer is English, add helpful bilingual notice
-        if lang == "hi" and not re.search(r"[\u0900-\u097F]", final_answer):
-            final_answer = f"[हिंदी सेवा / Hindi Support]: {final_answer}"
-        elif lang == "hinglish" and "IRCTC" in final_answer:
-            final_answer = f"[Hinglish Guide]: {final_answer}"
 
         if hallucination_flag:
             logger.warning(

@@ -46,6 +46,26 @@ FEATURE_LABELS = {
     "season_factor": "Festival / holiday season",
 }
 REFUND_DELAY_MIN = 180
+_MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+
+
+def _display(feature: str, v: float, feats: Dict[str, float]) -> str:
+    """Model-scale feature value → the units a passenger understands."""
+    try:
+        if feature == "weather_index":
+            return f"{min(100.0, v * 10):.0f}% severity"
+        if feature == "congestion_at_station":
+            sf = float(feats.get("season_factor", 1.0)) or 1.0
+            return f"{float(np.clip((v / sf - 10.0) / 0.8, 0, 100)):.0f}/100"
+        if feature == "distance_from_origin_km":
+            return f"{v:,.0f} km"
+        if feature == "month":
+            return _MONTHS[int(v) - 1]
+        if feature == "season_factor":
+            return f"×{v:.2f}" + (" peak" if v >= 1.15 else "")
+    except Exception:
+        pass
+    return f"{v:.2f}"
 
 
 def _congestion_to_model(index_0_100: float, sf: float) -> float:
@@ -161,6 +181,7 @@ class DelayPredictorService:
             vals = np.asarray(explainer.shap_values(x))[0]
             base = float(np.ravel(explainer.expected_value)[0])
             out = [{"factor": FEATURE_LABELS.get(c, c), "feature": c, "value": round(float(feats[c]), 2),
+                    "display": _display(c, float(feats[c]), feats),
                     "impact_minutes": round(float(v), 1),
                     "severity": "High" if abs(v) >= 8 else "Moderate" if abs(v) >= 3 else "Low",
                     "direction": "adds delay" if v > 0 else "reduces delay"} for c, v in zip(cols, vals)]

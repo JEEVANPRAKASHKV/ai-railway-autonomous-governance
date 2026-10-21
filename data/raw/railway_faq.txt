@@ -58,15 +58,6 @@ A: Garib Rath Express is an all-AC sleeper train offering affordable AC 3-Tier t
 Q: Can I book tickets without internet?
 A: Yes, you can book at any PRS (Passenger Reservation System) counter at railway stations. IRCTC agents also offer booking services.
 
-Q: मेरा PNR स्टेटस कैसे चेक करें?
-A: आप IRCTC वेबसाइट पर 'PNR Status' में, SMS से 139 पर PNR नंबर भेजकर, या 14646 हेल्पलाइन पर कॉल करके PNR स्टेटस चेक कर सकते हैं।
-
-Q: Tatkal ticket book karna kab shuru hota hai?
-A: AC classes ke liye Tatkal booking subah 10 baje se shuru hoti hai. SL aur 2S classes ke liye 11 baje se. Yeh journey se ek din pehle hota hai.
-
-Q: WL ticket cancel karne par refund milega?
-A: Agar aapka WL ticket charting tak confirm nahi hota, to pura refund automatic mil jata hai. Agar ticket confirm tha aur aapne cancel kiya, to normal cancellation charges lagte hain.
-
 Q: What is the maximum fine for travelling without ticket?
 A: The penalty for travelling without a valid ticket is ₹250 plus the applicable fare for the journey undertaken.
 

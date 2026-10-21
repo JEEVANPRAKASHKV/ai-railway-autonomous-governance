@@ -253,6 +253,13 @@ REASON_CODES = ["HEAVY_TRAFFIC", "SIGNAL_FAILURE", "ENGINE_FAILURE", "WEATHER", 
 FRAUD_LABELS = ["legitimate", "suspicious", "bot"]
 
 
+
+def _arrival(departure: str, duration_hours: float, *_legacy_draws) -> str:
+    """Clock arrival time for a journey that leaves at `departure` and takes `duration_hours`."""
+    h, m = map(int, departure.split(":"))
+    total = (h * 60 + m + int(round(duration_hours * 60))) % (24 * 60)
+    return f"{total // 60:02d}:{total % 60:02d}"
+
 def season_factor(d: date) -> float:
     """Returns congestion/demand multiplier based on season."""
     month = d.month
@@ -341,8 +348,9 @@ def generate_trains(stations_df: pd.DataFrame) -> pd.DataFrame:
             "avg_speed_kmph": round(dist / dur, 1),
             "classes": "|".join(classes),
             "quota_types": "GN|TQ|LADIES|DEFENCE|SENIOR",
-            "departure_time": f"{random.randint(0,23):02d}:{random.choice(['00','15','30','45'])}",
-            "arrival_time": f"{random.randint(0,23):02d}:{random.choice(['00','15','30','45'])}",
+            "departure_time": (dep := f"{random.randint(0,23):02d}:{random.choice(['00','15','30','45'])}"),
+            # arrival = departure + journey time (the two extra draws keep the seeded sequence of later datasets unchanged)
+            "arrival_time": _arrival(dep, dur, random.randint(0, 23), random.choice(['00', '15', '30', '45'])),
             "punctuality_pct": punct + random.randint(-5, 5),
             "base_fare_sl": base_sl if "SL" in classes else 0,
             "base_fare_3a": base_3a if "3A" in classes else 0,
@@ -381,8 +389,9 @@ def generate_trains(stations_df: pd.DataFrame) -> pd.DataFrame:
             "avg_speed_kmph": round(speed, 1),
             "classes": "|".join(classes),
             "quota_types": "GN|TQ" + ("|LADIES" if random.random() > 0.5 else ""),
-            "departure_time": f"{random.randint(0,23):02d}:{random.choice(['00','15','30','45'])}",
-            "arrival_time": f"{random.randint(0,23):02d}:{random.choice(['00','15','30','45'])}",
+            "departure_time": (dep := f"{random.randint(0,23):02d}:{random.choice(['00','15','30','45'])}"),
+            # arrival = departure + journey time (the two extra draws keep the seeded sequence of later datasets unchanged)
+            "arrival_time": _arrival(dep, dur, random.randint(0, 23), random.choice(['00', '15', '30', '45'])),
             "punctuality_pct": punct,
             "base_fare_sl": base_sl if "SL" in classes else 0,
             "base_fare_3a": max(500, int(base_sl * 2.0)) if "3A" in classes else 0,
@@ -951,9 +960,6 @@ def generate_faq() -> None:
         ("My train was cancelled. Will I get a refund?", "Yes, if your train is cancelled by Railways, you get a full refund automatically without any cancellation charges."),
         ("What is the Garib Rath Express?", "Garib Rath Express is an all-AC sleeper train offering affordable AC 3-Tier travel for budget-conscious passengers."),
         ("Can I book tickets without internet?", "Yes, you can book at any PRS (Passenger Reservation System) counter at railway stations. IRCTC agents also offer booking services."),
-        ("मेरा PNR स्टेटस कैसे चेक करें?", "आप IRCTC वेबसाइट पर 'PNR Status' में, SMS से 139 पर PNR नंबर भेजकर, या 14646 हेल्पलाइन पर कॉल करके PNR स्टेटस चेक कर सकते हैं।"),
-        ("Tatkal ticket book karna kab shuru hota hai?", "AC classes ke liye Tatkal booking subah 10 baje se shuru hoti hai. SL aur 2S classes ke liye 11 baje se. Yeh journey se ek din pehle hota hai."),
-        ("WL ticket cancel karne par refund milega?", "Agar aapka WL ticket charting tak confirm nahi hota, to pura refund automatic mil jata hai. Agar ticket confirm tha aur aapne cancel kiya, to normal cancellation charges lagte hain."),
         ("What is the maximum fine for travelling without ticket?", "The penalty for travelling without a valid ticket is ₹250 plus the applicable fare for the journey undertaken."),
         ("How do I upgrade my class?", "Class upgrades are available at the station before departure, subject to availability. Contact the Station Manager or Ticket Examiner."),
     ]

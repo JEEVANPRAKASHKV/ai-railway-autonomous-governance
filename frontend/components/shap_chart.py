@@ -14,6 +14,14 @@ import streamlit as st
 from frontend.ui import style_fig
 
 
+def _fmt(v: float, metric: str) -> str:
+    if "₹" in metric:
+        return f"{'+' if v >= 0 else '−'}₹{abs(v):,.0f}"
+    if "min" in metric.lower():
+        return f"{v:+.1f} min"
+    return f"{v:+.3f}"
+
+
 def render_shap_chart(
     shap_data: Union[List[Dict[str, Any]], Dict[str, Any]],
     title: str = "Why this prediction? (SHAP)",
@@ -46,6 +54,7 @@ def render_shap_chart(
         st.info("No numeric feature contributions available.")
         return
 
+    items = [i for i in items if abs(i["contribution"]) >= 1e-4] or items   # hide factors with no effect
     items.sort(key=lambda x: abs(x["contribution"]), reverse=True)
     top = list(reversed(items[:8]))
     labels = [t["feature"].replace("_", " ").title() if "_" in t["feature"] else t["feature"] for t in top]
@@ -53,9 +62,9 @@ def render_shap_chart(
     fig = go.Figure(go.Bar(
         x=vals, y=labels, orientation="h",
         marker=dict(color=["#2563EB" if v >= 0 else "#F97316" for v in vals]),
-        text=[f"{v:+.3f}" for v in vals], textposition="auto",
+        text=[_fmt(v, target_metric) for v in vals], textposition="auto",
     ))
     fig.update_layout(title=dict(text=f"<b>{title}</b>", font=dict(size=14)),
                       xaxis_title=f"{target_metric}  (blue ↑ raises, orange ↓ lowers)")
     style_fig(fig, height=max(240, len(labels) * 34 + 70))
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")

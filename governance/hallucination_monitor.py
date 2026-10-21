@@ -45,16 +45,13 @@ HARMFUL_PATTERNS = [
 ]
 HISTORY_SIZE = 500
 
-# Words that carry no factual claim (English + Hinglish function words + assistant boilerplate).
+# Words that carry no factual claim (English function words + assistant boilerplate).
 _STOPWORDS = frozenset("""
 the and for are was were you your yours not but with this that these those from have has had will would can could should may might
 any all its into out over under than then them they their there here what when which while who whom how why also only more most
 some such each per via been being does did doing done get gets got use used using one two within without about after before
 please visit contact call details detail information info help helpline website irctc railmadad railway railways indian
 yes sure note kindly thank thanks regards ticket tickets passenger passengers
-hai hain ka ki ke ko se me mein par pe aur ya toh to bhi nahi nahin kya kyun kyu jab tab agar aap aapka aapki aapke aapko apna apni
-yeh ye woh wo is us isko usko hota hoti hote hua hui hue kar karo karein karna karne kiya liye lie sakte sakta sakti milta milti milega
-mil jata jati jate raha rahi rahe wala wali wale tak sath saath jaankari zyaada zyada sampark depend karta baat baar
 """.split())
 
 
@@ -75,7 +72,7 @@ _NEGATION_WORDS = frozenset({"not", "no", "never", "cannot", "non", "without", "
                              "ineligible", "prohibited"})
 
 
-_CLAUSE_SPLIT = re.compile(r"(?<=[.!?])\s+|\n+|[;:,()]\s*|\s+(?:but|however|although|though|except|unless|whereas|lekin|magar)\s+",
+_CLAUSE_SPLIT = re.compile(r"(?<=[.!?])\s+|\n+|[;:,()]\s*|\s+(?:but|however|although|though|except|unless|whereas)\s+",
                            re.IGNORECASE)
 
 

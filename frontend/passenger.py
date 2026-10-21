@@ -1,7 +1,8 @@
 """
 frontend/passenger.py
 ─────────────────────
-Railway Buddy — the passenger-facing screens (Modules 1–7).
+Railway Buddy — the passenger-facing screens (Modules 1–5) and the Fraud & Bot Shield (Module 7, under AI Governance).
+The Support Assistant (Module 6) is the floating chat button in frontend/chat_widget.py.
 
 Every screen follows the same pattern: hero banner → quick scenarios → inputs on the left,
 a plain-language result on the right → "why" (SHAP) → governance receipt.
@@ -44,7 +45,7 @@ def presets(items: List[tuple], run_flag: str, key: str) -> None:
     st.caption("⚡ Try a ready-made scenario")
     cols = st.columns(len(items))
     for i, (col, (label, vals)) in enumerate(zip(cols, items)):
-        col.button(label, key=f"{key}_p{i}", use_container_width=True, on_click=_setter(vals, run_flag))
+        col.button(label, key=f"{key}_p{i}", width="stretch", on_click=_setter(vals, run_flag))
 
 
 def _err(result: Any, what: str) -> None:
@@ -68,7 +69,7 @@ def outcome_box(key: str, res: Dict[str, Any], label: str, kind: str, **kw: Any)
         else:
             val = c1.number_input(kw.get("input_label", "Value"), min_value=0.0, value=float(kw.get("value", 0.0)),
                                   step=float(kw.get("step", 1.0)), key=f"{key}_v", label_visibility="collapsed")
-        if c2.button("Send outcome", key=f"{key}_b", use_container_width=True):
+        if c2.button("Send outcome", key=f"{key}_b", width="stretch"):
             r = send_outcome(audit, val)
             if r and r.get("accepted"):
                 st.success("Thanks — recorded. It now counts towards this model's live accuracy.")
@@ -92,11 +93,13 @@ def _empty(msg: str) -> None:
 SERVICES = [
     ("🎫", "Ticket Confirmation", "Will my waitlist ticket confirm? Probability, berth and the reasons why.", "ticket"),
     ("🚆", "Train Recommender", "Best train for your budget, time and travel style — fairness-audited.", "recommend"),
-    ("⏱️", "Delay & Disruption", "Delay forecast, platform congestion and smarter alternatives.", "delay"),
+    ("⏱️", "Delay & Disruption", "Delay forecast, station congestion and smarter alternatives.", "delay"),
     ("🧭", "AI Travel Planner", "Tell it your trip in plain English. It plans — you approve.", "planner"),
     ("💰", "Fare Forecast", "Where fares are heading and the cheapest time to book.", "fare"),
-    ("💬", "Support Assistant", "Ask about PNR, refunds and rules in English, हिन्दी or Hinglish.", "support"),
-    ("🛡️", "Fraud & Bot Shield", "Real-time bot and fraud risk scoring for every session.", "fraud"),
+]
+GOVERNANCE = [
+    ("🏛️", "Governance Control Tower", "See how AI agents monitor, explain and fix the models behind these services.", "tower"),
+    ("🛡️", "Fraud & Bot Shield", "Real-time bot, scalper and account-misuse risk scoring with explainable alerts.", "fraud"),
 ]
 
 
@@ -113,34 +116,42 @@ def home(pages: Dict[str, Any]) -> None:
     score = dash.get("governance_score")
     status = (dash.get("platform_health") or {}).get("platform_status", "—")
     kpi_row([
-        ("AI services online", "7 / 7", "Passenger modules", "ok"),
-        ("Platform status", esc(status), "Live from Control Tower", "ok" if status == "HEALTHY" else "warn"),
+        ("AI services online", "7 / 7", "5 tools · support chat · fraud shield", "ok"),
+        ("Platform status", esc(status.title() if status != "—" else status), "Live from Control Tower", "ok" if status == "HEALTHY" else "warn"),
         ("Governance score", f"{score:.0f}" if score is not None else "—", "out of 100", "ok" if (score or 0) >= 80 else "warn"),
-        ("Languages", "EN · हिं · Hinglish", "Auto-detected", ""),
+        ("Bookings", "You approve", "Agents never book on their own", "ok"),
     ])
 
-    section("What would you like to do?", "Pick a service — each one shows its reasoning, not just an answer.")
-    for row in (SERVICES[:4], SERVICES[4:]):
-        cols = st.columns(4)
+    section("Plan your journey", "Pick a service — each one shows its reasoning, not just an answer.")
+    cards = SERVICES + [("💬", "Support Assistant", "PNR status, refunds, cancellations, Tatkal and RAC rules — "
+                                                      "tap the round 💬 button at the bottom-right of any page.", None)]
+    for row in (cards[:3], cards[3:]):
+        cols = st.columns(3)
         for col, (icon, title, desc, key) in zip(cols, row):
             with col:
                 st.markdown(
-                    f'<div class="rb-card" style="height:196px"><div style="font-size:1.6rem">{icon}</div>'
+                    f'<div class="rb-card" style="height:168px"><div style="font-size:1.6rem">{icon}</div>'
                     f'<h4 style="margin-top:4px">{title}</h4><div class="rb-sub">{desc}</div></div>',
                     unsafe_allow_html=True,
                 )
-                if st.button("Open →", key=f"home_{key}", use_container_width=True):
+                if key and st.button("Open →", key=f"home_{key}", width="stretch"):
                     st.switch_page(pages[key])
-        if row is SERVICES[4:]:
-            with cols[3]:
-                st.markdown(
-                    '<div class="rb-card" style="height:196px;background:linear-gradient(135deg,#0A2463,#1D4ED8);border:0">'
-                    '<div style="font-size:1.6rem">🏛️</div><h4 style="margin-top:4px;color:#fff">AI Governance Tower</h4>'
-                    '<div class="rb-sub" style="color:#DBEAFE">See how AI agents monitor, explain and fix the models behind these services.</div></div>',
-                    unsafe_allow_html=True,
-                )
-                if st.button("Open Control Tower →", key="home_tower", use_container_width=True, type="primary"):
-                    st.switch_page(pages["tower"])
+                elif not key:
+                    st.markdown('<div class="rb-sub" style="text-align:center;padding:8px 0">Always one tap away ↘</div>',
+                                unsafe_allow_html=True)
+
+    section("AI governance", "The operations side: how every model is watched, explained, secured and fixed.")
+    cols = st.columns(2)
+    for col, (icon, title, desc, key) in zip(cols, GOVERNANCE):
+        with col:
+            st.markdown(
+                f'<div class="rb-card" style="background:linear-gradient(135deg,#0A2463,#1D4ED8);border:0;min-height:128px">'
+                f'<div style="font-size:1.6rem">{icon}</div><h4 style="margin-top:4px;color:#fff">{title}</h4>'
+                f'<div class="rb-sub" style="color:#DBEAFE">{desc}</div></div>',
+                unsafe_allow_html=True,
+            )
+            if st.button(f"Open {title} →", key=f"home_{key}", width="stretch", type="primary"):
+                st.switch_page(pages[key])
 
     section("How Railway Buddy stays trustworthy", "Every prediction passes through the same governance loop.")
     cols = st.columns(4)
@@ -172,6 +183,8 @@ def ticket() -> None:
         ("🔵 Festival rush", {"t_train": label_for(trains, "12301"), "t_cls": "SL", "t_quota": "GN", "t_wl": 180, "t_days": 45}),
     ], "t_run", "tk")
 
+    st.session_state.setdefault("t_wl", 15)
+    st.session_state.setdefault("t_days", 7)
     left, right = st.columns([1, 1.65], gap="large")
     with left:
         with st.form("ticket_form"):
@@ -179,12 +192,12 @@ def ticket() -> None:
             c1, c2 = st.columns(2)
             cls = c1.selectbox("Class", CLASSES, key="t_cls")
             quota = c2.selectbox("Quota", ["GN", "TQ", "LADIES", "DEFENCE", "SENIOR"], key="t_quota")
-            wl = c1.number_input("Waitlist / RAC no.", 1, 500, key="t_wl", value=st.session_state.get("t_wl", 15))
-            days = c2.slider("Days to departure", 1, 120, key="t_days", value=st.session_state.get("t_days", 7))
+            wl = c1.number_input("Waitlist / RAC no.", 1, 500, key="t_wl")
+            days = c2.slider("Days to departure", 1, 120, key="t_days")
             with st.expander("More options"):
                 senior = st.checkbox("Senior citizen (60+)")
                 disab = st.checkbox("Divyangjan quota")
-            go_btn = st.form_submit_button("🔮 Predict confirmation", use_container_width=True)
+            go_btn = st.form_submit_button("🔮 Predict confirmation", type="primary", width="stretch")
         st.caption(f"Journey date: **{(date.today() + timedelta(days=days)).strftime('%d %b %Y')}**")
 
     with right:
@@ -208,7 +221,7 @@ def ticket() -> None:
             g1, g2 = st.columns([1.1, 1])
             g1.plotly_chart(gauge(p * 100, "Chance of confirmation", "%",
                                   color={"ok": "#059669", "warn": "#D97706", "bad": "#DC2626"}[tone]),
-                            use_container_width=True)
+                            width="stretch")
             with g2:
                 st.markdown(kpi("Verdict", esc(res.get("pnr_status_prediction", "—")), "", tone), unsafe_allow_html=True)
                 st.markdown("<div style='height:8px'></div>", unsafe_allow_html=True)
@@ -231,7 +244,7 @@ def ticket() -> None:
                                        text=[f"{v:.0%}" for v in bb.values()], textposition="auto"))
                 fig.update_layout(title="<b>Berth likelihood</b>")
                 style_fig(fig, 300)
-                st.plotly_chart(fig, use_container_width=True)
+                st.plotly_chart(fig, width="stretch")
         hi = res.get("historical_insights") or {}
         if hi:
             section("Booking & cancellation trends", f'From {hi.get("comparable_bookings", 0):,} comparable past bookings ({esc(hi.get("scope", ""))}).')
@@ -248,7 +261,7 @@ def ticket() -> None:
                                        marker_color="#60A5FA"))
                 fig.update_layout(title="<b>Confirmation rate by travel month</b>", yaxis_title="% confirmed")
                 style_fig(fig, 250)
-                st.plotly_chart(fig, use_container_width=True)
+                st.plotly_chart(fig, width="stretch")
         outcome_box("t_out", res, "Report the final status after chart preparation", "choice",
                     options=["Confirmed", "RAC", "WL"])
         render_telemetry_badge(res.get("governance_telemetry"))
@@ -257,6 +270,28 @@ def ticket() -> None:
 # ──────────────────────────────────────────────────────────────────────────────
 # M2 — Train recommender
 # ──────────────────────────────────────────────────────────────────────────────
+
+ARRIVE_BY = ["Any time"] + [f"{h:02d}:{m:02d}" for h in range(5, 24) for m in (0, 30)]
+
+
+def _connections(res: Dict[str, Any]) -> None:
+    conns = res.get("connections") or []
+    if not conns:
+        return
+    st.markdown('<div class="rb-sub" style="margin:10px 0 6px"><b>🔀 One-change connections</b> — useful when few direct '
+                'trains run on this corridor. Plan and book one in the AI Travel Planner.</div>', unsafe_allow_html=True)
+    for c in conns:
+        legs = " &nbsp;→&nbsp; ".join(
+            f'<b>{esc(l["train_name"])}</b> {esc(l["train_number"])} ({esc(l["source"])} {esc(l["departure_time"])} → '
+            f'{esc(l["destination"])} {esc(l["arrival_time"])})' for l in c.get("legs", []))
+        st.markdown(
+            f'<div class="rb-card" style="padding:12px 16px"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap">'
+            f'<div>Change at <b>{esc(c.get("via"))}</b> · {c.get("total_hours", 0):.1f} h door to door · '
+            f'{c.get("layover_minutes", 0) // 60} h {c.get("layover_minutes", 0) % 60:02d} min layover</div>'
+            f'<div style="font-weight:800;color:var(--deep)">₹{c.get("total_fare_inr", 0):,.0f}'
+            f'{"" if c.get("within_budget", True) else " " + badge("over budget", "warn")}</div></div>'
+            f'<div class="rb-sub" style="margin-top:6px">{legs}</div></div>', unsafe_allow_html=True)
+
 
 def recommend() -> None:
     inject_theme("recommend")
@@ -271,22 +306,26 @@ def recommend() -> None:
         with st.form("rec_form"):
             o = st.selectbox("From", names, index=names.index(label_for(stations, "NDLS")))
             d = st.selectbox("To", names, index=names.index(label_for(stations, "CSTM")))
-            dt = st.date_input("Travel date", value=date.today() + timedelta(days=5))
+            dt = st.date_input("Travel date", value=date.today() + timedelta(days=5), min_value=date.today(),
+                               max_value=date.today() + timedelta(days=120))
             c1, c2 = st.columns(2)
             persona = c1.selectbox("I travel as", PERSONAS)
             cls = c2.selectbox("Preferred class", CLASSES)
-            budget = c1.number_input("Max budget ₹ (0 = no limit)", 0, 20000, 0, step=500)
-            arrive = c2.text_input("Arrive by (HH:MM, optional)", "")
+            budget = c1.number_input("Max fare ₹ (0 = any)", 0, 20000, 0, step=500)
+            arrive = c2.selectbox("Arrive by", ARRIVE_BY, help="Trains arriving later are ranked lower")
             uid = st.text_input("Passenger ID (optional, e.g. USR00001)", "",
                                 help="Personalises using that passenger's travel history and usual class / budget.")
-            go_btn = st.form_submit_button("🔍 Find best trains", use_container_width=True)
+            go_btn = st.form_submit_button("🔍 Find best trains", type="primary", width="stretch")
     with right:
+        if go_btn and stations[o] == stations[d]:
+            callout("Origin and destination are the same — pick two different stations.", "warn", "🔁")
+            go_btn = False
         if go_btn:
             with st.spinner("Scoring trains on your corridor…"):
                 res = api_post("/recommend/trains", {
                     "source_station": stations[o], "destination_station": stations[d], "journey_date": str(dt),
                     "persona": persona, "preferred_class": cls, "max_budget": float(budget) if budget > 0 else None,
-                    "arrival_deadline": arrive.strip() or None, "user_id": uid.strip() or None})
+                    "arrival_deadline": None if arrive == ARRIVE_BY[0] else arrive, "user_id": uid.strip() or None})
             st.session_state["r_res"] = (res, stations[o], stations[d])
         stored = st.session_state.get("r_res")
         if not stored:
@@ -297,6 +336,7 @@ def recommend() -> None:
                 _err(res, "the recommendation")
             elif not res["recommendations"]:
                 callout(esc(res.get("message") or f"No direct trains found on {oc} → {dc}."), "warn", "🔎")
+                _connections(res)
             else:
                 dirv = float(res.get("disparate_impact_ratio", 1.0))
                 if res.get("personalisation"):
@@ -329,12 +369,13 @@ def recommend() -> None:
                             for f, v in sorted(fc.items(), key=lambda kv: -kv[1]):
                                 st.markdown(f'<div class="rb-row"><span class="k">{esc(f.title())} — score {fs.get(f, 0):.0%}</span>'
                                             f'<span class="v">+{v:.3f}</span></div>', unsafe_allow_html=True)
-                    if audit and b2.button("I'd pick this", key=f"pick_{r.get('train_number')}", use_container_width=True):
+                    if audit and b2.button("I'd pick this", key=f"pick_{r.get('train_number')}", width="stretch"):
                         out = send_outcome(audit, r.get("train_number"))
                         if out and out.get("accepted"):
                             st.success("Thanks! Your choice is used to measure relevance and tune the ranking.")
                         else:
                             st.info((out or {}).get("error", "Choice already recorded."))
+                _connections(res)
                 if dirv >= 0.8:
                     callout(f"<b>Fairness audit passed</b> — Disparate Impact Ratio <b>{dirv:.2f}</b> (≥ 0.80). Rankings give fair exposure across fare tiers.", "ok", "⚖️")
                 else:
@@ -345,7 +386,7 @@ def recommend() -> None:
                         fig = go.Figure(go.Bar(x=list(w.keys()), y=list(w.values()), marker_color="#38BDF8",
                                                text=[f"{v:.0%}" for v in w.values()], textposition="auto"))
                         style_fig(fig, 240)
-                        st.plotly_chart(fig, use_container_width=True)
+                        st.plotly_chart(fig, width="stretch")
                 render_telemetry_badge(res.get("governance_telemetry"))
 
 
@@ -369,17 +410,25 @@ def delay() -> None:
 
     left, right = st.columns([1, 1.65], gap="large")
     with left:
+        st.session_state.setdefault("d_auto", True)
+        st.session_state.setdefault("d_weather", 0.25)
+        st.session_state.setdefault("d_cong", 0.45)
+        auto = st.toggle("Estimate weather & congestion automatically", key="d_auto",
+                         help="Uses the month's weather pattern and this station's own congestion history.")
         with st.form("delay_form"):
             train = st.selectbox("Train", list(trains.keys()), key="d_train")
             stn = st.selectbox("Station", list(stations.keys()), key="d_station")
-            jd = st.date_input("Journey date", value=date.today() + timedelta(days=1))
-            auto = st.checkbox("Estimate weather & congestion automatically", value=st.session_state.get("d_auto", True), key="d_auto",
-                               help="Uses the month's weather pattern and this station's own congestion history.")
-            wx = st.slider("Weather severity", 0.0, 1.0, st.session_state.get("d_weather", 0.25), 0.05, key="d_weather",
-                           help="0 = clear skies · 1 = heavy fog / flooding (ignored when automatic)")
-            cg = st.slider("Station congestion", 0.0, 1.0, st.session_state.get("d_cong", 0.45), 0.05, key="d_cong",
-                           help="Ignored when automatic")
-            go_btn = st.form_submit_button("⏱️ Forecast delay", use_container_width=True)
+            jd = st.date_input("Journey date", value=date.today() + timedelta(days=1), min_value=date.today())
+            if auto:
+                st.caption("🌦️ Weather and congestion will be estimated from the travel month and this station's history. "
+                           "Switch the toggle off to set them yourself.")
+                wx, cg = None, None
+            else:
+                wx = st.slider("Weather severity", 0.0, 1.0, step=0.05, key="d_weather",
+                               help="0 = clear skies · 1 = heavy fog / flooding")
+                cg = st.slider("Station congestion", 0.0, 1.0, step=0.05, key="d_cong",
+                               help="0 = empty platforms · 1 = extremely crowded")
+            go_btn = st.form_submit_button("⏱️ Forecast delay", type="primary", width="stretch")
     with right:
         if go_btn or st.session_state.pop("d_run", False):
             with st.spinner("Forecasting arrival delay…"):
@@ -419,12 +468,12 @@ def delay() -> None:
                 base = next((d for d in res["delay_drivers"] if d.get("feature") == "base_value"), None)
                 fig = go.Figure(go.Bar(
                     x=[d.get("impact_minutes", 0) for d in drivers][::-1],
-                    y=[f'{d.get("factor", "")} ({d.get("value")})' for d in drivers][::-1],
+                    y=[f'{d.get("factor", "")} ({d.get("display", d.get("value"))})' for d in drivers][::-1],
                     orientation="h", marker_color=["#0891B2" if d.get("impact_minutes", 0) >= 0 else "#F97316" for d in drivers][::-1],
                     text=[f'{d.get("impact_minutes", 0):+.1f} min' for d in drivers][::-1], textposition="auto"))
                 fig.update_layout(title=f"<b>Why this delay (SHAP)</b> — typical delay {base['impact_minutes']:.0f} min, each bar adds or removes minutes" if base else "<b>Why this delay (SHAP)</b>")
                 style_fig(fig, 60 + 50 * len(drivers))
-                st.plotly_chart(fig, use_container_width=True)
+                st.plotly_chart(fig, width="stretch")
             for a in res.get("alternative_options", []):
                 st.markdown(
                     f'<div class="rb-card"><div style="display:flex;justify-content:space-between;gap:8px"><div>'
@@ -447,6 +496,19 @@ EXAMPLES = [
 ]
 
 
+def _expiry(ts: Any) -> str:
+    """'· approve within 27 min' — the approval gate expires plans after 30 minutes."""
+    try:
+        from datetime import datetime, timezone
+        exp = datetime.fromisoformat(str(ts).replace("Z", "+00:00"))
+        if exp.tzinfo is None:
+            exp = exp.replace(tzinfo=timezone.utc)
+        mins = int((exp - datetime.now(timezone.utc)).total_seconds() // 60)
+        return f" · approve within {mins} min" if mins > 0 else " · <b>expired — plan again</b>"
+    except Exception:
+        return ""
+
+
 def planner() -> None:
     inject_theme("planner")
     hero("🧭 AI Travel Planner",
@@ -457,7 +519,7 @@ def planner() -> None:
     st.caption("💬 Try an example")
     cols = st.columns(len(EXAMPLES))
     for i, (c, ex) in enumerate(zip(cols, EXAMPLES)):
-        c.button(ex if len(ex) < 52 else ex[:50] + "…", key=f"ex{i}", use_container_width=True,
+        c.button(ex if len(ex) < 52 else ex[:50] + "…", key=f"ex{i}", width="stretch",
                  on_click=lambda e=ex: st.session_state.update(p_query=e))
 
     with st.form("plan_form"):
@@ -466,7 +528,7 @@ def planner() -> None:
         c1, c2, c3 = st.columns([1, 1, 1.2])
         persona = c1.selectbox("Traveller type", PERSONAS)
         budget = c2.number_input("Budget cap ₹ (0 = from message)", 0, 50000, 0, step=500)
-        go_btn = c3.form_submit_button("🤖 Plan my journey", use_container_width=True)
+        go_btn = c3.form_submit_button("🤖 Plan my journey", type="primary", width="stretch")
 
     if go_btn:
         with st.spinner("Agents are searching routes and connections, predicting delays and forecasting fares…"):
@@ -517,8 +579,7 @@ def planner() -> None:
                 f' <span class="rb-sub">({esc(l.get("arrival", "")[:10])})</span></span>'
                 f'<span class="v">₹{l.get("fare_inr", 0):,.0f} · {l.get("confirmation_probability", 0):.0%} odds · ~{l.get("predicted_delay_minutes", 0):.0f} min</span></div>')
 
-    section("Your proposed itinerary", f'Request <code>{esc(plan.get("request_id"))}</code>'
-            + (f' · expires {esc(plan.get("expires_at", "")[11:16])} UTC' if plan.get("expires_at") else ""))
+    section("Your proposed itinerary", f'Request <code>{esc(plan.get("request_id"))}</code>' + _expiry(plan.get("expires_at")))
     exp = rec.get("expected_arrival_with_delay") or ""
     st.markdown(
         f'<div class="rb-card" style="border:2px solid var(--accent)">'
@@ -562,7 +623,7 @@ def planner() -> None:
                         f'{esc(o.get("departure_time"))} → {esc(o.get("arrival_time"))} · ₹{o.get("estimated_fare_inr", 0):,.0f} · '
                         f'{o.get("confirmation_probability", 0):.0%} odds{" · 1 change" if o.get("changes") else ""}'
                         f'{"" if o.get("meets_all_constraints") else " · misses a constraint"}</div>', unsafe_allow_html=True)
-            if c2.button("Review", key=f"opt_{o.get('option_id')}", use_container_width=True):
+            if c2.button("Review", key=f"opt_{o.get('option_id')}", width="stretch"):
                 st.session_state["plan_choice"] = o.get("option_id")
                 st.rerun()
 
@@ -584,8 +645,8 @@ def planner() -> None:
             gd = c3.selectbox("Gender", ["M", "F", "O"])
             bp = c4.selectbox("Berth", ["Lower", "Middle", "Upper", "Side Lower", "Side Upper"])
             ok, no = st.columns(2)
-            yes = ok.form_submit_button(f"✅ Approve {rec.get('option_id')} & prepare booking", type="primary", use_container_width=True)
-            rej = no.form_submit_button("↩️ Reject & re-plan", use_container_width=True)
+            yes = ok.form_submit_button(f"✅ Approve {rec.get('option_id')} & prepare booking", type="primary", width="stretch")
+            rej = no.form_submit_button("↩️ Reject & re-plan", width="stretch")
         if yes:
             r = api_post("/agent/confirm", {"request_id": plan["request_id"], "selected_option_id": rec.get("option_id", "OPT-1"),
                                             "passenger_name": nm, "passenger_age": int(ag), "passenger_gender": gd, "berth_preference": bp})
@@ -631,9 +692,10 @@ def fare() -> None:
         with st.form("fare_form"):
             train = st.selectbox("Train", list(trains.keys()))
             cls = st.selectbox("Class", CLASSES)
-            jd = st.date_input("Journey date", value=date.today() + timedelta(days=20))
+            jd = st.date_input("Journey date", value=date.today() + timedelta(days=20), min_value=date.today(),
+                               max_value=date.today() + timedelta(days=120))
             tk = st.checkbox("Tatkal quota")
-            go_btn = st.form_submit_button("💰 Forecast fare", use_container_width=True)
+            go_btn = st.form_submit_button("💰 Forecast fare", type="primary", width="stretch")
     with right:
         if go_btn:
             with st.spinner("Forecasting fare trajectory…"):
@@ -671,7 +733,7 @@ def fare() -> None:
                 fig.update_layout(title="<b>Fare vs days before departure</b>", xaxis_title="Days before departure",
                                   yaxis_title="₹", xaxis_autorange="reversed")
                 style_fig(fig, 300)
-                st.plotly_chart(fig, use_container_width=True)
+                st.plotly_chart(fig, width="stretch")
     res = st.session_state.get("f_res")
     if res and "current_predicted_fare_inr" in res:
         alts = res.get("cost_saving_alternatives") or []
@@ -691,125 +753,39 @@ def fare() -> None:
 
 
 # ──────────────────────────────────────────────────────────────────────────────
-# M6 — Support assistant
-# ──────────────────────────────────────────────────────────────────────────────
-
-QUICK_Q = [
-    ("🔎 PNR status", "What is the status of PNR 0000001 and my refund?"),
-    ("🚆 Refund on waitlist ticket", "What happens if my waitlist ticket is not confirmed before chart preparation? Will I get a full refund?"),
-    ("👨‍👩‍👧 Transfer a ticket", "Can I transfer my confirmed train ticket to a family member like father, mother, or spouse?"),
-    ("🇮🇳 तत्काल रिफंड (Hindi)", "तत्काल टिकट रद्द करने पर क्या कोई रिफंड मिलता है? IRCTC का क्या नियम है?"),
-    ("⚡ RAC rules (Hinglish)", "Kya RAC passenger 3A coach me travel kar sakta hai aur berth kaise allot hoti hai?"),
-    ("🚉 Trains Delhi → Mumbai", "Which trains from Delhi to Mumbai?"),
-]
-
-
-def _ask(q: str, lang: str) -> None:
-    hist = st.session_state.setdefault("chat", [])
-    hist.append({"role": "user", "text": q})
-    res = api_post("/support/query", {"query": q, "language": lang, "user_id": "railway_buddy_user",
-                                      "session_id": st.session_state.get("chat_sid", "web")})
-    hist.append({"role": "assistant", "res": res})
-
-
-def support() -> None:
-    inject_theme("support")
-    hero("💬 Support Assistant",
-         "Ask about PNR, refunds, cancellations, Tatkal or RAC rules — in English, हिन्दी or Hinglish. "
-         "Every answer is grounded in official policy text and checked for hallucination.",
-         ["24×7", "Multilingual", "PNR & refund lookup", "RAG over IRCTC policy", "Faithfulness-audited"])
-    c1, c2 = st.columns([1, 3])
-    lang = c1.selectbox("Language", ["auto", "en", "hi", "hinglish"], help="'auto' detects it for you")
-    c2.caption("💬 Quick questions")
-    cols = st.columns(len(QUICK_Q))
-    for i, (c, (lbl, q)) in enumerate(zip(cols, QUICK_Q)):
-        c.button(lbl, key=f"qq{i}", use_container_width=True, on_click=lambda qq=q: st.session_state.update(chat_pending=qq))
-
-    pending = st.session_state.pop("chat_pending", None)
-    typed = st.chat_input("Ask Railway Buddy anything about your journey…")
-    q = typed or pending
-    if q:
-        with st.spinner("Searching verified IRCTC policy…"):
-            _ask(q, lang)
-
-    hist = st.session_state.get("chat", [])
-    if not hist:
-        st.markdown('<div class="rb-card" style="text-align:center;padding:36px"><div style="font-size:2rem">👋</div>'
-                    '<b style="color:#0A2463">Hello! How can I help with your journey today?</b>'
-                    '<div class="rb-sub">Pick a quick question above or type your own below.</div></div>', unsafe_allow_html=True)
-    for idx, m in enumerate(hist):
-        if m["role"] == "user":
-            with st.chat_message("user"):
-                st.write(m["text"])
-        else:
-            res = m["res"]
-            with st.chat_message("assistant", avatar="🚆"):
-                if not res or "response" not in res:
-                    _err(res, "your question")
-                    continue
-                st.write(res["response"])
-                faith = res.get("faithfulness_score", 0)
-                flag = res.get("hallucination_flag")
-                st.markdown(
-                    badge(f'Answered by: {res.get("answered_by") or "policy engine"}', "mute") + " " +
-                    badge(f'Language: {str(res.get("detected_language", "")).upper()}', "info") + " " +
-                    badge(f'Grounded {faith:.0%}' if not flag else f'Low grounding {faith:.0%}', "ok" if not flag else "warn") + " " +
-                    badge("Escalate to human" if res.get("escalation_recommended") else "Self-resolved", "warn" if res.get("escalation_recommended") else "ok") + " " +
-                    badge(f'Sentiment: {res.get("sentiment", "Neutral")}', "mute"), unsafe_allow_html=True)
-                if flag:
-                    st.caption("⚠️ The governance layer flagged this answer as weakly supported by policy text — please verify on irctc.co.in or call 139.")
-                chunks = res.get("retrieved_contexts") or []
-                if chunks:
-                    with st.expander(f"📚 Sources used ({len(chunks)})"):
-                        for ch in chunks:
-                            st.markdown(f'**{esc(ch.get("source_file"))}** · similarity {ch.get("similarity_score", 0):.2f}')
-                            st.caption(ch.get("text", "")[:420])
-                audit = (res.get("governance_telemetry") or {}).get("audit_id")
-                if audit:
-                    rated = st.session_state.setdefault("rated", {})
-                    if audit in rated:
-                        st.caption(f"Thanks for rating this answer {rated[audit]}/5.")
-                    else:
-                        stars = st.feedback("stars", key=f"fb_{idx}_{audit}")
-                        if stars is not None:
-                            r = send_outcome(audit, int(stars) + 1)
-                            if r and r.get("accepted"):
-                                rated[audit] = int(stars) + 1
-                                st.caption("Thanks — your rating feeds the satisfaction monitor.")
-    if hist:
-        st.button("🧹 Clear conversation", on_click=lambda: st.session_state.update(chat=[]))
-
-
-# ──────────────────────────────────────────────────────────────────────────────
 # M7 — Fraud & bot shield
 # ──────────────────────────────────────────────────────────────────────────────
 
 def fraud() -> None:
-    inject_theme("fraud")
+    inject_theme("tower")
     hero("🛡️ Fraud & Bot Shield",
-         "Scores every booking session for bot, scalper and account-misuse risk — and explains the evidence behind each alert.",
-         ["XGBoost classifier", "Anomaly detection", "Account-misuse checks", "SHAP investigations"])
+         "Security operations for the booking platform: every session is scored for bot, scalper and account-misuse risk, "
+         "each alert carries its evidence, and analyst verdicts feed live false-positive / false-negative monitoring.",
+         ["AI Governance · security", "XGBoost classifier", "Anomaly detection", "Account-misuse checks", "SHAP investigations"])
     presets([
         ("🟢 Genuine passenger", {"f_rpm": 4.0, "f_pnr": 1, "f_tatkal": False, "f_cap": 0, "f_age": 365, "f_pay": 1, "f_ip": 0.10, "f_bulk": False, "f_sess": "SESS-GENUINE-PASSENGER"}),
         ("🟠 Fast Tatkal user", {"f_rpm": 35.0, "f_pnr": 4, "f_tatkal": True, "f_cap": 1, "f_age": 45, "f_pay": 2, "f_ip": 0.40, "f_bulk": False, "f_sess": "SESS-TATKAL-FREQUENT"}),
         ("🔴 Scalper bot", {"f_rpm": 120.0, "f_pnr": 25, "f_tatkal": True, "f_cap": 6, "f_age": 1, "f_pay": 6, "f_ip": 0.85, "f_bulk": True, "f_sess": "SESS-SCALPER-BOTNET-99"}),
     ], "f_run", "fr")
 
+    for k_, v_ in {"f_rpm": 20.0, "f_pnr": 2, "f_age": 180, "f_pay": 1, "f_cap": 0, "f_tatkal": False,
+                   "f_bulk": False, "f_sess": "SESS-DEMO-001", "f_ip": 0.1}.items():
+        st.session_state.setdefault(k_, v_)
     left, right = st.columns([1, 1.65], gap="large")
     with left:
         with st.form("fraud_form"):
-            rpm = st.slider("Requests per minute", 1.0, 150.0, float(st.session_state.get("f_rpm", 20.0)), 1.0, key="f_rpm")
+            rpm = st.slider("Requests per minute", 1.0, 150.0, step=1.0, key="f_rpm", format="%.0f")
             c1, c2 = st.columns(2)
-            pnr = c1.number_input("PNR lookups", 1, 50, int(st.session_state.get("f_pnr", 2)), key="f_pnr")
-            age = c2.number_input("Account age (days)", 0, 2000, int(st.session_state.get("f_age", 180)), key="f_age")
-            pay = c1.number_input("Payment attempts", 1, 20, int(st.session_state.get("f_pay", 1)), key="f_pay")
-            cap = c2.slider("Failed captchas", 0, 10, int(st.session_state.get("f_cap", 0)), key="f_cap")
-            tk = st.checkbox("During Tatkal window (10:00–10:15)", value=st.session_state.get("f_tatkal", False), key="f_tatkal")
-            bulk = st.checkbox("Bulk booking (6+ passengers)", value=st.session_state.get("f_bulk", False), key="f_bulk")
+            pnr = c1.number_input("PNR lookups", 1, 50, key="f_pnr")
+            age = c2.number_input("Account age (days)", 0, 2000, key="f_age")
+            pay = c1.number_input("Payment attempts", 1, 20, key="f_pay")
+            cap = c2.slider("Failed captchas", 0, 10, key="f_cap")
+            tk = st.checkbox("During Tatkal window (10:00–10:15)", key="f_tatkal")
+            bulk = st.checkbox("Bulk booking (6+ passengers)", key="f_bulk")
             with st.expander("Session details"):
-                sess = st.text_input("Session ID", st.session_state.get("f_sess", "SESS-DEMO-001"), key="f_sess")
-                ip = st.slider("Network risk score", 0.0, 1.0, float(st.session_state.get("f_ip", 0.1)), 0.05, key="f_ip")
-            go_btn = st.form_submit_button("🛡️ Score this session", use_container_width=True)
+                sess = st.text_input("Session ID", key="f_sess")
+                ip = st.slider("Network risk score", 0.0, 1.0, step=0.05, key="f_ip")
+            go_btn = st.form_submit_button("🛡️ Score this session", type="primary", width="stretch")
     with right:
         if go_btn or st.session_state.pop("f_run", False):
             with st.spinner("Classifying session behaviour…"):
@@ -829,7 +805,7 @@ def fraud() -> None:
             tone = "bad" if cat in ("Bot Detected", "High Risk") else "warn" if cat == "Suspicious" else "ok"
             g1, g2 = st.columns([1.1, 1])
             g1.plotly_chart(gauge(sc, "Fraud risk score", " / 100", color={"ok": "#059669", "warn": "#D97706", "bad": "#DC2626"}[tone]),
-                            use_container_width=True)
+                            width="stretch")
             with g2:
                 st.markdown(kpi("Threat level", esc(cat), "", tone), unsafe_allow_html=True)
                 st.markdown("<div style='height:8px'></div>", unsafe_allow_html=True)
@@ -853,7 +829,7 @@ def fraud() -> None:
             with st.expander("🕵️ Security analyst verdict (feeds false-positive / false-negative monitoring)"):
                 c1, c2 = st.columns([2, 1])
                 verdict = c1.selectbox("Confirmed label after investigation", ["legitimate", "suspicious", "bot"], key="fr_verdict")
-                if c2.button("Record verdict", use_container_width=True):
+                if c2.button("Record verdict", width="stretch"):
                     r = api_post("/governance/outcomes", {"audit_id": audit, "actual": verdict, "source": "analyst"})
                     if r and r.get("accepted"):
                         st.success("Verdict recorded — it now counts towards the live false-positive / false-negative rates.")
@@ -861,11 +837,27 @@ def fraud() -> None:
                         st.warning(f"Not recorded: {(r or {}).get('error', 'unknown error')}")
         render_telemetry_badge(res.get("governance_telemetry"))
 
-    alerts = api_get("/security/alerts", {"n": 8}) or []
-    if alerts:
-        section("Recent security alerts", "Every alert carries its evidence so an analyst can investigate it.")
-        for a in alerts:
-            st.markdown(f'<div class="rb-row" style="background:#fff;padding:9px 14px;border:1px solid #D9E4F5;border-radius:10px;margin-bottom:6px">'
-                        f'<span class="k"><b>{esc(a.get("session_id"))}</b> · {esc(", ".join(a.get("why", [])[:4]))}</span>'
-                        f'<span class="v">{badge(a.get("category", ""), None)} {esc(a.get("risk_score"))}</span></div>',
-                        unsafe_allow_html=True)
+    alerts = api_get("/security/alerts", {"n": 60}) or []
+    perf = api_get("/governance/performance") or []
+    m7 = next((p_ for p_ in perf if p_.get("module_id") == "m7_fraud_detector"), {}) if isinstance(perf, list) else {}
+    mm = m7.get("metrics") or {}
+    fpr, fnr = mm.get("fpr"), mm.get("fnr")
+    section("Security operations", "Live from the governance layer — every alert carries its evidence so an analyst can investigate it.")
+    kpi_row([
+        ("Alerts raised", len(alerts), "recent sessions flagged", "warn" if alerts else "ok"),
+        ("Blocked & reported", sum(1 for a in alerts if a.get("action") == "BLOCK_AND_REPORT"), "bot / scalper sessions", ""),
+        ("False-positive rate", f"{fpr:.1%}" if fpr is not None else "—",
+         f'{m7.get("n_outcomes", 0)} analyst verdicts · limit 12%', "bad" if fpr is not None and fpr > 0.12 else "ok"),
+        ("False-negative rate", f"{fnr:.1%}" if fnr is not None else "—", "missed threats · limit 15%",
+         "bad" if fnr is not None and fnr > 0.15 else "ok"),
+    ])
+    st.markdown("<div style='height:8px'></div>", unsafe_allow_html=True)
+    if not alerts:
+        st.caption("No alerts yet — try the 🔴 Scalper bot scenario above.")
+    for a in alerts[:8]:
+        act = str(a.get("action", "")).replace("_", " ").title()
+        st.markdown(f'<div class="rb-row" style="background:#fff;padding:9px 14px;border:1px solid #D9E4F5;border-radius:10px;margin-bottom:6px">'
+                    f'<span class="k"><span class="rb-sub">{esc(str(a.get("at", ""))[11:19])} UTC</span> · <b>{esc(a.get("session_id"))}</b> · '
+                    f'{esc(", ".join(a.get("why", [])[:4]))}</span>'
+                    f'<span class="v">{badge(a.get("category", ""), None)} {badge(act, "mute")} {esc(a.get("risk_score"))}</span></div>',
+                    unsafe_allow_html=True)

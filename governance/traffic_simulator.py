@@ -27,7 +27,7 @@ _cache: Dict[str, pd.DataFrame] = {}
 SUPPORT_QS = [
     "How do I check my PNR status?", "What is the refund if my waitlist ticket is not confirmed?",
     "Can I transfer my ticket to a family member?", "What are the Tatkal booking timings?",
-    "Kya RAC passenger 3A coach me travel kar sakta hai?", "तत्काल टिकट रद्द करने पर रिफंड मिलता है?",
+    "Can an RAC passenger travel in a 3A coach?", "Is there a refund if I cancel a Tatkal ticket?",
     "What is the status of PNR 0000002?", "Which trains from Delhi to Mumbai?",
 ]
 PERSONAS = ["budget", "premium", "student", "senior", "business", "family"]

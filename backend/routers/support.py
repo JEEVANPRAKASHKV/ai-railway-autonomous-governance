@@ -1,7 +1,7 @@
 """
 backend/routers/support.py
 ==========================
-FastAPI router for Module 6: Multilingual Customer Support Assistant.
+FastAPI router for Module 6: Customer Support Assistant (English).
 """
 
 from __future__ import annotations
@@ -24,7 +24,7 @@ router = APIRouter(prefix="/support", tags=["Module 6: Customer Support Assistan
 @router.post(
     "/query",
     response_model=SupportQueryResponse,
-    summary="Answer passenger policy & travel queries using multilingual RAG with hallucination audit",
+    summary="Answer passenger policy & travel queries with tools + RAG and a hallucination audit (English)",
 )
 def handle_support_query(
     request: SupportQueryRequest,
