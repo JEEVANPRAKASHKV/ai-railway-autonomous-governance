@@ -6,10 +6,10 @@
       "current_version": "v1.0",
       "versions": {
         "v1.0": {
-          "accuracy": 0.6156,
-          "f1_weighted": 0.5619,
+          "accuracy": 0.5984,
+          "f1_weighted": 0.5443,
           "n_classes": 3,
-          "train_date": "2026-10-14",
+          "train_date": "2026-10-28",
           "status": "production",
           "artifact_path": "models/artifacts/wl_predictor_v1.0.pkl"
         }
@@ -21,9 +21,9 @@
       "current_version": "v1.0",
       "versions": {
         "v1.0": {
-          "accuracy": 0.2767,
-          "f1_weighted": 0.2351,
-          "train_date": "2026-10-14",
+          "accuracy": 0.2698,
+          "f1_weighted": 0.2273,
+          "train_date": "2026-10-28",
           "status": "production",
           "artifact_path": "models/artifacts/berth_estimator_v1.0.pkl"
         }
@@ -35,9 +35,9 @@
       "current_version": "v1.0",
       "versions": {
         "v1.0": {
-          "mae_minutes": 8.9619,
-          "r2_score": 0.4805,
-          "train_date": "2026-10-21",
+          "mae_minutes": 8.4414,
+          "r2_score": 0.4729,
+          "train_date": "2026-10-28",
           "status": "production",
           "artifact_path": "models/artifacts/delay_predictor_v1.0.pkl"
         }
@@ -49,10 +49,10 @@
       "current_version": "v1.0",
       "versions": {
         "v1.0": {
-          "mae_inr": 14.9237,
-          "mape_pct": 0.9317,
-          "r2_score": 0.9997,
-          "train_date": "2026-10-14",
+          "mae_inr": 10.1521,
+          "mape_pct": 0.8378,
+          "r2_score": 0.9959,
+          "train_date": "2026-10-28",
           "status": "production",
           "artifact_path": "models/artifacts/fare_predictor_v1.0.pkl"
         }
@@ -64,16 +64,16 @@
       "current_version": "v1.0",
       "versions": {
         "v1.0": {
-          "accuracy": 0.9995,
-          "precision": 0.9995,
-          "recall": 0.9995,
-          "f1_weighted": 0.9995,
+          "accuracy": 1.0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_weighted": 1.0,
           "classes": [
             "bot",
             "legitimate",
             "suspicious"
           ],
-          "train_date": "2026-10-14",
+          "train_date": "2026-10-28",
           "status": "production",
           "artifact_path": "models/artifacts/fraud_detector_v1.0.pkl"
         }

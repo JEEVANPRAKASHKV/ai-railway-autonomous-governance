@@ -1,0 +1,1881 @@
+train_number,train_name,train_type,zone,source,destination,departure_time,arrival_time,duration_minutes,distance_km,classes,halts,return_train
+10103,Mumbai CST - Madgaon Mandovi Exp,Express,KR,CSTM,MAO,06:55,18:45,710,765,1A|2A|3A|SL,20,10104
+10104,Madgaon - Mumbai CST Mandovi Exp,Express,KR,MAO,CSTM,09:30,21:30,720,765,1A|2A|3A|SL,20,10103
+10111,Mumbai CST - Madgaon Konkan Knaya Exp,Express,KR,CSTM,MAO,23:05,10:45,700,765,1A|2A|3A|SL,20,10112
+10112,Madgaon - Mumbai CST Konkan Knaya Exp,Express,KR,MAO,CSTM,18:00,05:50,710,765,1A|2A|3A|SL,20,10111
+10215,Madgaon Ernakulam Weekly Super Fast Express,Express,KR,MAO,ERS,21:30,10:55,805,850,1A|2A|3A|SL,13,10216
+10216,Ernakulam Madgaon Weekly SF Express,Express,KR,ERS,MAO,14:35,04:00,805,850,1A|2A|3A|SL,13,10215
+11003,Dadar - Sawantwadi RD Rajya Rani Exp,Express,CR,DR,SWV,23:55,10:55,660,646,2A|3A|SL,21,11004
+11004,Sawantwadi RD - Dadar Rajya Rani Exp,Express,CR,SWV,DR,18:10,06:30,740,646,2A|3A|SL,21,11003
+11007,Deccan Express,Express,CR,CSTM,PUNE,07:10,11:10,240,192,CC,12,11008
+11008,Deccan Express,Express,CR,PUNE,CSTM,15:30,19:40,250,192,CC,11,11007
+11009,Sinhagad Express,Express,CR,CSTM,PUNE,14:30,18:40,250,192,CC,12,11008
+11010,Sinhagad Express,Express,CR,PUNE,CSTM,06:05,09:55,230,192,CC,11,11009
+11011,Mahalaxmi Express,Express,CR,CSTM,KOP,20:23,07:20,657,518,1A|2A|3A|SL,18,11012
+11012,Mahalaxmi Express,Express,CR,KOP,CSTM,20:30,07:25,655,518,1A|2A|3A|SL,19,11011
+11013,Mumbai LTT-Coimbatore Express,Express,CR,LTT,CBE,22:35,06:30,1915,1518,1A|2A|3A|SL,33,11014
+11014,Coimbatore Mumbai LTT Express,Express,CR,CBE,LTT,08:00,14:30,1830,1518,1A|2A|3A|SL,33,11013
+11015,Kushinagar Express,Express,CR,LTT,GKP,22:45,07:25,1960,1680,2A|3A|SL,47,11016
+11016,Kushinagar Express,Express,CR,GKP,LTT,19:05,04:20,1995,1680,2A|3A|SL,45,11015
+11017,Chalukya Express,Express,CR,DR,YPR,21:30,21:55,1465,1205,2A|3A|SL,27,11018
+11018,Chalukya Express,Express,CR,YPR,DR,06:30,05:50,1400,1205,2A|3A|SL,26,11017
+11019,Konark Express,Express,CR,CSTM,BBS,15:10,04:25,2235,1932,2A|3A|SL,36,11020
+11020,Konark Express,Express,CR,BBS,CSTM,15:20,03:55,2195,1932,2A|3A|SL,37,11019
+11023,Sahyadri Express,Express,CR,CSTM,KOP,17:50,06:05,735,518,2A|3A|SL,28,11024
+11024,Sahyadri Express,Express,CR,KOP,CSTM,22:50,11:55,785,518,2A|3A|SL,31,11023
+11025,Manmad Pune Express(Via Nasik),Express,CR,MMR,PUNE,04:30,12:05,455,364,CC,10,11026
+11026,Pune Manmad Express,Express,CR,PUNE,MMR,12:50,21:30,520,364,CC,10,11025
+11027,Mumbai CST-Chennai Mail,Mail,CR,CSTM,MAS,23:45,04:55,1750,1283,2A|3A|SL,52,11028
+11028,Chennai-Mumbai CST Mail,Mail,CR,MAS,CSTM,22:50,03:45,1735,1283,2A|3A|SL,52,11027
+11029,Koyna Express,Express,CR,CSTM,KOP,08:40,20:25,705,518,CC,35,11030
+11030,Koyna Express,Express,CR,KOP,CSTM,07:55,20:22,747,518,CC,33,11029
+11033,Pune - Darbhanga Gyan Ganga Exp,Express,CR,PUNE,DBG,16:15,06:45,2310,1948,2A|3A|SL,30,11034
+11034,Darbhanga - Pune Gyan Ganga Exp,Express,CR,DBG,PUNE,17:00,08:05,2345,1948,2A|3A|SL,30,11033
+11035,Dadar-Mysore Sharavati Express,Express,CR,DR,MYS,21:30,21:45,1455,1212,2A|3A|SL,27,11036
+11036,Mysore-Dadar Sharavati Express,Express,CR,MYS,DR,06:15,05:50,1415,1212,2A|3A|SL,26,11035
+11037,Pune - Gorakhpur Exp,Express,CR,PUNE,GKP,16:15,01:15,1980,1771,2A|3A|SL,16,11038
+11038,Gorakhpur - Pune Exp,Express,CR,GKP,PUNE,15:30,04:05,2195,1771,2A|3A|SL,16,11037
+11039,Maharashtra Express,Express,CR,KOP,G,15:30,20:15,1725,1346,2A|3A|SL,62,11040
+11040,Maharashtra Express,Express,CR,G,KOP,08:20,12:45,1705,1346,2A|3A|SL,60,11039
+11041,Mumbai - Chennai Express,Express,CR,CSTM,MAS,14:00,16:45,1605,1283,2A|3A|SL,36,11042
+11042,ChennaiCentral-CST Mumbai Express,Express,CR,MAS,CSTM,11:55,13:45,1550,1283,2A|3A|SL,34,11041
+11043,Mumbai LTT - Madurai Exp,Express,CR,LTT,MDU,00:15,12:30,3615,1702,2A|3A|SL,27,11044
+11044,Madurai - Mumbai LTT Exp,Express,CR,MDU,LTT,18:00,05:45,3585,1702,2A|3A|SL,26,11043
+11045,Kolhapur Csmt - Dhanbad Deekshabhoomi Exp,Express,CR,KOP,DHN,23:45,12:00,6495,2968,3A|SL,36,11046
+11046,Dhanbad - Kolhapur Csmt Deekshabhoomi Exp,Express,CR,DHN,KOP,13:45,04:00,6615,2968,3A|SL,36,11045
+11047,Hubli Express,Express,CR,MRJ,UBL,00:10,06:25,375,279,SL,12,11048
+11048,Hubli Miraj Express,Express,CR,UBL,MRJ,23:00,05:15,375,279,SL,12,11047
+11049,Ahmedabad-Kolhapur Express,Express,CR,ADI,KOP,19:30,15:25,1195,961,2A|3A|SL,18,11050
+11050,Kolhapur-Ahmedabad Express,Express,CR,KOP,ADI,12:50,07:45,1135,961,2A|3A|SL,18,11049
+11051,Solapur-Kolhapur Express,Express,CR,SUR,KOP,08:10,14:15,365,315,3A|SL,8,11052
+11052,Kolhapur Solapur Express,Express,CR,KOP,SUR,08:45,15:00,375,315,3A|SL,8,11051
+11055,Mumbai LTT - Gorakhpur Exp,Express,CR,LTT,GKP,10:55,20:15,3440,1733,2A|3A|SL,23,11056
+11056,Gorakhpur - Mumbai LTT Exp,Express,CR,GKP,LTT,06:25,16:05,3460,1733,2A|3A|SL,22,11055
+11057,Dadar Amritsar Express,Express,CR,DR,ASR,23:45,16:30,2445,2037,2A|3A|SL,88,11058
+11058,Amritsar Dadar Express,Express,CR,ASR,DR,08:30,04:00,2610,2037,2A|3A|SL,88,11057
+11059,Mumbai LTT - Chhapra Godan Exp,Express,CR,LTT,CPR,10:55,20:55,3480,1772,2A|3A|SL,24,11060
+11060,Chhapra - Mumbai LTT Godan Exp,Express,CR,CPR,LTT,05:30,16:05,3515,1772,2A|3A|SL,24,11059
+11064,Salem - Chennai Egmore Exp,Express,CR,SA,MS,21:00,04:50,470,353,1A|2A|3A|SL,14,11063
+11065,Mumbai LTT - Darbhanga Pawan Exp,Express,CR,LTT,DBG,12:15,01:20,2225,1880,2A|3A|SL,40,11066
+11066,Darbhanga - Mumbai LTT Pawan Exp,Express,CR,DBG,LTT,13:10,03:45,2315,1880,2A|3A|SL,38,11065
+11067,Mumbai LTT - Faizabad Saket Exp,Express,CR,LTT,FD,05:20,09:25,1685,1505,2A|3A|SL,20,11068
+11068,Faizabad - Mumbai LTT Saket Exp,Express,CR,FD,LTT,15:35,21:40,1805,1505,2A|3A|SL,20,11067
+11069,Tulsi Express,Express,CR,LTT,ALD,05:20,08:50,1650,1511,2A|3A|SL,25,11070
+11070,Tulsi Express,Express,CR,ALD,LTT,16:15,21:40,1765,1511,2A|3A|SL,25,11069
+11071,Kamayani Express,Express,CR,LTT,BSB,12:40,19:25,1845,1640,2A|3A|SL,39,11072
+11072,Kamayani Express,Express,CR,BSB,LTT,15:50,23:05,1875,1640,2A|3A|SL,37,11071
+11077,Jhelum Express,Express,CR,PUNE,JAT,17:20,09:20,2400,2177,2A|3A|SL,63,11078
+11078,Jhelum Express,Express,CR,JAT,PUNE,21:45,14:35,2450,2173,2A|3A|SL,64,11077
+11087,Veraval Pune Express,Express,CR,VRL,PUNE,06:25,04:45,1340,1066,2A|3A|SL,26,11088
+11088,Pune Veraval Express,Express,CR,PUNE,VRL,19:50,16:40,1250,1066,2A|3A|SL,25,11087
+11089,Bhagat KI Kothi - Pune Exp,Express,CR,BGKT,PUNE,05:33,04:45,1392,1094,2A|3A|SL,26,11090
+11090,Pune - Bhagat KI Kothi Exp,Express,CR,PUNE,BGKT,19:50,17:29,2739,1094,2A|3A|SL,25,11089
+11091,Bhuj - Pune Ahimsa Exp,Express,CR,BHUJ,PUNE,08:00,04:45,1245,993,2A|3A|SL,24,11092
+11092,Pune - Bhuj Ahimsa Exp,Express,CR,PUNE,BHUJ,19:50,15:20,1170,993,2A|3A|SL,24,11091
+11093,Mumbai CST - Varanasi Mahanagari Exp,Express,CR,CSTM,BSB,00:10,04:40,1710,1533,2A|3A|SL,26,11094
+11094,Varanasi - Mumbai CST Mahanagari Exp,Express,CR,BSB,CSTM,11:25,14:15,1610,1533,2A|3A|SL,25,11093
+11095,Ahimsa Express,Express,CR,ADI,PUNE,16:00,04:45,765,635,2A|3A|SL,17,11096
+11096,Ahimsa Express,Express,CR,PUNE,ADI,19:50,07:45,715,635,2A|3A|SL,16,11095
+11097,Pune - Ernakulam Poorna Exp,Express,CR,PUNE,ERS,23:10,04:20,1750,1435,2A|3A|SL,32,11098
+11098,Ernakulam - Pune Poorna Exp,Express,CR,ERS,PUNE,23:30,05:05,1775,1435,2A|3A|SL,32,11097
+11105,Pratham Swatantrata Sangram Express,Express,CR,KOAA,JHS,07:25,08:50,1525,1326,3A|SL,18,11106
+11106,Pratham Swatantrata Sangram Express,Express,CR,JHS,KOAA,20:40,21:45,1505,1326,3A|SL,18,11105
+11107,Gwalior-Varanasi Bundelkhand Express,Express,NCR,GWL,BSB,20:40,10:50,850,624,1A|2A|3A|SL,30,11108
+11108,Varanasi-Gwalior Bundelkhand Express,Express,NCR,BSB,GWL,18:05,08:55,890,624,1A|2A|3A|SL,36,11107
+11109,Jhansi-Lucknow Intercity Express,Express,CR,JHS,LKO,06:10,12:00,350,292,CC,11,11110
+11110,Lucknow-Jhansi InterCity,Express,CR,LKO,JHS,16:30,22:35,365,292,CC,11,11109
+11123,Barauni-Gwalior Mail,Mail,NCR,BJU,GWL,18:45,21:00,1575,1055,2A|3A|SL,47,11124
+11124,Gwalior Barauni Mail,Mail,NCR,GWL,BJU,11:45,13:05,1520,1055,2A|3A|SL,46,11123
+11125,Indore Gwalior Express,Express,CR,INDB,GWL,20:15,08:25,730,562,2A|3A|SL,10,11126
+11126,Gwalior Indore Express,Express,CR,GWL,INDB,19:30,07:50,740,562,2A|3A|SL,10,11125
+11266,Ambikapur - Jabalpur Exp,Express,WCR,ABKP,JBP,06:05,14:55,530,433,SL,11,11265
+11271,Itarsi - Bhopal Vindhyachal Exp,Express,WCR,ET,BPL,16:20,09:25,1025,738,SL,45,11272
+11272,Bhopal - Itarsi Vindhyachal Exp,Express,WCR,BPL,ET,18:00,12:20,1100,738,SL,45,11271
+11401,Nandigram Express,Express,CR,CSTM,NGP,16:35,16:15,1420,1139,2A|3A|SL,32,11402
+11402,Nandigram Express,Express,CR,NGP,CSTM,06:00,05:40,1420,1139,2A|3A|SL,32,11401
+11403,Nagpur - Kolhapur EXP,Express,CR,NGP,KOP,15:00,15:25,1465,1038,2A|3A|SL,21,11404
+11404,Kolhapur - Nagpur EXP,Express,CR,KOP,NGP,12:50,12:35,1425,1038,2A|3A|SL,21,11403
+11447,Jabalpur - KOL Howrah Shaktipunj Exp,Express,WCR,JBP,HWH,00:30,04:15,16065,1152,2A|3A|SL,40,11448
+11448,Howrah - Jabalpur Shaktipunj Exp,Express,WCR,HWH,JBP,14:30,15:45,14475,1152,2A|3A|SL,41,11447
+11451,Jabalpur - Rewa Intercity Exp,Express,CR,JBP,REWA,17:05,21:40,275,238,CC,9,11452
+11452,Rewa - Jabalpur Intercity Exp,Express,CR,REWA,JBP,06:00,10:25,265,238,CC,9,11451
+11453,Prerna Express,Express,CR,ADI,NGP,16:25,12:15,1190,959,3A|SL,14,11454
+11454,Prerna Express,Express,CR,NGP,ADI,09:35,03:40,1085,959,3A|SL,14,11453
+11463,Somnath-Jabalpur Express,Express,CR,SMNH,JBP,09:40,15:10,1770,1415,2A|3A|SL,48,11464
+11464,Jabalpur-Somnath Express,Express,CR,JBP,SMNH,12:00,17:55,1795,1415,2A|3A|SL,48,11463
+11465,Somnath - Jabalpur Exp (via Bina),Express,WCR,SMNH,JBP,09:40,18:30,1970,1570,2A|3A|SL,47,11466
+11466,Jabalpur - Somnath Exp (via Bina),Express,CR,JBP,SMNH,10:00,17:55,1915,1570,2A|3A|SL,48,11465
+11471,Indore-Jabalpur Overnight Express,Express,CR,INDB,JBP,17:45,05:40,715,555,1A|2A|3A|SL,16,11472
+11472,Jabalpur-Indore Express,Express,CR,JBP,INDB,23:00,10:30,690,555,1A|2A|3A|SL,16,11471
+11701,Jabalpur - Indore Intercity Exp,Express,WCR,JBP,INDB,05:00,20:40,940,761,CC,10,11702
+11702,Indore - Jabalpur Intercity Exp,Express,WCR,INDB,JBP,04:15,20:25,970,761,CC,10,11701
+12001,Bhopal-New Delhi Shatabdi Express,Shatabdi,NR,BPL,NDLS,14:40,22:30,470,701,CC|EC,7,12002
+12002,New Delhi-Bhopal Shatabdi Express,Shatabdi,NR,NDLS,BPL,06:15,14:05,470,701,CC|EC,7,12001
+12003,Lucknow-NewDelhi Swarn Shatabdi Express,Shatabdi,NR,LKO,NDLS,15:35,22:05,390,511,CC|EC,6,12004
+12004,NewDelh-Lucknowi Swarn Shatabdi Express,Superfast,NR,NDLS,LKO,06:15,12:30,375,511,CC,6,12003
+12005,New Delhi-Kalka Shatabdi,Shatabdi,NR,NDLS,KLK,17:15,21:20,245,303,CC|EC,5,12006
+12006,Kalka-New Delhi Shatabdi,Shatabdi,NR,KLK,NDLS,06:15,10:25,250,303,CC|EC,5,12005
+12007,Chennai Cent - Mysore Shatabdi Express,Shatabdi,SR,MAS,MYS,06:00,13:00,420,500,CC|EC,3,12008
+12008,Mysore - Chennai Cent Shatabdi Express,Shatabdi,SR,MYS,MAS,14:15,21:25,430,500,CC|EC,3,12007
+12009,Mumbai-Ahmedabad Shatabdi Express,Shatabdi,WR,BCT,ADI,06:25,13:10,405,491,CC|EC,9,12010
+12010,Ahmedabad-Mumbai Central Shatabdi,Shatabdi,WR,ADI,BCT,14:30,21:35,425,491,CC|EC,9,12009
+12011,Kalka Shatabdi Express,Shatabdi,NR,NDLS,KLK,07:40,11:45,245,303,CC|EC,6,12012
+12012,Kalka-New Delhi Shatabdi,Shatabdi,NR,KLK,NDLS,17:45,21:55,250,303,CC|EC,6,12011
+12013,New Delhi-Amritsar Shatabdi Express,Shatabdi,NR,NDLS,ASR,16:30,22:35,365,448,CC|EC,7,12014
+12014,Amritsar-NewDelhi Shatabdi,Shatabdi,NR,ASR,NDLS,05:00,11:15,375,448,CC|EC,7,12013
+12015,New Delhi-Ajmer Shatabdi,Shatabdi,NR,NDLS,AII,06:05,12:40,395,443,CC|EC,7,12016
+12016,Ajmer-New Delhi Shatabdi,Shatabdi,NR,AII,NDLS,15:50,22:40,410,443,CC|EC,7,12015
+12017,New Delhi-Dehradun Shatabdi,Shatabdi,NR,NDLS,DDN,06:50,12:40,350,315,CC|EC,8,12018
+12018,Dehradun-New Delhi Shatabdi,Shatabdi,NR,DDN,NDLS,17:00,22:45,345,315,CC|EC,8,12017
+12019,Howrah-Ranchi Shatabdi Express,Shatabdi,ER,HWH,RNC,06:05,13:10,425,423,CC|EC,9,12020
+12020,Ranchi-Howrah Shatabdi Express,Shatabdi,ER,RNC,HWH,13:45,21:10,445,423,CC|EC,9,12019
+12021,Barbil Janshatabdi,Jan Shatabdi,ER,HWH,BBN,06:20,13:15,415,398,CC|2S,8,12022
+12022,Barbil Howrah Janshatabdi,Jan Shatabdi,ER,BBN,HWH,13:45,20:50,425,398,CC|2S,9,12021
+12023,Howrah-Patna Jan Shatabdi,Jan Shatabdi,ECR,HWH,PNBE,14:05,22:15,490,532,CC|2S,14,12024
+12024,Patna-Howrah Jan Shatabdi,Jan Shatabdi,ECR,PNBE,HWH,05:45,13:25,460,532,CC|2S,14,12023
+12025,Pune-Secunderabad Shatabdi Express,Shatabdi,CR,PUNE,SC,05:50,14:10,500,597,CC|EC,8,12026
+12026,Secunderabad-Pune Shatabdi,Shatabdi,CR,SC,PUNE,14:40,23:00,500,597,CC|EC,8,12025
+12027,Chennai Cent - Bangalore City Shatabdi Exp,Shatabdi,SWR,MAS,SBC,17:30,22:30,300,362,CC|EC,4,12028
+12028,Bangalore City - Chennai Cent Shatabdi Exp,Shatabdi,SWR,SBC,MAS,06:00,11:00,300,362,CC|EC,4,12027
+12029,New Delhi-Amritsar Swarna Shatabdi Express,Shatabdi,NR,NDLS,ASR,07:20,13:25,365,448,CC|EC,7,12030
+12030,Amritsar-New Delhi Swarna Shatabdi Express,Shatabdi,NR,ASR,NDLS,16:55,23:05,370,448,CC|EC,7,12031
+12031,Amritsar Shatabdi Express,Shatabdi,NR,NDLS,ASR,07:20,13:25,365,448,CC|EC,7,12032
+12032,Amritsar Shatabdi Express,Shatabdi,NR,ASR,NDLS,16:55,23:05,370,448,CC|EC,7,12031
+12033,Kanpur Shatabdi,Shatabdi,NCR,CNB,NDLS,06:00,11:10,310,437,CC|EC,3,12034
+12034,New Delhi-Kanpur Shatabdi Express,Shatabdi,NCR,NDLS,CNB,15:55,20:50,295,437,CC|EC,3,12033
+12037,New Delhi-Ludhiana Shatabdi Express,Shatabdi,NR,NDLS,LDH,07:00,12:20,320,329,CC|EC,4,12038
+12038,Ludhiana-New Delhi Shatabdi Express,Shatabdi,NR,LDH,NDLS,16:40,22:05,325,329,CC|EC,4,12037
+12051,Dadar - Madgaon Jan Shatabdi Exp,Jan Shatabdi,KR,DR,MAO,05:25,14:10,525,765,CC|2S,9,12052
+12052,Madgaon - Dadar Jan Shatabdi Exp,Jan Shatabdi,KR,MAO,DR,14:30,22:58,508,765,CC|2S,9,12051
+12053,Haridwar Amritsar Jan Shatabdi Express,Jan Shatabdi,NR,HW,ASR,14:35,21:55,440,407,CC|2S,10,12054
+12054,Amritsar Haridwar Jan Shatabdi,Jan Shatabdi,NR,ASR,HW,07:00,13:55,415,407,CC|2S,10,12053
+12055,Dehradun Jan Shatabdi Express,Jan Shatabdi,NR,NDLS,DDN,15:15,21:10,355,303,CC|2S,9,12056
+12056,Dehradun Jan Shatabdi Express,Jan Shatabdi,NR,DDN,NDLS,05:10,11:15,365,305,CC|2S,10,12055
+12057,New Delhi-Una Janshatabdi,Jan Shatabdi,NR,NDLS,UHL,14:35,22:10,455,410,CC|2S,13,12058
+12058,Una-New Delhi Janshatabdi,Jan Shatabdi,NR,UHL,NDLS,05:00,12:00,420,410,CC|2S,13,12057
+12059,Kota-Hazrat Nizamuddin Jan Shatabdi,Jan Shatabdi,WCR,KOTA,NZM,05:55,12:30,395,458,CC|2S,10,12060
+12060,Hazarat Nizamuddin-Kota Jan Shatabdi,Jan Shatabdi,WCR,NZM,KOTA,13:20,19:40,380,458,CC|2S,10,12059
+12061,HabibGanj Bhopal-Jabalpur Jan Shatabdi,Jan Shatabdi,WCR,HBJ,JBP,17:40,22:55,315,331,CC|2S,10,12062
+12062,Jabalpur-HabibGanj Bhopal Jan Shatabdi,Jan Shatabdi,WCR,JBP,HBJ,06:00,11:35,335,331,CC|2S,10,12061
+12067,Guwahati Jorhat Jan Shatabdi,Jan Shatabdi,NFR,GHY,JTTN,06:30,13:10,400,376,CC|2S,10,12068
+12068,Jorhat Guwahati Jan Shatabdi,Jan Shatabdi,NFR,JTTN,GHY,13:55,20:45,410,376,CC|2S,10,12067
+12069,Raigarh-Gondia Jan Shatabdi,Jan Shatabdi,SECR,RIG,G,06:25,13:25,420,414,CC|2S,14,12070
+12070,Gondia-Raigarh Jan Shatabdi,Jan Shatabdi,SECR,G,RIG,15:00,22:00,420,414,CC|2S,14,12069
+12071,Mumbai Aurangabad Jan Shatabdi,Jan Shatabdi,SCR,CSTM,AWB,13:50,20:35,405,374,CC|2S,7,12072
+12072,Aurangabad Mumbai Jan Shatabdi,Jan Shatabdi,SCR,AWB,CSTM,06:00,12:45,405,374,CC|2S,7,12071
+12073,Howrah-Bhubaneswar Jan Shatabdi Express,Jan Shatabdi,ECoR,HWH,BBS,13:35,20:20,405,439,CC|2S,9,12074
+12074,Bhubaneswar-Howrah Jan Shatabdi Express,Jan Shatabdi,ECoR,BBS,HWH,06:20,12:50,390,439,CC|2S,9,12073
+12075,Kozhikode-Trivandrum Jan Shatabdi Express,Jan Shatabdi,SR,CLT,TVC,13:40,20:55,435,399,CC|2S,10,12076
+12076,Trivandrum-Kozhikode Jan Shatabdi Express,Jan Shatabdi,SR,TVC,CLT,06:00,13:00,420,399,CC|2S,10,12075
+12077,Chennai Vijayawada Jan Shatabdi Express,Jan Shatabdi,SR,MAS,BZA,07:00,13:35,395,431,CC|2S,9,12078
+12078,Vijayawada Chennai Jan Shatabdi,Jan Shatabdi,SR,BZA,MAS,14:35,21:10,395,431,CC|2S,9,12077
+12079,Bangalore City-Hubli Jan Shatabdi,Jan Shatabdi,SWR,SBC,UBL,06:00,13:25,445,469,CC|2S,11,12080
+12080,Hubli Bangalore Janshatabdi,Jan Shatabdi,SWR,UBL,SBC,14:00,21:25,445,469,CC|2S,11,12079
+12081,Kozhikode - Trivandrum Jan Shatabdi,Jan Shatabdi,SR,CLT,TVC,06:15,13:45,450,413,CC|2S,10,12082
+12082,Trivandrum-Kozhikode Jan Shatabdi,Jan Shatabdi,SR,TVC,CLT,14:20,22:05,465,413,CC|2S,10,"Trivandrum Jan Shatabdi"" href=/train/13981/1242/59> 12081"
+12083,Mayiladuturai-Coimbatore Jan Shatabdi,Jan Shatabdi,SR,MV,CBE,14:45,21:20,395,362,CC|2S,9,12084
+12084,Coimbatore-Mayiladuturai Jan Shatabdi,Jan Shatabdi,SR,CBE,MV,07:00,13:40,400,362,CC|2S,9,12083
+12101,Mumbai LTT - Howrah Janeswari Super Deluxe Exp,Superfast,CR,LTT,HWH,20:35,03:35,1860,1952,1A|2A|3A|SL,15,12102
+12102,Howrah - Mumbai LTT Janeswari Super Deluxe Exp,Superfast,CR,HWH,LTT,22:55,05:45,1850,1952,1A|2A|3A|SL,16,12101
+12103,Pune Lucknow Jn SuperFast Express,Superfast,CR,PUNE,LJN,16:15,17:10,1495,1478,2A|3A|SL,13,12104
+12104,Lucknow Jn - Pune Express,Superfast,CR,LJN,PUNE,06:30,08:05,1535,1477,2A|3A|SL,13,12103
+12105,Vidarbha Express,Superfast,CR,CSTM,G,19:10,11:10,960,968,1A|2A|3A|SL,24,12106
+12106,Vidarbha Express,Superfast,CR,G,CSTM,14:55,06:50,955,968,1A|2A|3A|SL,25,12105
+12107,Mumbai LTT Lucknow Superfast Express,Superfast,CR,LTT,LJN,16:25,15:10,1365,1410,2A|3A|SL,10,12108
+12108,Lucknow Mumbai LTT Superfast Express,Superfast,CR,LJN,LTT,22:45,22:45,1440,1409,2A|3A|SL,10,12107
+12109,Panchavati Express,Superfast,CR,CSTM,MMR,18:15,22:50,275,261,CC,10,12110
+12110,Panchavati Express,Superfast,CR,MMR,CSTM,06:10,10:45,275,261,CC,10,12109
+12111,Mumbai CST-Amaravati SF Express,Superfast,CR,CSTM,AMI,20:05,08:15,730,673,1A|2A|3A|SL,14,12112
+12112,Amaravati-Mumbai CST Express,Superfast,CR,AMI,CSTM,19:05,06:35,690,673,1A|2A|3A|SL,14,12111
+12113,Pune-Nagpur Garib Rath Express,Garib Rath,CR,PUNE,NGP,17:40,09:25,945,890,3A,9,12114
+12114,Nagpur-Pune Garib Rath,Garib Rath,CR,NGP,PUNE,18:35,09:45,910,890,3A,9,12113
+12115,Siddheshwar Express,Superfast,CR,CSTM,SUR,22:42,06:57,495,455,1A|2A|3A|SL,14,12116
+12116,Siddheshwar Express,Superfast,CR,SUR,CSTM,22:45,07:00,495,455,1A|2A|3A|SL,15,12115
+12117,Mumbai Ltt- Manmad Express,Superfast,CR,LTT,MMR,15:00,19:25,265,245,CC,10,12118
+12118,Manmad-Mumbai LTT Express,Superfast,CR,MMR,LTT,08:35,13:00,265,245,CC,10,12117
+12119,Amaravati Nagpur Express,Superfast,CR,AMI,NGP,05:15,08:35,200,184,CC,7,12120
+12120,Nagpur Amravati Express,Superfast,CR,NGP,AMI,18:25,21:45,200,184,CC,7,12119
+12121,Jabalpur - Delhi H Nizamuddin S Kranti Exp,Sampark Kranti,WCR,JBP,NZM,19:10,09:05,835,909,1A|2A|3A|SL,7,12122
+12122,Delhi H Nizamuddin - Jabalpur S Kranti Exp,Sampark Kranti,WCR,NZM,JBP,17:25,08:00,875,909,1A|2A|3A|SL,7,12121
+12123,Deccan Queen SF Express,Superfast,CR,CSTM,PUNE,17:10,20:25,195,192,CC,5,12124
+12124,Deccan Queen SF Express,Superfast,CR,PUNE,CSTM,07:15,10:25,190,192,CC,4,12123
+12125,Pragati Superfast Express,Superfast,CR,CSTM,PUNE,16:25,19:53,208,192,CC,6,12124
+12126,Pragati Superfast Express,Superfast,CR,PUNE,CSTM,07:50,11:10,200,192,CC,4,12127
+12127,MumbaiCST-Pune SF InterCity,Superfast,CR,CSTM,PUNE,06:45,09:52,187,192,CC,5,12128
+12128,Pune-MumbaiCST Intercity Express,Superfast,CR,PUNE,CSTM,17:55,21:00,185,192,CC,5,12127
+12129,Pune - Howrah Azad Hind SF Exp,Superfast,CR,PUNE,HWH,18:25,03:50,2005,2020,2A|3A|SL,28,12130
+12130,Howrah - Pune Azad Hind SF Exp,Superfast,CR,HWH,PUNE,21:55,06:50,1975,2020,2A|3A|SL,28,12129
+12131,Mumbai Dadar-Sainagar Shirdi Express,Superfast,CR,DR,SNSI,21:45,03:51,366,336,2A|3A|SL,8,12132
+12132,Sainagar Shirdi-Mumbai Dadar Express,Superfast,CR,SNSI,DR,10:00,16:05,365,336,2A|3A|SL,8,12131
+12133,Mumbai CST - Mangalore Exp,Superfast,CR,CSTM,MAJN,22:15,12:25,850,1195,2A|3A|SL,12,12134
+12134,Mangalore - Mumbai CST Exp,Superfast,CR,MAJN,CSTM,14:00,04:25,865,1195,2A|3A|SL,12,12133
+12135,Pune -Nagpur SuperFast Express,Superfast,CR,PUNE,NGP,17:40,09:25,945,890,2A|3A|SL,18,12136
+12136,Nagpur Pune Express,Superfast,CR,NGP,PUNE,18:35,09:45,910,890,2A|3A|SL,18,12135
+12137,Punjab Mail,Superfast,CR,CSTM,FZR,19:40,05:40,2040,1930,1A|2A|3A|SL,56,12138
+12138,Punjab Mail,Superfast,CR,FZR,CSTM,21:40,07:35,2035,1930,1A|2A|3A|SL,54,12137
+12139,Sevagram Express,Superfast,CR,CSTM,NGP,15:00,06:10,910,838,2A|3A|SL,33,12140
+12140,Sevagram Express,Superfast,CR,NGP,CSTM,21:00,12:00,900,838,2A|3A|SL,33,12139
+12143,LTT Sultanpur Superfast Weekly Express,Superfast,CR,LTT,SLN,16:40,19:45,1625,1550,2A|3A|SL,13,12144
+12144,Sultanpur-LTT Weekly SF Express,Superfast,CR,SLN,LTT,23:55,04:10,1695,1550,2A|3A|SL,13,12143
+12147,Kolhapur-Nizamuddin Express,Superfast,CR,KOP,NZM,09:05,17:05,1920,1915,2A|3A|SL,22,12148
+12148,Nizamuddin-Kolhapur Express,Superfast,CR,NZM,KOP,06:00,16:20,2060,1915,2A|3A|SL,22,12147
+12151,Mumbai LTT - Howrah Samarsata SF Exp,Superfast,CR,LTT,HWH,20:35,08:25,2150,2082,1A|2A|3A|SL,24,12152
+12152,Howrah - Mumbai LTT Samarsata SF Exp,Superfast,CR,HWH,LTT,21:15,07:30,2055,2082,1A|2A|3A|SL,23,12151
+12153,Lokmanya Tilak (T) Habibganj Express,Superfast,CR,LTT,HBJ,16:25,05:30,785,822,2A|3A|SL,10,12154
+12154,Habibganj LTT Superfast Express,Superfast,CR,HBJ,LTT,18:20,07:30,790,822,2A|3A|SL,10,12153
+12155,Shaan-e-Bhopal Express,Superfast,WCR,HBJ,NZM,21:05,08:05,660,700,1A|2A|3A|SL,10,12156
+12156,Shaan E Bhopal SF Express,Superfast,WCR,NZM,HBJ,21:00,07:05,605,700,1A|2A|3A|SL,10,12155
+12157,Hutatma Express,Superfast,CR,PUNE,SUR,18:00,22:00,240,264,CC,4,12158
+12158,Hutatma Express,Superfast,CR,SUR,PUNE,06:30,10:30,240,264,CC,4,12157
+12159,Amravati -Jabalpur Express,Superfast,CR,AMI,JBP,17:45,06:45,780,726,2A|3A|SL,20,12160
+12160,Jabalpur - Amravati Express,Superfast,CR,JBP,AMI,20:50,09:50,780,726,2A|3A|SL,20,12159
+12161,Lashkar Superfast Express,Superfast,CR,LTT,AGC,16:25,12:55,1230,1334,2A|3A|SL,21,12162
+12162,Lashkar Express,Superfast,CR,AGC,LTT,23:50,22:45,1375,1334,2A|3A|SL,21,12161
+12165,Mumbai LTT - Varanasi Ratnagiri Exp,Superfast,CR,LTT,BSB,05:20,07:05,1545,1483,2A|3A|SL,14,12166
+12166,Varanasi - Mumbai LTT Ratnagiri SF Exp,Superfast,CR,BSB,LTT,20:25,21:40,1515,1483,2A|3A|SL,14,12165
+12167,Mumbai LTT - Varanasi SF Exp,Superfast,CR,LTT,BSB,00:43,03:50,1627,1480,3A|SL,13,12168
+12168,Varanasi - Mumbai LTT SF Exp,Superfast,CR,BSB,LTT,10:25,12:20,1555,1480,3A|SL,13,12167
+12169,Pune Solapur InterCity Express,Superfast,CR,PUNE,SUR,09:30,13:30,240,264,CC,5,12170
+12170,Solapur Pune Intercity Express,Superfast,CR,SUR,PUNE,14:00,18:05,245,264,CC,5,12169
+12171,Mumbai LTT -Haridwar AC Express,Superfast,CR,LTT,HW,07:55,13:15,1760,1772,1A|2A|3A,11,12172
+12172,Haridwar-Mumbai LTT AC Express,Superfast,CR,HW,LTT,18:40,23:45,1745,1772,1A|2A|3A,11,12171
+12173,Udyog Nagri Express,Superfast,CR,LTT,PBH,16:25,18:55,1590,1583,2A|3A|SL,13,12174
+12174,Udyog Nagri Express,Superfast,CR,PBH,LTT,01:50,06:15,1705,1583,2A|3A|SL,13,12173
+12175,Chambal Express,Superfast,CR,HWH,GWL,17:45,17:20,1415,1303,2A|3A|SL,32,12176
+12176,Chambal Express,Superfast,CR,GWL,HWH,07:05,06:45,1420,1303,2A|3A|SL,31,12175
+12177,Chambal Express,Superfast,NCR,HWH,MTJ,17:45,20:30,1605,1475,2A|3A|SL,35,12178
+12178,Chambal Express,Superfast,NCR,MTJ,HWH,04:20,06:45,1585,1475,2A|3A|SL,34,12177
+12179,Lucknow Agra Intercity SF Express,Superfast,NCR,LJN,AGC,15:45,21:35,350,330,CC,10,12180
+12180,Agra Lucknow Intercity SF Express,Superfast,NCR,AGC,LJN,06:10,11:45,335,330,CC,10,12179
+12183,Bhopal Partapgarh Express,Superfast,CR,BPL,PBH,19:20,09:00,820,758,2A|3A|SL,11,12184
+12184,Pratapgarh-Bhopal Express,Superfast,CR,PBH,BPL,19:10,08:50,820,756,2A|3A|SL,11,12183
+12185,Bhopal Habibganj - Rewa Rewanchal Exp,Superfast,CR,HBJ,REWA,22:00,08:00,600,554,1A|2A|3A|SL,15,12186
+12186,Rewa - Bhopal Habibganj Rewanchal Exp,Superfast,CR,REWA,HBJ,20:05,06:05,600,554,1A|2A|3A|SL,15,12185
+12187,Jabalpur-CST Garib Rath Express,Garib Rath,WCR,JBP,CSTM,19:30,12:15,1005,997,3A,14,12188
+12188,Mumbai-Jabalpur Garib Rath Express,Garib Rath,WCR,CSTM,JBP,13:30,06:00,990,997,3A,14,12187
+12189,Jabalpur - Delhi H Nizamuddin Mahakoshal SF Exp,Superfast,CR,JBP,NZM,18:10,11:35,1045,961,2A|3A|SL,29,12190
+12190,Delhi H Nizamuddin - Jabalpur Mahakoshal SF Exp,Superfast,CR,NZM,JBP,16:10,09:35,1045,961,2A|3A|SL,29,12189
+12191,Shridham Express,Superfast,WCR,NDLS,JBP,14:05,07:15,1030,1038,1A|2A|3A|SL,19,12192
+12192,Jabalpur-New Delhi Superfast Express,Superfast,WCR,JBP,NDLS,17:45,11:40,1075,1038,1A|2A|3A|SL,19,12191
+12193,Bhopal Partapgarh Express,Superfast,CR,BPL,PBH,19:20,09:00,820,756,2A|3A|SL,11,12194
+12194,Partapgarh Bhopal SuperFast Express,Superfast,CR,PBH,BPL,19:10,08:50,820,756,2A|3A|SL,11,12193
+12195,Agra Fort - Ajmer Express,Superfast,CR,AF,AII,05:10,11:45,395,376,CC,13,12196
+12196,Ajmer-Agra Fort Express,Superfast,NCR,AII,AF,15:10,21:30,380,376,CC,13,12195
+12201,Mumbai LTT - Kochuveli Garib Rath Exp,Garib Rath,SR,LTT,KCVL,16:55,20:30,1655,1812,3A|CC,25,12202
+12202,Kochuveli - Mumbai LTT Garib Rath Exp,Garib Rath,SR,KCVL,LTT,08:50,11:45,1615,1812,3A|CC,25,12201
+12203,Saharsa Amritsar Garib Rath,Garib Rath,NR,SHC,ASR,15:00,20:45,1785,1723,3A|CC,21,12204
+12204,Amritsar Saharsa Garib Rath,Garib Rath,NR,ASR,SHC,04:40,10:10,1770,1723,3A|CC,22,12203
+12205,New Delhi-Dehradun AC Express,Superfast,NR,NDLS,DDN,23:55,05:40,345,303,1A|2A|3A,7,12206
+12206,Dehradun-NewDelhi AC Express,Superfast,NR,DDN,NDLS,23:25,05:05,340,303,1A|2A|3A,7,12205
+12207,Kathgodam-Jammu Garib Rath Express,Garib Rath,NR,KGM,JAT,18:30,09:40,910,769,3A,15,12208
+12208,Jammu-Kathgodam Garib Rath Express,Garib Rath,NR,JAT,KGM,23:45,14:35,890,769,3A,15,12207
+12209,Kanpur-Kathgodam Garib Rath,Garib Rath,NCR,CNB,KGM,06:15,15:05,530,459,3A,9,12210
+12210,Kathgodam-Kanpur Garib Rath,Garib Rath,NCR,KGM,CNB,18:30,04:30,600,459,3A,9,12209
+12211,Muzaffarpur-Anand Vihar(T) Garib Rath Exp.,Garib Rath,ECR,MFP,ANVT,15:15,12:25,1270,1060,3A,12,12212
+12212,Anand Vihar T.- Muzaffarpur Garib Rath,Garib Rath,NR,ANVT,MFP,21:10,17:55,1245,1060,3A,12,12211
+12213,Yeswantpur-Delhi Sarai Rohilla AC Duronto Express,Duronto,NR,YPR,DEE,23:40,06:50,1870,2314,1A|2A|3A,2,12214
+12214,Delhi Sarai Rohilla-Yesvantpur AC Duronto Express,Duronto,NR,DEE,YPR,23:00,07:30,1950,2314,1A|2A|3A,2,12213
+12215,Delhi Sarai Rohilla-Mumbai BandraT Garib Rath,Garib Rath,NR,DEE,BDTS,09:20,08:10,1370,1431,3A,17,12216
+12216,Mumbai Bandra T. - Delhi Sarai Rohilla Garib Rath,Garib Rath,NR,BDTS,DEE,12:55,12:20,1405,1431,3A,17,12215
+12217,Kochuveli - Chandigarh Kerala Sampark Kranti Exp,Sampark Kranti,NR,KCVL,CDG,09:10,15:45,3275,3415,1A|2A|3A|SL,20,12218
+12218,Chandigarh - Kochuveli Kerala Sampark Kranti Exp,Sampark Kranti,NR,CDG,KCVL,09:00,14:50,3230,3415,1A|2A|3A|SL,20,12217
+12219,Lokmanya Tilak (T)-Secunderabad AC Duronto Express,Duronto,SCR,LTT,SC,23:05,11:05,720,773,1A|2A|3A,2,12220
+12220,Secunderabad-Mumbai LTT AC Duronto Express,Duronto,SCR,SC,LTT,23:05,11:05,720,773,1A|2A|3A,2,12219
+12221,Pune - Howrah AC Duronto Exp,Duronto,SER,PUNE,HWH,15:15,19:40,1705,2020,1A|2A|3A,2,12222
+12222,Howrah - Pune AC Duronto Exp,Duronto,SER,HWH,PUNE,08:20,11:35,1635,2020,1A|2A|3A,2,12221
+12223,MUM LTT - Ernakulam AC Duronto,Duronto,CR,LTT,ERS,20:50,17:45,1255,1599,1A|2A|3A,2,12224
+12224,Ernakulam - MUM LTT AC Duronto,Duronto,SR,ERS,LTT,21:30,18:15,1245,1598,1A|2A|3A,2,12223
+12225,Kaifiat Express,Superfast,NER,AMH,DLI,16:30,07:00,870,803,1A|2A|3A|SL,15,12226
+12226,Kaifiat Express,Superfast,NER,DLI,AMH,19:20,09:30,850,803,1A|2A|3A|SL,15,12225
+12227,Mumbai Central- Indore Duronto Express,Duronto,WR,BCT,INDB,23:15,11:15,720,829,1A|2A|3A,2,12228
+12228,Indore- Mumbai Central Duronto Express,Duronto,WR,INDB,BCT,23:00,11:50,770,829,1A|2A|3A,2,12227
+12229,Lucknow Mail,Superfast,NR,LKO,NDLS,22:10,06:50,520,493,1A|2A|3A|SL,9,12230
+12230,Lucknow Mail,Superfast,NR,NDLS,LKO,22:10,06:45,515,493,1A|2A|3A|SL,9,12229
+12231,Lucknow-Chandigarh Express,Superfast,NR,LKO,CDG,22:30,09:55,685,667,2A|3A|SL,15,12232
+12232,Chandigarh - Lucknow Sadhbhavna SF Express,Superfast,NR,CDG,LKO,20:50,08:35,705,667,2A|3A|SL,15,12231
+12233,Lucknow New Delhi AC Express,Superfast,NR,LKO,NDLS,23:30,07:30,480,493,1A|2A|3A,5,12234
+12234,NewDelhi-Lucknow AC Express,Superfast,NR,NDLS,LKO,23:30,07:10,460,493,1A|2A|3A,5,12233
+12235,Dibrugarh - NEW Delhi Rajdhani Exp,Rajdhani,NR,DBRG,NDLS,19:15,13:45,2550,2453,1A|2A|3A,25,12236
+12236,NEW Delhi - Dibrugarh Rajdhani Exp,Rajdhani,NR,NDLS,DBRG,09:30,05:45,2655,2474,1A|2A|3A,24,12235
+12237,Varanasi-Jammu Tawi SF Express,Superfast,NR,BSB,JAT,12:50,11:25,1355,1261,3A|SL,10,12238
+12238,Jammu-Varanasi SF Express,Superfast,NR,JAT,BSB,14:00,13:00,1380,1261,3A|SL,10,12237
+12239,Mumbai Central Jaipur AC Duronto Express,Duronto,WR,BCT,JP,23:15,13:55,880,1159,1A|2A|3A,2,12240
+12240,Jaipur-Mumbai Central AC Duronto Express,Duronto,WR,JP,BCT,19:15,12:05,1010,1159,1A|2A|3A,2,12239
+12241,Chandigarh-Amritsar Duronto Express,Duronto,NR,CDG,ASR,19:00,23:15,255,267,CC,2,12242
+12242,Amritsar-Chandigarh Duronto Express,Duronto,NR,ASR,CDG,05:25,09:30,245,267,CC,2,12241
+12243,Chennai Central-Coimbatore AC Duronto Express,Duronto,SR,MAS,CBE,06:50,13:30,400,497,CC,2,12244
+12244,Coimbatore-Chennai Central AC Duronto Express,Duronto,SR,CBE,MAS,15:05,21:50,405,497,CC,2,12243
+12245,Howrah - Yesvantpur AC Duronto Exp,Duronto,SER,HWH,YPR,11:00,16:00,1740,1946,1A|2A|3A|SL,2,12246
+12246,Yesvantpur - Howrah AC Duronto Exp,Duronto,SER,YPR,HWH,11:15,16:00,1725,1946,1A|2A|3A|SL,2,12245
+12251,Wainganga express,Superfast,SWR,YPR,KRBA,23:40,04:30,1730,1614,2A|3A|SL,25,12252
+12252,Wainganga express,Superfast,SWR,KRBA,YPR,08:00,13:30,1770,1605,2A|3A|SL,26,12251
+12253,Yesvantpur - Bhagalpur Anga SF Exp,Superfast,SWR,YPR,BGP,13:30,08:30,4020,2473,2A|3A|SL,25,12254
+12254,Bhagalpur - Yesvantpur Anga SF Exp,Superfast,SWR,BGP,YPR,13:30,09:05,4055,2474,2A|3A|SL,27,12253
+12257,Yesvantapur Kochuveli Garib Rath Express,Garib Rath,SWR,YPR,KCVL,21:00,12:40,940,808,3A,14,12258
+12258,Kochuveli-Yesvantpur Garib Rath,Garib Rath,SWR,KCVL,YPR,16:35,09:05,990,808,3A,14,12257
+12259,Sealdah-New Delhi AC Duronto Express,Duronto,ER,SDAH,NDLS,18:40,11:00,980,1453,1A|2A|3A,2,12260
+12260,New Delhi-Sealdah AC Duronto Express,Duronto,ER,NDLS,SDAH,20:05,12:25,980,1453,1A|2A|3A,2,12259
+12261,Mumbai CST - Howrah AC Duronto Exp,Duronto,SER,CSTM,HWH,17:15,19:40,1585,1968,1A|2A|3A,2,12262
+12262,Howrah - Mumbai CST AC Duronto Exp,Duronto,SER,HWH,CSTM,08:20,10:30,1570,1968,1A|2A|3A,2,12261
+12263,Pune - Hazrat Nizamuddin AC Duronto Express,Duronto,NR,PUNE,NZM,11:10,07:15,1205,1520,1A|2A|3A,2,12264
+12264,Hazrat Nizamuddin-Pune AC Duronto Express,Duronto,NR,NZM,PUNE,11:00,07:00,1200,1508,1A|2A|3A,2,12263
+12265,Delhi Sarai Rohilla Jammu Tawi Duronto Express,Duronto,NR,DEE,JAT,22:15,07:10,535,578,1A|2A|3A|SL,2,12266
+12266,Jammu Tawi-Delhi Sarai Rohilla Duronto Express,Duronto,NR,JAT,DEE,19:25,04:00,515,578,1A|2A|3A|SL,2,12265
+12267,Mumbai Central-Ahmedabad AC Duronto Express,Duronto,WR,BCT,ADI,23:25,06:00,395,491,1A|2A|3A,2,12268
+12268,Ahmedabad-Mumbai Central AC Duronto Express,Duronto,WR,ADI,BCT,23:45,06:15,390,491,1A|2A|3A,2,12267
+12269,Chennai-Hazrat Nizamuddin Duronto Express,Duronto,SR,MAS,NZM,06:40,10:35,1675,2176,1A|2A|3A|SL,2,12270
+12270,Hazrat Nizamuddin-Chennai Duronto,Duronto,SR,NZM,MAS,15:50,20:10,1700,2176,1A|2A|3A|SL,2,12269
+12271,Lucknow-New Delhi AC Duronto Express,Duronto,NR,LKO,NDLS,23:30,07:30,480,493,1A|2A|3A,2,12272
+12272,New Delhi-Lucknow AC Duronto Express,Duronto,NR,NDLS,LKO,23:30,07:10,460,493,1A|2A|3A,2,12271
+12273,Howrah-New Delhi Duronto Express,Duronto,ER,HWH,NDLS,13:00,06:05,1025,1446,1A|2A|3A|SL,2,12274
+12274,New Delhi-Howrah Duronto Express,Duronto,ER,NDLS,HWH,13:00,06:00,1020,1441,1A|2A|3A|SL,2,12273
+12275,Allahabad-New Delhi Duronto Express,Duronto,NCR,ALD,NDLS,22:40,06:05,445,634,1A|2A|3A|SL,2,12276
+12276,New Delhi-Allahabad Duronto Express,Duronto,NCR,NDLS,ALD,23:00,06:20,440,634,1A|2A|3A|SL,2,12275
+12277,Howrah Puri Duronto Express,Duronto,ECoR,HWH,PURI,14:25,21:40,435,502,CC,2,12278
+12278,Puri-Howrah AC Duronto Express,Duronto,ECoR,PURI,HWH,06:30,13:45,435,502,CC,2,12277
+12279,Jhansi-H.Nizamuddin Taj Express,Superfast,NR,JHS,NZM,15:20,22:00,400,403,CC,11,12280
+12280,H.Nizamuddin-Jhansi Taj Express,Superfast,NR,NZM,JHS,07:10,13:40,390,403,CC,11,12279
+12281,Bhubaneswar-New Delhi Duronto,Duronto,ECoR,BBS,NDLS,08:10,06:05,1315,1724,1A|2A|3A|SL,2,12282
+12282,New Delhi-Bhubaneswar Duronto Express,Duronto,ECoR,NDLS,BBS,13:00,11:05,1325,1724,1A|2A|3A|SL,2,12281
+12283,Ernakulam - Delhi H Nizamuddin Duronto Exp,Duronto,NR,ERS,NZM,23:30,19:30,2640,2943,1A|2A|3A|SL,2,12284
+12284,Delhi H Nizamuddin - Ernakulam Duronto Exp,Duronto,NR,NZM,ERS,21:35,15:30,2515,2943,1A|2A|3A|SL,2,12283
+12285,Secunderabad- Hazrat Nizamuddin Duronto Express,Duronto,SCR,SC,NZM,13:30,10:35,1265,1660,1A|2A|3A|SL,2,12286
+12286,Hazrat Nizamuddin-Secunderabad Duronto Express,Duronto,SCR,NZM,SC,15:50,14:00,1330,1660,1A|2A|3A|SL,2,12285
+12287,Kochuveli-Dehradun Weekly Express,Superfast,SR,KCVL,DDN,08:50,18:00,3430,3459,3A|SL,23,12288
+12288,Dehradun - Kochuveli SF Express,Superfast,SR,DDN,KCVL,06:00,15:30,3450,3459,3A|SL,24,12287
+12289,Mumbai CSTM-Nagpur Duronto Express,Duronto,CR,CSTM,NGP,20:15,07:15,660,838,1A|2A|3A|SL,2,12290
+12290,Nagpur-Mumbai CST Duronto Express,Duronto,CR,NGP,CSTM,20:50,07:50,660,838,1A|2A|3A|SL,2,12289
+12291,Yesvantpur - Chennai SF Exp,Superfast,SWR,YPR,MAS,22:45,05:15,390,370,2A|3A|SL,7,12292
+12292,Chennai - Yesvantpur SF Exp,Superfast,SWR,MAS,YPR,23:30,06:10,400,370,2A|3A|SL,7,12291
+12301,Howrah-New Delhi Rajdhani Express,Rajdhani,ER,HWH,NDLS,16:55,09:55,1020,1447,1A|2A|3A,8,12302
+12302,New Delhi-Howrah Rajdhani Express,Rajdhani,ER,NDLS,HWH,17:00,09:55,1015,1447,1A|2A|3A,8,12301
+12303,Poorva Express,Superfast,ER,HWH,NDLS,08:10,07:20,1390,1530,1A|2A|3A|SL,24,12304
+12304,Poorva Express,Superfast,ER,NDLS,HWH,16:20,16:45,1465,1530,1A|2A|3A|SL,24,12303
+12305,Howrah-New Delhi Rajdhani Express,Rajdhani,ER,HWH,NDLS,14:05,09:55,1190,1530,1A|2A|3A,8,12304
+12306,New Delhi-Howrah Rajdhani Express,Rajdhani,ER,NDLS,HWH,17:00,12:40,1180,1542,1A|2A|3A,8,12305
+12307,Howrah-Jodhpur SF Express,Superfast,ER,HWH,JU,23:30,06:00,1830,1814,2A|3A|SL,26,12308
+12308,Jodhpur-Howrah SF Express,Superfast,ER,JU,HWH,20:30,04:00,1890,1814,2A|3A|SL,25,12307
+12309,Rajendra Nagar-New Delhi Rajdhani Express,Rajdhani,ECR,RJPB,NDLS,19:00,07:35,755,1001,1A|2A|3A,6,12310
+12310,New Delhi Rajendra Nagar Rajdhani Express,Rajdhani,ECR,NDLS,RJPB,17:10,06:00,770,1001,1A|2A|3A,6,12309
+12311,Kalka Mail,Superfast,ER,HWH,KLK,19:40,04:30,1970,1743,1A|2A|3A|SL,39,12312
+12312,Kalka Mail,Superfast,ER,KLK,HWH,23:55,07:30,1895,1743,1A|2A|3A|SL,40,12311
+12313,KOL Sealdah - NEW Delhi Rajdhani Exp,Rajdhani,ER,SDAH,NDLS,16:50,10:20,2490,1454,1A|2A|3A,8,12314
+12314,NEW Delhi - KOL Sealdah Rajdhani Exp,Rajdhani,ER,NDLS,SDAH,16:30,10:15,2505,1454,1A|2A|3A,8,12313
+12315,Ananya Express,Superfast,ER,SDAH,UDZ,13:10,03:00,2270,2141,2A|3A|SL,20,12316
+12316,Ananya Express,Superfast,ER,UDZ,SDAH,00:30,15:10,2320,2141,2A|3A|SL,20,12315
+12317,Kolkata Sealdah - Amritsar Akal Takht Exp,Superfast,ER,SDAH,ASR,07:40,16:50,4870,1898,2A|3A|SL,22,12318
+12318,Akal Takht Express,Superfast,ER,ASR,SDAH,06:05,15:10,4865,1898,2A|3A|SL,22,12317
+12319,Kolkata Chitpur - Agra Cantt SF Exp,Superfast,ER,KOAA,AGC,13:10,12:00,2810,1405,2A|3A|SL,11,12320
+12320,Agra Cantt - Kolkata Chitpur SF Exp,Superfast,ER,AGC,KOAA,17:00,17:20,2900,1405,2A|3A|SL,11,12319
+12321,Howrah - Mumbai CST Mail (via Allahabad),Superfast,ER,HWH,CSTM,22:00,11:25,5125,2177,1A|2A|3A|SL,48,12322
+12322,Mumbai CST - Howrah Mail (via Allahabad),Superfast,ER,CSTM,HWH,21:25,11:45,5180,2177,1A|2A|3A|SL,50,12321
+12323,Howrah-NewDelhi SF Express,Superfast,ER,HWH,NDLS,18:45,17:00,1335,1447,2A|3A|SL,9,12324
+12324,New Delhi-Howrah SF Express,Superfast,ER,NDLS,HWH,07:10,06:00,1370,1447,2A|3A|SL,9,12323
+12325,Kolkata Chitpur - Nangal DAM Gurumukhi Exp,Superfast,ER,KOAA,NLDM,07:40,15:40,3360,1803,2A|3A|SL,15,12326
+12326,Nangal DAM - Kolkata Chitpur Gurumukhi Exp,Superfast,ER,NLDM,KOAA,07:00,15:15,3375,1803,2A|3A|SL,15,12325
+12327,Upasana Express,Superfast,ER,HWH,DDN,13:10,18:00,1730,1587,2A|3A|SL,17,12328
+12328,Upasana Express,Superfast,ER,DDN,HWH,22:25,03:15,1730,1587,2A|3A|SL,17,12327
+12329,West Bengal Sampark Kranti,Sampark Kranti,ER,SDAH,DLI,13:10,11:55,1365,1448,2A|3A|SL,7,12330
+12330,West Bengal Sampark Kranti Express,Sampark Kranti,ER,DLI,SDAH,19:10,17:25,1335,1448,2A|3A|SL,8,12329
+12331,Himgiri Express,Superfast,ER,HWH,JAT,23:55,12:20,2185,2021,2A|3A|SL,31,12332
+12332,Himgiri Express,Superfast,ER,JAT,HWH,22:45,11:15,2190,2021,2A|3A|SL,32,12331
+12333,Vibhuti Express,Superfast,ER,HWH,ALY,20:00,12:15,975,882,2A|3A|SL,26,12334
+12334,Vibhuti Express,Superfast,ER,ALY,HWH,15:40,07:55,975,882,2A|3A|SL,28,12333
+12335,Bhagalpur - Mumbai LTT SF Exp,Superfast,ER,BGP,LTT,09:00,20:00,4980,1917,2A|3A|SL,39,12336
+12336,Mumbai LTT - Bhagalpur SF Exp,Superfast,ER,LTT,BGP,08:05,18:30,4945,1917,2A|3A|SL,38,12335
+12337,Shantiniketan Express,Superfast,ER,HWH,BHP,10:10,12:25,135,146,CC,4,12338
+12338,Shantiniketan Express,Superfast,ER,BHP,HWH,13:10,15:40,150,146,CC,4,12337
+12339,Coalfield Express,Superfast,ER,HWH,DHN,17:20,21:40,260,259,CC,13,12340
+12340,Coalfield Express,Superfast,ER,DHN,HWH,05:55,10:25,270,259,CC,13,12339
+12341,Agniveena Express,Superfast,ER,HWH,ASN,18:20,21:40,200,200,CC,7,12342
+12342,Agniveena Express,Superfast,ER,ASN,HWH,05:30,08:45,195,200,CC,7,12341
+12343,Darjeeling Mail,Superfast,ER,SDAH,NJP,22:05,08:00,595,567,1A|2A|3A|SL,6,
+12344,Darjeeling Mail,Superfast,ER,HDB,SDAH,16:45,06:00,795,624,1A|2A|3A|SL,12,12343-Slip
+12345,Howrah - Guwahati Saraighat SF Exp,Superfast,ER,HWH,GHY,15:50,09:30,1060,1020,1A|2A|3A|SL,11,12346
+12346,Guwahati - Howrah Saraighat SF Exp,Superfast,ER,GHY,HWH,12:45,05:10,985,1020,1A|2A|3A|SL,11,12345
+12347,Howrah-Rampur Hat SF Express,Superfast,ER,HWH,RPH,12:00,15:35,215,207,CC,9,12348
+12348,Rampur Hat-Howrah SF Express,Superfast,ER,RPH,HWH,16:35,20:15,220,207,CC,9,12347
+12349,Bhagalpur-NewDelhi Weekly SF Express,Superfast,ER,BGP,NDLS,17:30,13:00,1170,1220,3A|SL,9,12350
+12350,NewDelhi-Bhagalpur Weekly SF Express,Superfast,ER,NDLS,BGP,23:45,20:00,1215,1220,3A|SL,9,12349
+12351,Howrah- Danapur Express,Superfast,ER,HWH,DNR,20:35,06:40,605,541,1A|2A|3A|SL,25,12352
+12352,Danapur- Howrah Express,Superfast,ER,DNR,HWH,20:35,06:35,600,541,1A|2A|3A|SL,26,12351
+12355,Archana Express,Superfast,ER,RJPB,JAT,07:05,10:25,1640,1510,2A|3A|SL,18,12356
+12356,Archana Express,Superfast,ER,JAT,RJPB,20:15,23:05,1610,1510,2A|3A|SL,18,12355
+12357,Kolkata Chitpur - Amritsar Durgiana SF Exp,Superfast,ER,KOAA,ASR,12:30,16:50,4580,1812,2A|3A|SL,12,12358
+12358,Amritsar - Kolkata Chitpur Durgiana SF Exp,Superfast,ER,ASR,KOAA,06:05,11:05,4620,1812,2A|3A|SL,13,12357
+12359,Kolkata Chitpur - Patna Garib Rath Exp,Garib Rath,ER,KOAA,PNBE,20:00,05:30,2010,534,3A,13,12360
+12360,Kolkata Chitpur - Patna Garib Rath Exp,Garib Rath,ER,PNBE,KOAA,20:10,05:15,1985,534,3A,13,12359
+12361,Asansol - Mumbai CST SF Exp,Superfast,ER,ASN,CSTM,19:45,06:25,3520,2043,2A|3A|SL,18,12362
+12362,Mumbai CST - Asansol SF Exp,Superfast,ER,CSTM,ASN,11:05,23:15,3610,2043,2A|3A|SL,18,12361
+12363,Kolkata Chitpur - Haldibari SF Intercity Exp,Superfast,ER,KOAA,HDB,09:05,20:25,680,620,CC,9,12364
+12364,Haldibari - Kolkata Chitpur SF Intercity Exp,Superfast,ER,HDB,KOAA,08:35,19:40,665,620,CC,9,12363
+12365,Patna-Ranchi Jan Shatabdi Express,Jan Shatabdi,ER,PNBE,RNC,06:15,13:55,460,411,CC|2S,8,12366
+12366,Ranchi Patna Jan Shatabdi Express,Jan Shatabdi,ER,RNC,PNBE,14:25,22:15,470,411,CC|2S,8,12365
+12367,Vikramshila Express,Superfast,ER,BGP,ANVT,11:15,07:40,1225,1206,1A|2A|3A|SL,19,12368
+12368,Vikramshila Express,Superfast,ER,ANVT,BGP,14:40,12:25,1305,1206,1A|2A|3A|SL,19,12367
+12369,Kumbh Express,Superfast,ER,HWH,HW,13:10,16:15,1625,1536,2A|3A|SL,16,12370
+12370,Kumbh Express,Superfast,ER,HW,HWH,23:55,03:15,1640,1536,2A|3A|SL,16,12369
+12377,Padatik Express,Superfast,ER,SDAH,NJP,22:55,09:05,610,567,1A|2A|3A|SL,7,12378
+12378,Padatik Express,Superfast,ER,NJP,SDAH,21:00,06:45,585,567,1A|2A|3A|SL,7,12377
+12379,Sealdah - Amritsar Superfast Express,Superfast,ER,SDAH,ASR,13:10,19:40,1830,1894,2A|3A|SL,11,12380
+12380,Amritsar - Sealdah Superfast Express,Superfast,ER,ASR,SDAH,10:50,17:25,1835,1894,2A|3A|SL,12,12379
+12381,Poorva Express,Superfast,ER,HWH,NDLS,08:20,07:20,1380,1446,1A|2A|3A|SL,20,12382
+12382,Poorva Express,Superfast,ER,NDLS,HWH,16:20,16:45,1465,1446,1A|2A|3A|SL,19,12381
+12383,Howrah-Dhanbad AC DD Express,Superfast,ER,HWH,DHN,15:20,19:40,260,259,CC,7,12384
+12384,Dhanbad-Howrah AC DD Express,Superfast,ER,DHN,HWH,05:00,09:15,255,259,CC,7,12383
+12389,Gaya - Chennai Egmore SF Exp,Superfast,ER,GAYA,MS,05:45,20:45,2340,2346,2A|3A|SL,16,12390
+12390,Chennai Egmore - Gaya SF Exp,Superfast,ER,MS,GAYA,07:30,21:40,2290,2346,2A|3A|SL,14,12389
+12391,Shramjeevi Express,Superfast,ER,RGD,NDLS,08:10,05:10,1260,1103,1A|2A|3A|SL,32,12392
+12392,Shramjeevi Express,Superfast,ECR,NDLS,RGD,13:15,10:10,1255,1103,1A|2A|3A|SL,32,12391
+12393,Sampoorna Kranti Express,Superfast,ER,RJPB,NDLS,17:35,08:35,900,1001,1A|2A|3A|SL,3,12394
+12394,Sampoorna Kranti Express,Superfast,ER,NDLS,RJPB,17:30,07:35,845,1001,1A|2A|3A|SL,3,12393
+12395,RajendraNagar-Ajmer Ibadat Express,Superfast,ER,RJPB,AII,18:45,15:20,1235,1305,2A|3A|SL,13,12396
+12396,Ajmer-RajendraNagar Ziyarat Express,Superfast,ER,AII,RJPB,23:55,23:05,1390,1305,2A|3A|SL,13,12395
+12397,Mahabodhi Express,Superfast,ER,GAYA,NDLS,14:30,05:00,870,990,2A|3A|SL,15,12398
+12398,Mahabodhi Express,Superfast,ER,NDLS,GAYA,14:10,05:50,940,990,2A|3A|SL,15,12397
+12401,Magadh Express,Superfast,NR,IPR,NDLS,16:10,11:45,1175,1063,1A|2A|3A|SL,27,12402
+12402,Magadh Express,Superfast,NR,NDLS,IPR,20:10,13:55,1065,1063,1A|2A|3A|SL,27,12401
+12403,Allahabad Mathura SF Express,Superfast,NCR,ALD,MTJ,23:30,08:20,530,507,1A|2A|3A|SL,7,12404
+12404,Mathura Allahabad SF Express,Superfast,NCR,MTJ,ALD,20:20,05:00,520,507,1A|2A|3A|SL,6,12403
+12405,Gondwana Express,Superfast,NR,BSL,NZM,05:40,07:25,1545,1476,2A|3A|SL,27,12406
+12406,H.Nizamuddin-Bhusaval Gondwana Express,Superfast,NR,NZM,BSL,15:25,15:50,1465,1476,2A|3A|SL,26,12405
+12409,Gondwana Express,Superfast,NR,RIG,NZM,03:30,07:25,1675,1626,2A|3A|SL,32,12410
+12410,Gondwana Express,Superfast,NR,NZM,RIG,15:25,19:05,1660,1626,2A|3A|SL,32,12409
+12413,Pooja express,Superfast,NR,AII,JAT,14:15,08:05,1070,1017,1A|2A|3A|SL,21,12414
+12414,Pooja Express,Superfast,NR,JAT,AII,18:15,12:15,1080,1017,1A|2A|3A|SL,21,12413
+12415,Indore-Nizamuddin Express,Superfast,NR,INDB,NZM,16:20,05:40,800,817,1A|2A|3A|SL,20,12416
+12416,Nizamuddin-Indore Express,Superfast,NR,NZM,INDB,22:15,11:55,820,817,1A|2A|3A|SL,19,12415
+12417,Prayagraj Express,Superfast,NCR,ALD,NDLS,21:30,06:55,565,634,1A|2A|3A|SL,6,12418
+12418,Prayagraj Express,Superfast,NCR,NDLS,ALD,21:25,06:45,560,634,1A|2A|3A|SL,7,12417
+12419,Gomti Express,Superfast,NR,LKO,NDLS,05:25,14:00,515,511,1A|2A|CC,13,12420
+12420,Gomti Express,Superfast,NR,NDLS,LKO,12:40,21:25,525,511,1A|2A|CC,12,12419
+12423,Dibrugarh Town - NEW Delhi Rajdhani Exp,Rajdhani,NR,DBRT,NDLS,20:15,10:10,3715,2443,1A|2A|3A,18,12424
+12424,NEW Delhi - Dibrugarh Town Rajdhani Exp,Rajdhani,NR,NDLS,DBRT,14:00,05:00,3780,2443,1A|2A|3A,18,12423
+12425,Jammu Rajdhani Express,Rajdhani,NR,NDLS,JAT,20:40,05:40,540,577,1A|2A|3A,5,12426
+12426,Jammu Rajdhani Express,Rajdhani,NR,JAT,NDLS,19:45,05:00,555,577,1A|2A|3A,5,12425
+12427,Rewa - Delhi Anand Vihar SF Exp,Superfast,NR,REWA,ANVT,16:00,06:24,864,860,2A|3A|SL,11,12428
+12428,Delhi Anand Vihar - Rewa SF Exp,Superfast,NR,ANVT,REWA,00:20,14:15,2275,860,2A|3A|SL,12,12427
+12429,Bangalore - Hazrat Nizamuddin Rajdhani Express,Rajdhani,NR,SBC,NZM,20:20,05:50,2010,2365,1A|2A|3A,12,12430
+12430,Delhi H Nizamuddin-Bangalore Rajdhani Express,Rajdhani,NR,NZM,SBC,20:50,06:40,2030,2382,1A|2A|3A,12,12429
+12431,Trivandrum - Delhi H Nizamuddin Rajdhani Exp,Rajdhani,NR,TVC,NZM,19:15,12:40,2485,3149,1A|2A|3A,19,12432
+12432,Delhi H Nizamuddin - Trivandrum Rajdhani Exp,Rajdhani,NR,NZM,TVC,11:00,05:05,2525,3149,1A|2A|3A,19,12431
+12433,Chennai Central-Delhi H.Nizamuddin Rajdhani Expres,Rajdhani,NR,MAS,NZM,06:10,10:20,1690,2176,1A|2A|3A,9,12434
+12434,Delhi H.Nizamuddin-Chennai Central Rajdhani Expres,Rajdhani,NR,NZM,MAS,16:00,20:15,1695,2176,1A|2A|3A,9,12433
+12435,Dibrugarh Town - NEW Delhi Rajdhani Exp,Rajdhani,NR,DBRT,NDLS,19:00,13:45,4005,2463,1A|2A|3A,23,12436
+12436,NEW Delhi - Dibrugarh Town Rajdhani Exp,Rajdhani,NR,NDLS,DBRT,09:30,06:25,4135,2463,1A|2A|3A,23,12435
+12437,Secunderabad Rajdhani Express,Rajdhani,NR,SC,NZM,12:45,10:20,1295,1660,1A|2A|3A,6,12438
+12438,Secunderabad Rajdhani Express,Rajdhani,NR,NZM,SC,16:00,14:00,1320,1660,1A|2A|3A,6,12437
+12439,Ranchi - NEW Delhi Rajdhani Exp,Rajdhani,NR,RNC,NDLS,17:55,10:50,1015,1306,1A|2A|3A,8,12440
+12440,NEW Delhi - Ranchi Rajdhani Exp,Rajdhani,NR,NDLS,RNC,16:10,09:10,1020,1306,1A|2A|3A,8,12439
+12441,Bilaspur-New Delhi Rajdhani Express,Rajdhani,NR,BSP,NDLS,14:00,10:45,1245,1501,1A|2A|3A,9,12442
+12442,Bilaspur Rajdhani Express,Rajdhani,NR,NDLS,BSP,15:45,12:00,1215,1501,1A|2A|3A,9,12441
+12445,Uttar Sampark Kranti Express,Sampark Kranti,NR,NDLS,UHP,20:50,08:05,675,630,1A|2A|3A|SL,10,12446
+12446,Uttar Sampark Kranti Express,Sampark Kranti,NR,UHP,NDLS,19:05,06:10,665,630,1A|2A|3A|SL,10,12445
+12447,UP Sampark Kranti Express,Sampark Kranti,NR,MKP,NZM,17:05,05:30,745,695,1A|2A|3A|SL,12,12448
+12448,UP Sampark Kranti Express,Sampark Kranti,NR,NZM,MKP,20:15,08:35,740,695,1A|2A|3A|SL,12,12447
+12451,Shram Shakti Express,Superfast,NR,CNB,NDLS,23:45,06:20,395,440,1A|2A|3A|SL,2,12452
+12452,Shram Shakti Express,Superfast,NR,NDLS,CNB,23:40,05:55,375,440,1A|2A|3A|SL,2,12451
+12453,Ranchi-New Delhi Rajdhani Express,Rajdhani,NR,RNC,NDLS,17:10,10:50,1060,1341,1A|2A|3A,6,12454
+12454,New Delhi-Ranchi Rajdhani Express,Rajdhani,NR,NDLS,RNC,16:10,10:40,1110,1341,1A|2A|3A,6,12453
+12455,DelhiSaraiRohilla-ShriGanganagar AC SF Express,Superfast,NR,DEE,SGNR,22:50,07:40,530,486,1A|2A|3A,9,12456
+12456,ShriGanganagar-DelhiSaraiRohilla AC SF Express,Superfast,NR,SGNR,DEE,22:00,06:35,515,486,1A|2A|3A,9,12455
+12457,Delhi SaraiRohilla-Bikaner Express,Superfast,NWR,DEE,BKN,23:35,07:45,490,458,2A|3A|SL,11,12458
+12458,Bikaner-DelhiSaraiRohiilla Express,Superfast,NR,BKN,DEE,22:40,06:20,460,458,2A|3A|SL,12,12457
+12459,NewDelhi-Amritsar SF InterCity,Superfast,NR,NDLS,ASR,13:35,21:35,480,448,CC,15,12460
+12460,Amritsar-New Delhi Intercity Express,Superfast,NR,ASR,NDLS,06:25,14:20,475,448,CC,17,12459
+12461,Mandore Express,Superfast,NR,DLI,JU,20:55,07:30,635,620,1A|2A|3A|SL,18,12462
+12462,Mandore Express,Superfast,NR,JU,DLI,20:00,06:25,625,620,1A|2A|3A|SL,16,12461
+12463,Rajasthan Sampark Kranti Express,Sampark Kranti,NR,DEE,JU,22:25,08:15,590,616,1A|2A|3A|SL,9,12464
+12464,Rajasthan Sampark Kranti Express,Sampark Kranti,NR,JU,DEE,19:00,05:35,635,616,1A|2A|SL,9,12463
+12465,Indore-Jodhpur Ranthambhore Express,Superfast,NR,INDB,JU,06:20,22:00,940,911,3A|CC|SL,23,12466
+12466,Jodhpur-Indore Ranthambhore Intercity Express,Superfast,NR,JU,INDB,05:55,22:25,990,911,3A|CC|SL,23,12465
+12469,Kanpur Jammu Express,Superfast,NR,CNB,JAT,17:05,11:50,1125,1026,3A|SL,14,12470
+12470,Jammu Kanpur Express,Superfast,NR,JAT,CNB,20:15,14:50,1115,1026,3A|SL,14,12469
+12471,Mumbai Bandra (T.) - Jammu Tawi SF Swaraj Express,Superfast,NR,BDTS,JAT,07:55,14:45,1850,1950,2A|3A|SL,24,12472
+12472,Jammu Tawi - Mumbai Bandra (T.) SF Swaraj Express,Superfast,NR,JAT,BDTS,11:15,18:05,1850,1950,2A|3A|SL,24,12471
+12473,Sarvodaya SF Express,Superfast,NR,ADI,JAT,11:35,14:45,1630,1669,2A|3A|SL,21,12474
+12474,Sarvodaya SF Express,Superfast,NR,JAT,ADI,11:15,14:10,1615,1669,2A|3A|SL,21,12473
+12475,Hapa - Jammu Tawi Sarvodaya SF Express,Superfast,NR,HAPA,JAT,05:20,14:45,2005,1992,2A|3A|SL,26,12476
+12476,Jammu Tawi - Hapa Sarvodaya SF Express,Superfast,NR,JAT,HAPA,11:15,20:45,2010,1992,2A|3A|SL,26,12475
+12477,Jamnagar - Jammu Tawi SF Sindhu Express,Superfast,NR,JAM,JAT,05:05,14:45,2020,2000,2A|3A|SL,27,12478
+12478,Jammu Tawi - Jamnagar (Weekly) Sindhu SF Express,Superfast,NR,JAT,JAM,11:15,21:00,2025,2000,2A|3A|SL,27,12477
+12479,Jodhpur - Mumbai Bandra Suryanagari SF Exp,Superfast,NWR,JU,BDTS,18:45,11:45,1020,935,2A|3A|SL,16,12480
+12480,Mumbai Bandra - Jodhpur Suryanagari SF Exp,Superfast,NWR,BDTS,JU,13:30,06:30,1020,935,2A|3A|SL,16,12479
+12481,Delhi Sriganganagar InterCity,Superfast,NR,DLI,SGNR,13:10,20:40,450,424,CC,14,12482
+12482,Sriganganagar Delhi InterCity Express,Superfast,NR,SGNR,DLI,05:55,13:40,465,424,CC,14,12481
+12483,Kochuveli - Amritsar SF Exp,Superfast,NR,KCVL,ASR,09:10,19:40,4950,3597,2A|3A|SL,23,12484
+12484,Amritsar - Kochuveli SF Exp,Superfast,NR,ASR,KCVL,06:05,15:30,4885,3597,2A|3A|SL,23,12483
+12485,H S Nanded - Shri Ganganagar Exp,Superfast,NR,NED,SGNR,23:30,10:55,2125,1965,3A|SL,21,12486
+12486,Shri Ganganagar - H S Nanded Exp,Superfast,NR,SGNR,NED,14:30,23:45,1995,1965,3A|SL,21,12485
+12487,Seemanchal Express,Superfast,NR,JBN,ANVT,20:30,20:50,1460,1383,2A|3A|SL,15,12488
+12488,Seemanchal Express,Superfast,NR,ANVT,JBN,07:40,08:05,1465,1383,2A|3A|SL,15,12487
+12489,Bikaner-Dadar Express,Superfast,NWR,BKN,DDR,13:50,12:15,1345,1245,2A|3A|SL,14,12490
+12490,Dadar - Bikaner Express,Superfast,NWR,DDR,BKN,14:35,13:10,1355,1245,2A|3A|SL,14,12489
+12493,Bangalore-Hazrat Nizammudin Rajdhani Express,Rajdhani,NR,SBC,NZM,20:20,05:50,2010,2294,1A|2A|3A,8,12494
+12494,Hazrat Nizamuddin-Bangalore Rajdhani Express,Rajdhani,NR,NZM,SBC,20:50,06:40,2030,2383,1A|2A|3A,8,12493
+12495,Bikaner - Kolkata Chitpur Pratap Exp,Superfast,NR,BKN,BWN,05:30,11:32,3242,1873,2A|3A|SL,18,12496
+12496,Kolkata Chitpur - Bikaner Pratap Exp,Superfast,NR,KOAA,BKN,22:40,05:40,3300,1885,2A|3A|SL,19,12495
+12497,Shan-e-Punjab Express,Superfast,NR,NDLS,ASR,06:40,14:15,455,448,CC,11,12498
+12498,Shan-e-Punjab Express,Superfast,NR,ASR,NDLS,15:10,22:45,455,448,CC,12,12497
+12501,Guwahati - NEW Delhi Poorvottar Sampark Kranti Exp,Sampark Kranti,NFR,GHY,NDLS,06:00,13:00,1860,1974,1A|2A|3A|SL,8,12502
+12505,Guwahati - Delhi Anand Vihar North East Exp,Superfast,NFR,GHY,ANVT,09:45,19:15,3450,1866,2A|3A|SL,28,12506
+12506,Delhi Anand Vihar - Guwahati North East Exp,Superfast,NFR,ANVT,GHY,06:50,16:40,3470,1867,2A|3A|SL,27,12505
+12509,Bengaluru - Guwahati (Kaziranga) SF Express,Superfast,NER,BNC,GHY,23:45,05:50,6125,2992,2A|3A|SL,41,12510
+12510,Guwahati - Bengaluru (Kaziranga) SF Express,Superfast,NFR,GHY,SBC,06:30,11:50,6080,2992,2A|3A|SL,42,12509
+12511,Rapti Sagar Express,Superfast,NER,GKP,TVC,06:45,17:50,3545,3251,2A|3A|SL,60,12512
+12512,Rapti Sagar Expres,Superfast,NER,TVC,GKP,05:30,15:10,3460,3251,2A|3A|SL,59,12511
+12513,Secunderabad - Guwahati Exp,Superfast,NER,SC,GHY,07:30,05:50,4220,2551,2A|3A|SL,30,12514
+12514,Guwahati - Secunderabad Exp,Superfast,NFR,GHY,SC,06:30,04:20,4190,2551,2A|3A|SL,29,12513
+12515,Rivandrum - Guwahati Exp,Superfast,NER,TVC,GHY,12:50,05:50,6780,3552,2A|3A|SL,51,12516
+12516,Guwahati - Trivandrum Central EXP,Superfast,NFR,GHY,TVC,06:30,22:55,6745,3552,2A|3A|SL,50,12515
+12517,Kolkata - Guwahati Garib Rath Exp,Garib Rath,NER,KOAA,GHY,21:40,15:40,2520,1027,3A,13,12518
+12518,Guwahati - Kolkata Garib Rath Exp,Garib Rath,NER,GHY,KOAA,21:00,15:00,2520,1027,3A,14,12517
+12521,Raptisagar Express,Superfast,ECR,BJU,ERS,23:00,13:20,3740,3441,1A|2A|3A|SL,62,12522
+12522,Raptisagar Express,Superfast,ECR,ERS,BJU,10:10,22:50,3640,3441,2A|3A|SL,61,12521
+12523,New Jalpaiguri-New Delhi Superfast Express,Superfast,NFR,NJP,NDLS,08:15,12:10,1675,1500,2A|3A|SL,18,12524
+12524,New Delhi New Jalpaiguri SuperFast Express,Superfast,NFR,NDLS,NJP,15:10,18:35,1645,1497,2A|3A|SL,18,12523
+12525,Indrayani SF Express,Superfast,CR,CSTM,PUNE,05:40,09:08,208,192,CC,8,12526
+12526,Indrayani SF Express,Superfast,CR,PUNE,CSTM,18:35,21:55,200,192,CC,7,12525
+12527,Mumbai CST-Latur Superfast Express.,Superfast,CR,CSTM,LUR,21:00,06:30,570,530,1A|2A|3A|SL,11,12528
+12528,Latur-Mumbai CST Superfast Express,Superfast,CR,LUR,CSTM,22:30,08:00,570,530,1A|2A|3A|SL,11,12527
+12529,Bhopal-Jabalpur Intercity Express,Superfast,WCR,HBJ,JBP,05:30,10:50,320,331,CC,7,12530
+12530,Jabalpur-Bhopal Intercity,Superfast,WCR,JBP,HBJ,16:10,22:05,355,331,CC,7,12529
+12531,Gorakhpur Lucknow InterCity Express,Superfast,NER,GKP,LJN,06:05,11:00,295,279,CC,10,12532
+12532,Lucknow Gorakhpur Inter City Express,Superfast,NER,LJN,GKP,16:35,21:30,295,279,CC,10,12531
+12533,Pushpak Express,Superfast,NER,LJN,CSTM,19:45,20:05,1460,1426,1A|2A|3A|SL,16,12534
+12534,Pushpak Express,Superfast,NER,CSTM,LJN,08:20,08:40,1460,1426,1A|2A|3A|SL,15,12533
+12535,Lucknow-Raipur Garib Rath Express,Garib Rath,NER,LJN,R,14:40,07:15,995,917,3A,12,12536
+12536,Raipur-Lucknow Garib Rath,Garib Rath,NER,R,LJN,12:20,05:05,1005,917,3A,12,12535
+12537,Bapudham Express,Superfast,NER,MKI,MUV,21:40,06:00,500,465,3A|SL,12,12538
+12538,Bapudham Express,Superfast,NER,MUV,MKI,07:40,16:05,505,465,3A|SL,12,12537
+12539,Yesvantpur - Lucknow SF Exp,Superfast,SWR,YPR,LKO,10:50,08:50,2760,2554,2A|3A|SL,17,12540
+12540,Lucknow - Yesvantpur SF Exp,Superfast,SWR,LKO,YPR,20:00,16:40,2680,2532,2A|3A|SL,17,12539
+12541,Gorakhpur-Mumbai LTT SF Express,Superfast,NER,GKP,LTT,21:35,04:00,1825,1680,2A|3A|SL,13,12542
+12542,Mumbai LTT-Gorakhpur SF Express,Superfast,NER,LTT,GKP,11:10,17:45,1835,1680,2A|3A|SL,13,12541
+12543,Yesvantpur-Tirupati Tri Weekly Intercity,Superfast,SR,YPR,TPTY,07:20,13:30,370,345,CC,7,12544
+12544,Tirupati-Yesvantpur Tri Weekly SF Intercity,Superfast,SR,TPTY,YPR,14:50,20:55,365,345,CC,7,12543
+12547,Agra Fort Ahmedabad Tri Weekly Express,Superfast,NER,AF,ADI,22:25,13:35,910,867,2A|3A|SL,9,12548
+12548,Ahmedabad-Agra Fort Express,Superfast,NER,ADI,AF,16:55,08:10,915,867,2A|3A|SL,9,12547
+12549,Durg - Jammu Tawi SF Exp,Superfast,SECR,DURG,JAT,12:00,21:05,3425,1873,1A|2A|3A|SL,17,12550
+12550,Jammu Tawi - Durg SF Exp,Superfast,SECR,JAT,DURG,05:00,14:20,3440,1873,1A|2A|3A|SL,17,12549
+12553,Vaishali SF Express,Superfast,ECR,BJU,NDLS,09:30,06:30,1260,1185,1A|2A|3A|SL,21,12554
+12554,Vaishali SF Express,Superfast,ECR,NDLS,BJU,19:50,17:15,1285,1185,1A|2A|3A|SL,21,12553
+12555,Gorakhdham Express,Superfast,NER,GKP,HSR,16:35,10:00,1045,962,1A|2A|3A|SL,14,12556
+12556,Gorakhdham Express,Superfast,NER,HSR,GKP,16:35,10:00,1045,962,1A|2A|3A|SL,14,12555
+12557,Sapt Kranti SF Express,Superfast,ECR,MFP,ANVT,09:10,04:05,1135,1060,1A|2A|3A|SL,14,12558
+12558,Sapt Kranti SF Express,Superfast,ECR,ANVT,MFP,14:50,10:25,1175,1060,1A|2A|3A|SL,14,12557
+12559,Shiv Ganga Express,Superfast,NER,BSB,NDLS,19:15,07:40,745,758,1A|2A|3A|SL,5,12560
+12560,Shiv Ganga Express,Superfast,NER,NDLS,BSB,18:45,07:30,765,758,1A|2A|3A|SL,5,12559
+12561,Swatantrata Sainani Express,Superfast,ECR,DBG,NDLS,15:30,12:30,1260,1166,1A|2A|3A|SL,17,12562
+12562,Swatantrata Sainani Express,Superfast,ECR,NDLS,DBG,20:40,18:05,1285,1166,1A|2A|3A|SL,17,12561
+12563,Mumbai LTT - Faizabad SF Express,Superfast,NER,LTT,FD,14:30,17:40,1630,1600,1A|2A|3A|SL,15,12564
+12564,Faizabad-Mumbai LTT SF Express,Superfast,CR,FD,LTT,23:55,05:00,1745,1600,1A|2A|3A|SL,15,12563
+12565,Bihar Sampark Kranti Express,Sampark Kranti,ECR,DBG,NDLS,08:35,05:30,1255,1172,1A|2A|3A|SL,11,12566
+12566,Bihar Sampark Kranti Express,Sampark Kranti,ECR,NDLS,DBG,14:30,11:25,1255,1172,1A|2A|3A|SL,11,12565
+12569,Jaynagar-Delhi AnandViharT Garib Rath,Garib Rath,ECR,JYG,ANVT,12:10,08:25,1215,1252,3A,20,12570
+12570,Anand Vihar Terminus-Jaynagar Garib Rath Express,Garib Rath,ECR,ANVT,JYG,17:00,13:30,1230,1252,3A,20,12569
+12571,Howrah Prasanti Nilayam SF Express,Superfast,NFR,HWH,SSPN,15:50,22:25,1835,1763,2A|3A|SL,15,12572
+12572,Prashanti Nilayam Howrah SF Express,Superfast,NFR,SSPN,HWH,07:50,14:50,1860,1763,2A|3A|SL,15,12571
+12573,SainagarShirdi-Howrah Express,Superfast,SER,SNSI,HWH,13:55,19:30,1775,1792,2A|3A|SL,14,12574
+12574,Howrah-SainagarShirdi Express,Superfast,NFR,HWH,SNSI,14:35,20:30,1795,1791,2A|3A|SL,15,12573
+12575,Kharagpur Purulia Express,Superfast,NFR,KGP,PRR,07:25,11:25,240,208,CC,13,12576
+12576,Purulia Khargapur Intercity Express,Superfast,NFR,PRR,KGP,11:55,15:50,235,208,CC,13,12575
+12579,Digha- Puri SamudraKanya Express,Superfast,NFR,DGHA,PURI,17:15,03:20,605,549,2A|3A|SL,12,12580
+12580,Puri Digha Samudra Kanya Super Fast Express,Superfast,NFR,PURI,DGHA,23:35,09:30,595,549,2A|3A|SL,12,12579
+12581,Pune Bhubaneshwar Express,Superfast,ECoR,PUNE,BBS,11:15,17:35,1820,1689,2A|3A|SL,13,12582
+12582,Bhubaneshwar-Pune Express,Superfast,ECoR,BBS,PUNE,22:15,05:00,1845,1689,2A|3A|SL,13,12581
+12587,Amarnath Express,Superfast,NFR,GKP,JAT,14:05,12:20,1335,1248,2A|3A|SL,18,12588
+12588,Amarnath Express,Superfast,NFR,JAT,GKP,22:45,20:50,1325,1248,2A|3A|SL,18,12587
+12589,Gorakhpur-Secunderabad Express,Superfast,NFR,GKP,SC,06:45,15:10,1945,1827,2A|3A|SL,30,12590
+12590,Secunderabad - Gorakhpur Express,Superfast,NFR,SC,GKP,07:20,15:10,1910,1827,2A|3A|SL,30,12589
+12593,Lucknow-Bhopal Garib Rath,Garib Rath,NER,LJN,BPL,22:45,09:35,650,585,3A,6,12594
+12594,Bhopal-Lucknow Garib Rath Express,Garib Rath,NER,BPL,LJN,22:45,09:45,660,585,3A,6,12593
+12601,Chennai Mangalore Mail,Superfast,SR,MAS,MAQ,20:25,12:25,960,889,2A|3A|FC|SL,31,12602
+12602,Chennai Mail,Superfast,SR,MAQ,MAS,13:15,05:25,970,889,2A|3A|FC|SL,33,12601
+12603,Chennai - Hyderabad Express,Superfast,SR,MAS,HYB,16:45,05:45,780,715,1A|2A|3A|SL,22,12604
+12604,Hyderabad - Chennai Express,Superfast,SR,HYB,MAS,16:55,05:55,780,715,1A|2A|3A|SL,21,12603
+12605,Pallavan Superfast Express,Superfast,SR,MS,TPJ,15:45,21:20,335,336,CC,11,12606
+12606,Pallavan Superfast Express,Superfast,SR,TPJ,MS,06:30,12:05,335,336,CC,11,12605
+12607,Chennai Central - Bangalore Lalbagh Exp,Superfast,SWR,MAS,SBC,15:35,21:35,360,358,CC,13,12608
+12608,Bangalore - Chennai Central Lalbagh Exp,Superfast,SWR,SBC,MAS,06:30,12:15,345,362,CC,13,12607
+12609,Chennai Cent - Bangalore SF Intercity Exp,Superfast,SWR,MAS,SBC,13:35,20:05,390,362,CC,19,12610
+12610,Bangalore - Chennai Cent SF Intercity Exp,Superfast,SWR,SBC,MAS,08:00,14:30,390,362,CC,19,12609
+12611,Chennai Central-H.Nizamuddin Garib Rath Express,Garib Rath,SR,MAS,NZM,06:10,10:20,1690,2177,3A,11,12612
+12612,H Nizamuddin-Chennai Garib Rath Express,Garib Rath,SR,NZM,MAS,16:00,20:15,1695,2176,3A,11,12611
+12613,Tippu Express,Superfast,SWR,MYS,SBC,11:00,13:30,150,139,CC,3,12614
+12614,Tippu Express,Superfast,SWR,SBC,MYS,15:00,17:30,150,139,CC,3,12613
+12615,Grand Trunk (Gt) Express,Superfast,SR,MAS,NDLS,19:15,06:20,2105,2184,1A|2A|3A|SL,38,12616
+12616,GrandTrunk Express,Superfast,SR,NDLS,MAS,18:40,06:15,2135,2184,1A|2A|3A|SL,38,12615
+12617,Ernakulam - NEW Delhi H Nizamuddin Mangala Lakshadweep Exp,Superfast,SR,ERS,NZM,13:10,13:10,2880,3067,2A|3A|SL,46,12618
+12618,NEW Delhi H Nizamuddin - Ernakulam Mangala Lakshadweep Exp,Superfast,SR,NZM,ERS,09:20,10:00,2920,3067,2A|3A|SL,46,12617
+12619,Mumbai LTT - Mangalore Cent Matsyagandha Exp,Superfast,SR,LTT,MAQ,15:20,07:30,970,1185,2A|3A|SL,24,12620
+12620,Mangalore Cent - Mumbai LTT Matsyagandha Exp,Superfast,SR,MAQ,LTT,14:40,06:35,955,1186,2A|3A|SL,22,12619
+12621,Tamil Nadu Express,Superfast,SR,MAS,NDLS,22:00,07:00,1980,2184,1A|2A|3A|SL,12,12622
+12622,Tamil Nadu Express,Superfast,SR,NDLS,MAS,22:30,07:15,1965,2184,1A|2A|3A|SL,11,12621
+12623,Chennai Tiruvananthapuram SF Mail,Superfast,SR,MAS,TVC,19:45,11:25,940,909,1A|2A|3A|SL,20,12624
+12624,Tiruvananthapuram Chennai SF Mail,Superfast,SR,TVC,MAS,14:30,06:55,985,909,1A|2A|3A|SL,21,12623
+12625,Kerala Express,Superfast,SR,TVC,NDLS,11:15,13:40,3025,3036,2A|3A|SL,41,12626
+12626,Kerala Express,Superfast,SR,NDLS,TVC,11:30,14:35,3065,3036,2A|3A|SL,40,12625
+12627,Karnataka Express,Superfast,SWR,SBC,NDLS,19:20,10:35,2355,2406,1A|2A|3A|SL,34,12628
+12628,Karnataka Express,Superfast,SWR,NDLS,SBC,21:15,13:40,2425,2406,1A|2A|3A|SL,33,12627
+12629,Karnataka Sampark Kranti Express,Sampark Kranti,SWR,YPR,NZM,12:50,09:15,2665,2610,1A|2A|3A|SL,11,12630
+12630,Karnataka Sampark Kranti Express,Sampark Kranti,SWR,NZM,YPR,08:55,06:40,2745,2610,1A|2A|3A|SL,11,12629
+12631,Chennai Egmore - Tirunelveli Nellai SF Exp,Superfast,SR,MS,TEN,20:50,08:30,2140,653,2A|3A|FC|SL,15,12632
+12632,Tirunelveli - Chennai Egmore Nellai SF Exp,Superfast,SR,TEN,MS,18:50,06:40,2150,653,2A|3A|FC|SL,16,12631
+12633,Chennai Egmore - Kanniyakumari SF Exp,Superfast,SR,MS,CAPE,17:30,06:50,2240,742,1A|2A|3A|SL,17,12634
+12634,Kanniyakumari - Chennai Egmore SF Exp,Superfast,SR,CAPE,MS,17:20,06:50,2250,742,1A|2A|3A|SL,18,12633
+12635,Chennai Egmore - Madurai Vaigai SF Exp,Superfast,SR,MS,MDU,12:45,20:50,1925,497,CC,10,12636
+12636,Madurai - Chennai Egmore Vaigai SF Exp,Superfast,SR,MDU,MS,06:45,14:35,1910,497,CC,11,12635
+12637,Chennai Egmore - Madurai Pandiyan SF Exp,Superfast,SR,MS,MDU,21:15,06:15,1980,497,1A|2A|3A|FC|SL,11,12638
+12638,Madurai - Chennai Egmore Pandiyan SF Exp,Superfast,SR,MDU,MS,20:35,05:35,1980,497,1A|2A|3A|FC|SL,12,12637
+12639,Chennai Cent - Bangalore Brindavan Exp,Superfast,SR,MAS,SBC,07:15,13:20,365,362,CC,12,12640
+12640,Bangalore - Chennai Cent Brindavan Exp,Superfast,SR,SBC,MAS,14:30,20:25,355,362,CC,13,12639
+12641,Kanyakumari - D H Nizamuddin Thirukkural Exp,Superfast,SR,CAPE,NZM,19:15,18:00,4245,2922,2A|3A|SL,25,12642
+12642,D H Nizamuddin - Kanyakumari Thirukkural Exp,Superfast,SR,NZM,CAPE,06:00,08:45,4485,2919,2A|3A|SL,26,12641
+12643,Swarna Jayanthi Express,Superfast,SR,TVC,NZM,14:20,17:05,3045,3014,3A|SL,32,12644
+12644,Swarna Jayanti Express,Superfast,SR,NZM,TVC,06:00,11:10,3190,3014,3A|SL,31,12643
+12645,Millennium Expres,Superfast,SR,ERS,NZM,18:55,17:05,2770,2809,2A|3A|SL,29,12646
+12646,Millennium Express,Superfast,SR,NZM,ERS,06:00,06:00,2880,2809,2A|3A|SL,27,12645
+12647,Kongu Express,Superfast,SR,CBE,NZM,15:15,14:15,2820,2671,2A|3A|SL,28,12648
+12648,Kongu Express,Superfast,SR,NZM,CBE,08:40,09:30,2930,2671,2A|3A|SL,28,12647
+12649,Karnataka Sampark Kranti Express,Sampark Kranti,SWR,YPR,NZM,22:10,09:15,2105,2277,1A|2A|3A|SL,7,12650
+12650,Karnataka Sampark Kranti Express,Sampark Kranti,SWR,NZM,YPR,06:45,19:00,2175,2276,1A|2A|3A|SL,7,12649
+12651,Madurai - Delhi H Nizamuddin Tamil Nadu S Kranti,Sampark Kranti,SR,MDU,NZM,23:55,18:00,3965,2677,1A|2A|3A|SL,14,12652
+12652,Delhi H Nizamuddin - Madurai Tamil Nadu S Kranti,Sampark Kranti,SR,NZM,MDU,07:25,03:45,4100,2677,1A|2A|3A|SL,14,12651
+12653,Tiruchirappalli Mangalore Weekly Superfast Express,Superfast,SR,TPJ,MAQ,18:00,05:25,685,635,1A|2A|3A|SL,13,12654
+12654,Mangalore Tiruchirappalli Weekly Superfast Express,Superfast,SR,MAQ,TPJ,20:45,08:15,690,635,2A|3A|SL,13,12653
+12655,Navjeevan Express,Superfast,SR,ADI,MAS,06:30,16:05,2015,1893,1A|2A|3A|SL,38,12656
+12656,Navajivan Express,Superfast,SR,MAS,ADI,09:35,19:10,2015,1893,1A|2A|3A|SL,39,12655
+12657,Chennai - Bangalore Mail,Superfast,SWR,MAS,SBC,23:15,05:10,355,362,1A|2A|3A|SL,8,12658
+12658,Bangalore - Chennai Mail,Superfast,SWR,SBC,MAS,22:45,04:40,355,362,1A|2A|3A|SL,8,12657
+12659,Gurudev Express,Superfast,SR,NCJ,SHM,14:35,13:50,2835,2583,2A|3A|SL,44,12660
+12660,Shalimar-Nagercoil Gurudev Express,Superfast,SR,SHM,NCJ,23:00,22:00,2820,2583,2A|3A|SL,44,12659
+12661,Chennai Egmore - Sengottai Pothigai SF Exp,Superfast,SR,MS,SCT,20:05,08:15,2170,670,2A|3A|SL,18,12662
+12662,Sengottai - Chennai Egmore Pothigai SF Exp,Superfast,SR,SCT,MS,19:00,07:05,2165,670,2A|3A|SL,18,12661
+12663,Howrah-Tiruchirappalli Express,Superfast,SR,HWH,TPJ,16:10,04:25,2175,2025,2A|3A|SL,23,12664
+12664,Tiruchirappalli-Howrah Express,Superfast,SR,TPJ,HWH,16:00,03:20,2120,2025,2A|3A|SL,23,12663
+12665,Howrah - Kanniyakumari SF Exp,Superfast,SR,HWH,CAPE,16:10,11:40,5490,2431,2A|3A|SL,31,12666
+12666,Kanyakumari - KOL Howrah Weekly Exp,Superfast,SR,CAPE,HWH,07:50,03:20,5490,2431,2A|3A|SL,31,12665
+12667,Chennai Egmore - Nagercoil SF Exp,Superfast,SR,MS,NCJ,18:50,08:10,2240,727,2A|3A|SL,11,12668
+12668,Nagercoil - Chennai Egmore SF Exp,Superfast,SR,NCJ,MS,17:05,06:00,2215,727,2A|3A|SL,11,12667
+12669,Chennai Central - Chhapra Ganga Kaveri Exp,Superfast,SR,MAS,CPR,17:35,11:40,2525,2343,2A|3A|SL,23,12670
+12670,Chhapra - Chennai Central Ganga Kaveri Exp,Superfast,SR,CPR,MAS,21:00,14:25,2485,2343,2A|3A|SL,23,12669
+12671,Nilgiri (Blue Mountain) Express,Superfast,SR,MAS,MTP,21:00,06:15,555,532,1A|2A|3A|SL,9,12672
+12672,Nilgiri (Blue Mountain) Express,Superfast,SR,MTP,MAS,19:45,05:05,560,532,1A|2A|3A|SL,9,12671
+12673,Cheran Express,Superfast,SR,MAS,CBE,22:10,06:10,480,497,1A|2A|3A|SL,8,12674
+12674,Cheran Express,Superfast,SR,CBE,MAS,22:20,06:35,495,497,1A|2A|3A|SL,9,12673
+12675,Kovai Express,Superfast,SR,MAS,CBE,06:15,13:55,460,497,CC,11,12676
+12676,Kovai Express,Superfast,SR,CBE,MAS,14:20,21:40,440,497,CC,12,12675
+12677,Bangalore City - Ernakulam Intercity SF Express,Superfast,SR,SBC,ERS,06:15,16:55,640,587,CC,14,12678
+12678,Ernakulam-BangaloreCity Intercity Express,Superfast,SR,ERS,SBC,09:10,19:50,640,587,CC,14,12677
+12679,ChennaiCentral-Coimbatore InterCity,Superfast,SR,MAS,CBE,14:30,22:15,465,497,CC,12,12680
+12680,Coimbatore-Chennai Central InterCity SF Express,Superfast,SR,CBE,MAS,06:15,13:50,455,497,CC,12,12679
+12681,Chennai-Coimbatore Express,Superfast,SR,MAS,CBE,22:30,06:50,500,497,2A|3A|SL,7,12682
+12682,Coimbatore-Chennai Express,Superfast,SR,CBE,MAS,23:45,07:45,480,497,2A|3A|SL,8,12681
+12683,Ernakulam - Bangalore SF Exp,Superfast,SR,ERS,SBC,17:00,04:20,680,625,2A|3A|SL,14,12684
+12684,Bangalore - Ernakulam SF Exp,Superfast,SR,SBC,ERS,17:15,04:20,665,625,2A|3A|SL,14,12683
+12685,Chennai - Mangalore Express,Superfast,SR,MAS,MAQ,17:00,09:05,965,889,1A|2A|3A|SL,18,12686
+12686,Mangalore - Chennai Express,Superfast,SR,MAQ,MAS,16:10,08:00,950,889,1A|2A|3A|SL,18,12685
+12687,Chennai Dehradun Express,Superfast,SR,MAS,DDN,09:45,05:00,2595,2488,2A|3A|SL,20,12688
+12688,Dehradun Chennai Express,Superfast,SR,DDN,MAS,07:20,02:15,2575,2488,2A|3A|SL,21,12687
+12689,Chennai Central - Nagercoil SF Exp,Superfast,SR,MAS,NCJ,18:15,11:05,2450,927,3A|SL,19,12690
+12690,Nagercoil - Chennai SF Exp,Superfast,SR,NCJ,MAS,19:40,12:25,2445,927,3A|SL,20,12689
+12691,Chennai - SSP Nilayam SF Exp,Superfast,SR,MAS,SSPN,23:30,09:20,590,529,2A|3A|SL,11,12692
+12692,SSP Nilayam - Chennai SF Exp,Superfast,SR,SSPN,MAS,18:45,05:15,630,529,2A|3A|SL,14,12691
+12693,Chennai Egmore - Tuticorin Pearl City SF Exp,Superfast,SR,MS,TN,19:35,07:30,2155,656,1A|2A|3A|FC|SL,22,12694
+12694,Tuticorin - Chennai Egmore Pearl City SF Exp,Superfast,SR,TN,MS,19:45,07:40,2155,656,1A|2A|3A|FC|SL,22,12693
+12695,Chennai-Trivandrum SuperFast Express,Superfast,SR,MAS,TVC,15:25,07:40,975,922,2A|3A|FC|SL,21,12696
+12696,Trivandrum-Chennai Superfast Express,Superfast,SR,TVC,MAS,17:10,09:50,1000,922,2A|3A|FC|SL,21,12695
+12697,Chennai-Thiruvananthapuram Express,Superfast,SR,MAS,TVC,15:15,06:35,920,909,2A|3A|SL,12,12696
+12698,Thiruvananthapuram Central Chennai Central weekly express,Superfast,SR,TVC,MAS,20:10,12:25,975,909,2A|3A|SL,11,12697
+12701,Hussain Sagar Express,Superfast,SCR,CSTM,HYB,21:50,12:10,860,790,1A|2A|3A|SL,16,12702
+12702,Hussain Sagar Express,Superfast,SCR,HYB,CSTM,14:45,05:05,860,790,2A|3A|SL,17,12701
+12703,Howrah - Secunderabad Falaknuma SF Express,Superfast,SCR,HWH,SC,07:25,09:35,1570,1545,1A|2A|3A|SL,24,12704
+12704,Falaknuma Express,Superfast,SCR,SC,HWH,16:00,17:45,1545,1545,1A|2A|3A|SL,25,12703
+12705,Guntur-Secunderabad SF Intercity,Superfast,SCR,GNT,SC,15:00,21:50,410,383,CC,10,12706
+12706,Secunderabad-Guntur SF Intercity,Superfast,SCR,SC,GNT,07:40,14:25,405,383,CC,13,12705
+12707,Andhra Pradesh Sampark Kranti Express,Sampark Kranti,SCR,TPTY,NZM,05:45,18:00,2175,2302,2A|3A|SL,19,12708
+12708,Andhra Pradesh Sampark Kranti Express,Sampark Kranti,SCR,NZM,TPTY,07:25,21:35,2290,2302,2A|3A|SL,19,12707
+12709,Simhapuri SF Express,Superfast,SCR,GDR,SC,21:00,07:45,645,644,1A|2A|3A|SL,16,12710
+12710,Simhapuri SF Express,Superfast,SCR,SC,GDR,22:30,08:50,620,644,1A|2A|3A|SL,16,12709
+12711,Pinakini Express,Superfast,SCR,BZA,MAS,06:00,13:00,420,431,CC,12,12712
+12712,Pinakini Express,Superfast,SCR,MAS,BZA,14:05,21:10,425,431,CC,12,12711
+12713,Satavahana Express,Superfast,SCR,BZA,SC,06:10,11:45,335,351,CC,8,12714
+12714,Satavahana Express,Superfast,SCR,SC,BZA,16:15,21:50,335,351,CC,8,12713
+12715,Sachkhand SF Express,Superfast,SCR,NED,ASR,09:30,20:15,2085,2081,2A|3A|SL,35,12716
+12716,Sachkhand SF Express,Superfast,SCR,ASR,NED,05:40,15:50,2050,2081,2A|3A|SL,34,12715
+12717,Ratnachal SF Express,Superfast,SCR,VSKP,BZA,12:30,18:35,365,351,CC,11,12718
+12718,Ratnachal SF Express,Superfast,SCR,BZA,VSKP,06:05,12:05,360,351,CC,11,12717
+12719,Ajmer - Hyderabad Deccan SF Exp,Superfast,SCR,AII,HYB,17:40,00:30,1850,1711,2A|3A|SL,19,12720
+12720,Hyderabad Deccan - Ajmer SF Exp,Superfast,SCR,HYB,AII,20:30,03:05,1835,1711,2A|3A|SL,17,12719
+12721,Dakshin SF Express,Superfast,SCR,HYB,NZM,22:30,04:05,1775,1670,2A|3A|SL,45,12722
+12722,Dakshin SF Express,Superfast,SCR,NZM,HYB,22:50,05:00,1810,1670,2A|3A|SL,45,12721
+12723,Andhra Pradesh Express,Superfast,SCR,HYB,NDLS,06:25,09:05,1600,1677,1A|2A|3A|SL,17,12724
+12724,Andhra Pradesh Express,Superfast,SCR,NDLS,HYB,17:30,19:50,1580,1677,1A|2A|3A|SL,16,12723
+12725,Siddhaganga Intercity Express,Superfast,SWR,SBC,DWR,13:00,21:50,530,490,CC,14,12726
+12726,Siddhaganga InterCity Express,Superfast,SWR,DWR,SBC,05:15,14:05,530,490,CC,14,12725
+12727,Godavari SF Express,Superfast,SCR,VSKP,HYB,17:25,06:15,770,711,1A|2A|3A|SL,20,12728
+12728,Godavari SF Express,Superfast,SCR,HYB,VSKP,17:15,05:50,755,711,1A|2A|3A|SL,20,12727
+12729,Pune-Nanded Express,Superfast,SCR,PUNE,NED,22:00,10:00,720,662,2A|3A|SL,13,12730
+12730,Nanded-Pune SuperFast Express,Superfast,SCR,NED,PUNE,21:20,09:20,720,662,2A|3A|SL,13,12729
+12731,Tirupati-Secunderabad Express,Superfast,SCR,TPTY,SC,16:45,07:00,855,801,2A|3A|SL,13,12732
+12732,Secunderabad-Tirupati Express,Superfast,SCR,SC,TPTY,19:00,09:30,870,801,2A|3A|SL,13,12731
+12733,Narayanadri Express,Superfast,SCR,TPTY,SC,18:25,06:25,720,661,1A|2A|3A|SL,23,12734
+12734,Narayanadri Express,Superfast,SCR,SC,TPTY,18:05,06:05,720,661,1A|2A|3A|SL,23,12733
+12737,Gowthami SF Express,Superfast,SCR,COA,SC,20:20,06:35,615,566,1A|2A|3A|SL,20,12738
+12738,Secunderabad - Kakinada Gowthami SF Express,Superfast,SCR,SC,COA,21:15,07:30,615,566,1A|2A|3A|SL,21,12737
+12739,Visakhapatnam Secunderabad Garib Rath Express,Garib Rath,SCR,VSKP,SC,20:30,08:10,700,701,3A,9,12740
+12740,Secunderabad-Visakhapatnam Garib Rath,Garib Rath,SCR,SC,VSKP,20:15,07:30,675,701,3A,9,12739
+12741,Vasco DA Gama - Patna SF Exp,Superfast,SWR,VSG,PNBE,19:10,12:10,5340,2419,2A|3A|SL,20,12742
+12742,Patna - Vasco DA Gama SF Exp,Superfast,SWR,PNBE,VSG,14:00,08:55,5455,2419,2A|3A|SL,19,12741
+12747,Palnadu Express,Superfast,SCR,GNT,VKB,05:45,12:10,385,353,CC,15,12748
+12748,Palnadu Express,Superfast,SCR,VKB,GNT,13:45,20:00,375,353,CC,15,12747
+12750,Mumbai LTT-Visakhapatnam SF Express,Superfast,ECoR,LTT,VSKP,12:25,14:45,1580,1502,1A|2A|3A|SL,14,12749
+12751,Manuguru-Secunderabad Tri Weekly SF Express,Superfast,SCR,MUGR,SC,21:45,03:45,360,331,2A|3A|SL,8,12752
+12752,Secunderabad-Manuguru SF Express,Superfast,SCR,SC,MUGR,23:45,05:45,360,331,2A|3A|SL,8,12751
+12753,Chennai-NewJalpaiguri SF Express,Superfast,SR,MAS,NJP,11:00,03:45,2445,2257,2A|3A|SL,19,12754
+12754,New Jalpaiguri-Chennai SF Express,Superfast,SR,NJP,MAS,22:00,14:55,2455,2257,2A|3A|SL,19,12753
+12755,Sangrami SF Expres,Superfast,SR,MAS,HLZ,14:35,18:10,1655,1647,3A|SL,13,12756
+12756,Sangrami Expres,Superfast,SR,HLZ,MAS,11:30,17:00,1770,1647,3A|SL,13,12755
+12757,Tirupati-Coimbatore Intercity Express,Superfast,SR,TPTY,CBE,14:50,22:40,470,472,CC,8,12758
+12758,Coimbatore-Tirupati (Triweekly) SF Intercity Expre,Superfast,SCR,CBE,TPTY,06:00,13:30,450,472,CC,8,12757
+12759,Charminar Express,Superfast,SCR,MAS,HYB,18:10,08:00,830,790,1A|2A|3A|SL,17,12760
+12760,Charminar Express,Superfast,SCR,HYB,MAS,18:30,08:15,825,790,1A|2A|3A|SL,17,12759
+12763,Padmavati Express,Superfast,SCR,TPTY,SC,17:00,05:50,770,737,2A|3A|SL,18,12764
+12764,Padmavati Express,Superfast,SCR,SC,TPTY,18:30,07:00,750,737,2A|3A|SL,18,12763
+12777,Hubli - Trivandrum Kochuveli SF Exp,Superfast,SWR,UBL,KCVL,06:50,06:30,2860,1307,2A|3A|SL,20,12778
+12778,Trivandrum Kochuveli - Hubli SF Exp,Superfast,SWR,KCVL,UBL,12:50,12:45,2875,1307,2A|3A|SL,20,12777
+12779,Vasco DA Gama - Delhi H Nizamuddin Goa Exp,Superfast,SWR,VSG,NZM,15:10,06:15,2345,2202,2A|3A|SL,29,12780-Slip
+12780,Delhi H Nizamuddin - Vasco DA Gama Goa Exp,Superfast,SWR,NZM,VSG,15:05,06:30,2365,2202,2A|3A|SL,28,12779
+12781,Mysore-Nizamuddin Swarna Jayanti Express,Superfast,SWR,MYS,NZM,20:10,17:05,2695,2618,2A|3A|SL,31,12782
+12782,Nizamuddin-Mysore Swarna Jayanti Express,Superfast,SWR,NZM,MYS,06:00,05:05,2825,2617,2A|3A|SL,32,12781
+12785,Kacheguda-Bangalore SF Express,Superfast,SCR,KCG,SBC,19:05,06:25,680,625,1A|2A|3A|SL,17,12786
+12786,Bangalore-Kacheguda SF Express,Superfast,SCR,SBC,KCG,18:20,05:40,680,625,1A|2A|3A|SL,16,12785
+12787,Bilaspur Tirunelveli SF Express,Superfast,SR,BSP,TEN,08:10,05:05,2695,2493,2A|3A|SL,29,12788
+12788,Tirunelveli Bilaspur SF Express,Superfast,SR,TEN,BSP,01:00,21:35,2675,2494,2A|3A|SL,29,12787
+12789,Rameswaram Kanyakumari SF Express,Superfast,SR,RMM,CAPE,20:45,04:05,440,407,3A|SL,10,12790
+12790,Kanyakumari Rameswaram SF Express,Superfast,SR,CAPE,RMM,22:00,05:20,440,407,3A|SL,10,12789
+12791,Secunderabad - Danapur SF EXP,Superfast,SCR,SC,DNR,10:00,18:59,1979,1840,2A|3A|SL,26,12792
+12792,Danapur - Secunderabad SF EXP,Superfast,SCR,DNR,SC,12:13,21:30,1997,1840,2A|3A|SL,24,12791
+12793,Chennai Egmore Madurai BI-Weekly Superfast Express,Superfast,SR,MS,MDU,22:45,08:50,605,561,1A|2A|3A|SL,10,12794
+12794,Madurai Chennai Egmore BI-Weekly Superfast Express,Superfast,SR,MDU,MS,21:10,07:20,610,561,1A|2A|3A|SL,11,12793
+12797,Venkatadri SF Express,Superfast,SCR,KCG,CTO,20:05,08:55,770,707,1A|2A|3A|SL,24,12798
+12798,Venkatadri SF Express,Superfast,SCR,CTO,KCG,17:30,06:20,770,707,1A|2A|3A|SL,24,12797
+12801,Purushottam SF Express,Superfast,ECoR,PURI,NDLS,21:50,04:50,1860,1863,2A|3A|SL,28,12802
+12802,Purushottam SF Express,Superfast,ECoR,NDLS,PURI,22:20,05:20,1860,1863,2A|3A|SL,27,12801
+12803,Visakhapatnam-Nizamuddin SwarnaJayanthi Express,Superfast,ECoR,VSKP,NZM,08:30,17:05,1955,2097,2A|3A|SL,19,12804
+12804,Swarna Jayanti Express,Superfast,SER,NZM,VSKP,06:00,17:25,2125,2096,2A|3A|SL,19,12803
+12805,Janmabhoomi Express,Superfast,ECoR,VSKP,SC,06:00,18:25,745,689,CC,19,12806
+12806,Janmabhoomi Express,Superfast,ECoR,SC,VSKP,07:10,19:40,750,689,CC,19,12805
+12807,Samata Express,Superfast,ECoR,VSKP,NZM,06:25,16:45,2060,1911,2A|3A|SL,40,12808
+12808,Samata Express,Superfast,ECoR,NZM,VSKP,08:40,18:30,2030,1911,2A|3A|SL,39,12807
+12809,Mumbai CST - Howrah SF Mail (via Nagpur),Superfast,SER,CSTM,HWH,20:35,05:50,1995,1968,1A|2A|3A|SL,43,12810
+12810,Howrah - Mumbai CST SF Mail (via Nagpur),Superfast,SER,HWH,CSTM,20:15,05:25,1990,1968,1A|2A|3A|SL,41,12809
+12811,Mumbai - Hatia LTT SF Exp,Superfast,SER,LTT,HTE,00:15,03:45,1650,1706,2A|3A|SL,17,12812
+12812,Hatia - Mumbai LTT SF Exp,Superfast,SER,HTE,LTT,09:40,13:35,1675,1706,2A|3A|SL,17,12811
+12813,Steel Express,Superfast,SER,HWH,TATA,17:30,21:25,235,250,1A|3A|CC,8,12814
+12814,Steel Express,Superfast,SER,TATA,HWH,06:15,10:20,245,250,1A|3A|CC,9,12813
+12815,Puri New Delhi Superfast Express,Superfast,SER,PURI,NDLS,10:55,17:00,1805,1804,2A|3A|SL,28,12816
+12816,New Delhi-Puri Superfast Express,Superfast,SER,NDLS,PURI,06:30,12:25,1795,1794,2A|3A|SL,28,12815
+12817,Jharkhand Swarna Jayanti SF Express,Superfast,SER,HTE,ANVT,14:40,13:50,1390,1300,2A|3A|SL,19,12818
+12818,Jharkhand Swarna Jayanti Express,Superfast,SER,ANVT,HTE,19:50,16:40,1250,1303,2A|3A|SL,18,12817
+12819,Orissa Sampark Kranti Express,Sampark Kranti,ECoR,BBS,NDLS,15:40,20:50,1750,1799,2A|3A|SL,11,12820
+12820,Orissa Sampark Kranti Express,Sampark Kranti,ECoR,NDLS,BBS,07:10,12:10,1740,1799,2A|3A|SL,11,12819
+12821,Dhauli Express,Superfast,SER,HWH,PURI,06:00,14:30,510,502,CC,12,12822
+12822,Dhauli Express,Superfast,SER,PURI,HWH,11:50,20:15,505,502,CC,13,12821
+12823,Chhattisgarh Sampark Kranti Express,Sampark Kranti,SER,DURG,NZM,12:00,09:05,1265,1281,1A|2A|3A|SL,11,12824
+12824,Chhattisgarh Sampark Kranti Express,Sampark Kranti,SER,NZM,DURG,17:25,15:10,1305,1284,1A|2A|3A|SL,11,12823
+12825,Jharkhand Sampark Kranti Express,Sampark Kranti,SER,RNC,NDLS,23:40,20:50,1270,1306,2A|3A|SL,9,12826
+12826,Jharkhand Sampark Kranti Express,Sampark Kranti,SER,NDLS,RNC,07:10,04:55,1305,1309,2A|3A|SL,9,12825
+12827,Howrah Purulia Express,Superfast,SER,HWH,PRR,16:50,22:20,330,323,CC,14,12828
+12828,Howrah Express,Superfast,SER,PRR,HWH,05:30,11:20,350,323,CC,15,12827
+12829,Chennai Bhubaneswar SF Express,Superfast,ECoR,MAS,BBS,21:10,17:35,1225,1223,2A|3A|SL,21,12830
+12830,Bhubaneswar Chennai Superfast Express,Superfast,ECoR,BBS,MAS,12:00,08:55,1255,1223,2A|3A|SL,21,12829
+12831,Dhanbad - Bhubaneswar Garib Rath Exp,Garib Rath,SER,DHN,BBS,16:00,08:15,975,780,3A,13,12832
+12832,Bhubaneswar - Dhanbad Garib Rath Exp,Garib Rath,SER,BBS,DHN,20:10,10:45,875,780,3A,13,12831
+12833,Ahmedabad - Howrah SF EXP,Superfast,SER,ADI,HWH,23:55,13:30,3695,2087,2A|3A|SL,62,12834
+12834,Howrah - Ahmedabad SF EXP,Superfast,SER,HWH,ADI,23:55,13:25,3690,2087,2A|3A|SL,64,12833
+12835,Hatia - Yesvantpur SF Exp,Superfast,SER,HTE,YPR,18:20,05:00,3520,1904,2A|3A|SL,24,12836
+12836,Yesvantpur - Hatia SF Exp,Superfast,SER,YPR,HTE,08:30,19:15,3525,1904,2A|3A|SL,25,12835
+12837,Howrah-Puri Express,Superfast,SER,HWH,PURI,22:35,07:30,535,502,1A|2A|3A|SL,14,12838
+12838,Puri Howrah Express,Superfast,SER,PURI,HWH,20:05,04:50,525,502,1A|2A|3A|SL,14,12837
+12839,Howrah Chennai Superfast Mail,Superfast,SER,HWH,MAS,23:45,03:50,1685,1662,1A|2A|3A|SL,35,12840
+12840,Chennai-Howrah SF Mail,Superfast,SER,MAS,HWH,23:40,04:10,1710,1662,1A|2A|3A|SL,36,12841
+12841,Coromandel Express,Superfast,SER,HWH,MAS,14:50,17:15,1585,1662,1A|2A|3A|SL,12,12842
+12842,Coromandel Express,Superfast,SER,MAS,HWH,08:45,11:50,1625,1662,1A|2A|3A|SL,14,12841
+12843,Puri Ahmedabad Superfast Express,Superfast,ECoR,PURI,ADI,17:30,07:25,2275,2130,2A|3A|SL,41,12844
+12844,Ahmedabad Puri Superfast Express,Superfast,SER,ADI,PURI,18:00,08:50,2330,2130,2A|3A|SL,41,12843
+12847,Howrah-Digha AC Duronto Express,Duronto,SER,HWH,DGHA,11:15,14:15,180,189,1A|CC,2,12848
+12848,Digha-Howrah AC Duronto Express,Duronto,SER,DGHA,HWH,15:35,18:35,180,189,1A|CC,2,12847
+12849,Bilaspur Pune SF Express,Superfast,SECR,BSP,PUNE,11:35,09:45,1330,1301,2A|3A|SL,18,12850
+12850,Pune Bilaspur Superfast Express,Superfast,SECR,PUNE,BSP,17:40,16:50,1390,1301,2A|3A|SL,18,12849
+12851,Bilaspur-Chennai Express,Superfast,SER,BSP,MAS,08:55,08:55,1440,1413,2A|3A|SL,15,12852
+12852,Chennai-Bilaspur Express,Superfast,SER,MAS,BSP,21:10,20:15,1385,1413,2A|3A|SL,15,12851
+12853,Durg - Bhopal Amarkantak SF Exp,Superfast,SER,DURG,BPL,18:20,10:30,970,894,2A|3A|SL,29,12854
+12854,Bhopal - Durg Amarkantak SF Exp,Superfast,SER,BPL,DURG,15:45,07:55,970,894,2A|3A|SL,30,12853
+12855,Bilaspur-Nagpur InterCity,Superfast,SER,BSP,NGP,16:15,23:00,405,411,2A|3A|SL,11,12856
+12856,Nagpur-Bilaspur InterCity,Superfast,SER,NGP,BSP,06:30,13:30,420,411,2A|3A|SL,15,12855
+12857,Tamralipta Express,Superfast,SER,HWH,DGHA,06:40,10:00,200,189,CC,8,12858
+12858,Tamralipta Express,Superfast,SER,DGHA,HWH,10:25,13:50,205,189,CC,8,12857
+12859,Mumbai CST - Howrah Gitanjali Exp,Superfast,SER,CSTM,HWH,06:00,12:30,1830,1968,2A|3A|SL,25,12860
+12860,Howrah - Mumbai CST Gitanjali Exp,Superfast,SER,HWH,CSTM,13:50,21:20,1890,1968,2A|3A|SL,24,12859
+12861,Link Superfast Express,Superfast,ECoR,VSKP,NZM,15:10,04:00,2210,2097,2A|3A|SL,58,
+12862,Link Superfast Express,Superfast,ECoR,KZJ,VSKP,02:30,13:30,660,567,2A|3A|SL,19,
+12863,Howrah - Yesvantpur SF Exp,Superfast,SER,HWH,YPR,20:35,07:55,3560,1963,2A|3A|SL,32,12864
+12864,Yesvantpur - Howrah SF Exp,Superfast,SER,YPR,HWH,19:35,06:10,3515,1963,2A|3A|SL,32,12863
+12865,Lalmati Express,Superfast,SER,HWH,PRR,08:30,14:15,345,340,CC,8,12866
+12866,Lalmati Express,Superfast,SER,PRR,HWH,14:45,20:30,345,340,CC,8,12865
+12867,Howrah-Puducherry Express,Superfast,SER,HWH,PDY,23:30,08:50,2000,1907,2A|3A|SL,14,12868
+12868,Puducherry-Howrah (Aurobindo) Express,Superfast,SER,PDY,HWH,12:30,22:25,2035,1907,2A|3A|SL,14,12867
+12869,Mumbai CST - Howrah SF Exp,Superfast,SER,CSTM,HWH,11:05,19:30,1945,1968,2A|3A|SL,20,12870
+12870,Howrah - Mumbai CST SF Exp,Superfast,SER,HWH,CSTM,14:35,23:30,1975,1968,2A|3A|SL,19,12869
+12871,Howrah - Titlagarh Ispat Exp,Superfast,SER,HWH,TIG,06:55,20:20,805,745,CC,29,12872
+12872,Titlagarh - Howrah Ispat Exp,Superfast,SER,TIG,HWH,05:20,18:45,805,745,CC,29,12871
+12873,Jharkhand Swarna Jayanti Express,Superfast,SER,HTE,ANVT,13:40,13:50,1450,1334,2A|3A|SL,20,12874
+12874,Jharkhand Swarna Jayanti Express,Superfast,SER,ANVT,HTE,19:50,19:55,1445,1334,2A|3A|SL,20,12873
+12875,Puri - NEW Delhi Neelanchal SF Exp,Superfast,ECoR,PURI,NDLS,10:55,21:40,3525,1910,2A|3A|SL,40,12876
+12876,NEW Delhi - Puri Neelanchal SF Exp,Superfast,ECoR,NDLS,PURI,06:30,17:10,3520,1910,2A|3A|SL,39,12875
+12877,Ranchi-New Delhi Garib Rath,Garib Rath,SER,RNC,NDLS,17:10,10:50,1060,1341,3A,12,12878
+12878,New Delhi-Ranchi Garib Rath,Garib Rath,SER,NDLS,RNC,16:10,10:40,1110,1344,3A,12,12877
+12879,Mumbai LTT - Bhubaneswar SF Exp,Superfast,SER,LTT,BBS,00:15,07:35,6200,1788,2A|3A|SL,18,12880
+12880,Bhubaneswar - Mumbai LTT SF Exp,Superfast,SER,BBS,LTT,07:10,13:35,1825,1789,2A|3A|SL,18,12879
+12881,Howrah Puri Garib Rath,Garib Rath,SER,HWH,PURI,20:55,05:55,540,502,3A,9,12882
+12882,Puri Howrah Garib Rath,Garib Rath,SER,PURI,HWH,22:15,07:05,530,502,3A,9,12881
+12883,Rupashi Bangla Express,Superfast,SER,HWH,PRR,06:00,11:50,350,333,CC,13,12884
+12884,Rupashi Bangla Express,Superfast,SER,PRR,HWH,15:35,21:15,340,333,CC,14,12883
+12887,Howrah-Puri Express,Superfast,SER,HWH,PURI,20:55,05:55,540,502,2A|3A|SL,10,12888
+12888,Howrah Express,Superfast,SER,PURI,HWH,22:15,07:05,530,502,2A|3A|SL,11,12887
+12891,Baripada- Bhubaneswar Express,Superfast,SER,BPO,BBS,05:07,10:00,293,275,CC,10,12892
+12892,Bhubaneswar Baripada SF Express,Superfast,SER,BBS,BPO,17:10,22:05,295,275,CC,14,12891
+12893,Bhubaneswar - Balangir SF Exp,Superfast,SER,BBS,BLGR,06:45,13:40,415,397,CC,12,12894
+12894,Balangir - Bhubaneswar SF Exp,Superfast,SER,BLGR,BBS,14:40,21:50,430,397,CC,12,12893
+12895,Kolkata-Puri Express,Superfast,SER,HWH,PURI,20:55,05:55,540,502,2A|3A|SL,10,12896
+12896,Puri-Howrah Express,Superfast,SER,PURI,HWH,22:15,07:05,530,502,2A|3A|SL,11,12895
+12897,Puducherry-Bhubaneswar Express,Superfast,SER,PDY,BBS,18:30,18:45,1455,1424,2A|3A|SL,18,12898
+12898,Bhubaneswar-Puducherry Superfast Express,Superfast,SER,BBS,PDY,12:00,13:35,1535,1424,2A|3A|SL,18,12897
+12901,Gujarat Mail,Superfast,WR,BCT,ADI,21:45,06:25,520,491,1A|2A|3A|SL,14,12902
+12902,Gujarat Mail,Superfast,WR,ADI,BCT,22:00,06:45,525,491,1A|2A|3A|SL,13,12901
+12903,Golden Temple Mail,Superfast,WR,BCT,ASR,21:25,05:40,1935,1891,1A|2A|3A|SL,34,12904
+12904,Golden Temple Mail,Superfast,WR,ASR,BCT,21:25,05:35,1930,1891,1A|2A|3A|SL,35,12903
+12905,Porbandar - Howrah SF Exp,Superfast,WR,PBR,HWH,06:20,03:35,4155,2551,2A|3A|SL,30,12906
+12906,Howrah - Porbandar SF Exp,Superfast,WR,HWH,PBR,22:55,19:00,4085,2551,2A|3A|SL,29,12905
+12907,Maharashtra Sampark Kranti Express,Sampark Kranti,WR,BDTS,NZM,16:50,13:45,1255,1366,2A|3A|SL,5,12908
+12908,Maharashtra Sampark Kranti Express,Sampark Kranti,WR,NZM,BDTS,21:35,17:50,1215,1366,2A|3A|SL,5,12907
+12909,Bandra Terminus- Hazrat Nizamuddin Garib Rath,Garib Rath,WR,BDTS,NZM,16:55,09:45,1010,1366,3A|CC,9,12910
+12910,H.Nizamuddin-Bandra Terminus Garib Rath Express,Garib Rath,WR,NZM,BDTS,15:40,08:10,990,1366,3A|CC,9,12909
+12911,Valsad-Haridwar Exp,Superfast,WR,BL,HW,15:40,16:15,1475,1433,2A|3A|SL,14,12912
+12912,Haridwar Valsad Superfast Express,Superfast,WR,HW,BL,18:40,18:15,1415,1433,2A|3A|SL,14,12911
+12913,Indore-Nagpur Weekly Express,Superfast,WR,INDB,NGP,20:35,08:25,710,652,2A|3A|SL,14,12914
+12914,Nagpur-Indore Weekly Express,Superfast,WR,NGP,INDB,19:15,06:50,695,652,2A|3A|SL,14,12913
+12915,Ashram SF Express,Superfast,WR,ADI,DLI,18:30,10:10,940,933,1A|2A|3A|SL,18,12916
+12916,Ashram SF Express,Superfast,WR,DLI,ADI,15:20,07:40,980,933,1A|2A|3A|SL,19,12915
+12917,Gujarat Sampark Kranti Express,Sampark Kranti,WR,ADI,NZM,17:20,10:40,1040,1085,2A|3A|SL,10,12918
+12918,Gujarat Sampark Kranti Express,Sampark Kranti,WR,NZM,ADI,14:05,06:35,990,1085,2A|3A|SL,10,12917
+12919,Malwa Express,Superfast,WR,INDB,JAT,12:25,15:55,1650,1540,2A|3A|SL,43,12920
+12920,Malwa Express,Superfast,WR,JAT,INDB,09:00,12:50,1670,1540,2A|3A|SL,41,12919
+12921,Flying Rani Express,Superfast,WR,BCT,ST,17:55,22:35,280,263,CC,14,12922
+12922,Flying Rani Express,Superfast,WR,ST,BCT,05:25,10:10,285,263,FC|CC,14,12921
+12923,Indore Nagpur Express,Superfast,WR,INDB,NGP,21:25,08:25,660,607,2A|3A|SL,12,12924
+12924,Indore Express,Superfast,WR,NGP,INDB,19:15,05:40,625,607,2A|3A|SL,12,12923
+12925,Paschim Express,Superfast,WR,BDTS,ASR,11:35,19:15,1900,1821,1A|2A|3A|SL,42,12926
+12926,Paschim Express,Superfast,WR,ASR,BDTS,08:10,15:15,1865,1821,1A|2A|3A|SL,41,12925
+12927,Mumbai Central -Vadodara Express,Superfast,WR,BCT,BRC,23:40,06:05,385,392,1A|2A|3A|SL,5,12928
+12928,Vadodara - Mumbai Central Express,Superfast,WR,BRC,BCT,22:40,04:55,375,392,1A|2A|3A|SL,6,12927
+12933,Karnavati Express,Superfast,WR,BCT,ADI,13:40,21:25,465,491,CC,11,12934
+12934,Karnavati Express,Superfast,WR,ADI,BCT,04:55,12:35,460,491,CC,10,12933
+12935,Bandra Surat InterCity Express,Superfast,WR,BDTS,ST,06:50,11:10,260,252,FC|CC,9,12936
+12936,Surat Bandra InterCity Express,Superfast,WR,ST,BDTS,16:10,20:30,260,252,FC|CC,9,12935
+12937,Gandhidham - Howrah Garbha Exp,Superfast,WR,GIMB,HWH,17:00,13:05,4085,2509,2A|3A|SL,16,12938
+12938,Howrah - Gandhidham Garbha Exp,Superfast,WR,HWH,GIMB,23:00,17:15,3975,2509,2A|3A|SL,16,12937
+12939,Pune-Jaipur SF Express,Superfast,NWR,PUNE,JP,15:20,13:40,1340,1302,2A|3A|SL,9,12940
+12940,Jaipur-Pune SF Express,Superfast,NWR,JP,PUNE,09:15,08:05,1370,1302,2A|3A|SL,9,12939
+12941,Ahmedabad-Asansol (Weekly) SF Parasnath Express,Superfast,WR,ADI,ASN,23:25,10:20,2095,2021,3A|SL,23,12942
+12942,Asansol Ahmedabad (Weekly) SF Express,Superfast,WR,ASN,ADI,19:50,05:50,2040,2021,3A|SL,23,12941
+12943,Valsad-Kanpur Udyogkarmi Express,Superfast,WR,BL,CNB,19:40,19:30,1430,1305,2A|3A|SL,11,12944
+12944,Kanpur-Valsad Udyogkarmi Express,Superfast,WR,CNB,BL,08:00,07:35,1415,1305,2A|3A|SL,11,12943
+12947,Azimabad Express,Superfast,WR,ADI,PNBE,21:30,04:30,1860,1772,3A|SL,18,12948
+12948,Azimabad Express,Superfast,WR,PNBE,ADI,23:30,05:50,1820,1772,3A|SL,18,12947
+12949,Porbandar - K Santraganchi Kavi Guru SF Exp,Superfast,WR,PBR,SRC,07:55,08:10,4335,2657,2A|3A|SL,35,12950
+12950,K Santraganchi - Porbandar Kavi Guru SF Exp,Superfast,WR,SRC,PBR,21:25,21:00,4295,2658,2A|3A|SL,34,12949
+12951,Mumbai Central-New Delhi Rajdhani Express,Rajdhani,WR,BCT,NDLS,16:40,08:30,950,1384,1A|2A|3A,6,12952
+12952,Mumbai Rajdhani Express,Rajdhani,WR,NDLS,BCT,16:30,08:35,965,1384,1A|2A|3A,6,12951
+12953,MumbaiCentral-H Nizamuddin August Kranti Rajdhani Express,Rajdhani,WR,BCT,NZM,17:40,10:55,1035,1377,1A|2A|3A,14,12954
+12954,August Kranti Rajdhani Express,Rajdhani,WR,NZM,BCT,16:55,10:35,1060,1377,1A|2A|3A,13,12953
+12955,Mumbai-Jaipur SF Express,Superfast,WR,BCT,JP,18:50,12:50,1080,1159,1A|2A|3A|SL,19,12956
+12956,Jaipur-Mumbai SF Express,Superfast,WR,JP,BCT,14:10,07:50,1060,1159,1A|2A|3A|SL,19,12955
+12957,Ahmadabad-New Delhi Swarna Jayanti Rajdhani Expres,Rajdhani,WR,ADI,NDLS,17:45,07:25,820,934,1A|2A|3A,8,12958
+12958,New Delhi-Ahmedabad Swarna Jayanti Rajdhani Expres,Rajdhani,WR,NDLS,ADI,19:55,09:35,820,934,1A|2A|3A,8,12957
+12959,Mumbai Dadar - Bhuj SF Exp,Superfast,WR,DDR,BHUJ,23:55,17:40,2505,977,2A|3A|SL,17,12960
+12960,Bhuj - Mumbai Dadar SF Exp,Superfast,WR,BHUJ,DDR,18:30,12:15,1065,977,2A|3A|SL,17,12959
+12961,Avantika Express,Superfast,WR,BCT,INDB,19:05,09:00,835,829,1A|2A|3A|SL,19,12962
+12962,Avantika Express,Superfast,WR,INDB,BCT,15:50,06:35,885,829,1A|2A|3A|SL,19,12961
+12963,Mewar Express,Superfast,WR,NZM,UDZ,19:05,07:20,735,743,1A|2A|3A|SL,15,12964
+12964,Mewar Express,Superfast,WR,UDZ,NZM,18:15,06:30,735,743,1A|2A|3A|SL,15,12963
+12965,Gwalior Udaipur Express,Superfast,NWR,GWL,UDZ,15:50,06:10,860,794,1A|2A|3A|SL,22,12966
+12966,Udaipur Gwalior Express,Superfast,NWR,UDZ,GWL,22:20,12:45,865,794,1A|2A|3A|SL,22,12965
+12967,Chennai-Jaipur SF Express,Superfast,NWR,MAS,JP,17:35,05:55,2180,2185,1A|2A|3A|SL,30,12968
+12968,Jaipur-Chennai SF Express,Superfast,NWR,JP,MAS,19:40,09:45,2285,2185,1A|2A|3A|SL,30,12967
+12969,Coimbatore-Jaipur Express,Superfast,NWR,CBE,JP,09:15,05:55,2680,2682,1A|2A|3A|SL,37,12970
+12970,Jaipur-Coimbatore Express,Superfast,NWR,JP,CBE,19:40,18:00,2780,2682,1A|2A|3A|SL,38,12969
+12971,Bhavnagar Express,Superfast,WR,BDTS,BVC,21:25,11:30,845,778,2A|3A|SL,19,12972
+12972,Bhavnagar Bandra Express,Superfast,WR,BVC,BDTS,20:30,10:35,845,778,2A|3A|SL,19,12971
+12973,Indore-Jaipur SF Express,Superfast,WR,INDB,JP,22:30,08:00,570,599,2A|3A|SL,8,12974
+12974,Jaipur Indore SF Express,Superfast,WR,JP,INDB,21:10,07:10,600,599,2A|3A|SL,8,12973
+12975,Mysore-Jaipur SF Express,Superfast,NWR,MYS,JP,10:15,05:55,2620,2479,1A|2A|3A|SL,40,12976
+12976,Jaipur-Mysore SF Express,Superfast,NWR,JP,MYS,19:40,16:20,2680,2479,1A|2A|3A|SL,40,12975
+12977,Ernakulam - Ajmer Marusagar Exp,Superfast,NWR,ERS,AII,19:50,16:15,2665,2859,1A|2A|3A|SL,30,12978
+12978,Ajmer - Ernakulam Marusagar Exp,Superfast,NWR,AII,ERS,07:40,04:20,2680,2859,1A|2A|3A|SL,30,12977
+12979,Mumbai Bandra (T.) - Jaipur (Tri-weekly) SF Exp,Superfast,WR,BDTS,JP,15:45,10:30,1125,1148,1A|2A|3A|SL,17,12980
+12980,Jaipur - Mumbai Bandra (T.) (Triweekly) SF Express,Superfast,NWR,JP,BDTS,20:40,14:30,1070,1148,1A|2A|3A|SL,17,12979
+12981,Chetak Express,Superfast,NWR,DEE,UDZ,19:40,07:50,730,673,2A|3A|SL,17,12982
+12982,Chetak Express,Superfast,NWR,UDZ,DEE,17:20,05:10,710,673,2A|3A|SL,17,12981
+12983,Ajmer-Chandigarh GaribRath Express,Garib Rath,NWR,AII,CDG,17:55,06:40,765,740,3A,15,12984
+12984,Chandigarh-Ajmer GaribRath,Garib Rath,NWR,CDG,AII,21:05,09:55,770,740,3A,15,12983
+12987,Sealdah Ajmer Express,Superfast,WR,SDAH,AII,23:20,02:45,1645,1642,2A|3A|SL,18,12988
+12988,Ajmer Sealdah Express,Superfast,NWR,AII,SDAH,12:45,15:55,1630,1642,2A|3A|SL,17,12987
+12989,Dadar Ajmer Superfast Express,Superfast,NWR,DDR,AII,14:35,08:05,1050,976,2A|3A|SL,22,12990
+12990,Ajmer-Dadar SF Express,Superfast,NWR,AII,DDR,19:20,12:50,1050,976,2A|3A|SL,22,12989
+12991,Udaipur-Ajmer Express,Superfast,WR,UDZ,AII,06:15,11:40,325,301,CC,12,12992
+12992,Ajmer Udaipur Express,Superfast,WR,AII,UDZ,16:15,21:30,315,301,CC,12,12991
+12993,Gandhidham - Puri SF Exp,Superfast,WR,GIMB,PURI,22:45,16:15,3930,2283,2A|3A|SL,25,12994
+12994,Puri - Gandhidham SF Exp,Superfast,WR,PURI,GIMB,19:50,13:20,3930,2283,2A|3A|SL,25,12993
+12995,Bandra-Udaipur SF Express,Superfast,WR,BDTS,UDZ,15:45,08:55,1030,945,2A|3A|SL,14,12996
+12996,Udaipur Bandra SF Express Slip,Superfast,NWR,UDZ,BDTS,21:35,14:30,1015,945,2A|3A|SL,14,12995
+12997,Tirunelveli - Hapa (Biweekly) SF Express,Superfast,WR,TEN,HAPA,05:55,02:00,2645,2730,3A|SL,28,12998
+12998,Hapa-Tirunelveli Express,Superfast,WR,HAPA,TEN,21:20,17:30,2650,2730,3A|SL,28,12997
+13005,Howrah-Amritsar Mail,Mail,ER,HWH,ASR,19:10,08:55,2265,1910,1A|2A|3A|SL,57,13006
+13006,Amritsar Howrah Mail,Mail,ER,ASR,HWH,18:45,07:20,2195,1910,1A|2A|3A|SL,55,13005
+13007,Udyan Abha Toofan Express,Express,ER,HWH,SGNR,09:35,07:10,2735,1978,3A|SL,103,13008
+13008,Udyan Abha Toofan Express,Express,ER,MGS,HWH,01:25,19:20,1075,755,3A|SL,49,13007
+13009,Doon Express,Express,ER,HWH,DDN,20:35,07:10,2075,1557,2A|3A|SL,75,13010
+13010,Doon Express,Express,ER,DDN,HWH,20:25,06:55,2070,1557,2A|3A|SL,77,13009
+13011,InterCity Express,Express,ER,HWH,MLDT,15:25,22:50,445,340,CC,17,13012
+13012,InterCity Express,Express,ER,MLDT,HWH,04:30,11:25,415,340,CC,17,13011
+13014,Rampurhat-Barddhaman Tri-Weekly Express,Express,ER,RPH,BWN,18:40,21:20,160,112,CC,6,13013
+13015,Howrah Bolpur KaviGuru Express,Express,ER,HWH,BHP,10:45,13:45,180,158,CC,5,13016
+13016,Bolpur-Howrah Kavi Guru Express,Express,ER,BHP,HWH,14:10,17:15,185,158,CC,5,13015
+13017,Ganadevta Express,Express,ER,HWH,AZ,06:05,13:05,420,278,CC,15,13018
+13018,Ganadevta Express,Express,ER,AZ,HWH,15:30,21:45,375,278,CC,15,13017
+13019,Bagh Express,Express,ER,HWH,KGM,21:45,09:30,2145,1521,2A|3A|SL,65,13020
+13020,Bagh Express,Express,ER,KGM,HWH,21:55,12:40,2325,1521,2A|3A|SL,63,13019
+13021,Mithila Express,Express,ER,HWH,RXL,15:45,08:30,1005,693,2A|3A|SL,42,13022
+13022,Mithila Express,Express,ER,RXL,HWH,10:00,04:00,1080,693,2A|3A|SL,42,13021
+13023,Howrah-Gaya Express,Express,ER,HWH,GAYA,19:50,10:55,905,654,SL,31,13024
+13024,Gaya-Howrah Express,Express,ER,GAYA,HWH,12:10,03:40,930,654,SL,31,13023
+13025,Howrah-Bhopal Express,Express,ER,HWH,BPL,13:25,18:30,1745,1459,2A|3A|SL,25,13026
+13026,Bhopal-Howrah Express,Express,ER,BPL,HWH,07:35,15:00,1885,1459,2A|3A|SL,25,13025
+13027,Kaviguru Express,Express,ER,HWH,AZ,22:40,04:30,350,278,SL,11,13028
+13028,Kaviguru Express,Express,ER,AZ,HWH,07:40,13:55,375,278,SL,11,13027
+13039,Howrah-Rajgir Express Slip,Express,ER,HWH,RGD,20:20,12:10,950,552,SL,37,
+13049,Howrah-Amritsar Express,Express,ER,HWH,ASR,14:00,10:10,2650,1922,3A|SL,110,13050
+13050,Amritsar Howrah Express,Express,ER,ASR,HWH,18:10,15:45,2735,1922,3A|SL,106,13049
+13051,Hool Express,Express,ER,HWH,SURI,06:45,11:40,295,241,CC,10,13052
+13052,Hool Express,Express,ER,SURI,HWH,13:30,18:25,295,241,CC,10,13051
+13053,Howrah-Siuri Intercity Express,Express,ER,HWH,SURI,08:35,13:40,305,211,CC,6,13052
+13054,Siuri-Howrah Intercity Express,Express,ER,SURI,HWH,17:50,22:40,290,211,CC,6,13053
+13071,Jamalpur Express,Express,ER,HWH,JMP,21:35,07:10,575,467,1A|2A|3A|SL,21,13072
+13072,Howrah Express,Express,ER,JMP,HWH,19:30,05:30,600,467,1A|2A|3A|SL,21,13071
+13103,Bhagirathi Express,Express,ER,SDAH,LGL,18:25,22:55,270,227,CC,11,13104
+13104,Bhagirathi Express,Express,ER,LGL,SDAH,05:50,10:25,275,227,CC,11,13103
+13105,Sealdah-Ballia Express,Express,ER,SDAH,BUI,13:25,06:10,1005,679,3A|SL,29,13106
+13106,Ballia-Sealdah Express,Express,ER,BUI,SDAH,09:00,03:35,1115,679,3A|SL,27,13105
+13108,Maitree Express BR,Express,ER,KOAA,DSNB,07:10,10:36,206,375,1A|CC,2,13107
+13109,Maitree Express IR,Express,ER,KOAA,DSNB,07:10,10:36,206,375,1A|CC,2,13110
+13111,Lal Quila Express,Express,ER,KOAA,DLI,20:15,03:10,1855,1527,3A|SL,67,13112
+13112,Lal Quila Express,Express,ER,DLI,KOAA,20:50,07:30,2080,1552,3A|SL,70,13111
+13113,Hazarduari Express,Express,ER,KOAA,LGL,06:50,12:10,320,223,CC,10,13114
+13114,Hazarduari Express,Express,ER,LGL,KOAA,15:50,21:25,335,223,CC,10,13113
+13117,Kolkata Berhampore Court Express,Express,ER,KOAA,BPC,20:30,00:20,230,182,CC,8,13118
+13118,Berhampore Court Kolkata Express,Express,ER,BPC,KOAA,07:20,11:35,255,182,CC,8,13117
+13133,Sealdah-Varanasi Express,Express,ER,SDAH,BSB,21:15,21:40,1465,871,SL,78,13134
+13134,Varanasi- Sealdah Express,Express,ER,BSB,SDAH,08:40,10:55,1575,871,SL,78,13133
+13141,Testa Torsa Express,Express,ER,SDAH,NOQ,13:40,07:15,1055,716,2A|3A|SL,34,13142
+13142,Teesta Torsa Express,Express,ER,NOQ,SDAH,11:45,04:35,1010,716,2A|3A|SL,34,13141
+13145,Radhikapur Express,Express,ER,KOAA,RDP,19:30,06:50,680,476,2A|3A|SL,16,13146
+13146,Radhikapur Express,Express,ER,RDP,KOAA,17:50,05:35,705,476,2A|3A|SL,16,13145
+13147,Uttar Banga Express,Express,ER,SDAH,NCB,19:35,09:25,830,693,2A|3A|SL,20,13148
+13148,Uttar Banga Express,Express,ER,NCB,SDAH,15:15,05:10,835,693,2A|3A|SL,20,13147
+13149,Kanchan Kanya Express,Express,ER,SDAH,APDJ,20:30,12:10,940,735,2A|3A|SL,25,13150
+13150,Kanchan Kanya Express,Express,ER,APDJ,SDAH,16:45,08:15,930,735,2A|3A|SL,25,13149
+13151,Kolkata Chitpur-JammuTawi Express,Express,ER,KOAA,JAT,11:45,08:30,2685,1982,2A|3A|SL,94,13152
+13152,JammuTawi-Kolkata Chitpur Express,Express,ER,JAT,KOAA,19:00,15:50,2690,1982,2A|3A|SL,96,13151
+13153,Sealdah-Malda Town Gour Express,Express,ER,SDAH,MLDT,22:15,06:15,480,347,1A|2A|3A|SL,14,13154
+13154,Malda Town-Sealdah Gour Express,Express,ER,MLDT,SDAH,21:35,05:20,465,347,1A|2A|3A|SL,15,13153
+13157,Kolkata Chitpur - Muzaffarpur Tirhut Exp,Express,ER,KOAA,MFP,20:55,09:15,740,566,3A|SL,14,13158
+13158,Muzaffarpur - Kolkata Chitpur Tirhut Exp,Express,ER,MFP,KOAA,14:50,03:45,775,566,3A|SL,14,13157
+13159,Kolkata Chitpur - Jogbani Exp,Express,ER,KOAA,JBN,20:55,11:15,860,542,2A|3A|SL,13,13160
+13160,Jogbani - Kolkata Chitpur Exp,Express,ER,JBN,KOAA,14:35,03:45,790,542,2A|3A|SL,13,13159
+13163,Hatey Bazare Express,Express,ER,SDAH,SHC,20:10,12:15,965,589,2A|3A|SL,30,13164
+13164,Hatey Bazare Express,Express,ER,SHC,SDAH,14:20,07:15,1015,589,2A|3A|SL,30,13163
+13185,Ganga Sagar Express,Express,ER,SDAH,JYG,15:40,07:55,975,624,2A|3A|SL,22,13186
+13186,Ganga Sagar Express,Express,ER,JYG,SDAH,16:05,06:55,890,624,2A|3A|SL,21,13185
+13187,Maa Tara Express,Express,ER,SDAH,RPH,07:25,12:15,290,226,CC,9,13188
+13188,Rampurhat- Sealdah Express,Express,ER,RPH,SDAH,14:05,18:45,280,226,CC,9,13187
+13201,Rajendra Nagar Patna - Mumbai LTT Janta Exp,Express,ECR,RJPB,LTT,23:30,11:30,2160,1715,2A|3A|SL,63,13202
+13202,Mumbai LTT - Rajendra Nagar Patna Janta Exp,Express,ECR,LTT,RJPB,22:15,09:55,2140,1715,2A|3A|SL,61,13201
+13225,Jaynagar-Danapur Intercity,Express,ECR,JYG,DNR,10:45,20:40,595,277,CC,22,13226
+13226,Danapur-Jaynagar Intercity,Express,ECR,DNR,JYG,06:45,15:00,495,277,CC,22,13225
+13233,Rajgriha Express,Express,ECR,RGD,DNR,14:40,18:05,205,109,CC,15,13234
+13234,Rajgriha Express,Express,ECR,DNR,RGD,08:45,12:30,225,109,CC,15,13233
+13235,Sahibganj-Danapur InterCity,Express,ECR,SBG,DNR,14:25,23:37,552,306,CC,27,13236
+13236,Danapur-Sahibganj InterCity,Express,ECR,DNR,SBG,05:05,13:05,480,306,CC,29,13235
+13237,Patna Mathura Express,Express,ECR,PNBE,MTJ,11:50,07:20,1170,938,2A|3A|SL,17,13238
+13238,Mathura Patna Express,Express,ECR,MTJ,PNBE,22:00,17:20,1160,936,2A|3A|SL,18,13237
+13239,Patna Mathura Express,Express,ECR,PNBE,MTJ,11:50,07:20,1170,895,2A|3A|SL,12,13238
+13240,Mathura Patna Express,Express,ECR,MTJ,PNBE,22:00,17:20,1160,895,2A|3A|SL,12,13239
+13241,Banka Patna Express,Express,ECR,BAKA,RJPB,07:30,15:15,465,272,3A|SL,18,13242
+13242,Patna Banka Express,Express,ECR,RJPB,BAKA,23:25,06:50,445,272,3A|SL,18,13241
+13243,Patna Dehri On Sone InterCity Express,Express,ECR,PNBE,DOS,17:30,22:25,295,177,CC,20,13244
+13244,Dehri On Sone Patna InterCity Express,Express,ECR,DOS,PNBE,05:20,10:00,280,177,CC,20,13243
+13245,Capital Express,Express,ECR,NJP,DNR,14:40,04:50,850,501,2A|3A|SL,35,13246
+13246,Capital Express,Express,ECR,DNR,NJP,22:15,12:20,845,501,2A|3A|SL,35,13245
+13251,Islampur Rajendra Nagar Express,Express,ECR,IPR,RJPB,10:45,13:00,135,63,2A|3A|SL,7,13252
+13252,Rajendra Nagar Islampur Express,Express,ECR,RJPB,IPR,08:00,10:00,120,63,2A|3A|SL,7,13251
+13287,Durg - Rajendra Nagar South Bihar Exp,Express,ECR,DURG,RJPB,07:05,06:54,5749,1130,2A|3A|SL,49,13288
+13288,Rajendra Nagar Bihar - Durg South Bihar Exp,Express,ECR,RJPB,DURG,20:29,20:40,5771,1130,2A|3A|SL,51,13287
+13301,Suvarna Rekha Express,Express,ECR,DHN,TATA,05:35,11:15,340,193,CC,12,13302
+13302,Suvarna Rekha Express,Express,ECR,TATA,DHN,13:20,18:45,325,193,CC,11,13301
+13307,Ganga Sutlej Express,Express,ECR,DHN,FZR,21:20,10:20,2220,1599,2A|3A|SL,72,13308
+13308,Ganga Sutlej Express,Express,ECR,FZR,DHN,18:25,04:55,2070,1599,2A|3A|SL,69,13307
+13317,Black Diamond Express,Express,ECR,HWH,DHN,06:15,11:10,295,271,CC,16,13318
+13318,Black Diamond Express,Express,ECR,DHN,HWH,16:25,21:25,300,271,CC,16,13317
+13329,Ganga Damodar Express,Express,ECR,DHN,PNBE,23:10,05:15,365,291,2A|3A|SL,11,13330
+13330,Ganga Damodar Express,Express,ECR,PNBE,DHN,23:30,05:20,350,291,2A|3A|SL,11,13329
+13331,Dhanbad Patna Express,Express,ECR,DHN,PNBE,08:30,17:10,520,373,2A|3A|SL,16,13332
+13332,Patna Dhanbad Express,Express,ECR,PNBE,DHN,08:40,16:30,470,373,2A|3A|SL,16,13331
+13347,Palamau Express,Express,ECR,BRKA,PNBE,17:20,04:40,680,494,SL,31,13348
+13348,Palamau Express,Express,ECR,PNBE,BRKA,21:15,10:05,770,494,SL,30,13347
+13351,Dhanbad - Alappuzha Exp,Express,ECR,DHN,ALLP,10:50,20:25,6335,2536,2A|3A|SL,94,13352
+13352,Alappuzha - Dhanbad (Bokaro) Express,Express,ECR,ALLP,DHN,06:00,13:15,6195,2536,2A|3A|SL,93,13351
+13401,InterCity Express,Express,ER,BGP,DNR,05:25,12:15,410,231,CC,27,13402
+13402,InterCity Express,Express,ER,DNR,BGP,16:15,22:40,385,231,CC,27,13401
+13403,Vananchal Express,Express,ER,RNC,BGP,14:45,05:15,870,558,3A|SL,24,13404
+13404,Vananchal Express,Express,ER,BGP,RNC,15:30,05:15,825,561,3A|SL,24,13403
+13413,Farakka Express,Express,ER,MLDT,DLI,19:10,04:30,2000,1416,2A|3A|SL,61,13414
+13414,Farakka Express,Express,ER,DLI,MLDT,21:50,07:20,2010,1416,2A|3A|SL,57,13413
+13415,Malda Patna Express,Express,ER,MLDT,PNBE,20:30,05:30,540,399,2A|3A|SL,17,13416
+13416,Patna-Malda Express,Express,ER,PNBE,MLDT,21:45,08:20,635,399,2A|3A|SL,17,13415
+13419,Jan Sewa Express,Express,ER,BGP,MFP,14:05,20:50,405,240,SL,16,13420
+13420,Jan Sewa Express,Express,ER,MFP,BGP,23:05,05:55,410,240,SL,17,13419
+13465,InterCity Express,Express,ER,HWH,MLDT,15:15,22:20,425,331,CC,13,13466
+13466,InterCity Express,Express,ER,MLDT,HWH,06:10,12:50,400,331,CC,13,13465
+13483,Farakka Express,Express,ER,MLDT,DLI,19:10,04:30,2000,1456,2A|3A|SL,63,13484
+13484,Farakka Express,Express,ER,DLI,MLDT,21:50,07:20,2010,1456,2A|3A|SL,59,13483
+13507,Asansol-Gorakhpur Express,Express,ER,ASN,GKP,16:10,06:00,830,644,3A|SL,15,13508
+13508,Gorakhpur-Asansol Express,Express,ER,GKP,ASN,20:55,11:15,860,644,3A|SL,15,13507
+13509,Asansol-Gonda Express,Express,ER,ASN,GD,16:10,13:00,1250,862,3A|SL,20,13510
+13510,Gonda-Asansol Express,Express,ER,GD,ASN,15:00,11:15,1215,862,3A|SL,20,13509
+14001,OLD Delhi - Atari Shyam Singh Samjhauta Exp,Express,NR,DLI,ATT,23:05,07:15,490,472,3A|SL,2,14002
+14002,Atari Shyam Singh - OLD Delhi Samjhauta Exp,Express,NR,ATT,DLI,20:15,03:20,425,472,3A|SL,2,14001
+14003,New Farakka-New Delhi Express,Express,NR,NFK,NDLS,09:45,14:25,1720,1387,2A|3A|SL,20,14004
+14004,New Delhi-New Farakka Express,Express,NR,NDLS,NFK,17:45,23:00,1755,1387,2A|3A|SL,20,14003
+14005,Lichhavi Express,Express,NR,SMI,ANVT,23:55,04:20,1705,1285,2A|3A|SL,39,14006
+14006,Lichhavi Express,Express,NR,ANVT,SMI,15:45,22:15,1830,1285,2A|3A|SL,40,14005
+14007,Muzaffarpur-Old Delhi Sadbhavna Express,Express,NR,MFP,DLI,04:15,04:50,1475,1106,3A|SL,29,14008
+14008,Old Delhi-Muzaffarpur Sadbhavana Express,Express,NR,DLI,MFP,16:20,18:00,1540,1106,3A|SL,29,14007
+14009,Patalkot Express,Express,NR,CWA,DEE,10:15,06:15,1200,1050,3A|SL,19,14010
+14010,Patalkot Express,Express,NR,DEE,CWA,12:20,09:50,1290,1050,3A|SL,19,14009
+14011,Kathgodam-Anand Vihar AC Express,Express,NR,KGM,ANVT,15:45,21:20,335,271,1A|2A|3A,8,14012
+14012,Anand Vihar-Kathgodam AC Express,Express,NR,ANVT,KGM,06:00,11:55,355,271,1A|2A|3A,8,14011
+14013,Sadbhavna Express,Express,NR,SLN,DLI,15:30,04:50,800,645,2A|3A|SL,15,14014
+14014,Sadbhavna Express,Express,NR,DLI,SLN,16:20,06:10,830,645,2A|3A|SL,15,14013
+14015,Sadbhavna Express,Express,NR,RXL,DLI,00:35,04:50,1695,1236,3A|SL,35,14016
+14016,Sadbhavana Express,Express,NR,DLI,RXL,16:20,21:30,1750,1236,3A|SL,35,14015
+14017,Sadbhavna Express,Express,NR,MFP,DLI,04:15,04:50,1475,1147,2A|3A|SL,32,14018
+14018,Sadbhavana Expres,Express,NR,DLI,MFP,16:20,18:00,1540,1147,2A|3A|SL,32,14017
+14019,Chhindwara Delhi SR (Biweekly) Kanhan valley Express,Express,NR,CWA,DEE,10:15,06:15,1200,1050,3A|SL,18,14020
+14020,Delhi SR Chhindwara Kanhan Valley Express,Express,NR,DEE,CWA,12:20,09:50,1290,1050,3A|SL,18,14019
+14033,Jammu Mail,Mail,NR,DLI,UHP,20:20,11:40,920,637,1A|2A|3A|SL,29,14034
+14034,Jammu Mail,Mail,NR,UHP,DLI,14:35,05:45,910,637,1A|2A|3A|SL,26,14033
+14035,Dhauladhar Express,Express,NR,DLI,PTK,22:10,08:00,590,496,1A|2A|3A|SL,18,14036
+14036,Dhauladhar Express,Express,NR,PTK,DLI,22:30,07:45,555,496,1A|2A|3A|SL,19,14035
+14037,Delhi-Pathankot Express,Express,NR,DLI,PTK,08:00,18:00,600,554,CC,13,14036
+14038,Pathankot Delhi Express,Express,NR,PTK,DLI,07:00,17:25,625,554,CC,15,14037
+14041,Delhi Sarai Rohilla - Dehradun Mussoorie Exp,Express,NR,DEE,DDN,21:30,08:00,4950,339,1A|2A|3A|SL,19,14042
+14042,Dehradun - Delhi Sarai Rohilla Mussoorie Exp,Express,NR,DDN,DEE,21:20,08:35,4995,339,1A|2A|3A|SL,19,14041
+14043,Kotdwar - OLD Delhi Garhwal Exp,Express,NR,KTW,DLI,15:00,22:15,1875,238,CC,13,14044
+14044,OLD Delhi - Kotdwar Garhwal Exp,Express,NR,DLI,KTW,07:20,14:20,1860,238,CC,13,14043
+14055,Dibrugarh - OLD Delhi Brahmaputra Exp,Mail,NR,DBRG,DLI,23:10,06:05,6175,2589,2A|3A|SL,59,14056
+14056,OLD Delhi - Dibrugarh Brahmaputra Exp,Mail,NR,DLI,DBRG,23:30,04:00,6030,2589,2A|3A|SL,59,14055
+14083,Sikkim Mahananda Express,Express,NR,APDJ,DLI,07:15,18:10,2095,1651,2A|3A|SL,56,14084
+14084,Sikkim Mahananda Express,Express,NR,DLI,APDJ,06:40,17:55,2115,1651,2A|3A|SL,57,14083
+14095,Himalayan Queen,Express,NR,DEE,KLK,05:45,11:10,325,305,CC,12,14096
+14096,Himalayan Queen,Express,NR,KLK,DEE,16:50,22:40,350,305,CC,13,14095
+14114,Link Express,Express,NCR,DDN,ALD,13:25,08:10,1125,863,2A|SL,31,
+14115,Haridwar Express,Express,NCR,ALD,HW,23:35,14:30,895,725,2A|3A|SL,15,14116
+14116,Allahabad Express,Express,NCR,HW,ALD,16:20,07:45,925,725,2A|3A|SL,15,14115
+14119,Kathgodam Dehradun Express,Express,NCR,KGM,DDN,19:45,04:20,515,335,1A|2A|SL,11,14120
+14120,Dehradun Kathgodam Express,Express,NCR,DDN,KGM,22:50,07:10,500,335,1A|2A|SL,11,14119
+14163,Sangam Express,Express,NCR,ALD,MTC,17:45,06:40,775,639,2A|3A|SL,28,14164
+14164,Sangam Express,Express,NCR,MTC,ALD,19:00,08:10,790,639,2A|3A|SL,23,14163
+14203,Varanasi Lucknow InterCity Express,Express,NR,BSB,LKO,16:20,22:10,350,302,CC,12,14204
+14204,Lucknow Varanasi InterCity Express,Express,NR,LKO,BSB,07:00,13:30,390,302,CC,12,14203
+14205,Faizabad Delhi Express,Express,NR,FD,DLI,21:30,09:35,725,615,2A|3A|SL,9,14206
+14206,Delhi-Faizabad Express,Express,NR,DLI,FD,18:40,07:20,760,615,2A|3A|SL,9,14205
+14207,Padmavat Express,Express,NR,PBH,DLI,17:00,07:10,850,660,2A|3A|SL,13,14208
+14208,Padmavat Express,Express,NR,DLI,PBH,19:50,08:20,750,660,2A|3A|SL,13,14207
+14209,Vindhyachal-Lucknow InterCity,Express,NR,BDL,LKO,13:45,19:40,355,284,CC,11,14210
+14210,Lucknow-Vindhyachal InterCity,Express,NR,LKO,BDL,07:30,13:10,340,284,CC,11,14209
+14211,Agra-New Delhi Intercity Express,Express,NCR,AGC,NDLS,06:00,10:20,260,195,1A|2A|CC,16,14212
+14212,NewDelhi-Agra InterCity Express,Express,NCR,NDLS,AGC,17:40,21:50,250,195,1A|2A|CC,16,14211
+14213,Varanasi-Gonda Intercity Express,Express,NR,BSB,GD,14:15,19:50,335,256,CC,7,14214
+14214,Gonda-Varanasi Intercity Express,Express,NR,GD,BSB,06:55,13:40,405,256,CC,7,14213
+14215,Ganga Gomti Express,Express,NR,ALD,LKO,06:00,10:10,250,201,CC,10,14216
+14216,Ganga Gomti Express,Express,NR,LKO,ALD,18:00,22:20,260,201,CC,10,14215
+14217,Unchahar Express,Express,NCR,ALD,CDG,14:15,10:15,1200,913,2A|3A|SL,41,14218
+14218,Chandigarh Allahabad Unchahar Express,Express,NR,CDG,ALD,16:25,11:20,1135,913,2A|3A|SL,37,14217
+14227,Varuna Express,Express,NR,BSB,LKO,04:55,09:50,295,284,CC,10,14228
+14228,Varuna Express,Express,NR,LKO,BSB,17:50,23:20,330,284,CC,10,14227
+14235,Varanasi Bareilly Express,Express,NR,BSB,BE,23:45,13:50,845,559,3A|FC|SL,45,14236
+14236,Bareilly Varanasi Express,Express,NR,BE,BSB,15:30,06:50,920,559,3A|FC|SL,42,14235
+14257,Kashi Vishwanath Express,Express,NR,BSB,NDLS,13:45,06:10,985,794,1A|2A|3A|SL,32,14258
+14258,Kashi Vishwanath Express,Express,NR,NDLS,BSB,11:40,04:45,1025,794,1A|2A|3A|SL,34,14257
+14265,Varanasi Dehradun Janata Express,Express,NR,BSB,DDN,08:30,06:40,1330,846,2A|3A|SL,48,14266
+14266,Dehradun Varanasi Janata Express,Express,NR,DDN,BSB,18:15,15:45,1290,846,2A|3A|SL,50,14265
+14307,Bareilly Express,Express,NR,PRG,BE,22:15,10:55,760,461,SL,40,14308
+14309,Ujjaini Express,Express,WR,UJN,DDN,15:00,19:00,1680,1241,2A|3A|SL,28,14310
+14310,Ujjaini Express,Express,WR,DDN,UJN,06:00,09:00,1620,1241,2A|3A|SL,28,14309
+14311,Bareilly - Bhuj Ala Hazrat Exp,Express,NR,BE,BHUJ,06:25,14:20,6235,1543,2A|3A|SL,42,14312
+14312,Bhuj - Bareilly Ala Hazrat Exp,Express,NR,BHUJ,BE,12:30,20:20,6230,1543,2A|3A|SL,42,14311
+14313,Mumbai LTT - Bareilly Weekly Exp,Express,NR,LTT,BE,08:05,15:40,1895,1608,2A|3A|SL,27,14314
+14314,Bareilly - Mumbai LTT Weekly Exp,Express,NR,BE,LTT,10:45,20:00,1995,1608,2A|3A|SL,27,14313
+14315,Bareilly-NewDelhi InterCity,Express,NR,BE,NDLS,04:55,10:05,310,258,CC,15,14316
+14316,NewDelhi-Bareilly InterCity,Express,NR,NDLS,BE,16:35,21:55,320,258,CC,15,14315
+14317,Indore - Dehradun Exp,Express,NR,INDB,DDN,15:05,19:00,1675,1183,2A|3A|SL,27,14318
+14318,Dehradun - Indore Exp,Express,NR,DDN,INDB,06:00,06:35,1475,1179,2A|3A|SL,28,14317
+14321,Bareilly - Bhuj Ala Hazrat Exp,Express,NR,BE,BHUJ,06:25,10:15,3110,1410,2A|3A|SL,42,14322
+14322,Bhuj - Bareilly Ala Hazrat Exp,Express,NR,BHUJ,BE,16:20,20:20,3120,1410,2A|3A|SL,41,14321
+14323,New Delhi-Rohtak Express,Express,NR,NDLS,ROK,10:35,12:45,130,72,CC,6,14324
+14324,New Delhi Express,Express,NR,ROK,NDLS,14:15,16:00,105,72,CC,6,14323
+14369,Tribeni Express,Express,NR,SGRL,BE,18:25,12:30,1085,723,2A|SL,33,14370
+14370,Triveni Express,Express,NR,BE,SGRL,12:00,07:15,1155,723,2A|SL,35,14369
+14511,Allahabad-Saharanpur Nauchandi Express,Express,NR,ALD,SRE,17:40,11:45,1085,774,2A|SL,29,14512
+14512,Saharanpur-Allahabad Nauchandi Express,Express,NR,SRE,ALD,16:45,09:55,1030,774,2A|SL,28,14511
+14519,Kissan Express,Express,NR,DLI,BTI,14:55,22:20,445,337,CC,17,14520
+14520,Kisan Express,Express,NR,BTI,DLI,06:55,14:20,445,337,CC,17,14519
+14523,Harihar Express,Express,NR,MFP,UMB,07:25,07:55,1470,1201,3A|SL,19,14524
+14524,Harihar Express,Express,NR,UMB,MFP,22:35,23:50,1515,1201,3A|SL,19,14523
+14525,Ambala Cantt-Shri GangaNagar InterCity Express,Express,NR,UMB,SGNR,05:15,12:25,430,328,CC,13,14526
+14526,Shri Ganganagar-Ambala Cantt InterCity Express,Express,NR,SGNR,UMB,14:00,20:55,415,328,CC,13,14525
+14553,Himachal Express,Express,NR,DLI,UHL,22:45,07:50,545,371,2A|3A|SL,25,14554
+14554,Himachal Express,Express,NR,UHL,DLI,20:50,05:30,520,371,2A|3A|SL,23,14553
+14555,Bareilly-Delhi Express,Express,NR,BE,DLI,14:30,21:25,415,274,2A|3A,19,14556
+14556,Delhi-Bareilly Express,Express,NR,DLI,BE,06:05,13:00,415,274,2A|3A,21,14555
+14609,Hemkunt Express,Express,NR,RKSH,JAT,16:20,04:30,730,558,2A|3A|SL,19,14610
+14610,Hemkunt Express,Express,NR,JAT,RKSH,18:40,08:00,800,558,2A|3A|SL,20,14609
+14631,Dehradun Amritsar Express,Express,NR,DDN,ASR,19:40,07:30,710,463,3A|FC|SL,25,14632
+14632,Amritsar Dehradun Express,Express,NR,ASR,DDN,22:15,10:05,710,463,3A|FC|SL,27,14631
+14645,Shalimar Express,Express,NR,DLI,JAT,15:50,05:15,805,640,1A|2A|3A|SL,29,14646
+14646,Shalimar Express,Express,NR,JAT,DLI,21:00,10:55,835,640,1A|2A|3A|SL,28,14645
+14649,Saryu Yamuna Express,Express,NR,JYG,ASR,06:30,22:55,2425,1670,2A|3A|SL,62,14650
+14650,Saryu Yamuna Express,Express,NR,ASR,JYG,11:55,02:00,2285,1670,2A|3A|SL,58,14649
+14659,Delhi-Jaisalmer Express,Express,NR,DLI,JSM,17:30,11:00,1050,921,1A|2A|3A|SL,38,14660
+14660,Jaisalmer Delhi Express,Express,NR,JSM,DLI,17:15,11:10,1075,918,1A|2A|3A|SL,37,14659
+14661,Delhi Barmer Link Express,Express,NR,JU,BME,05:05,09:45,280,209,2A|3A|SL,8,
+14662,Barmer-Delhi Malani Express,Express,NR,BME,DLI,18:30,11:10,1000,829,2A|3A|SL,35,
+14673,Shaheed Express,Express,NR,JYG,ASR,06:30,22:55,2425,1654,2A|3A|SL,56,14674
+14674,Shaheed Express,Express,NR,ASR,JYG,11:55,02:00,2285,1654,2A|3A|SL,56,14673
+14681,New Delhi-Jalandhar Express,Express,NR,NDLS,JUC,14:50,23:30,520,439,CC,21,14682
+14682,Jalandhar Ndls Express,Express,NR,JUC,NDLS,04:20,12:50,510,439,CC,21,14681
+14701,Jaisalmer-Bikaner Express,Express,NWR,JSM,BKN,22:40,04:35,355,327,SL,8,14702
+14702,Bikaner-Jaisalmer Express,Express,NWR,BKN,JSM,23:35,05:30,355,327,SL,8,14701
+14705,Delhi Sarai Rohilla Sadulpur Express,Express,NWR,DEE,SDLP,08:40,12:50,250,220,2A|3A|SL,8,14706
+14706,Sadulpur Delhi Sarai Rohilla Express,Express,NWR,SDLP,DEE,16:10,20:25,255,220,2A|3A|SL,8,14705
+14707,Bikaner - Mumbai Bandra Ranakpur Exp,Express,NWR,BKN,BDTS,09:30,10:55,1525,1212,2A|3A|SL,33,14708
+14708,Mumbai Bandra - Bikaner Ranakpur Exp,Express,NWR,BDTS,BKN,15:00,15:35,2915,1212,2A|3A|SL,33,14707
+14711,Haridwar Shri Ganganagar InterCity Express,Express,NWR,HW,SGNR,14:05,23:55,590,485,CC,21,14712
+14712,Shriganganagar Haridwar Express,Express,NWR,SGNR,HW,04:10,13:35,565,485,CC,21,14711
+14723,Kalindi Express,Express,NCR,CNB,BNW,17:05,09:40,995,605,3A|SL,31,14724
+14724,Kalindi Express,Express,NCR,BNW,CNB,18:15,11:10,1015,605,3A|SL,30,14723
+14731,Delhi Bhatinda Intercity Express,Express,NWR,DLI,BTI,14:15,22:15,480,399,CC,20,14732
+14732,Bhatinda Delhi Express,Express,NWR,BTI,DLI,05:05,12:45,460,399,CC,20,14731
+14801,Jodhpur Gandhidham Express,Express,NWR,JU,GIMB,20:45,06:30,585,559,3A|SL,10,14802
+14802,Gandhidham Jodhpur Express,Express,NWR,GIMB,JU,20:30,05:40,550,559,3A|SL,10,14801
+14809,Jaisalmer Jodhpur Express,Express,NWR,JSM,JU,23:30,05:15,345,301,3A|SL,10,14810
+14810,Jaisalmer Express,Express,NWR,JU,JSM,23:45,05:30,345,301,3A|SL,10,14809
+14853,Marudhar Express,Express,NWR,BSB,JU,17:20,17:00,1420,1201,2A|3A|SL,35,14854
+14854,Marudhar Express,Express,NWR,JU,BSB,09:50,10:30,1480,1201,2A|3A|SL,35,14853
+14863,Marudhar Express,Express,NWR,BSB,JU,18:15,17:00,1365,1161,2A|3A|SL,31,14864
+14864,Marudhar Express,Express,NWR,JU,BSB,09:50,08:35,1365,1161,2A|3A|SL,31,14863
+14865,Marudhar Express,Express,NWR,BSB,JU,17:45,17:00,1395,1179,2A|3A|SL,32,14864
+14866,Marudhar Express,Express,NWR,JU,BSB,09:50,09:30,1420,1179,2A|3A|SL,32,14865
+14887,Kalka - Barmer Chandigarh Express,Express,NWR,KLK,BME,21:45,20:00,1335,1117,2A|3A|SL,36,14888
+14888,Barmer-Kalka Express,Express,NWR,BME,KLK,06:45,05:50,1385,1117,3A|SL,36,14887
+14889,Thar Link Express,Express,NWR,BGKT,MBF,01:00,07:00,360,325,SL,2,14890
+15001,Rapti Ganga Express,Express,NER,MFP,DDN,14:00,14:00,1440,1124,2A|3A|SL,25,15002
+15002,Rapti Ganga Express,Express,NER,DDN,MFP,15:35,15:55,1460,1124,2A|3A|SL,25,15001
+15003,Chauri Chaura Express,Express,NER,CPA,GKP,16:45,06:50,845,552,1A|2A|3A|SL,31,15004
+15004,Chauri Chaura Express,Express,NER,GKP,CPA,22:30,12:15,825,552,1A|2A|3A|SL,27,15003
+15005,Rapti Ganga Express,Express,NER,GKP,DDN,21:10,14:00,1010,815,2A|3A|SL,15,15006
+15006,Rapti Ganga Express,Express,NER,DDN,GKP,15:35,08:05,990,815,2A|3A|SL,15,15005
+15007,Krishak Express,Express,NER,MUV,LJN,16:40,05:50,790,513,1A|2A|3A|SL,37,15008
+15008,Krishak Express,Express,NER,LJN,MUV,23:05,13:00,835,513,1A|2A|3A|SL,38,15007
+15009,Chitrakoot Express,Express,NER,LJN,ADTL,17:30,07:29,839,582,2A|3A|SL,27,15010
+15010,Chitrakoot Express,Express,NER,JBP,LJN,20:40,09:30,770,582,2A|3A|SL,27,15009
+15011,Lucknow - Chandigarh Exp,Express,NER,LJN,CDG,22:55,14:50,955,724,2A|SL,19,15012
+15012,Chandigarh - Lucknow Exp,Express,NER,CDG,LJN,17:10,09:05,955,724,2A|SL,19,15011
+15013,Ranikhet Express,Express,NER,DLI,KGM,22:40,05:10,390,278,1A|2A|3A|SL,12,15014
+15014,Ranikhet Express,Express,NER,KGM,DLI,20:40,03:55,435,278,1A|2A|3A|SL,12,15013
+15015,Gorakhpur - Yesvantpur Exp,Express,NER,GKP,YPR,06:45,09:45,3060,2532,2A|3A|SL,20,15016
+15016,Yesvantpur - Gorakhpur Exp,Express,NER,YPR,GKP,07:40,14:20,3280,2515,2A|3A|SL,19,15015
+15017,Mumbai LTT - Gorakhpur Kashi Exp,Express,NER,LTT,GKP,06:35,19:10,2195,1714,2A|3A|SL,72,15018
+15018,Gorakhpur - Mumbai LTT Kashi Exp,Express,NER,GKP,LTT,05:30,18:40,2230,1714,2A|3A|SL,71,15017
+15019,Gorakhpur Nautanwa Express,Express,NER,GKP,NTV,11:30,14:00,150,82,3A,4,15020
+15020,Gorakhpur Nautanwa Express,Express,NER,NTV,GKP,14:40,16:40,120,82,3A,4,15019
+15021,Kolkata Shalimar-Gorakhpur Bhojpuri Express,Express,NER,SHM,GKP,20:25,16:20,1195,1050,2A|3A|SL,13,15022
+15022,Bhojpuri Express,Express,NER,GKP,SHM,13:40,09:55,1215,1050,2A|3A|SL,13,15021
+15023,Gorakhpur - Yesvantpur Exp,Express,NER,GKP,YPR,08:00,11:15,3075,2473,2A|3A|SL,23,15024
+15024,Yesvantpur - Gorakhpur Exp,Express,NER,YPR,GKP,23:40,05:05,3205,2465,2A|3A|SL,23,15023
+15027,Maurya Express,Express,NER,HTE,GKP,16:55,17:10,1455,857,2A|3A|SL,49,15028
+15028,Maurya Express,Express,NER,GKP,HTE,07:25,08:10,1485,864,2A|3A|SL,49,15027
+15035,Uttarakhand Sampark Kranti Express,Sampark Kranti,NER,DLI,KGM,16:00,22:40,400,278,3A|CC,9,15036
+15036,Uttarakhand Sampark Kranti Express,Sampark Kranti,NER,KGM,DLI,08:50,15:20,390,278,3A|CC,9,15035
+15045,Gorakhpur-Okha Express,Express,NER,GKP,OKHA,04:05,04:30,2905,2306,2A|3A|SL,39,15046
+15046,Okha-Gorakhpur Express,Express,NER,OKHA,GKP,18:55,20:20,2965,2306,2A|3A|SL,38,15045
+15047,Purvanchal Express,Express,NER,KOAA,GKP,14:30,07:55,1045,859,2A|3A|SL,19,15048
+15048,Purvanchal Express,Express,NER,GKP,KOAA,11:30,04:15,1005,859,2A|3A|SL,18,15049
+15049,Poorvanchal Express,Express,NER,KOAA,GKP,14:30,09:40,1150,883,2A|3A|SL,27,15050
+15050,Poorvanchal Express,Express,NER,GKP,KOAA,08:00,04:15,1215,883,2A|3A|SL,26,15049
+15051,Poorvanchal Express,Express,NER,KOAA,GKP,14:30,08:10,1060,875,2A|3A|SL,22,15050
+15052,Gorakhpur Kolkata Express,Express,NER,GKP,KOAA,10:10,04:15,1085,876,2A|3A|SL,23,15051
+15097,Barauni-Jammu Amarnath Express,Express,ECR,BJU,JAT,05:00,12:20,1880,1648,2A|3A|SL,26,15098
+15098,Jammu-Barauni Amarnath Express,Express,ECR,JAT,BJU,22:45,05:45,1860,1648,2A|3A|SL,26,15097
+15103,Gorakhpur Manduadih Intercity Express,Express,NER,GKP,MUV,16:00,21:40,340,235,3A,13,15104
+15104,Manduadih Gorakhpur InterCity,Express,NER,MUV,GKP,05:30,11:10,340,235,3A,16,15103
+15105,Chhapra Gorakhpur InterCity Express,Express,NER,CPR,GKP,06:30,10:30,240,180,3A,8,15106
+15106,Gorakhpur Chhapra InterCity Express,Express,NER,GKP,CPR,17:00,21:15,255,180,3A,13,15105
+15107,Chhapra Mathura Express,Express,NER,CPR,MTJ,05:00,21:55,1015,874,3A|SL,19,15108
+15108,Mathura Chhapra Express,Express,NER,MTJ,CPR,23:15,17:05,1070,874,3A|SL,19,15107
+15109,Budhpurnima Express,Express,NER,RGD,BSB,23:30,08:40,550,410,SL,17,15110
+15110,Budhpurnima Express,Express,NER,BSB,RGD,20:35,05:05,510,410,SL,17,15109
+15159,Sarnath Express,Express,NER,CPR,DURG,07:20,07:30,1450,1083,2A|3A|SL,44,15160
+15160,Sarnath Express,Express,NER,DURG,CPR,20:35,21:40,1505,1083,2A|3A|SL,40,15159
+15203,Barauni-Lucknow Express,Express,ECR,BJU,LJN,20:30,12:45,975,674,3A|SL,37,15204
+15204,Lucknow-Barauni Express,Express,ECR,LJN,BJU,15:00,08:30,1050,674,3A|SL,37,15203
+15227,Yesvantpur - Muzaffarpur Weekly Exp,Express,ECR,YPR,MFP,23:55,04:00,6005,2733,2A|3A|SL,33,15228
+15228,Muzaffarpur - Yesvantpur Weekly Exp,Express,ECR,MFP,YPR,07:25,11:20,5995,2733,2A|3A|SL,32,15227
+15233,Kolkata Chitpur - Darbhanga Maithili Exp,Express,ECR,KOAA,DBG,10:40,22:15,695,539,2A|3A|SL,8,15234
+15234,Darbhanga - Kolkata Chitpur Maithili Exp,Express,ECR,DBG,KOAA,16:10,03:10,660,539,2A|3A|SL,8,15233
+15235,Howrah-Darbhanga Express,Express,ECR,HWH,DBG,11:05,22:15,670,536,2A|3A|SL,11,15236
+15236,Darbhanga-Howrah Express,Express,ECR,DBG,HWH,16:10,03:00,650,536,2A|3A|SL,11,15235
+15273,Satyagraha Express,Express,NER,RXL,DLI,08:50,09:20,1470,964,3A|SL,46,15274
+15274,Satyagraha Express,Express,NER,DLI,RXL,17:15,16:50,1415,964,3A|SL,46,15273
+15279,Poorbiya Express,Express,NER,SHC,ANDI,11:00,14:15,1635,1210,3A|SL,23,15280
+15280,Poorabiya Express,Express,NER,ANDI,SHC,15:40,18:50,1630,1202,3A|SL,23,15279
+15281,Kosi Express,Express,NER,SHC,PNBE,05:10,10:25,315,224,CC,21,15282
+15282,Kosi Express,Express,NER,PNBE,SHC,16:55,22:30,335,224,CC,21,15281
+15283,Janaki Express,Express,ECR,SHC,JYG,23:15,05:20,365,245,3A|SL,13,15284
+15284,Janaki Express,Express,ECR,JYG,SHC,23:30,05:40,370,245,3A|SL,11,15283
+15307,Nainital Express,Express,NER,LKU,ASH,20:45,06:35,590,363,2A|FC|SL,14,15308
+15308,Nainital Express,Express,NER,ASH,LKU,20:35,06:10,575,363,2A|FC|SL,14,15307
+15312,Kumaun Express,Express,NER,LKKA,KSJF,17:45,23:40,355,188,2A|FC|SL,12,15311
+15314,Aishbagh Express,Express,NER,BRY,ASH,04:30,13:30,540,317,SL,15,15313
+15315,Gonda-Kasganj Gokul Express,Express,NER,GD,KSJ,20:15,09:30,795,499,SL,22,15316
+15316,Kasganj-Gonda Gokul Express,Express,NER,KSJ,GD,17:35,07:10,815,498,SL,21,15315
+15603,Guwahati Ledo Intercity Express,Express,NFR,GHY,LEDO,22:30,12:15,825,571,2A|3A|SL,29,15604
+15604,Ledo Guwahati Intercity Express,Express,NFR,LEDO,GHY,15:15,04:35,800,571,2A|3A|SL,29,15603
+15605,Jorhat Town InterCity Express,Express,NFR,GHY,MXN,22:30,09:30,660,405,3A|SL,23,15606
+15606,Guwahati InterCity Express,Express,NFR,MXN,GHY,18:30,04:35,605,405,3A|SL,23,15605
+15609,Awadh Assam Express,Express,NFR,GHY,LGH,21:30,05:45,3375,2559,2A|3A|SL,72,15610
+15610,Awadh Assam Express,Express,NFR,LGH,GHY,19:45,04:00,3375,2559,2A|3A|SL,72,15609
+15619,Gaya - Kamakhya Weekly Exp,Express,NFR,GAYA,KYQ,12:50,12:30,2860,1091,3A|SL,20,15620
+15620,Kamakhya - Gaya Weekly Exp,Express,NFR,KYQ,GAYA,07:00,05:35,2795,1091,3A|SL,20,15619
+15629,Chennai Egmore - Guwahati Exp,Express,NFR,MS,GHY,22:30,04:55,7585,2795,2A|3A|SL,35,15630
+15630,Guwahati - Chennai Egmore Exp,Express,NFR,GHY,MS,15:00,20:15,7515,2796,2A|3A|SL,35,15629
+15631,Barmer - Guwahati Exp,Express,NFR,BME,GHY,23:00,23:15,4335,2473,2A|3A|SL,31,15632
+15632,Guwahati - Barmer Exp,Express,NFR,GHY,BME,10:45,08:50,4205,2473,2A|3A|SL,31,15631
+15635,Okha - Guwahati EXP,Express,NFR,OKHA,GHY,11:25,07:05,6940,3237,2A|3A|SL,41,15636
+15636,Guwahati - Okha Dwarka EXP,Express,NFR,GHY,OKHA,10:45,04:30,6825,3237,2A|3A|SL,41,15635
+15639,Puri - Guwahati Exp,Express,NFR,PURI,GHY,14:05,22:00,4795,1528,2A|3A|SL,24,15640
+15640,Guwahati - Puri Exp,Express,NFR,GHY,PURI,18:45,03:20,4835,1528,2A|3A|SL,24,15639
+15643,Puri - Kamakhya Weekly Express,Express,NFR,PURI,KYQ,22:15,04:20,3245,1572,3A|SL,24,15644
+15644,Kamakhya - Puri Weekly Spl,Express,NFR,KYQ,PURI,23:45,07:45,3360,1572,3A|SL,23,15643
+15645,Mumbai LTT - Guwahati Exp,Express,NFR,LTT,GHY,08:05,11:30,4525,2594,2A|3A|SL,46,15646
+15646,Guwahati - Mumbai LTT Exp,Express,NFR,GHY,LTT,16:45,20:00,4515,2594,2A|3A|SL,48,15645
+15647,Mumbai LTT - Guwahati Exp,Express,NFR,LTT,GHY,08:05,13:00,6055,2735,2A|3A|SL,54,15648
+15648,Guwahati - Mumbai LTT Exp,Express,NFR,GHY,LTT,15:00,20:00,6060,2735,2A|3A|SL,53,15647
+15651,Guwahati - Jammu Tawi Lohit Exp,Express,NFR,GHY,JAT,13:15,12:20,4265,2352,2A|3A|SL,41,15652
+15652,Jammu Tawi - Guwahati Lohit Exp,Express,NFR,JAT,GHY,22:45,22:55,4330,2352,2A|3A|SL,42,15651
+15653,Guwahati - Jammu Tawi Amarnath Exp,Express,NFR,GHY,JAT,13:15,12:20,4265,2431,2A|3A|SL,41,15654
+15654,Jammu Tawi - Guwahati Amarnath Exp,Express,NFR,JAT,GHY,22:45,22:55,4330,2431,2A|3A|SL,43,15653
+15657,Kolkata Sealdah - Guwahati KanchanJungha Exp,Express,NFR,SDAH,GHY,06:35,04:30,1315,975,2A|3A|SL,32,15658
+15658,Guwahati - Kolkata Sealdah KanchanJungha Exp,Express,NFR,GHY,SDAH,22:30,19:25,1255,975,2A|3A|SL,31,15657
+15661,Ranchi - Kamakhya Exp,Express,NFR,RNC,KYQ,20:40,22:00,4400,1216,3A|SL,25,15662
+15662,Kamakhya - Ranchi Exp,Express,NFR,KYQ,RNC,12:30,14:15,4425,1216,3A|SL,25,15661
+15665,Guwahati-Dimapur Express,Express,NFR,GHY,DMV,14:15,19:40,325,250,2A|3A|SL,8,15666
+15666,Dimapur-Guwahati Express,Express,NFR,DMV,GHY,21:45,03:45,360,250,2A|3A|SL,8,15665
+15667,Gandhidham - Kamakhya Exp,Express,NFR,GIMB,KYQ,13:15,06:00,5325,3157,2A|3A|SL,34,15668
+15668,Kamakhya - Gandhidham Exp,Express,NFR,KYQ,GIMB,11:00,04:00,5340,3159,2A|3A|SL,34,15667
+15669,Nagaland Express,Express,NFR,KYQ,DMV,23:10,05:20,370,256,2A|3A|SL,6,15670
+15670,Nagaland Express,Express,NFR,DMV,KYQ,06:30,12:00,330,256,2A|3A|SL,6,15669
+15691,Cachar Express,Express,NFR,LMG,SCL,22:00,08:50,650,215,2A|SL,14,15692
+15692,Cachar Express,Express,NFR,SCL,LMG,19:00,06:10,670,215,2A|SL,14,15693
+15693,Barak Valley Express,Express,NFR,LMG,SCL,06:15,18:45,750,215,SL,30,15694
+15694,Barak Valley Express,Express,NFR,SCL,LMG,08:30,20:00,690,215,SL,30,15693
+15695,Lumding Agartala Express,Express,NFR,LMG,AGTL,20:55,13:15,980,412,2A|SL,14,15696
+15696,Agartala Lumding Express,Express,NFR,AGTL,LMG,14:10,08:30,1100,412,2A|SL,17,15695
+15707,Amrapali Express,Express,NFR,KIR,ASR,23:30,12:10,2200,1805,2A|3A|SL,48,15708
+15708,Amrapali Express,Express,NFR,ASR,KIR,07:15,20:10,2215,1805,2A|3A|SL,49,15707
+15713,InterCity Express,Express,NFR,KIR,PNBE,06:10,12:40,390,290,CC,18,15714
+15714,InterCity Express,Express,NFR,PNBE,KIR,14:15,21:35,440,290,CC,17,15713
+15715,Garib Nawaz Express,Express,NFR,KNE,AII,05:40,21:30,2390,1835,1A|3A|SL,25,15716
+15716,Garib Nawaz Express Slip,Express,NFR,AII,KNE,11:20,03:30,2410,1816,3A|SL,26,15715
+15721,Paharia Express,Express,NFR,DGHA,NJP,16:30,08:45,975,752,1A|3A|SL,16,15722
+15722,Paharia Express,Express,NFR,NJP,DGHA,21:15,12:00,885,752,1A|3A|SL,16,15721
+15723,NewJalpaiguri-Darbhanga Weekly Express,Express,NFR,NJP,DBG,22:00,08:30,630,469,1A|3A|SL,10,15724
+15724,Darbhanga-NewJalpaiguri Weekly Express,Express,NFR,DBG,NJP,19:00,05:50,650,469,1A|3A|SL,10,15723
+15743,InterCity Express,Express,NFR,APDJ,KYQ,05:25,11:35,370,297,SL,10,
+15903,Dibrugarh-Chandigarh Weekly Express,Express,NFR,DBRG,CDG,08:40,13:45,3185,2661,2A|3A|SL,33,
+15905,Kanniyakumari - Dibrugarh Vivek Exp,Express,NFR,CAPE,DBRG,14:00,03:30,8010,4279,2A|3A|SL,55,15906
+15906,Dibrugarh - Kanniyakumari Vivek Exp,Express,NFR,DBRG,CAPE,23:45,10:25,7840,4278,2A|3A|SL,54,15905
+15929,Chennai Egmore - Dibrugarh Weekly Exp,Express,NFR,MS,DBRG,22:30,18:00,8370,3352,2A|3A|SL,47,15930
+15930,Dibrugarh - Chennai Egmore Weekly Exp,Express,NFR,DBRG,MS,23:45,20:15,8430,3352,2A|3A|SL,47,15929
+15933,Dibrugarh-Amritsar Weekly Express,Express,NFR,DBRG,ASR,07:00,20:45,6585,2870,2A|3A|SL,35,
+15934,Amritsar-DibrugarhTown Weekly Express,Express,NFR,ASR,DBRG,15:50,04:20,6510,2877,2A|3A|SL,35,
+15941,Jhajha - Dibrugarh Exp,Express,NFR,JAJ,DBRG,22:05,10:30,2185,1710,2A|3A|SL,31,15942
+15942,Dibrugarh - Jhajha Exp,Express,NFR,DBRG,JAJ,06:35,17:50,2115,1710,2A|3A|SL,30,15941
+15959,Howrah - Dibrugarh Kamrup Exp,Express,NFR,HWH,DBRG,17:35,05:45,3610,1528,2A|3A|SL,52,15960
+15960,Dibrugarh - Howrah Kamrup Exp,Express,NFR,DBRG,HWH,18:25,05:35,3550,1528,2A|3A|SL,53,15959
+16031,Andaman Express,Express,SR,MAS,JAT,05:15,13:10,3355,2800,3A|SL,78,16032
+16032,Andaman Express,Express,SR,JAT,MAS,23:45,10:10,3505,2800,3A|SL,79,16031
+16041,Chennai- Alapuzha Alleppey Express,Express,SR,MAS,ALLP,21:15,10:45,810,746,2A|3A|FC|SL,24,16042
+16042,Alappuzha-Chennai Express,Express,SR,ALLP,MAS,16:05,06:05,840,746,2A|3A|FC|SL,25,16041
+16053,Tirupati Express,Express,SR,MAS,TPTY,13:50,17:00,190,151,CC,8,16054
+16054,Chennai Express,Express,SR,TPTY,MAS,09:55,13:15,200,151,CC,9,16053
+16057,Saptagiri Express,Express,SR,MAS,TPTY,06:25,09:30,185,151,CC,8,16058
+16058,Saptagiri Express,Express,SR,TPTY,MAS,17:20,20:35,195,151,CC,9,16057
+16093,Chennai Lucknow Express,Express,SR,MAS,LKO,05:15,20:35,2360,2088,3A|SL,45,16094
+16094,Lucknow Chennai Express,Express,SR,LJN,MAS,16:20,10:10,2510,2088,3A|SL,45,16093
+16107,Chennai Egmore-Mangalore Express,Express,SR,MS,MAQ,22:15,22:00,1425,983,1A|2A|3A|SL,52,16108
+16108,Mangalore Chennai Egmore Express,Express,SR,MAQ,MS,06:50,05:05,1335,983,1A|2A|3A|SL,53,16107
+16125,Chennai Egmore - Jodhpur Exp,Express,SR,MS,JU,15:15,11:00,4065,2356,2A|3A|SL,24,16126
+16126,Jodhpur - Chennai Egmore Exp,Express,SR,JU,MS,21:15,16:55,4060,2356,2A|3A|SL,24,16125
+16127,Chennai Egmore - Guruvayur Exp,Express,SR,MS,GUV,07:40,06:40,2820,1100,2A|3A|SL,46,16128
+16128,Guruvayur - Chennai Egmore Exp,Express,SR,GUV,MS,20:50,21:15,2905,1100,2A|3A|SL,46,16127
+16175,Kamban Express,Express,SR,MS,NCR,23:15,09:15,600,436,1A|2A|3A|FC|SL,17,16176
+16176,Kamban Express,Express,SR,NCR,MS,20:05,05:25,560,436,1A|2A|3A|FC|SL,17,16175
+16177,Rock Fort Express,Express,SR,MS,KMU,22:30,07:40,550,425,1A|2A|3A|FC|SL,19,16178
+16178,Rock Fort (Malai Kottai) Express,Express,SR,KMU,MS,19:55,05:15,560,425,1A|2A|3A|FC|SL,20,16177
+16179,Mannai Express,Express,SR,MS,MQ,22:00,06:25,505,395,1A|2A|3A|SL,11,16180
+16180,Mannai Express,Express,SR,MQ,MS,21:15,05:50,515,395,1A|2A|3A|SL,12,16179
+16201,Bangalore City-Shimoga InterCity,Express,SWR,SBC,SMET,16:30,22:00,330,274,CC,10,16202
+16202,Shimoga-Bangalore City InterCity,Express,SWR,SMET,SBC,06:20,11:55,335,274,CC,10,16201
+16205,Talaguppa Mysore Intercity Express,Express,SWR,TLGP,MYS,14:45,22:40,475,373,CC,12,16206
+16206,Mysore - Talguppa Intercity Express,Express,SWR,MYS,TLGP,06:00,14:15,495,373,CC,12,16205
+16209,Ajmer-Mysore Express,Express,SWR,AII,MYS,05:35,07:10,2975,2290,2A|3A|SL,44,16210
+16210,Mysore-Ajmer Express,Express,SWR,MYS,AII,18:15,17:30,2835,2290,2A|3A|SL,43,16209
+16215,Chamundi Express,Express,SWR,MYS,SBC,06:45,09:40,175,139,CC,10,16216
+16216,Chamundi Express,Express,SWR,SBC,MYS,18:15,21:10,175,139,CC,10,16215
+16221,Kaveri Express,Express,SWR,MYS,MAS,20:30,07:25,655,500,2A|3A|SL,24,16222
+16222,Kaveri Express,Express,SWR,MAS,MYS,21:30,08:00,630,500,2A|3A|SL,25,16221
+16227,Bangalore-Shimoga Express,Express,SWR,SBC,SMET,23:15,06:10,415,274,1A|3A|FC|SL,11,16228
+16228,Shimoga-Bangalore Express,Express,SWR,SMET,SBC,22:10,04:30,380,274,1A|3A|FC|SL,11,16227
+16231,Mayiladuturai Mysore Express,Express,SWR,MV,MYS,17:45,09:20,935,680,2A|3A|SL,23,16232
+16232,Mysore Mayiladuturai Express,Express,SWR,MYS,MV,15:45,07:00,915,680,2A|3A|SL,24,16231
+16301,Venad Express,Express,SR,SRR,TVC,14:20,22:10,470,327,CC,27,16302
+16302,Venad Express,Express,SR,TVC,SRR,05:00,12:40,460,327,CC,27,16301
+16303,Vanchinad Express,Express,SR,ERS,TVC,05:00,09:40,280,220,CC,16,16304
+16304,Vanchinad Express,Express,SR,TVC,ERS,17:40,22:20,280,220,CC,17,16303
+16305,Ernakulam Kannur InterCity Express,Express,SR,ERS,CAN,06:50,12:35,345,283,CC|SL,11,16306
+16306,Kannur Ernakulam InterCity Express,Express,SR,CAN,ERS,14:30,20:30,360,283,CC,12,16305
+16307,Executive Express,Express,SR,ALLP,CAN,15:00,23:00,480,339,CC,26,16308
+16308,Executive Express,Express,SR,CAN,ALLP,05:00,13:00,480,339,CC,27,16307
+16309,Ernakulam-Patna Express,Express,SR,ERS,PNBE,16:40,20:15,3095,2790,2A|3A|SL,43,16310
+16310,Patna - Ernakulam Express,Express,SR,PNBE,ERS,14:00,17:30,3090,2790,2A|3A|SL,41,16309
+16311,Bikaner - Kochuveli Express,Express,SR,BKN,KCVL,20:25,03:10,3285,3002,2A|3A|SL,39,16312
+16312,Kochuveli - Bikaner Express,Express,SR,KCVL,BKN,15:15,22:00,3285,3002,2A|3A|SL,39,16311
+16313,Executive Express,Express,SR,ERS,CAN,16:20,23:00,400,283,CC,23,16314
+16314,Executive Express,Express,SR,CAN,ERS,05:00,11:30,390,283,CC,24,16313
+16315,Bangalore - Kochuveli Exp,Express,SR,SBC,KCVL,17:15,09:25,970,837,2A|3A|SL,10,16316
+16316,Kochuveli - Bangalore Exp,Express,SR,KCVL,SBC,16:05,08:35,990,837,2A|3A|SL,10,16315
+16317,Himsagar Express,Express,SR,CAPE,JAT,14:00,13:10,4270,3715,3A|SL,68,16318
+16318,Himsagar Express,Express,SR,JAT,CAPE,23:45,22:00,4215,3715,2A|3A|SL,73,16317
+16321,Bangalore Tiruvananthapuram Weekly Express,Express,SR,SBC,TVC,18:50,12:00,1030,843,2A|3A|SL,21,16322
+16322,Tiruvananthapuram Bangalore Weekly Express,Express,SR,TVC,SBC,16:05,08:35,990,843,2A|3A|SL,22,16321
+16323,Trivandrum Shalimar Biweekly Express,Express,SR,TVC,SHM,16:35,13:50,2715,2566,2A|3A|SL,36,16324
+16324,Shalimar Tiruvananthapuram Express,Express,SR,SHM,TVC,22:45,22:30,2865,2566,2A|3A|SL,37,16323
+16325,Ahilyanagari Express,Express,SR,INDB,TVC,16:05,17:50,2985,2653,2A|3A|SL,52,16326
+16326,Ahilyanagari Express,Express,SR,TVC,INDB,05:30,05:00,2850,2653,2A|3A|SL,51,16325
+16327,Korba Tiruvananthapuram Express,Express,SR,KRBA,TVC,19:50,17:50,2760,2519,2A|3A|SL,55,16328
+16328,Trivandrum-Korba Express,Express,SR,TVC,KRBA,05:30,04:00,2790,2516,2A|3A|SL,55,16327
+16331,Mumbai CST - Trivandrum Exp,Express,SR,CSTM,TVC,12:05,03:00,2335,1946,2A|3A|SL,40,16332
+16332,Trivandrum - Mumbai CST Exp,Express,SR,TVC,CSTM,04:15,20:50,2435,1946,2A|3A|SL,39,16331
+16333,Veraval - Trivandrum Exp,Express,SR,VRL,TVC,03:00,03:10,2890,2709,2A|3A|SL,56,16334
+16334,Trivandrum - Veraval Exp,Express,SR,TVC,VRL,15:15,16:40,2965,2709,2A|3A|SL,56,16333
+16335,Gandhidham - Nagercoil Weekly Exp,Express,SR,GIMB,NCJ,05:20,04:45,2845,2649,2A|3A|SL,52,16336
+16336,Nagercoil - Gandhidham Weekly Exp,Express,SR,NCJ,GIMB,13:30,13:10,2860,2649,2A|3A|SL,52,16335
+16337,Okha - Ernakulam Exp,Express,SR,OKHA,ERS,02:00,22:40,2680,2557,2A|3A|SL,48,16338
+16338,Ernakulam - Okha Exp,Express,SR,ERS,OKHA,19:50,17:25,2735,2557,2A|3A|SL,49,16337
+16339,Mumbai CST - Nagercoil Exp,Express,SR,CSTM,NCJ,12:05,03:15,2350,1882,2A|3A|SL,39,16340
+16340,Nagercoil - Mumbai CST Exp,Express,SR,NCJ,CSTM,06:55,20:50,2275,1882,2A|3A|SL,38,16339
+16341,Guruvayur-Ernakulam-Trivandrum Intercity Express,Express,SR,GUV,TVC,03:20,10:05,405,303,CC,21,16342
+16342,Trivandrum-Ernakulam-Guruvayur Intercity Express,Express,SR,TVC,GUV,17:25,00:15,410,303,CC,20,16341
+16343,Amrita Express,Express,SR,TVC,PGTN,22:30,08:00,570,376,2A|SL,18,16344
+16344,Amrita Express,Express,SR,PGTN,TVC,21:45,06:20,515,376,2A|SL,18,16343
+16345,Mumbai LTT - Trivandrum Netravati Exp,Express,SR,LTT,TVC,11:40,18:40,1860,1804,2A|3A|SL,45,16346
+16346,Trivandrum - Mumbai LTT Netravati Exp,Express,SR,TVC,LTT,09:50,16:40,1850,1804,2A|3A|SL,47,16345
+16347,Trivandrum Mangalore Express,Express,SR,TVC,MAQ,20:40,11:10,870,634,2A|3A|SL,49,16348
+16348,Trivandrum Express,Express,SR,MAQ,TVC,14:30,04:50,860,634,2A|3A|SL,48,16347
+16349,Trivandrum Nilambur Road Rajya Rani Express,Express,SR,TVC,NIL,22:30,07:25,535,393,3A|SL,21,16350
+16350,Nilambur Road Trivandrum Rajya Rani Express,Express,SR,NIL,TVC,20:40,06:20,580,393,3A|SL,21,16349
+16351,Mumbai CST - Nagercoil Balaji Exp,Express,SR,CSTM,NCJ,12:05,05:35,3930,1967,2A|3A|SL,45,16352
+16352,Nagercoil - Mumbai CST Balaji Exp,Express,SR,NCJ,CSTM,04:40,20:50,3850,1967,2A|3A|SL,44,16351
+16359,Ernakulam - Patna Exp,Express,SR,ERS,PNBE,22:45,09:50,3545,2988,2A|3A|SL,43,16360
+16360,Patna - Ernakulam Express,Express,SR,PNBE,ERS,16:30,23:00,3270,2988,2A|3A|SL,43,16359
+16381,Mumbai CST - Kanyakumari Express,Express,SR,CSTM,CAPE,15:45,12:45,2700,2135,2A|3A|SL,61,16382
+16382,Kanniyakumari-Mumbai CST Express,Express,SR,CAPE,CSTM,05:30,04:50,2840,2135,2A|3A|SL,60,16381
+16501,Ahmedabad Bangalore Express,Express,SWR,ADI,SBC,18:00,04:50,2090,1802,2A|3A|SL,26,16502
+16502,Bangalore - Ahmedabad (Weekly) Express,Express,SWR,SBC,ADI,13:30,03:45,2295,1802,2A|3A|SL,26,16501
+16505,Gandhidham - Bangalore Exp,Express,SWR,GIMB,SBC,09:00,04:00,2580,1962,2A|3A|SL,34,16506
+16506,Bangalore - Gandhidham Exp,Express,SWR,SBC,GIMB,21:55,13:30,2375,1962,2A|3A|SL,33,16505
+16507,Bhagat KI Kothi - Bangalore Exp,Express,SWR,BGKT,SBC,05:33,04:00,2787,2116,2A|3A|SL,45,16508
+16508,Bangalore - Bhagat KI Kothi Exp,Express,SWR,SBC,JU,21:55,16:35,2560,2121,2A|3A|SL,43,16507
+16515,Yesvantpur - Karwar Express,Express,SWR,YPR,KAWR,07:30,23:00,930,794,CC,16,16516
+16516,Karwar-Yeshvantpur Express,Express,SWR,KAWR,YPR,05:30,22:25,1015,794,CC,16,16515
+16517,Yeshvantapur-Kannur Express,Express,SWR,YPR,CAN,20:35,11:35,900,640,2A|3A|SL,18,16518
+16518,Kannur-Yesvantpur Express,Express,SWR,CAN,YPR,16:45,07:40,895,640,2A|3A|SL,18,16517
+16525,Kanniyakumari - Bangalore Island Exp,Express,SWR,CAPE,SBC,10:30,06:55,1225,944,2A|3A|SL,44,16526
+16526,Bangalore - Kanniyakumari Island Exp,Express,SWR,SBC,CAPE,21:40,19:00,1280,944,2A|3A|SL,47,16525
+16527,Yesvantpur - Kannur Express,Express,SWR,YPR,CAN,20:00,08:30,750,649,2A|3A|SL,16,16528
+16528,Kannur - Yeshvantpur Express,Express,SWR,CAN,YPR,18:20,07:15,775,649,2A|3A|SL,16,16527
+16529,Udyan Express,Express,SWR,CSTM,SBC,08:05,08:50,1485,1153,1A|2A|3A|SL,34,16530
+16530,Udyan Express,Express,SWR,SBC,CSTM,20:10,19:50,1420,1153,1A|2A|3A|SL,33,16529
+16531,Garib Nawaz Express,Express,SWR,AII,YPR,05:35,04:30,2815,2236,2A|3A|SL,36,16532
+16532,Garib Nawaz Express,Express,SWR,YPR,AII,17:20,17:30,2890,2218,2A|3A|SL,35,16531
+16535,Gol Gumbaz Express,Express,SWR,YPR,SUR,19:45,13:25,1060,822,1A|2A|3A|SL,21,16536
+16536,Gol Gumbaz Express,Express,SWR,SUR,YPR,15:35,09:15,1060,822,1A|2A|3A|SL,21,16535
+16537,Bangalore-Nagercoil Weekly Express,Express,SWR,SBC,NCJ,23:05,14:00,895,723,2A|3A|SL,9,16538
+16538,Nagercoil-Bangalore Express,Express,SWR,NCJ,SBC,12:45,04:00,915,723,2A|3A|SL,9,16537
+16589,Rani Chennamma Express,Express,SWR,SBC,KOP,21:15,13:40,985,795,1A|2A|3A|SL,28,16590
+16590,Rani Chennamma Express,Express,SWR,KOP,SBC,14:20,07:35,1035,795,1A|2A|3A|SL,29,16589
+16591,Hampi Express,Express,SWR,UBL,SBC,18:00,06:10,730,567,1A|2A|3A|SL,22,16592
+16592,Hampi Express,Express,SWR,SBC,UBL,22:00,11:00,780,567,1A|2A|3A|SL,22,16591
+16593,Nanded-Bangalore Express,Express,SWR,NED,SBC,06:00,06:10,1450,1042,1A|3A|SL,41,16594
+16594,Bangalore-Nanded Express,Express,SWR,SBC,NED,23:00,22:55,1435,1030,1A|3A|SL,41,16593
+16603,Maveli Express,Express,SR,MAQ,TVC,17:45,07:15,810,619,2A|3A|FC|SL,30,16604
+16604,Maveli Express,Express,SR,TVC,MAQ,19:25,08:50,805,619,2A|3A|FC|SL,30,16603
+16605,Eranad Express,Express,SR,MAQ,NCJ,07:20,23:30,970,690,CC,36,16606
+16606,Eranad Express,Express,SR,NCJ,MAQ,02:00,17:30,930,690,CC,36,16605
+16609,Nagercoil-Coimbatore Express,Express,SR,NCJ,CBE,20:30,07:30,660,536,3A|SL,14,16610
+16610,Coimbatore-Nagercoil Express,Express,SR,CBE,NCJ,20:30,06:55,625,536,3A|SL,14,16609
+16611,Tuticorin Coimbatore Link Express,Express,SR,TN,CBE,21:30,07:30,600,465,3A|SL,14,16612
+16612,Coimbatore Tuticorin Link Express,Express,SR,CBE,TN,20:30,06:10,580,465,3A|SL,14,16611
+16613,Rajkot - Coimbatore Exp,Express,SR,RJT,CBE,05:00,02:00,2700,2237,2A|3A|SL,34,16614
+16614,Coimbatore - Rajkot Exp,Express,SR,CBE,RJT,23:45,20:05,2660,2237,2A|3A|SL,34,16613
+16627,West Coast Express,Express,SR,MAS,MAQ,11:30,04:35,1025,902,2A|3A|FC|SL,31,16628
+16628,West Coast Express,Express,SR,MAQ,MAS,21:45,15:15,1050,902,2A|3A|FC|SL,32,16627
+16629,Malabar Express,Express,SR,TVC,MAQ,18:30,10:05,935,634,2A|3A|FC|SL,53,16630
+16630,Malabar Express,Express,SR,MAQ,TVC,18:25,09:05,880,634,2A|3A|FC|SL,54,16629
+16649,Parasuram Express,Express,SR,MAQ,TVC,04:40,18:30,830,634,CC,43,16650
+16650,Parasuram Express,Express,SR,TVC,MAQ,06:30,20:25,835,634,CC,41,16649
+16669,Yercaud Express,Express,SR,MAS,ED,22:40,06:25,465,396,1A|2A|3A|SL,18,16670
+16670,Yercaud Express,Express,SR,ED,MAS,21:00,04:30,450,396,1A|2A|3A|SL,18,16669
+16687,Navyug Express,Express,SR,MAQ,JAT,17:05,13:10,4085,3609,2A|3A|SL,61,16688
+16688,Navyug Express,Express,SR,JAT,MAQ,23:45,18:15,3990,3609,2A|3A|SL,63,16687
+16701,Chennai Egmore-Rameshwaram Express,Express,SR,MS,RMM,21:40,11:45,845,665,1A|2A|3A|SL,23,16702
+16702,Rameswaram-Chennai Egmore Express,Express,SR,RMM,MS,17:00,06:30,810,665,1A|2A|3A|SL,24,16701
+16713,Setu Express,Express,SR,MS,RMM,17:00,04:45,705,600,2A|3A|SL,18,16714
+16714,Setu Express,Express,SR,RMM,MS,20:00,08:20,740,600,2A|3A|SL,19,16713
+16723,Chennai Egmore - Trivandrum Anantapuri Exp,Express,SR,MS,TVC,19:15,11:05,2390,798,1A|2A|3A|SL,27,16724
+16724,Trivandrum - Chennai Egmore Anantapuri Exp,Express,SR,TVC,MS,16:20,08:40,2420,798,1A|2A|3A|SL,28,16723
+16731,Tuticorin Mysore Express,Express,SR,TN,MYS,16:35,10:10,1055,783,2A|3A|SL,36,16732
+16732,Mysore-Tuticorin Express,Express,SR,MYS,TN,18:00,11:00,1020,783,2A|3A|SL,34,16731
+16733,Rameswaram-Okha Express,Express,SR,RMM,OKHA,20:50,15:15,3985,3196,2A|3A|SL,39,16734
+16734,Okha-Rameswaram Express,Express,SR,OKHA,RMM,06:05,19:50,3705,3196,2A|3A|SL,39,16733
+16735,Chendhur Express,Express,SR,MS,TCN,16:05,08:00,955,779,1A|2A|3A|SL,25,16736
+16736,Chendhur Express,Express,SR,TCN,MS,19:45,11:40,955,779,1A|2A|3A|SL,26,16735
+16788,Jammu Erode - Tirunelveli Link Exp,Express,SR,ED,TEN,08:50,18:20,2010,458,2A|SL,10,16787
+16853,Cholan Express (Day Express),Express,SR,MS,TPJ,08:20,16:35,495,401,1A|2A|3A|SL,17,16854
+16854,Cholan Express( Day Express),Express,SR,TPJ,MS,09:20,17:45,505,401,1A|2A|3A|SL,17,16853
+16865,Tea Garden Express,Express,SR,NCR,ERS,16:30,06:15,825,582,1A|2A|3A|FC|SL,27,16866
+16866,Tea Garden Express,Express,SR,ERS,NCR,22:05,11:45,820,582,1A|2A|3A|FC|SL,26,16865
+17001,Sainagar Shirdi Secunderabad Express,Express,SCR,SNSI,SC,17:10,09:20,970,776,2A|3A|SL,25,17002
+17002,Secunderabad Sainagar Shirdi Express,Express,SCR,SC,SNSI,16:40,09:15,995,776,2A|3A|SL,25,17001
+17003,Hyderabad-Kolhapur BiWeekly Express,Express,SCR,HYB,KOP,23:10,22:45,1415,998,2A|3A|SL,35,17004
+17004,Kolhapur-Hyderabad BiWeekly Express,Express,SCR,KOP,HYB,07:30,06:45,1395,998,2A|3A|SL,35,17003
+17013,Pune-Hyderabad Express,Express,SCR,PUNE,HYB,14:15,04:30,855,649,2A|3A|SL,14,17014
+17014,Hyderabad-Pune Express,Express,SCR,HYB,PUNE,22:45,13:15,870,649,2A|3A|SL,14,17013
+17015,Visakha Express,Express,SCR,BBS,SC,08:35,07:30,1375,1135,2A|3A|SL,40,17016
+17016,Visakha Express,Express,SCR,SC,BBS,17:00,15:25,1345,1135,2A|3A|SL,40,17015
+17017,Rajkot Secunderabad Express,Express,SCR,RJT,SC,05:00,10:30,1770,1478,2A|3A|SL,24,17018
+17018,Secunderabad - Rajkot Express,Express,SCR,SC,RJT,14:50,20:05,1755,1478,2A|3A|SL,25,17017
+17031,Mumbai CST-Hyderabad Express,Express,SCR,CSTM,HYB,12:45,05:55,1030,790,2A|3A|SL,25,17032
+17032,Hyderabad-Mumbai Express,Express,SCR,HYB,CSTM,20:40,13:05,985,790,1A|2A|3A|SL,25,17031
+17035,Telangana Express,Express,SCR,SC,SKZR,08:20,13:45,325,297,CC,13,17036
+17036,Telangana Express,Express,SCR,SKZR,SC,14:50,20:20,330,297,CC,13,17035
+17037,Secunderabad - Bikaner Express,Express,SCR,SC,BKN,23:15,17:00,3945,2113,2A|3A|SL,27,17038
+17038,Bikaner - Secunderabad Express,Express,SCR,BKN,SC,15:40,08:50,5350,2113,2A|3A|SL,27,17037
+17049,Machilipatnam Secunderabad Express,Express,SCR,MTM,SC,19:45,04:45,540,431,2A|3A|SL,19,17050
+17050,Secunderabad Machilipatnam Express,Express,SCR,SC,MTM,22:45,07:15,510,431,2A|3A|SL,19,17049
+17057,Mumbai-Secunderabad Devagiri Expres,Express,SCR,CSTM,SC,21:05,14:15,1030,881,1A|2A|3A|SL,30,17058
+17058,Devagiri Express,Express,SCR,SC,CSTM,13:35,07:10,1055,881,1A|2A|3A|SL,29,17057
+17063,Ajanta Express,Express,SCR,MMR,SC,21:00,08:55,715,621,2A|3A|SL,20,17064
+17064,Ajanta Express,Express,SCR,SC,MMR,18:10,06:45,755,621,2A|3A|SL,20,17063
+17201,Golconda Express,Express,SCR,GNT,SC,05:45,13:45,480,383,CC,24,17202
+17202,Golconda Express,Express,SCR,SC,GNT,13:05,21:20,495,383,CC,24,17201
+17203,Bhavnagar(T)-Kakinada Town Express,Express,SCR,BVC,CCT,04:10,21:00,2450,2053,2A|3A|SL,29,17204
+17204,Kakinada Town- Bhavnagar Express,Express,SCR,CCT,BVC,04:00,20:45,2445,2053,2A|3A|SL,30,17203
+17205,Sainagar Shirdi-Kakinada Express,Express,SCR,SNSI,CCT,17:10,19:20,1570,1339,2A|3A|SL,38,17206
+17206,Kakinada-Sainagar Shirdi Express,Express,SCR,CCT,SNSI,06:15,09:15,1620,1339,2A|3A|SL,38,17205
+17207,Sainagar Shiridi Vijayawada Express,Express,SCR,SNSI,BZA,17:10,15:25,1335,1127,2A|3A|SL,32,17208
+17208,Vijayawada Sainagar Shirdi Express,Express,SCR,BZA,SNSI,10:30,09:15,1365,1127,2A|3A|SL,32,17207
+17209,Bangalore - Kakinada Town Seshadri Exp,Express,SCR,SBC,CCT,13:20,08:45,1165,963,2A|3A|SL,33,17210
+17210,Kakinada Town -Bangalore Seshadri Exp,Express,SCR,CCT,SBC,17:35,12:35,1140,963,2A|3A|SL,34,17209
+17211,Machilipatnam Yeshvantapur Express,Express,SCR,MTM,YPR,15:15,09:45,1110,778,2A|3A|SL,17,17212
+17212,Machilipatnam Express,Express,SCR,YPR,MTM,14:45,06:35,950,778,2A|3A|SL,17,17211
+17213,Narasapur-Nagarsol Express,Express,SCR,NS,NSL,10:30,08:30,1320,1086,2A|3A|SL,19,17214
+17214,Nagarsol Narsapur Express,Express,SCR,NSL,NS,11:30,09:30,1320,1086,2A|3A|SL,19,17213
+17225,Amaravati Express,Express,SCR,BZA,UBL,18:55,09:40,885,693,2A|3A|SL,26,17226
+17226,Amaravati Express,Express,SCR,UBL,BZA,12:15,02:50,875,693,2A|3A|SL,25,17225
+17229,Sabari Express,Express,SCR,TVC,HYB,07:15,13:40,1825,1568,2A|3A|SL,41,17230
+17230,Sabari Express,Express,SCR,HYB,TVC,12:00,18:55,1855,1568,2A|3A|SL,40,17229
+17233,Bhagyanagar Express,Express,SCR,SC,BPQ,15:25,01:00,575,367,CC,32,17234
+17234,Bhagyanagar Express,Express,SCR,BPQ,SC,02:00,10:45,525,367,CC,34,17233
+17239,Simhadri Express,Express,SCR,GNT,VSKP,08:00,17:50,590,383,CC,25,17240
+17240,Simhadri Express,Express,SCR,VSKP,GNT,07:10,15:30,500,383,CC,26,17239
+17255,Narasapur Hyderabad Express,Express,SCR,NS,HYB,18:55,05:25,630,462,1A|2A|3A|SL,21,17256
+17256,Hyderabad-Narsapur Express,Express,SCR,HYB,NS,21:45,08:40,655,462,1A|2A|3A|SL,21,17255
+17301,Mysore Dharwad Express,Express,SWR,MYS,DWR,22:15,08:15,600,491,2A|3A|SL,18,17302
+17302,Dharwad Mysore Express,Express,SWR,DWR,MYS,20:45,07:00,615,491,2A|3A|SL,17,17301
+17305,Hubli-H.Nizamuddin Goa Express,Express,SWR,UBL,NZM,16:15,06:15,2280,2147,2A|SL,19,
+17307,Basava Express,Express,SWR,YPR,BGK,17:40,12:10,1110,860,2A|3A|SL,21,17308
+17308,Basava Express,Express,SWR,BGK,YPR,14:10,10:10,1200,860,2A|3A|SL,20,17307
+17309,Yesvantpur - Vasco DA Gama Exp,Express,SWR,YPR,VSG,15:15,06:00,885,700,2A|3A|SL,16,17310
+17310,Vasco DA Gama - Yesvantpur Exp,Express,SWR,VSG,YPR,20:45,11:25,880,700,2A|3A|SL,17,17309
+17311,Chennai Cent - Vasco DA Gama Exp,Express,SWR,MAS,VSG,14:10,13:00,1370,1070,2A|3A|SL,22,17312
+17312,Vasco DA Gama - Chennai Cent Exp,Express,SWR,VSG,MAS,14:30,11:55,1285,1070,2A|3A|SL,24,17311
+17313,Chennai Cent - Hubli Weekly Exp,Express,SWR,MAS,UBL,14:10,06:45,995,834,2A|3A|SL,17,17314
+17314,Hubli - Chennai Cent Weekly Exp,Express,SWR,UBL,MAS,20:20,11:55,935,834,2A|3A|SL,18,17313
+17401,Tirupati-Machilipatnam Express,Express,SCR,TPTY,MTM,19:40,05:20,580,467,3A|SL,21,17402
+17402,Machilipatanam-Tirupati Express,Express,SCR,MTM,TPTY,19:00,04:35,575,467,3A|SL,21,17401
+17404,Narasapur Tirupati Link Express,Express,SCR,NS,TPTY,17:20,04:35,675,525,3A|SL,22,
+17405,Krishna Express,Express,SCR,TPTY,ADB,05:25,06:15,1490,1228,3A|CC|SL,61,17406
+17406,Krishna Express,Express,SCR,ADB,TPTY,21:00,21:25,1465,1228,3A|CC|SL,62,17405
+17415,Haripriya Express,Express,SCR,TPTY,KOP,20:30,16:35,1205,903,2A|3A|SL,31,17416
+17416,Haripriya Express,Express,SCR,KOP,TPTY,11:35,08:30,1255,903,2A|3A|SL,31,17415
+17429,Rayalaseema Express,Express,SCR,HYB,TPTY,17:25,08:10,885,732,2A|3A|SL,34,17430
+17430,Rayalaseema Express,Express,SCR,TPTY,HYB,16:30,08:30,960,732,2A|3A|SL,34,17429
+17479,Puri-Tirupati Express,Express,SCR,PURI,TPTY,13:00,16:15,1635,1232,3A|SL,72,17480
+17480,Tirupati-Puri Express,Express,SCR,TPTY,PURI,10:35,15:20,1725,1232,3A|SL,73,17479
+17481,Bilaspur-Tirupati Express,Express,SECR,BSP,TPTY,10:05,16:15,1810,1403,3A|SL,65,17482
+17482,Tirupati-Bilaspur Express,Express,SCR,TPTY,BSP,10:35,17:45,1870,1403,3A|SL,66,17481
+17487,Tirumala Express,Express,SCR,TPTY,VSKP,20:50,10:55,845,736,2A|3A|SL,36,17488
+17488,Tirumala Express,Express,SCR,VSKP,TPTY,14:00,05:00,900,736,2A|3A|SL,33,17487
+17603,Prasanti Nilayam Express,Express,SCR,KCG,YPR,21:00,10:30,810,664,1A|2A|3A|SL,16,17604
+17604,Prashanti Nilayam Express,Express,SCR,YPR,KCG,16:15,05:00,765,664,1A|2A|3A|SL,16,17603
+17607,Tungabhadra Express,Express,SCR,SC,KRNT,07:30,12:30,300,244,CC,13,17608
+17608,Tungabhadra Express,Express,SCR,KRNT,SC,15:00,19:55,295,244,CC,13,17607
+17609,Patna - Purna Exp,Express,SCR,PNBE,PAU,23:10,07:05,1915,1819,2A|3A|SL,15,17610
+17610,Purna - Patna Exp,Express,SCR,PAU,PNBE,18:10,03:30,2000,1819,2A|3A|SL,15,17609
+17613,Pune Nanded Exp,Express,SCR,PUNE,NED,22:00,10:00,720,557,3A|SL,10,17614
+17614,Nanded Pune Express,Express,SCR,NED,PUNE,21:20,09:20,720,557,2A|3A|SL,10,17613
+17617,Tapovan Express,Express,SCR,CSTM,NED,06:10,17:55,705,610,CC,20,17618
+17618,Tapovan Express,Express,SCR,NED,CSTM,10:30,22:05,695,610,CC,20,17617
+17639,Kacheguda - Akola Intercity Exp,Express,SCR,KCG,AK,07:30,18:30,660,514,CC,21,17640
+17640,Akola - Kacheguda Intercity Exp,Express,SCR,AK,KCG,09:30,20:15,645,514,CC,21,17639
+17643,Circar Express,Express,SCR,MS,COA,17:20,09:40,980,702,2A|3A|SL,33,17644
+17644,Circar Express,Express,SCR,COA,MS,14:40,06:30,950,702,2A|3A|SL,32,17643
+17651,Chennai Egmore Kacheguda Express,Express,SCR,MS,KCG,17:00,07:55,895,772,2A|3A|SL,18,17652
+17652,Kacheguda Chennai Egmore Express,Express,SCR,KCG,MS,16:00,07:15,915,772,2A|3A|SL,19,17651
+17687,Manmad-Dharmabad Composite Express,Express,SCR,MMR,DAB,15:00,23:50,530,422,CC,22,17688
+17688,Dharmabad-Manmad Composit Express,Express,SCR,DAB,MMR,04:00,13:10,550,422,CC,22,17687
+18001,Kandari Express,Express,SER,HWH,DGHA,14:15,17:50,215,189,CC,8,18002
+18002,Kandari Express,Express,SER,DGHA,HWH,18:20,21:50,210,189,CC,8,18001
+18003,Jhargram Purulia Express,Express,SER,JGM,PRR,10:50,14:15,205,187,CC,10,18004
+18004,Purulia Jhargram Express,Express,SER,PRR,JGM,14:45,17:55,190,187,CC,10,18003
+18029,Mumbai LTT [Kurla] - Kolkata Salimar Exp,Express,SER,LTT,SHM,21:50,12:15,2305,1951,2A|3A|SL,83,18030
+18030,Kolkata Salimar - Mumbai LTT [Kurla] Exp,Express,SER,SHM,LTT,15:00,04:50,2270,1951,2A|3A|SL,80,18029
+18047,Howrah - Vasco DA Gama Amravati Exp,Express,SER,HWH,VSG,23:30,15:00,2370,2147,2A|3A|SL,40,18048
+18048,Vasco-Da-Gama - Howrah Amaravati Exp,Express,SER,VSG,HWH,07:10,22:25,2355,2147,2A|3A|SL,42,18047
+18101,Tatanagar Jammu Tawi Express,Express,SER,TATA,JAT,14:50,13:40,2810,2026,2A|3A|SL,66,18102-Slip
+18102,Jammu-Rourkela Express,Express,SER,JAT,ROU,14:30,14:05,2855,2158,2A|3A|SL,77,
+18103,Jallianwalabagh Express,Express,SER,TATA,ASR,21:15,06:30,1995,1749,2A|3A|SL,23,18104
+18104,Jallianwalabagh Express,Express,SER,ASR,TATA,12:40,21:35,1975,1745,2A|3A|SL,23,18103
+18105,Rourkela-Bhubaneswar InterCity,Express,SER,ROU,BBS,05:30,13:00,450,419,3A|CC,11,18106
+18106,Bhubaneswar-Rourkela InterCity,Express,SER,BBS,ROU,13:35,21:30,475,419,3A|CC,11,18105
+18107,Rourkela - Koraput Exp,Express,SER,ROU,KRPU,16:45,07:30,2325,645,3A|SL,11,18108
+18108,Koraput - Rourkela Exp,Express,SER,KRPU,ROU,17:00,06:50,2270,645,3A|SL,13,18107
+18181,Tata-Chapra Express,Express,SER,TATA,CPR,21:35,16:20,1125,636,3A|SL,37,18182
+18182,Chhapra-Tata Express,Express,SER,CPR,TATA,12:50,06:40,1070,636,3A|SL,37,18181
+18183,Tata-Danapur Express,Express,SER,TATA,DNR,07:55,19:22,687,512,CC,36,18184
+18184,Danapur-Tatanagar Express,Express,SER,DNR,TATA,06:00,17:10,670,512,CC,35,18183
+18189,Tatanagar- Alappuzha (Alleppey) Express,Express,SER,TATA,ALLP,15:45,20:25,6040,2358,2A|3A|SL,83,
+18191,Utsarg Express,Express,SER,CPR,CPA,19:05,09:45,880,549,3A|SL,27,18192
+18192,Utsarg Express,Express,SER,CPA,CPR,16:25,08:35,970,549,3A|SL,27,18191
+18201,Durg-Nautanwa (via Varanasi)Express,Express,SECR,DURG,NTV,19:40,22:15,1595,1224,2A|3A|SL,24,18202
+18202,Nautanwa-Durg Nautanwa Express,Express,SECR,NTV,DURG,10:50,14:20,1650,1224,2A|3A|SL,24,18201
+18203,Betwa Express,Express,SECR,DURG,CNB,19:40,13:05,1045,885,2A|3A|SL,19,18204
+18204,Betwa Express,Express,SECR,CNB,DURG,18:20,13:10,1130,885,2A|3A|SL,19,18203
+18205,Durg -Nautanwa Express,Express,SECR,DURG,NTV,19:40,23:00,1640,1152,2A|3A|SL,23,18206
+18206,Nautanwa-Durg Express,Express,SECR,NTV,DURG,08:00,13:10,1750,1152,2A|3A|SL,23,18205
+18207,Durg Jaipur Express,Express,SECR,DURG,JP,16:05,15:45,1420,1268,2A|3A|SL,16,18208
+18208,Jaipur Durg Express,Express,SECR,JP,DURG,21:35,22:15,1480,1268,2A|3A|SL,17,18207
+18233,Indore - Bilaspur Narmada Exp,Express,SECR,INDB,BSP,16:50,17:25,1475,1010,1A|2A|3A|SL,67,18234
+18234,Bilaspur - Indore Narmada Exp,Express,SECR,BSP,INDB,09:55,10:40,1485,1010,1A|2A|3A|SL,72,18233
+18235,Bilaspur Express Cum Passenger,Express,SECR,BPL,BSP,08:00,06:05,1325,717,FC|SL,67,18236
+18236,Bilaspur Express Cum Passenger,Express,SECR,BSP,BPL,20:25,18:15,1310,717,FC|SL,67,18235
+18237,Chhattisgarh Express,Express,SECR,BSP,ASR,14:15,08:10,2515,2008,1A|2A|3A|SL,83,18238
+18238,Chhattisgarh Express,Express,SECR,ASR,BSP,16:15,12:20,2645,2022,1A|2A|3A|SL,86,18237
+18239,Gerva Road-Nagpur Express,Express,SECR,GAD,NGP,17:45,05:30,705,513,2A|3A|SL,29,
+18240,Nagpur Bilaspur Express,Express,SECR,NGP,BSP,23:35,07:15,460,412,2A|3A|SL,18,
+18241,Durg Ambikapur Express,Express,SECR,DURG,ABKP,20:10,07:05,655,469,2A|3A|SL,29,18242
+18242,Ambikapur Durg Express Cum Passenger,Express,SECR,ABKP,DURG,21:35,09:10,695,469,2A|3A|SL,30,18241
+18301,Rayagada Express,Express,ECoR,SBP,RGDA,06:30,13:20,410,322,CC,18,18302
+18302,Sambalpur Express,Express,ECoR,RGDA,SBP,14:30,21:00,390,322,CC,18,18301
+18303,Sambalpur - Puri Intercity Exp,Express,ECoR,SBP,PURI,06:10,12:45,395,341,3A|CC,11,18304
+18304,Puri - Sambalpur Intercity Exp,Express,ECoR,PURI,SBP,15:45,22:15,390,341,CC,11,18303
+18309,Nagavali Express,Express,ECoR,SBP,NED,09:00,14:35,1775,1479,2A|3A|SL,21,18310
+18310,Nagavali Express,Express,ECoR,NED,SBP,16:15,20:15,1680,1479,2A|3A|SL,21,18309
+18311,Sambalpur - Varanasi Exp,Express,ECoR,SBP,BSB,13:10,08:55,1185,896,2A|3A|SL,35,18312
+18312,Varanasi - Sambalpur Exp,Express,ECoR,BSB,SBP,14:50,11:15,1225,896,2A|3A|SL,37,18311
+18401,Puri - Okha (Weekly) Express,Express,ECoR,PURI,OKHA,08:45,15:15,3270,2779,2A|3A|SL,41,18402
+18402,Okha Puri Weekly Express,Express,ECoR,OKHA,PURI,07:45,10:45,3060,2779,2A|3A|SL,41,18401
+18405,Puri - Ahmedabad Exp,Express,ECoR,PURI,ADI,18:10,07:25,5115,1992,2A|3A|SL,38,18406
+18406,Ahmedabad - Puri Exp,Express,ECoR,ADI,PURI,18:00,09:35,5255,1992,2A|3A|SL,38,18405
+18409,Sri Jagannath Express,Express,ECoR,HWH,PURI,19:00,04:40,580,502,2A|3A|SL,20,18410
+18410,Sri Jagannath Express,Express,ECoR,PURI,HWH,22:50,08:10,560,502,2A|3A|SL,21,18409
+18413,Paradip Puri InterCity Express,Express,ECoR,PRDP,PURI,18:00,22:45,285,174,CC,11,18414
+18414,Puri Paradip InterCity Express,Express,ECoR,PURI,PRDP,06:00,10:10,250,174,CC,11,18413
+18415,Banspani-Puri InterCity,Express,ECoR,BSPX,PURI,14:18,21:45,447,334,CC,23,18416
+18416,Puri-Banspani InterCity,Express,ECoR,PURI,BSPX,06:00,14:00,480,334,CC,23,18415
+18417,Jharsuguda-Bhubaneswar Rajya Rani Express,Express,ECoR,JSG,BBS,23:05,07:35,510,341,2A|3A|SL,8,18418
+18418,Bhubaneswar-Jharsuguda Rajya Rani Express,Express,ECoR,BBS,JSG,23:05,06:30,445,341,2A|3A|SL,8,18417
+18419,Puri-Darbhanga Weekly Express,Express,ECoR,PURI,DBG,14:05,11:10,1265,942,2A|3A|SL,21,18420
+18420,Darbhanga-Puri Weekly Express,Express,ECoR,DBG,PURI,07:00,03:20,1220,942,2A|3A|SL,21,18419
+18425,Puri - Durg Exp,Express,ECoR,PURI,DURG,17:45,09:45,960,786,2A|3A|SL,26,18426
+18426,Durg - Puri Exp,Express,ECoR,DURG,PURI,16:25,09:15,1010,786,2A|3A|SL,26,18425
+18447,Hirakhand Express,Express,ECoR,BBS,JDB,19:35,12:40,1025,785,2A|3A|SL,36,18448
+18448,Hirakhand Express,Express,ECoR,JDB,BBS,15:30,08:25,1015,785,2A|3A|SL,35,18447
+18449,Baidyanathdham Express,Express,ECoR,PURI,PNBE,14:05,10:00,1195,937,2A|3A|SL,24,18450
+18450,Baidyanathdham Express,Express,ECoR,PNBE,PURI,08:55,03:20,1105,928,2A|3A|SL,24,18449
+18451,Hatia - Puri Tapaswini Exp,Express,ECoR,HTE,PURI,16:05,07:15,8110,691,1A|2A|3A|SL,24,18452
+18452,Puri - Hatia Tapaswini Exp,Express,ECoR,PURI,HTE,20:40,11:40,8100,691,1A|2A|3A|SL,25,18451
+18463,Prasanti Express,Express,ECoR,BBS,SBC,05:45,12:05,1820,1546,2A|3A|SL,41,18464
+18464,Prasanti Express,Express,ECoR,SBC,BBS,14:00,20:45,1845,1546,2A|3A|SL,41,18463
+18473,Puri - Jodhpur Express,Express,ECoR,PURI,JU,13:30,12:00,4230,2433,1A|2A|3A|SL,41,18474
+18474,Jodhpur - Puri Express,Express,ECoR,JU,PURI,13:55,12:25,2790,2433,1A|2A|3A|SL,40,18473
+18477,Utkal Express,Express,ECoR,PURI,HW,21:00,20:30,2850,2379,2A|3A|SL,53,18478
+18478,Utkal Express,Express,ECoR,HW,PURI,06:00,06:35,2915,2378,2A|3A|SL,55,18477
+18495,Rameswaram-Bhubaneswar Express,Express,ECoR,RMM,BBS,08:00,18:45,2085,1892,2A|3A|SL,22,18496
+18496,Bhubaneswar-Rameswaram Weekly Express,Express,ECoR,BBS,RMM,12:00,23:55,2155,1892,2A|3A|SL,22,18495
+18507,Visakhapatnam - Amritsar Hirakud Exp,Express,ECoR,VSKP,ASR,23:50,23:55,7205,2574,2A|3A|SL,45,18508
+18508,Amritsar - Visakhapatnam Hirakud Exp,Express,ECoR,ASR,VSKP,23:45,23:50,7205,2574,2A|3A|SL,46,18507
+18509,Visakhapatnam-Nanded Express,Express,ECoR,VSKP,NED,19:40,14:35,1135,973,2A|3A|SL,12,18510
+18510,Nanded-Visakhapatnam Express,Express,ECoR,NED,VSKP,16:15,10:15,1080,973,2A|3A|SL,12,18509
+18517,Korba Visakhapatnam Express,Express,ECoR,KRBA,VSKP,16:30,07:50,920,731,2A|3A|SL,31,18518
+18518,Visakhapatnam-Korba Express,Express,ECoR,VSKP,KRBA,20:00,11:10,910,728,2A|3A|SL,31,18517
+18601,Rourkela-JammuTawi Express,Express,SER,ROU,JAT,11:15,13:40,3025,2158,2A|3A|SL,71,
+18602,Jammu Tawi-Rourkela Express,Express,SER,MURI,HTE,08:20,10:05,105,67,2A|3A|SL,5,
+18603,Ranchi-Bhagalpur Tri-Weekly Express,Express,SER,RNC,BGP,15:10,04:00,770,514,3A|SL,15,18604
+18604,Bhagalpur Ranchi Express,Express,SER,BGP,RNC,16:55,05:35,760,507,3A|SL,19,18603
+18605,Ranchi-Jaynagar Express,Express,SER,RNC,JYG,20:40,11:35,895,612,2A|3A|SL,11,18606
+18606,Jaynagar-Ranchi Express,Express,SER,JYG,RNC,19:50,10:20,870,612,2A|3A|SL,11,18605
+18609,Ranchi - Mumbai LTT Exp,Express,SER,RNC,LTT,21:05,12:05,3780,2012,2A|3A|SL,28,18610
+18610,Mumbai LTT - Ranchi Exp,Express,SER,LTT,RNC,15:50,07:25,3815,2012,2A|3A|SL,29,18609
+18611,Ranchi-Varanasi Express,Express,SER,RNC,BSB,20:10,08:55,765,572,SL,26,18612
+18612,Varanasi-Ranchi Express,Express,SER,BSB,RNC,14:50,04:15,805,575,SL,28,18611
+18615,Howrah - Hatia Kriya Yoga Express,Express,SER,HWH,HTE,22:20,07:35,555,423,1A|2A|3A|SL,6,18616
+18616,Hatia - Howrah Kriya Yoga Express,Express,SER,HTE,HWH,21:10,06:35,565,423,1A|2A|3A|SL,6,18615
+18617,Howrah-Ranchi Intercity,Express,SER,HWH,RNC,15:05,23:00,475,462,CC,12,18618
+18618,Ranchi-Howrah Intercity,Express,SER,RNC,HWH,06:00,14:20,500,462,CC,12,18617
+18621,Patliputra Express,Express,SER,PNBE,HTE,15:25,05:05,820,547,2A|3A|SL,42,18622
+18622,Patliputra Express,Express,SER,HTE,PNBE,22:05,12:25,860,547,2A|3A|SL,42,18621
+18623,Patna Rajendra Nagar-Hatia Express,Express,SER,RJPB,HTE,21:20,08:45,685,421,1A|2A|3A|SL,26,18624
+18624,Hatia-Rajendranagar Express,Express,SER,HTE,RJPB,19:05,06:55,710,421,1A|2A|3A|SL,23,18623
+18625,Patna-Hatia Super Express,Express,SER,PNBE,HTE,11:40,20:55,555,418,CC,19,18626
+18626,Hatia-Patna Super Express,Express,SER,HTE,PNBE,06:10,15:40,570,415,CC,19,18625
+18627,Howrah-Ranchi InterCity Express,Express,SER,HWH,RNC,14:15,22:15,480,423,CC,9,18628
+18628,Ranchi-Howrah InterCity Express,Express,SER,RNC,HWH,05:45,13:40,475,423,CC,9,18627
+18631,Ranchi Garib Nawaz Express,Express,SER,RNC,AII,20:10,05:20,1990,1671,3A|SL,35,18632
+18632,Garib Nawaz Express,Express,SER,AII,RNC,19:30,04:15,1965,1671,3A|SL,35,18631
+18645,East Coast Express,Express,SER,HWH,HYB,11:45,18:30,1845,1592,2A|3A|SL,58,18646
+18646,East Coast Express,Express,SER,HYB,HWH,10:00,16:10,1810,1592,2A|3A|SL,60,18645
+19005,Saurashtra Mail,Mail,WR,BCT,OKHA,20:25,16:00,1175,990,1A|2A|3A|SL,30,19006
+19006,Saurashtra Mail,Mail,WR,OKHA,BCT,12:25,07:40,1155,990,1A|2A|3A|SL,31,19005
+19011,Gujarat Express,Express,WR,BCT,ADI,05:45,15:05,560,491,FC|CC,24,19012
+19012,Gujarat Express,Express,WR,ADI,BCT,07:00,16:30,570,491,FC|CC,24,19011
+19017,Saurashtra Janata Express,Express,WR,BDTS,JAM,17:35,09:30,955,812,2A|3A|SL,30,19018
+19018,Saurashtra Janata Express,Express,WR,JAM,BDTS,13:40,05:45,965,812,2A|3A|SL,31,19017
+19019,Bandra T - Dehradun Express,Express,WR,BDTS,DDN,23:40,17:35,2515,1682,2A|3A|SL,94,19020
+19020,Dehradun - Bandra Terminus Express,Express,WR,DDN,BDTS,10:40,04:25,2505,1682,2A|3A|SL,89,19019
+19023,Mumbai Firozpur Janata Express,Express,WR,BCT,FZR,07:25,22:20,2335,1772,SL,92,19024
+19024,Firozpur Mumbai Janata Express,Express,WR,FZR,BCT,04:30,20:10,2380,1770,SL,88,19023
+19025,Surat Bhavnagar Express Slip,Express,WR,ST,MHV,05:30,17:20,710,629,3A|SL,14,19026
+19026,Bhavnagar Surat (Slip) Express,Express,WR,MHV,ST,19:25,07:40,735,629,SL,14,19025
+19037,Awadh Express,Express,WR,BDTS,GKP,22:40,13:40,2340,1844,2A|3A|SL,65,19038
+19038,Awadh Express,Express,WR,GKP,BDTS,13:15,04:40,2365,1844,2A|3A|SL,66,19037
+19039,Awadh Express,Express,WR,BDTS,MFP,22:40,21:50,2830,2153,2A|3A|SL,79,19040
+19040,Awadh Express,Express,WR,MFP,BDTS,06:15,04:40,2785,2153,2A|3A|SL,80,19039
+19047,Surat - Bhagalpur Tapti Ganga Exp,Express,WR,ST,BGP,09:35,19:10,6335,1824,3A|SL,35,19048
+19048,Bhagalpur - Surat Tapti Ganga Exp,Express,WR,BGP,ST,09:15,18:50,6335,1826,3A|SL,36,19047
+19049,Mumbai Bandra T - Patna Exp,Express,WR,BDTS,PNBE,15:45,03:30,3585,1845,2A|3A|SL,13,19050
+19050,Patna - Mumbai Bandra T Exp,Express,WR,PNBE,BDTS,23:10,09:20,3490,1845,2A|3A|SL,13,19049
+19053,Surat - Muzaffarpur Exp,Express,WR,ST,MFP,05:30,04:30,2820,2135,3A|SL,22,19054
+19054,Muzaffarpur - Surat Exp,Express,WR,MFP,ST,19:30,17:10,2740,2136,3A|SL,21,19053
+19059,Surat-Jamnagar InterCity Express,Express,WR,ST,JAM,13:35,23:59,624,561,FC|CC,17,19060
+19060,Jamnagar-Surat InterCity Express,Express,WR,JAM,ST,04:45,14:55,610,561,FC|CC,17,19059
+19065,Mumbai Bandra - Bhagat KI Kothi Exp,Express,WR,BDTS,BGKT,23:25,16:57,1052,935,2A|3A|SL,10,19066
+19066,Bhagat KI Kothi - Mumbai Bandra Exp,Express,WR,BGKT,BDTS,19:24,13:05,1061,935,2A|3A|SL,10,19065
+19105,Ahmedabad-Haridwar Mail,Mail,WR,ADI,HW,10:05,12:15,1570,1208,1A|2A|3A|SL,39,19106
+19106,Haridwar-Ahmedabad Mail,Mail,WR,HW,ADI,15:25,16:55,1530,1207,1A|2A|3A|SL,41,19105
+19107,Ahmedabad-Udhampur Janmabhoomi Express,Express,WR,ADI,UHP,08:05,17:20,1995,1539,1A|2A|3A|SL,19,19108
+19108,Udhampur-Ahmedabad Janmabhoomi Express,Express,WR,UHP,ADI,20:50,07:00,2050,1539,1A|2A|3A|SL,19,19107
+19109,Gujarat Queen Express,Express,WR,BL,ADI,04:05,10:15,370,298,FC|CC,26,19110
+19110,Gujarat Queen Express,Express,WR,ADI,BL,18:10,00:30,380,298,FC|CC,26,19109
+19115,Mumbai Bandra - Bhuj Sayaji Nagari Exp,Express,WR,BDTS,BHUJ,14:50,07:40,1010,839,2A|3A|SL,29,19116
+19116,Bhuj - Mumbai Bandra Sayaji Nagari Exp,Express,WR,BHUJ,BDTS,22:15,13:55,940,839,2A|3A|SL,29,19115
+19131,Mumbai Bandra - Bhuj Kutch Exp,Express,WR,BDTS,BHUJ,17:10,09:30,980,839,2A|3A|SL,22,19132
+19132,Bhuj - Mumbai Bandra Kutch Exp,Express,WR,BHUJ,BDTS,19:50,11:30,940,839,2A|3A|SL,22,19131
+19143,Lokshakti Express,Express,WR,BDTS,ADI,19:40,04:50,550,481,2A|3A|SL,22,19144
+19144,Lokshakti Express,Express,WR,ADI,BDTS,21:05,06:05,540,481,2A|3A|SL,17,19143
+19165,Sabarmati Express,Express,WR,ADI,DBG,20:50,19:15,2785,1944,2A|SL,69,19166
+19166,Sabarmati Express,Express,WR,DBG,ADI,04:35,04:00,2845,1944,2A|SL,71,19165
+19167,Sabarmati Express,Express,WR,ADI,BSB,20:50,09:50,2220,1598,2A|SL,55,19168
+19168,Sabarmati Express,Express,WR,BSB,ADI,13:55,04:00,2285,1598,2A|SL,55,19167
+19215,Saurashtra Express,Express,WR,BCT,PBR,08:20,05:50,1290,955,3A|FC|SL,62,19216
+19216,Saurashtra Express,Express,WR,PBR,BCT,21:05,19:15,1330,955,3A|FC|SL,61,19215
+19221,Ahmedabad-Veraval Somnath Express,Express,WR,ADI,VRL,22:00,06:20,500,432,2A|3A|SL,16,19222
+19222,Veraval-Ahmedabad Somnath Express,Express,WR,VRL,ADI,19:40,04:00,500,432,2A|3A|SL,16,19221
+19223,Ahmedabad - Jammu Tawi Exp,Express,WR,ADI,JAT,11:20,19:35,6255,1476,2A|3A|SL,52,19224
+19224,Jammu Tawi - Ahmedabad Exp,Express,WR,JAT,ADI,07:40,15:00,3320,1476,2A|3A|SL,54,19223
+19225,Bhatinda Jammu Tawi Express,Express,WR,BTI,JAT,18:40,06:15,695,490,2A|3A|SL,22,19226
+19226,Jammu Tawi Bhatinda Express,Express,WR,JAT,BTI,21:25,09:30,725,490,2A|3A|SL,22,19225
+19259,Kochuveli - Bhavnagar Exp,Express,WR,KCVL,BVC,15:15,13:00,2745,2569,2A|3A|SL,39,19260
+19260,Bhavnagar - Kochuveli Exp,Express,WR,BVC,KCVL,05:25,03:10,2745,2569,2A|3A|SL,39,19259
+19263,Porbandar-Delhi Sarai Rohilla (Biweekly) Express,Express,WR,PBR,DEE,15:05,19:35,1710,1392,2A|3A|SL,28,19264
+19264,Delhi SaraiRohilla-Porbandar Express,Express,WR,DEE,PBR,08:20,12:55,1715,1392,2A|3A|SL,31,19263
+19269,Porbandar Muzaffarpur Express,Express,WR,PBR,MFP,15:05,18:10,3065,2470,2A|3A|SL,31,19270
+19270,Muzaffarpur-Porbandar Express,Express,WR,MFP,PBR,15:00,17:25,3025,2470,2A|3A|SL,30,19269
+19305,Shipra Express,Express,WR,INDB,HWH,23:30,06:45,1875,1754,2A|3A|SL,33,19306
+19306,Shipra Express,Express,WR,HWH,INDB,17:45,01:40,1915,1754,2A|3A|SL,35,19305
+19309,Shanti Express,Express,WR,GNC,INDB,18:25,06:05,700,571,2A|3A|SL,18,19310
+19310,Shanti Express,Express,WR,INDB,GNC,22:45,10:00,675,571,2A|3A|SL,18,19309
+19311,Pune Indore Express,Express,WR,PUNE,INDB,15:20,09:30,1090,972,2A|3A|SL,15,19312
+19312,Indore Pune Express,Express,WR,INDB,PUNE,14:00,08:10,1090,972,2A|3A|SL,15,19311
+19313,Indore-Patna Express,Express,WR,INDB,PNBE,14:00,16:20,1580,1357,2A|3A|SL,15,
+19314,Patna Indore Express,Express,WR,RJPB,INDB,11:10,15:20,1690,1359,2A|3A|SL,16,
+19321,Indore-Rajendranagar Express,Express,WR,INDB,RJPB,14:00,16:55,1615,1400,2A|3A|SL,16,19322
+19322,Patna-Indore Express,Express,WR,RJPB,INDB,11:10,15:20,1690,1400,2A|3A|SL,16,19321
+19323,Indore Habibganj InterCity Express,Express,WR,INDB,HBJ,06:55,10:55,240,224,CC,7,19324
+19324,Habibganj Indore InterCity Express,Express,WR,HBJ,INDB,17:10,21:20,250,224,CC,7,19323
+19325,Indore Amritsar (Weekly) Express,Express,WR,INDB,ASR,17:30,20:45,1635,1344,2A|3A|SL,24,19326
+19326,Amritsar Indore Express,Express,WR,ASR,INDB,04:40,05:20,1480,1337,2A|3A|SL,24,19325
+19327,Ratlam Chittaurgarh Express,Express,WR,RTM,COR,17:40,21:50,250,189,SL,8,19328
+19328,Chittaurgarh Ratlam Express,Express,WR,COR,RTM,04:05,08:00,235,189,SL,8,19327
+19565,Uttaranchal Express,Express,WR,OKHA,DDN,07:40,19:00,2120,1680,2A|SL,32,19566
+19566,Uttranchal Express,Express,WR,DDN,OKHA,06:00,16:35,2075,1680,2A|SL,32,19565
+19569,Okha Varanasi Express,Express,WR,OKHA,BSB,13:45,05:00,2355,2041,2A|3A|SL,23,19570
+19570,Varanasi Okha Weekly Express,Express,WR,BSB,OKHA,22:00,13:40,2380,2041,2A|3A|SL,23,19569
+19571,Rajkot-Porbandar Express,Express,WR,RJT,PBR,07:20,12:00,280,202,CC,10,19572
+19572,Porbandar-Rajkot Express,Express,WR,PBR,RJT,14:35,18:45,250,202,CC,10,19571
+19601,Ajmer New Jalpaiguri Weekly Express,Express,NWR,AII,NJP,06:30,18:35,2165,1936,2A|3A|SL,20,19602
+19602,New Jalpaiguri Ajmer Weekly Express,Express,NWR,NJP,AII,08:15,21:30,2235,1936,2A|3A|SL,20,19601
+19603,Ajmer-Sultanpur Weekly Express,Express,NWR,AII,SLN,16:05,12:35,1230,1068,2A|3A|SL,12,19604
+19604,Sultanpur Ajmer Express,Express,NWR,SLN,AII,17:35,14:05,1230,1068,2A|3A|SL,12,19603
+19653,Ratlam-Ajmer Express,Express,NWR,RTM,AII,06:25,13:55,450,375,3A|SL,18,19654
+19654,Ajmer-Ratlam Express,Express,NWR,AII,RTM,13:25,20:55,450,375,3A|SL,18,19653
+19657,Indore Jn - Udaipur Express,Express,NWR,INDB,UDZ,08:05,19:00,655,479,2A|3A|SL,14,19658
+19658,Udaipur Indore Express,Express,NWR,UDZ,INDB,20:35,08:35,720,479,2A|3A|SL,14,19657
+19707,Aravalli Express,Express,NWR,BDTS,JP,21:00,18:45,1305,1106,2A|3A|SL,38,19708
+19708,Aravalli Express,Express,NWR,JP,BDTS,09:00,06:45,1305,1106,2A|3A|SL,38,19707
+19709,Jaipur - Kamakhya Kavi Guru Exp,Express,NWR,JP,KYQ,23:35,23:40,2885,2212,2A|3A|SL,37,19710
+19710,Kamakhya - Jaipur Kavi Guru Exp,Express,NWR,KYQ,JP,19:15,17:55,2800,2212,2A|3A|SL,37,19709
+19711,Jaipur-Bhopal Express,Express,NWR,JP,BPL,17:35,11:25,1070,790,2A|3A|SL,33,19712
+19712,Bhopal Jaipur Express,Express,NWR,BPL,JP,16:50,09:25,995,790,2A|3A|SL,33,19711
+19771,Jaipur - Amritsar Express,Express,NWR,JP,ASR,20:10,14:45,1115,872,3A|SL,27,19772
+19772,Amritsar - Jaipur Express,Express,NWR,ASR,JP,14:30,07:30,1020,872,3A|SL,27,19771
+19781,Jaipur-Amritsar Express,Express,NWR,JP,ASR,20:10,10:30,860,713,3A|SL,20,19782
+19782,Amritsar-Jaipur Express,Express,NWR,ASR,JP,17:50,07:30,820,713,3A|SL,20,19781
+19802,Indore-Kota InterCity Express,Express,WCR,INDB,KOTA,14:50,23:25,515,433,CC,9,19801
+19943,Udaipur - Ahmedabad Exp,Express,WR,UDZ,ADI,19:25,04:25,3420,298,2A|SL,8,19944
+21028,Solapur-Gondia Slip Exp.,Mail,CR,SUR,G,18:20,20:15,1555,1132,SL,42,
+21068,Rai Bareli-Mumbai LTT Saket Express,Express,CR,RBL,LTT,16:15,21:40,1765,1502,3A|SL,20,
+21107,Khajuraho-Varanasi Bundelkhand Link Express,Express,CR,KURJ,BSB,23:20,10:50,690,453,3A|SL,21,21108
+21108,Bundelkhand Link Express,Express,CR,BSB,KURJ,18:05,05:00,655,453,3A|SL,27,21107
+21125,Indore Bhind Express,Express,WR,INDB,BIX,20:15,10:35,860,644,2A|3A|SL,15,21126
+21126,Bhind Indore Express,Express,WR,BIX,INDB,17:10,07:50,880,644,2A|3A|SL,15,21125
+22111,Bhusaval Nagpur (Triweekly) Express,Superfast,CR,BSL,NGP,05:35,16:00,625,604,CC,14,22112
+22131,Pune - Manduadih Gyan Ganga Exp,Superfast,CR,PUNE,MUV,16:15,19:20,1625,1537,2A|3A|SL,19,22132
+22132,Manduadih - Pune Gyan Ganga Exp,Superfast,CR,MUV,PUNE,04:35,08:05,1650,1537,2A|3A|SL,19,22131
+22161,Bhopal Damoh Rajya Rani exp,Superfast,WCR,BPL,DMO,17:30,22:45,315,291,CC,11,22162
+22162,Damoh Bhopal Rajya Rani Express,Express,WCR,DMO,BPL,05:00,10:05,305,291,CC,11,22161
+22308,Bikaner-Howrah SF Express,Superfast,ER,BKN,HWH,18:45,04:00,1995,1882,3A|SL,28,
+22403,Puducherry-New Delhi SF Express,Superfast,NR,PDY,NDLS,09:05,04:00,2575,2384,2A|3A|SL,14,22404
+22404,New Delhi-Puducherry SF Exp,Superfast,NR,NDLS,PDY,23:50,18:45,2575,2384,2A|3A|SL,14,22403
+22405,Bhagalpur - Delhi AnandVihar T. Garib Rath Express,Garib Rath,NR,BGP,ANVT,13:30,08:25,1135,1207,3A|CC,19,22406
+22406,AnandVihar Terminal-Bhagalpur Garib Rath,Garib Rath,NR,ANVT,BGP,17:00,11:30,1110,1207,3A|CC,17,22405
+22407,Varanasi-Delhi Anand Vihar Terminus Garib Rath,Garib Rath,NR,BSB,ANVT,19:30,10:00,870,781,3A,9,22408
+22408,Delhi Anand Vihar Terminus-Varanasi Garib Rath,Garib Rath,NR,ANVT,BSB,18:10,08:05,835,781,3A,9,22407
+22409,Sasaram-Anand ViharT Delhi GariRath Express,Garib Rath,NR,SSM,ANVT,21:15,11:50,875,874,3A,7,22410
+22410,Anand ViharT Delhi-Sasaram GaribRath Express,Garib Rath,NR,ANVT,SSM,19:15,08:15,780,874,3A,7,22409
+22423,Guwahati-New Delhi Rajdhani Express,Rajdhani,NR,GHY,NDLS,07:05,10:10,1625,1880,1A|2A|3A,13,22424
+22424,New Delhi-Guwahati Rajdhani Express,Rajdhani,NR,NDLS,GHY,14:00,17:20,1640,1879,1A|2A|3A,13,22423
+22447,Khajuraho Nizamuddin Express,Superfast,NR,KURJ,NZM,18:20,05:30,670,604,3A|SL,9,
+22463,Rajasthan Sampark Kranti Express,Superfast,NR,MTD,BKN,06:45,10:35,230,173,2A|3A|SL,4,
+22464,Rajasthan Sampark Kranti Express,Sampark Kranti,NR,BKN,DEE,17:15,05:35,740,685,2A|3A|SL,11,
+22471,Bikaner - Delhi Sarai Rohilla SF Intercity Express,Superfast,NWR,BKN,DEE,09:15,17:25,490,458,2A|3A|SL,13,22472
+22472,Delhi Sarai Rohilla - Bikaner SF Intercity Express,Superfast,NWR,DEE,BKN,07:05,15:15,490,458,2A|3A|SL,13,22471
+22481,Jodhpur-Delhi Sarai Rohilla Express,Superfast,NR,JU,DEE,19:00,05:35,635,622,2A|3A|SL,16,22482
+22482,Delhi Sarai Rohilla-Jodhpur Express,Superfast,NR,DEE,JU,22:25,09:10,645,622,2A|3A|SL,16,22481
+22601,Chennai Cent - Sainagar Shirdi SF Exp,Superfast,SR,MAS,SNSI,10:10,11:30,1520,1392,2A|3A|SL,22,22602
+22602,Sainagar Shirdi - Chennai Cent SF Exp,Superfast,SR,SNSI,MAS,08:25,09:40,1515,1392,2A|3A|SL,23,22601
+22607,Ernakulam - Bangalore Weekly SF Exp,Superfast,SR,ERS,SBC,17:00,04:20,680,625,2A|3A|SL,14,22608
+22608,Bangalore - Ernakulam Weekly SF Exp,Superfast,SR,SBC,ERS,17:15,04:20,665,625,2A|3A|SL,14,22607
+22609,Mangalore - Palghat Intercity Express,Superfast,SR,MAQ,PGT,12:00,18:15,375,352,CC,12,22610
+22610,Palghat Mangalore Intercity,Express,SR,PGT,MAQ,07:25,13:40,375,352,CC,12,22609
+22681,Mysore - Chennai Weekly SF Exp,Superfast,SWR,MYS,MAS,20:10,05:15,545,500,2A|3A|SL,12,22682
+22682,Chennai - Mysore Weekly SF Exp,Superfast,SWR,MAS,MYS,23:30,08:35,545,500,2A|3A|SL,11,22681
+22688,Chandigarh Chennai Express,Superfast,SR,CDG,MAS,07:45,02:15,2550,2509,3A|SL,21,
+22811,Bhubaneshwar-New Delhi Rajdhani Express,Rajdhani,ECoR,BBS,NDLS,11:30,10:35,1385,1724,1A|2A|3A,12,22812
+22812,New Delhi-Bhubaneswar Rajdhani Express,Rajdhani,ECoR,NDLS,BBS,17:20,16:00,1360,1724,1A|2A|3A,12,22811
+22815,Bilaspur-Ernakulam Express,Superfast,SECR,BSP,ERS,08:10,21:35,2245,2155,2A|3A|SL,23,22816
+22816,Ernakulam-Bilaspur Express,Superfast,SECR,ERS,BSP,08:30,21:35,2225,2156,2A|3A|SL,23,22815
+22823,Bhubaneswar - NEW Delhi Rajdhani Express,Rajdhani,ECoR,BBS,NDLS,09:15,10:35,1520,1800,1A|2A|3A,12,22824
+22824,NEW Delhi - Bhubaneswar Rajdhani Exp (Via Bokaro),Rajdhani,ECoR,NDLS,BBS,17:20,17:30,1450,1800,1A|2A|3A,12,22823
+22835,Shalimar-Puri Express,Superfast,SER,SHM,PURI,21:00,05:55,535,500,2A|3A|SL,11,22836
+22836,Puri-Shalimar weekly superfast express,Superfast,SER,PURI,SHM,22:15,07:20,545,500,2A|3A|SL,11,22835
+22845,Pune - Hatia SF Exp,Express,SER,PUNE,HTE,10:45,17:10,1825,1774,2A|3A|SL,18,22846
+22846,Hatia - Pune SF Exp,Superfast,SER,HTE,PUNE,20:00,02:45,1845,1774,2A|3A|SL,18,22845
+22853,Kolkata Shalimar-Visakhapatnam Superfast express,Superfast,SER,SHM,VSKP,18:15,08:20,845,880,2A|3A|SL,16,22854
+22854,Visakhapatnam-Shalimar Express,Superfast,SER,VSKP,SHM,13:45,03:30,825,880,2A|3A|SL,16,22853
+22855,Santragachi-Tirupati Superfast Express,Superfast,SER,SRC,TPTY,16:05,18:00,1555,1597,2A|3A|SL,16,22856
+22856,TirupatiSantragachi Superfast Express,Superfast,SER,TPTY,SRC,19:55,22:10,1575,1597,2A|3A|SL,16,22855
+22905,Okha Howrah Triweekly SF Express,Superfast,WR,OKHA,HWH,05:05,03:35,4230,2586,3A|SL,30,
+22926,Paschim Express,Superfast,WR,KLK,BDTS,10:20,15:15,1735,1676,3A|SL,34,
+22996,Ajmer Bandra SF Express,Superfast,NWR,AII,BDTS,20:30,14:30,1080,1017,3A|SL,14,
+23010,Doon Express,Express,ER,KTW,HWH,22:00,06:55,1975,1461,SL,69,
+23111,Danapur Express,Express,ER,GRD,DNR,22:50,07:15,505,298,SL,18,
+23112,Giridih Kolkata Express,Express,ER,GRD,KOAA,22:50,07:30,520,335,3A|SL,10,
+23142,Teesta Torsa Express,Express,ER,HDB,SDAH,13:15,04:35,920,628,SL,29,
+23154,Gour Express,Express,ER,BLGT,SDAH,17:05,05:20,735,454,3A|SL,28,
+23225,InterCity Link Express,Express,ECR,SHC,DNR,12:50,20:40,470,229,CC,19,23226
+23226,InterCity Link Express,Express,ECR,DNR,SHC,06:45,13:45,420,229,CC,19,23225
+23347,Palamu Express,Express,ECR,SGRL,PNBE,16:10,04:40,750,481,3A|SL,30,
+23348,Palamau Express (Slip),Express,ECR,GHD,SGRL,05:10,10:40,330,201,3A|SL,10,
+24033,Jammu Mail,Mail,NR,DLI,HSX,20:20,06:25,605,411,SL,19,24034
+24034,Jammu Mail,Mail,NR,HSX,DLI,19:10,05:45,635,411,SL,18,24033
+24042,Kotdwar - Najibabad Mussoorie Exp,Express,NR,KTW,DEE,22:00,08:35,2075,243,3A|SL,15,24041
+24227,Varuna Express,Express,NR,BSB,CNB,04:55,11:35,400,355,CC,12,24228
+24228,Varuna Express,Express,NR,CNB,BSB,16:00,23:20,440,355,CC,12,24227
+24369,Triveni Express,Express,NR,SKTN,BE,17:55,12:30,1115,742,2A|SL,35,24370
+24370,Triveni Express,Express,NR,BE,SKTN,12:00,07:50,1190,741,2A|SL,36,24369
+24512,Khurja Allahabad Link Express,Express,NR,BSC,ALD,18:15,09:55,940,672,2A|SL,26,
+24887,Haridwar-Barmer Link Express,Express,NWR,HW,BME,19:05,20:00,1495,1169,3A|SL,37,24888
+24888,Barmer-Haridwar Link Express,Express,NWR,BME,HW,06:45,09:30,1605,1169,3A|SL,37,24887
+25036,Ramnagar Delhi Link Express,Express,NER,RMR,DLI,09:50,15:20,1770,239,3A,4,
+25610,Jivachh Link Express,Express,NFR,DBG,GHY,05:30,04:00,1350,877,3A|SL,31,
+25631,Bikaner Guwahati Express,Express,NFR,BKN,GHY,23:45,23:15,4290,2333,3A|SL,29,
+25715,Radhikapur Delhi Link Express,Express,NFR,RDP,DLI,06:15,13:05,1850,1372,SL,19,
+25716,Garib Nawaz Express,Express,NFR,KIR,RDP,01:05,03:30,145,92,3A|SL,4,
+28181,Barauni-Katihar Slip Express,Express,SER,BJU,KIR,09:15,14:20,305,180,SL,13,
+28182,Katihar-Tatanagar Link Express,Express,SER,KIR,TATA,15:00,06:40,940,600,SL,33,
+28242,Chirmiri Durg Express Cum Pass,Express,SECR,CHRM,DURG,20:05,09:10,785,381,SL,19,
+28624,Barkakana Rajendranagar Slip Express,Express,SER,BRKA,RJPB,16:15,06:55,880,365,SL,25,
+29019,Nimach Kota Link Exp,Express,WR,NMH,MTC,13:40,07:25,1065,755,1A|2A|SL,34,29020
+29020,Dehradun Express Slip,Express,WR,MTC,NMH,19:20,13:15,1075,755,1A|2A|SL,33,29019
+29059,Hapa InterCity Express,Express,WR,ST,HAPA,13:35,23:32,597,552,FC|CC,15,29060
+29060,Surat InterCity Express,Express,WR,HAPA,ST,04:55,14:55,600,552,FC|CC,15,29059
+52451,Shivalik Deluxe Express,Express,NR,KLK,SML,05:30,10:15,285,96,CC,2,52452
+52452,Shivalik Deluxe Express,Express,NR,SML,KLK,17:40,22:25,285,96,CC,2,52453
+83112,Danapur Giridih Express,Express,?,DNR,GRD,19:00,04:30,570,298,SL,19,
+84369,Tribeni Link Express,Express,?,BRWD,BE,15:30,12:30,1260,862,SL,38,

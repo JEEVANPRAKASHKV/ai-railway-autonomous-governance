@@ -4,11 +4,12 @@ modules/m3_delay_predictor/service.py
 Inference service for Module 3: Train Delay & Disruption Prediction.
 
   • Arrival delay at the chosen station and departure delay from the origin (LightGBM)
-  • Station congestion estimated from that station's own history (congestion_logs.csv) when the
-    caller does not supply it; weather from monthly climatology when not supplied
+  • Distance from the origin and scheduled time at the station from the real timetable (core/network.py)
+  • Weather from the live Open-Meteo forecast at the station's coordinates, else its climatology
+    (core/weather.py); station congestion from that station's own history (congestion_logs.csv)
   • An 80% prediction interval and a disruption probability from the model's residuals on history
   • Real SHAP explanations (minutes added / removed by each factor)
-  • Proactive alerts and alternative trains on the same corridor
+  • Proactive alerts and alternative trains that also halt at the same station
 
 Request inputs use friendly 0–1 scales; they are converted to the units the model was trained on
 (weather 0–10, congestion ≈10–160) before inference, and governance monitors drift in model units.
@@ -25,7 +26,9 @@ import numpy as np
 import pandas as pd
 
 from core.config import settings
-from core.seasonality import climatology_weather, season_factor
+from core.network import network
+from core.seasonality import season_factor
+from core.weather import weather_for
 from governance.context import report_inference
 from governance.hooks import governance_hook
 from governance.lifecycle_manager import lifecycle_manager
@@ -205,26 +208,36 @@ class DelayPredictorService:
         route_km = float(train["distance_km"]) if train is not None else 1200.0
         origin = str(train["source"]) if train is not None else None
         dest = str(train["destination"]) if train is not None else None
+        halt = network.stop(request.train_number, station)
 
         if request.distance_from_origin_km is not None:
-            dist_km = float(request.distance_from_origin_km)
+            dist_km, dist_src = float(request.distance_from_origin_km), "provided"
+        elif halt is not None:
+            dist_km, dist_src = float(halt["km_from_origin"]), "timetable"
         elif station == origin:
-            dist_km = 0.0
+            dist_km, dist_src = 0.0, "timetable"
         elif station == dest:
-            dist_km = route_km
+            dist_km, dist_src = route_km, "timetable"
         else:
-            dist_km = route_km / 2.0
+            dist_km, dist_src = route_km / 2.0, "assumed mid-route (train does not halt here)"
 
+        scheduled = None
+        if halt is not None:
+            scheduled = str(halt.get("arrival") or "") or str(halt.get("departure") or "") or None
+        elif train is not None:
+            scheduled = str(train["arrival_time"] if station == dest else train["departure_time"])
         try:
-            when = train["arrival_time"] if station == dest else train["departure_time"]
-            sched_hour = int(str(when).split(":")[0]) if train is not None else 12
+            sched_hour = int(str(scheduled).split(":")[0]) if scheduled and scheduled != "nan" else 12
         except Exception:
             sched_hour = 12
 
+        weather_conditions: Dict[str, Any] = {}
         if request.weather_index is not None:
             weather_model, weather_src = float(request.weather_index) * 10.0, "provided"
         else:
-            weather_model, weather_src = climatology_weather(jd), "monthly climatology"
+            lat, lon = network.coords(station)
+            w = weather_for(lat, lon, jd)
+            weather_model, weather_src, weather_conditions = float(w["index"]), w["source"], w["conditions"]
         if request.congestion_index is not None:
             cong_idx, cong_src = float(request.congestion_index) * 100.0, "provided"
         else:
@@ -271,10 +284,16 @@ class DelayPredictorService:
             alerts.append(DelayAlert(severity="CRITICAL", title="Severe delay forecast",
                                      message=f"{p_over_60:.0%} chance the delay exceeds 60 minutes.",
                                      action="Consider an alternative train below."))
-        if weather_model >= 7:
-            alerts.append(DelayAlert(severity="WARNING", title="Adverse weather",
-                                     message="Heavy rain / fog conditions slow trains on this route.",
-                                     action="Check the live running status before leaving for the station."))
+        if weather_model >= 4.5:
+            wc = weather_conditions
+            what = ("Dense fog" if wc.get("min_visibility_m", 99999) < 500 else "Fog" if wc.get("min_visibility_m", 99999) < 1000
+                    else "Thunderstorms" if wc.get("storm") else "Heavy rain" if wc.get("precip_mm", 0) >= 30
+                    else "Adverse weather")
+            detail = (f" (rain {wc['precip_mm']:.0f} mm, visibility {wc['min_visibility_m'] / 1000:.1f} km)"
+                      if wc else "")
+            alerts.append(DelayAlert(severity="WARNING", title=f"{what} at {station}",
+                                     message=f"{what} expected on the travel day{detail} — trains slow down in these conditions.",
+                                     action="Check the live running status (NTES) before leaving for the station."))
         if cong_idx >= 70:
             alerts.append(DelayAlert(severity="INFO", title=f"Busy station ({station})",
                                      message=f"Platform congestion index {cong_idx:.0f}/100 ({cong_src}).",
@@ -285,15 +304,15 @@ class DelayPredictorService:
                                      action="Keep your PNR handy."))
 
         alternatives: List[AlternativeTravelOption] = []
-        if predicted_delay > 45 and self._trains_df is not None and dest:
-            df = self._trains_df
-            same = df[(df["destination"] == dest) & (df["train_number"].astype(str) != str(request.train_number))]
-            if origin:
-                same = same.assign(_same_src=(same["source"] == origin).astype(int))
-                same = same.sort_values(["_same_src", "punctuality_pct"], ascending=[False, False])
-            for _, tr in same.head(4).iterrows():
+        if predicted_delay > 45:
+            # other trains that also halt at this station, preferring ones from the same starting city
+            pool = network.segments(origin, station, nearby=True) if origin and origin != station else pd.DataFrame()
+            if len(pool):
+                pool = pool[pool["train_number"].astype(str) != str(request.train_number)]
+                pool = pool.sort_values("punctuality_pct", ascending=False)
+            for _, tr in pool.head(4).iterrows():
                 if bundle and "model" in bundle:
-                    alt_feats = dict(feats, distance_from_origin_km=float(tr["distance_km"]))
+                    alt_feats = dict(feats, distance_from_origin_km=float(tr["km_at_destination"]))
                     alt_delay = self._predict(bundle, alt_feats) * (1.0 - (float(tr["punctuality_pct"]) - 80) / 100.0)
                 else:
                     alt_delay = predicted_delay * 0.6
@@ -304,8 +323,8 @@ class DelayPredictorService:
                     train_number=str(tr["train_number"]), train_name=str(tr["train_name"]),
                     departure_time=str(tr["departure_time"]), arrival_time=str(tr["arrival_time"]),
                     delay_advantage_minutes=adv,
-                    reason=(f"{'Same route' if tr['source'] == origin else 'Also reaches ' + dest}; "
-                            f"{int(tr['punctuality_pct'])}% historical punctuality."),
+                    reason=(f"Leaves {tr['source']} {tr['departure_time']}, reaches {station} {tr['arrival_time']}; "
+                            f"{int(tr['punctuality_pct'])}% on time (simulated history)."),
                 ))
 
         drivers = self._shap(bundle, feats) if bundle and "model" in bundle else []
@@ -320,6 +339,11 @@ class DelayPredictorService:
             station_congestion_index=round(cong_idx / 100.0, 3),
             congestion_source=cong_src,
             weather_source=weather_src,
+            weather_index_used=round(weather_model, 2),
+            weather_conditions=weather_conditions,
+            distance_from_origin_km=round(dist_km, 1),
+            distance_source=dist_src,
+            scheduled_time=scheduled if scheduled and scheduled != "nan" else None,
             disruption_probability=round(p_over_60, 3),
             proactive_alert=alert,
             alerts=alerts,

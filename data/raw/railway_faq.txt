@@ -64,44 +64,47 @@ A: The penalty for travelling without a valid ticket is ₹250 plus the applicab
 Q: How do I upgrade my class?
 A: Class upgrades are available at the station before departure, subject to availability. Contact the Station Manager or Ticket Examiner.
 
-Q: What classes are available on Duronto?
-A: Duronto typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: What is the fare from Delhi to Lucknow in Sleeper class?
-A: The approximate Sleeper class fare from Delhi to Lucknow is ₹240. Final fare may vary based on dynamic pricing and quotas.
-
-Q: What is the fare from Kolkata to Guwahati in Sleeper class?
-A: The approximate Sleeper class fare from Kolkata to Guwahati is ₹450. Final fare may vary based on dynamic pricing and quotas.
-
-Q: Is Rajdhani Express running on time today?
-A: For real-time running status of Rajdhani Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: What is the fare from Delhi to Lucknow in Sleeper class?
-A: The approximate Sleeper class fare from Delhi to Lucknow is ₹240. Final fare may vary based on dynamic pricing and quotas.
-
-Q: How long is the journey from Delhi to Lucknow?
-A: The journey from Delhi to Lucknow typically takes 7 hours by major express trains. Duration varies by train type.
-
-Q: How long is the journey from Delhi to Lucknow?
-A: The journey from Delhi to Lucknow typically takes 7 hours by major express trains. Duration varies by train type.
-
 Q: How long is the journey from Mumbai to Delhi?
 A: The journey from Mumbai to Delhi typically takes 16 hours by major express trains. Duration varies by train type.
 
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+Q: Is Shatabdi Express running on time today?
+A: For real-time running status of Shatabdi Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
 
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+Q: Is Garib Rath running on time today?
+A: For real-time running status of Garib Rath, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: How long is the journey from Delhi to Jaipur?
+A: The journey from Delhi to Jaipur typically takes 5 hours by major express trains. Duration varies by train type.
+
+Q: How long is the journey from Delhi to Jaipur?
+A: The journey from Delhi to Jaipur typically takes 5 hours by major express trains. Duration varies by train type.
+
+Q: What classes are available on Garib Rath?
+A: Garib Rath typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: What is the fare from Mumbai to Goa in Sleeper class?
+A: The approximate Sleeper class fare from Mumbai to Goa is ₹280. Final fare may vary based on dynamic pricing and quotas.
+
+Q: Is Humsafar Express running on time today?
+A: For real-time running status of Humsafar Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: What classes are available on Mail Express?
+A: Mail Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
 
 Q: What classes are available on Humsafar Express?
 A: Humsafar Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
 
-Q: What is the fare from Delhi to Lucknow in Sleeper class?
-A: The approximate Sleeper class fare from Delhi to Lucknow is ₹240. Final fare may vary based on dynamic pricing and quotas.
+Q: How long is the journey from Delhi to Jaipur?
+A: The journey from Delhi to Jaipur typically takes 5 hours by major express trains. Duration varies by train type.
+
+Q: How long is the journey from Pune to Hyderabad?
+A: The journey from Pune to Hyderabad typically takes 10 hours by major express trains. Duration varies by train type.
+
+Q: How long is the journey from Chennai to Kolkata?
+A: The journey from Chennai to Kolkata typically takes 27 hours by major express trains. Duration varies by train type.
+
+Q: Is Rajdhani Express running on time today?
+A: For real-time running status of Rajdhani Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
 
 Q: Can I book a lower berth?
 A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
@@ -109,35 +112,62 @@ A: You can select berth preference at the time of booking, but it is subject to 
 Q: Is Duronto running on time today?
 A: For real-time running status of Duronto, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
 
-Q: What classes are available on Mail Express?
-A: Mail Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+Q: How long is the journey from Delhi to Jaipur?
+A: The journey from Delhi to Jaipur typically takes 5 hours by major express trains. Duration varies by train type.
+
+Q: How long is the journey from Pune to Hyderabad?
+A: The journey from Pune to Hyderabad typically takes 10 hours by major express trains. Duration varies by train type.
 
 Q: Can I book a lower berth?
 A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: What is the fare from Chennai to Kolkata in Sleeper class?
-A: The approximate Sleeper class fare from Chennai to Kolkata is ₹620. Final fare may vary based on dynamic pricing and quotas.
-
-Q: Is Humsafar Express running on time today?
-A: For real-time running status of Humsafar Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
 
 Q: How long is the journey from Chennai to Hyderabad?
 A: The journey from Chennai to Hyderabad typically takes 12 hours by major express trains. Duration varies by train type.
 
+Q: What is the fare from Chennai to Kolkata in Sleeper class?
+A: The approximate Sleeper class fare from Chennai to Kolkata is ₹620. Final fare may vary based on dynamic pricing and quotas.
+
+Q: How long is the journey from Mumbai to Goa?
+A: The journey from Mumbai to Goa typically takes 8 hours by major express trains. Duration varies by train type.
+
 Q: Is Garib Rath running on time today?
 A: For real-time running status of Garib Rath, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: How long is the journey from Delhi to Bangalore?
+A: The journey from Delhi to Bangalore typically takes 35 hours by major express trains. Duration varies by train type.
+
+Q: How long is the journey from Pune to Hyderabad?
+A: The journey from Pune to Hyderabad typically takes 10 hours by major express trains. Duration varies by train type.
+
+Q: What classes are available on Mail Express?
+A: Mail Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
 
 Q: Can I book a lower berth?
 A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
 
-Q: Is Garib Rath running on time today?
-A: For real-time running status of Garib Rath, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+Q: Is Shatabdi Express running on time today?
+A: For real-time running status of Shatabdi Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
 
 Q: What is the fare from Chennai to Kolkata in Sleeper class?
 A: The approximate Sleeper class fare from Chennai to Kolkata is ₹620. Final fare may vary based on dynamic pricing and quotas.
 
-Q: What classes are available on Mail Express?
-A: Mail Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+Q: What classes are available on Rajdhani Express?
+A: Rajdhani Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: What classes are available on Tejas Express?
+A: Tejas Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: Is Vande Bharat running on time today?
+A: For real-time running status of Vande Bharat, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: Is Mail Express running on time today?
+A: For real-time running status of Mail Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: Is Vande Bharat running on time today?
+A: For real-time running status of Vande Bharat, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
 
 Q: Is Humsafar Express running on time today?
 A: For real-time running status of Humsafar Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
@@ -145,65 +175,8 @@ A: For real-time running status of Humsafar Express, please check NTES website o
 Q: What is the fare from Delhi to Jaipur in Sleeper class?
 A: The approximate Sleeper class fare from Delhi to Jaipur is ₹195. Final fare may vary based on dynamic pricing and quotas.
 
-Q: Is Shatabdi Express running on time today?
-A: For real-time running status of Shatabdi Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: Is Humsafar Express running on time today?
-A: For real-time running status of Humsafar Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: What is the fare from Chennai to Kolkata in Sleeper class?
-A: The approximate Sleeper class fare from Chennai to Kolkata is ₹620. Final fare may vary based on dynamic pricing and quotas.
-
-Q: How long is the journey from Delhi to Lucknow?
-A: The journey from Delhi to Lucknow typically takes 7 hours by major express trains. Duration varies by train type.
-
-Q: What is the fare from Chennai to Kolkata in Sleeper class?
-A: The approximate Sleeper class fare from Chennai to Kolkata is ₹620. Final fare may vary based on dynamic pricing and quotas.
-
-Q: Is Humsafar Express running on time today?
-A: For real-time running status of Humsafar Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: Is Humsafar Express running on time today?
-A: For real-time running status of Humsafar Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: Is Vande Bharat running on time today?
-A: For real-time running status of Vande Bharat, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: What is the fare from Kolkata to Guwahati in Sleeper class?
-A: The approximate Sleeper class fare from Kolkata to Guwahati is ₹450. Final fare may vary based on dynamic pricing and quotas.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: What is the fare from Chennai to Kolkata in Sleeper class?
-A: The approximate Sleeper class fare from Chennai to Kolkata is ₹620. Final fare may vary based on dynamic pricing and quotas.
-
-Q: What classes are available on Vande Bharat?
-A: Vande Bharat typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: What classes are available on Shatabdi Express?
-A: Shatabdi Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: What classes are available on Rajdhani Express?
-A: Rajdhani Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: Is Tejas Express running on time today?
-A: For real-time running status of Tejas Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: Is Rajdhani Express running on time today?
-A: For real-time running status of Rajdhani Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+Q: What is the fare from Delhi to Lucknow in Sleeper class?
+A: The approximate Sleeper class fare from Delhi to Lucknow is ₹240. Final fare may vary based on dynamic pricing and quotas.
 
 Q: What is the fare from Mumbai to Delhi in Sleeper class?
 A: The approximate Sleeper class fare from Mumbai to Delhi is ₹485. Final fare may vary based on dynamic pricing and quotas.
@@ -211,20 +184,11 @@ A: The approximate Sleeper class fare from Mumbai to Delhi is ₹485. Final fare
 Q: Can I book a lower berth?
 A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
 
-Q: What classes are available on Shatabdi Express?
-A: Shatabdi Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: What classes are available on Shatabdi Express?
-A: Shatabdi Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: What is the fare from Delhi to Jaipur in Sleeper class?
-A: The approximate Sleeper class fare from Delhi to Jaipur is ₹195. Final fare may vary based on dynamic pricing and quotas.
-
-Q: How long is the journey from Delhi to Lucknow?
-A: The journey from Delhi to Lucknow typically takes 7 hours by major express trains. Duration varies by train type.
-
 Q: How long is the journey from Mumbai to Delhi?
 A: The journey from Mumbai to Delhi typically takes 16 hours by major express trains. Duration varies by train type.
+
+Q: How long is the journey from Mumbai to Ahmedabad?
+A: The journey from Mumbai to Ahmedabad typically takes 8 hours by major express trains. Duration varies by train type.
 
 Q: Can I book a lower berth?
 A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
@@ -232,26 +196,98 @@ A: You can select berth preference at the time of booking, but it is subject to 
 Q: How long is the journey from Pune to Hyderabad?
 A: The journey from Pune to Hyderabad typically takes 10 hours by major express trains. Duration varies by train type.
 
-Q: How long is the journey from Mumbai to Ahmedabad?
-A: The journey from Mumbai to Ahmedabad typically takes 8 hours by major express trains. Duration varies by train type.
+Q: What classes are available on Tejas Express?
+A: Tejas Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
 
-Q: How long is the journey from Delhi to Lucknow?
-A: The journey from Delhi to Lucknow typically takes 7 hours by major express trains. Duration varies by train type.
+Q: What classes are available on Shatabdi Express?
+A: Shatabdi Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: What is the fare from Delhi to Jaipur in Sleeper class?
+A: The approximate Sleeper class fare from Delhi to Jaipur is ₹195. Final fare may vary based on dynamic pricing and quotas.
+
+Q: What classes are available on Duronto?
+A: Duronto typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
 
 Q: Can I book a lower berth?
 A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
 
-Q: What is the fare from Delhi to Lucknow in Sleeper class?
-A: The approximate Sleeper class fare from Delhi to Lucknow is ₹240. Final fare may vary based on dynamic pricing and quotas.
+Q: Is Mail Express running on time today?
+A: For real-time running status of Mail Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
 
-Q: What classes are available on Garib Rath?
-A: Garib Rath typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: Is Duronto running on time today?
+A: For real-time running status of Duronto, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: Is Tejas Express running on time today?
+A: For real-time running status of Tejas Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: What classes are available on Duronto?
+A: Duronto typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: What classes are available on Duronto?
+A: Duronto typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: Is Rajdhani Express running on time today?
+A: For real-time running status of Rajdhani Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: What classes are available on Mail Express?
+A: Mail Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: What is the fare from Mumbai to Ahmedabad in Sleeper class?
+A: The approximate Sleeper class fare from Mumbai to Ahmedabad is ₹250. Final fare may vary based on dynamic pricing and quotas.
+
+Q: How long is the journey from Delhi to Jaipur?
+A: The journey from Delhi to Jaipur typically takes 5 hours by major express trains. Duration varies by train type.
+
+Q: How long is the journey from Mumbai to Delhi?
+A: The journey from Mumbai to Delhi typically takes 16 hours by major express trains. Duration varies by train type.
+
+Q: What classes are available on Vande Bharat?
+A: Vande Bharat typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: What is the fare from Mumbai to Ahmedabad in Sleeper class?
+A: The approximate Sleeper class fare from Mumbai to Ahmedabad is ₹250. Final fare may vary based on dynamic pricing and quotas.
+
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: Is Humsafar Express running on time today?
+A: For real-time running status of Humsafar Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: How long is the journey from Chennai to Kolkata?
+A: The journey from Chennai to Kolkata typically takes 27 hours by major express trains. Duration varies by train type.
+
+Q: Is Duronto running on time today?
+A: For real-time running status of Duronto, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: What is the fare from Mumbai to Ahmedabad in Sleeper class?
+A: The approximate Sleeper class fare from Mumbai to Ahmedabad is ₹250. Final fare may vary based on dynamic pricing and quotas.
+
+Q: Is Garib Rath running on time today?
+A: For real-time running status of Garib Rath, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: How long is the journey from Pune to Hyderabad?
+A: The journey from Pune to Hyderabad typically takes 10 hours by major express trains. Duration varies by train type.
 
 Q: Is Shatabdi Express running on time today?
 A: For real-time running status of Shatabdi Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
 
-Q: How long is the journey from Delhi to Bangalore?
-A: The journey from Delhi to Bangalore typically takes 35 hours by major express trains. Duration varies by train type.
+Q: What is the fare from Chennai to Kolkata in Sleeper class?
+A: The approximate Sleeper class fare from Chennai to Kolkata is ₹620. Final fare may vary based on dynamic pricing and quotas.
+
+Q: What classes are available on Vande Bharat?
+A: Vande Bharat typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: What classes are available on Duronto?
+A: Duronto typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
 
 Q: What classes are available on Humsafar Express?
 A: Humsafar Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
@@ -259,11 +295,23 @@ A: Humsafar Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier
 Q: Can I book a lower berth?
 A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
 
-Q: What is the fare from Pune to Hyderabad in Sleeper class?
-A: The approximate Sleeper class fare from Pune to Hyderabad is ₹320. Final fare may vary based on dynamic pricing and quotas.
+Q: How long is the journey from Chennai to Hyderabad?
+A: The journey from Chennai to Hyderabad typically takes 12 hours by major express trains. Duration varies by train type.
 
-Q: What is the fare from Chennai to Kolkata in Sleeper class?
-A: The approximate Sleeper class fare from Chennai to Kolkata is ₹620. Final fare may vary based on dynamic pricing and quotas.
+Q: What classes are available on Humsafar Express?
+A: Humsafar Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: What is the fare from Mumbai to Delhi in Sleeper class?
+A: The approximate Sleeper class fare from Mumbai to Delhi is ₹485. Final fare may vary based on dynamic pricing and quotas.
+
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: What is the fare from Delhi to Lucknow in Sleeper class?
+A: The approximate Sleeper class fare from Delhi to Lucknow is ₹240. Final fare may vary based on dynamic pricing and quotas.
+
+Q: Is Duronto running on time today?
+A: For real-time running status of Duronto, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
 
 Q: Can I book a lower berth?
 A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
@@ -271,377 +319,110 @@ A: You can select berth preference at the time of booking, but it is subject to 
 Q: Can I book a lower berth?
 A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
 
-Q: What is the fare from Pune to Hyderabad in Sleeper class?
-A: The approximate Sleeper class fare from Pune to Hyderabad is ₹320. Final fare may vary based on dynamic pricing and quotas.
+Q: What classes are available on Vande Bharat?
+A: Vande Bharat typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: What is the fare from Mumbai to Ahmedabad in Sleeper class?
+A: The approximate Sleeper class fare from Mumbai to Ahmedabad is ₹250. Final fare may vary based on dynamic pricing and quotas.
+
+Q: What classes are available on Humsafar Express?
+A: Humsafar Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: What classes are available on Duronto?
+A: Duronto typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
 
 Q: Can I book a lower berth?
 A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: What is the fare from Mumbai to Goa in Sleeper class?
+A: The approximate Sleeper class fare from Mumbai to Goa is ₹280. Final fare may vary based on dynamic pricing and quotas.
+
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: What is the fare from Delhi to Jaipur in Sleeper class?
+A: The approximate Sleeper class fare from Delhi to Jaipur is ₹195. Final fare may vary based on dynamic pricing and quotas.
+
+Q: How long is the journey from Chennai to Hyderabad?
+A: The journey from Chennai to Hyderabad typically takes 12 hours by major express trains. Duration varies by train type.
+
+Q: Is Shatabdi Express running on time today?
+A: For real-time running status of Shatabdi Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: Is Vande Bharat running on time today?
+A: For real-time running status of Vande Bharat, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: Is Tejas Express running on time today?
+A: For real-time running status of Tejas Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
 
 Q: What is the fare from Chennai to Hyderabad in Sleeper class?
 A: The approximate Sleeper class fare from Chennai to Hyderabad is ₹380. Final fare may vary based on dynamic pricing and quotas.
 
-Q: Is Duronto running on time today?
-A: For real-time running status of Duronto, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: How long is the journey from Delhi to Lucknow?
-A: The journey from Delhi to Lucknow typically takes 7 hours by major express trains. Duration varies by train type.
-
-Q: What classes are available on Duronto?
-A: Duronto typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+Q: What classes are available on Humsafar Express?
+A: Humsafar Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
 
 Q: What is the fare from Delhi to Jaipur in Sleeper class?
 A: The approximate Sleeper class fare from Delhi to Jaipur is ₹195. Final fare may vary based on dynamic pricing and quotas.
 
-Q: How long is the journey from Mumbai to Goa?
-A: The journey from Mumbai to Goa typically takes 8 hours by major express trains. Duration varies by train type.
-
-Q: What is the fare from Kolkata to Guwahati in Sleeper class?
-A: The approximate Sleeper class fare from Kolkata to Guwahati is ₹450. Final fare may vary based on dynamic pricing and quotas.
-
-Q: How long is the journey from Chennai to Hyderabad?
-A: The journey from Chennai to Hyderabad typically takes 12 hours by major express trains. Duration varies by train type.
-
-Q: Is Vande Bharat running on time today?
-A: For real-time running status of Vande Bharat, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: How long is the journey from Mumbai to Delhi?
-A: The journey from Mumbai to Delhi typically takes 16 hours by major express trains. Duration varies by train type.
-
 Q: Can I book a lower berth?
 A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: What classes are available on Shatabdi Express?
-A: Shatabdi Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: What is the fare from Delhi to Bangalore in Sleeper class?
-A: The approximate Sleeper class fare from Delhi to Bangalore is ₹730. Final fare may vary based on dynamic pricing and quotas.
-
-Q: How long is the journey from Kolkata to Guwahati?
-A: The journey from Kolkata to Guwahati typically takes 16 hours by major express trains. Duration varies by train type.
-
-Q: What classes are available on Vande Bharat?
-A: Vande Bharat typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: What is the fare from Chennai to Kolkata in Sleeper class?
-A: The approximate Sleeper class fare from Chennai to Kolkata is ₹620. Final fare may vary based on dynamic pricing and quotas.
-
-Q: Is Duronto running on time today?
-A: For real-time running status of Duronto, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: What is the fare from Mumbai to Delhi in Sleeper class?
-A: The approximate Sleeper class fare from Mumbai to Delhi is ₹485. Final fare may vary based on dynamic pricing and quotas.
-
-Q: How long is the journey from Chennai to Hyderabad?
-A: The journey from Chennai to Hyderabad typically takes 12 hours by major express trains. Duration varies by train type.
-
-Q: How long is the journey from Delhi to Jaipur?
-A: The journey from Delhi to Jaipur typically takes 5 hours by major express trains. Duration varies by train type.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: How long is the journey from Chennai to Kolkata?
-A: The journey from Chennai to Kolkata typically takes 27 hours by major express trains. Duration varies by train type.
-
-Q: What is the fare from Delhi to Jaipur in Sleeper class?
-A: The approximate Sleeper class fare from Delhi to Jaipur is ₹195. Final fare may vary based on dynamic pricing and quotas.
-
-Q: What is the fare from Kolkata to Guwahati in Sleeper class?
-A: The approximate Sleeper class fare from Kolkata to Guwahati is ₹450. Final fare may vary based on dynamic pricing and quotas.
-
-Q: What is the fare from Mumbai to Goa in Sleeper class?
-A: The approximate Sleeper class fare from Mumbai to Goa is ₹280. Final fare may vary based on dynamic pricing and quotas.
-
-Q: What is the fare from Kolkata to Guwahati in Sleeper class?
-A: The approximate Sleeper class fare from Kolkata to Guwahati is ₹450. Final fare may vary based on dynamic pricing and quotas.
-
-Q: What classes are available on Mail Express?
-A: Mail Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: How long is the journey from Chennai to Hyderabad?
-A: The journey from Chennai to Hyderabad typically takes 12 hours by major express trains. Duration varies by train type.
-
-Q: How long is the journey from Delhi to Bangalore?
-A: The journey from Delhi to Bangalore typically takes 35 hours by major express trains. Duration varies by train type.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: How long is the journey from Delhi to Bangalore?
-A: The journey from Delhi to Bangalore typically takes 35 hours by major express trains. Duration varies by train type.
-
-Q: How long is the journey from Chennai to Hyderabad?
-A: The journey from Chennai to Hyderabad typically takes 12 hours by major express trains. Duration varies by train type.
-
-Q: Is Shatabdi Express running on time today?
-A: For real-time running status of Shatabdi Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: How long is the journey from Mumbai to Ahmedabad?
-A: The journey from Mumbai to Ahmedabad typically takes 8 hours by major express trains. Duration varies by train type.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: How long is the journey from Chennai to Kolkata?
-A: The journey from Chennai to Kolkata typically takes 27 hours by major express trains. Duration varies by train type.
-
-Q: What classes are available on Duronto?
-A: Duronto typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: What is the fare from Delhi to Lucknow in Sleeper class?
-A: The approximate Sleeper class fare from Delhi to Lucknow is ₹240. Final fare may vary based on dynamic pricing and quotas.
-
-Q: What classes are available on Rajdhani Express?
-A: Rajdhani Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: How long is the journey from Delhi to Bangalore?
-A: The journey from Delhi to Bangalore typically takes 35 hours by major express trains. Duration varies by train type.
-
-Q: What classes are available on Mail Express?
-A: Mail Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: How long is the journey from Mumbai to Ahmedabad?
-A: The journey from Mumbai to Ahmedabad typically takes 8 hours by major express trains. Duration varies by train type.
-
-Q: Is Vande Bharat running on time today?
-A: For real-time running status of Vande Bharat, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: How long is the journey from Mumbai to Delhi?
-A: The journey from Mumbai to Delhi typically takes 16 hours by major express trains. Duration varies by train type.
-
-Q: How long is the journey from Chennai to Kolkata?
-A: The journey from Chennai to Kolkata typically takes 27 hours by major express trains. Duration varies by train type.
-
-Q: What classes are available on Tejas Express?
-A: Tejas Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: What is the fare from Pune to Hyderabad in Sleeper class?
-A: The approximate Sleeper class fare from Pune to Hyderabad is ₹320. Final fare may vary based on dynamic pricing and quotas.
-
-Q: Is Duronto running on time today?
-A: For real-time running status of Duronto, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
 
 Q: Is Humsafar Express running on time today?
 A: For real-time running status of Humsafar Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
 
-Q: What is the fare from Delhi to Bangalore in Sleeper class?
-A: The approximate Sleeper class fare from Delhi to Bangalore is ₹730. Final fare may vary based on dynamic pricing and quotas.
+Q: What classes are available on Duronto?
+A: Duronto typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
 
-Q: How long is the journey from Mumbai to Delhi?
-A: The journey from Mumbai to Delhi typically takes 16 hours by major express trains. Duration varies by train type.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: What is the fare from Mumbai to Ahmedabad in Sleeper class?
-A: The approximate Sleeper class fare from Mumbai to Ahmedabad is ₹250. Final fare may vary based on dynamic pricing and quotas.
-
-Q: What classes are available on Mail Express?
-A: Mail Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: Is Shatabdi Express running on time today?
-A: For real-time running status of Shatabdi Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+Q: What is the fare from Chennai to Kolkata in Sleeper class?
+A: The approximate Sleeper class fare from Chennai to Kolkata is ₹620. Final fare may vary based on dynamic pricing and quotas.
 
 Q: How long is the journey from Mumbai to Goa?
 A: The journey from Mumbai to Goa typically takes 8 hours by major express trains. Duration varies by train type.
 
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: What classes are available on Shatabdi Express?
-A: Shatabdi Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: What classes are available on Duronto?
-A: Duronto typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
 Q: What classes are available on Humsafar Express?
 A: Humsafar Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
 
-Q: Is Shatabdi Express running on time today?
-A: For real-time running status of Shatabdi Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: What classes are available on Vande Bharat?
-A: Vande Bharat typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: What classes are available on Vande Bharat?
-A: Vande Bharat typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+Q: What is the fare from Delhi to Jaipur in Sleeper class?
+A: The approximate Sleeper class fare from Delhi to Jaipur is ₹195. Final fare may vary based on dynamic pricing and quotas.
 
 Q: Is Rajdhani Express running on time today?
 A: For real-time running status of Rajdhani Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
 
-Q: What classes are available on Humsafar Express?
-A: Humsafar Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: What classes are available on Tejas Express?
-A: Tejas Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: How long is the journey from Kolkata to Guwahati?
-A: The journey from Kolkata to Guwahati typically takes 16 hours by major express trains. Duration varies by train type.
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
 
 Q: Can I book a lower berth?
 A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
 
-Q: How long is the journey from Kolkata to Guwahati?
-A: The journey from Kolkata to Guwahati typically takes 16 hours by major express trains. Duration varies by train type.
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: Is Mail Express running on time today?
+A: For real-time running status of Mail Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: Is Vande Bharat running on time today?
+A: For real-time running status of Vande Bharat, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
 
 Q: How long is the journey from Delhi to Lucknow?
 A: The journey from Delhi to Lucknow typically takes 7 hours by major express trains. Duration varies by train type.
 
-Q: What is the fare from Pune to Hyderabad in Sleeper class?
-A: The approximate Sleeper class fare from Pune to Hyderabad is ₹320. Final fare may vary based on dynamic pricing and quotas.
-
-Q: Is Vande Bharat running on time today?
-A: For real-time running status of Vande Bharat, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: What is the fare from Delhi to Lucknow in Sleeper class?
-A: The approximate Sleeper class fare from Delhi to Lucknow is ₹240. Final fare may vary based on dynamic pricing and quotas.
-
-Q: What is the fare from Delhi to Bangalore in Sleeper class?
-A: The approximate Sleeper class fare from Delhi to Bangalore is ₹730. Final fare may vary based on dynamic pricing and quotas.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: Is Vande Bharat running on time today?
-A: For real-time running status of Vande Bharat, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: Is Vande Bharat running on time today?
-A: For real-time running status of Vande Bharat, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: What is the fare from Delhi to Jaipur in Sleeper class?
-A: The approximate Sleeper class fare from Delhi to Jaipur is ₹195. Final fare may vary based on dynamic pricing and quotas.
-
-Q: How long is the journey from Mumbai to Ahmedabad?
-A: The journey from Mumbai to Ahmedabad typically takes 8 hours by major express trains. Duration varies by train type.
-
-Q: What is the fare from Mumbai to Delhi in Sleeper class?
-A: The approximate Sleeper class fare from Mumbai to Delhi is ₹485. Final fare may vary based on dynamic pricing and quotas.
-
-Q: Is Tejas Express running on time today?
-A: For real-time running status of Tejas Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: What classes are available on Duronto?
-A: Duronto typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: What classes are available on Garib Rath?
-A: Garib Rath typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: Is Tejas Express running on time today?
-A: For real-time running status of Tejas Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: What is the fare from Kolkata to Guwahati in Sleeper class?
-A: The approximate Sleeper class fare from Kolkata to Guwahati is ₹450. Final fare may vary based on dynamic pricing and quotas.
-
-Q: Is Vande Bharat running on time today?
-A: For real-time running status of Vande Bharat, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: What is the fare from Delhi to Bangalore in Sleeper class?
-A: The approximate Sleeper class fare from Delhi to Bangalore is ₹730. Final fare may vary based on dynamic pricing and quotas.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: What classes are available on Garib Rath?
-A: Garib Rath typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: What is the fare from Mumbai to Goa in Sleeper class?
-A: The approximate Sleeper class fare from Mumbai to Goa is ₹280. Final fare may vary based on dynamic pricing and quotas.
-
-Q: How long is the journey from Delhi to Jaipur?
-A: The journey from Delhi to Jaipur typically takes 5 hours by major express trains. Duration varies by train type.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: What is the fare from Mumbai to Ahmedabad in Sleeper class?
-A: The approximate Sleeper class fare from Mumbai to Ahmedabad is ₹250. Final fare may vary based on dynamic pricing and quotas.
+Q: How long is the journey from Delhi to Bangalore?
+A: The journey from Delhi to Bangalore typically takes 35 hours by major express trains. Duration varies by train type.
 
 Q: What is the fare from Chennai to Kolkata in Sleeper class?
 A: The approximate Sleeper class fare from Chennai to Kolkata is ₹620. Final fare may vary based on dynamic pricing and quotas.
 
-Q: Is Vande Bharat running on time today?
-A: For real-time running status of Vande Bharat, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: How long is the journey from Delhi to Jaipur?
-A: The journey from Delhi to Jaipur typically takes 5 hours by major express trains. Duration varies by train type.
-
-Q: How long is the journey from Delhi to Lucknow?
-A: The journey from Delhi to Lucknow typically takes 7 hours by major express trains. Duration varies by train type.
-
-Q: What classes are available on Tejas Express?
-A: Tejas Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
 Q: What is the fare from Delhi to Bangalore in Sleeper class?
 A: The approximate Sleeper class fare from Delhi to Bangalore is ₹730. Final fare may vary based on dynamic pricing and quotas.
-
-Q: Is Vande Bharat running on time today?
-A: For real-time running status of Vande Bharat, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: What classes are available on Rajdhani Express?
-A: Rajdhani Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: What is the fare from Mumbai to Ahmedabad in Sleeper class?
-A: The approximate Sleeper class fare from Mumbai to Ahmedabad is ₹250. Final fare may vary based on dynamic pricing and quotas.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: Is Shatabdi Express running on time today?
-A: For real-time running status of Shatabdi Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
 
 Q: What classes are available on Vande Bharat?
 A: Vande Bharat typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
 
-Q: What classes are available on Garib Rath?
-A: Garib Rath typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
 Q: Can I book a lower berth?
 A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: Is Shatabdi Express running on time today?
-A: For real-time running status of Shatabdi Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: What is the fare from Mumbai to Delhi in Sleeper class?
-A: The approximate Sleeper class fare from Mumbai to Delhi is ₹485. Final fare may vary based on dynamic pricing and quotas.
-
-Q: How long is the journey from Chennai to Kolkata?
-A: The journey from Chennai to Kolkata typically takes 27 hours by major express trains. Duration varies by train type.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: What is the fare from Mumbai to Goa in Sleeper class?
-A: The approximate Sleeper class fare from Mumbai to Goa is ₹280. Final fare may vary based on dynamic pricing and quotas.
-
-Q: What classes are available on Humsafar Express?
-A: Humsafar Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: What is the fare from Kolkata to Guwahati in Sleeper class?
-A: The approximate Sleeper class fare from Kolkata to Guwahati is ₹450. Final fare may vary based on dynamic pricing and quotas.
-
-Q: What classes are available on Tejas Express?
-A: Tejas Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
 
 Q: Can I book a lower berth?
 A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
@@ -649,89 +430,20 @@ A: You can select berth preference at the time of booking, but it is subject to 
 Q: What is the fare from Delhi to Jaipur in Sleeper class?
 A: The approximate Sleeper class fare from Delhi to Jaipur is ₹195. Final fare may vary based on dynamic pricing and quotas.
 
-Q: What classes are available on Humsafar Express?
-A: Humsafar Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: What is the fare from Delhi to Bangalore in Sleeper class?
-A: The approximate Sleeper class fare from Delhi to Bangalore is ₹730. Final fare may vary based on dynamic pricing and quotas.
-
-Q: What is the fare from Chennai to Kolkata in Sleeper class?
-A: The approximate Sleeper class fare from Chennai to Kolkata is ₹620. Final fare may vary based on dynamic pricing and quotas.
-
-Q: What classes are available on Tejas Express?
-A: Tejas Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+Q: Is Shatabdi Express running on time today?
+A: For real-time running status of Shatabdi Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
 
 Q: Can I book a lower berth?
 A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
 
-Q: How long is the journey from Chennai to Kolkata?
-A: The journey from Chennai to Kolkata typically takes 27 hours by major express trains. Duration varies by train type.
+Q: What classes are available on Mail Express?
+A: Mail Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
 
-Q: How long is the journey from Chennai to Kolkata?
-A: The journey from Chennai to Kolkata typically takes 27 hours by major express trains. Duration varies by train type.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: How long is the journey from Mumbai to Ahmedabad?
-A: The journey from Mumbai to Ahmedabad typically takes 8 hours by major express trains. Duration varies by train type.
+Q: Is Garib Rath running on time today?
+A: For real-time running status of Garib Rath, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
 
 Q: What classes are available on Rajdhani Express?
 A: Rajdhani Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: Is Humsafar Express running on time today?
-A: For real-time running status of Humsafar Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: What classes are available on Duronto?
-A: Duronto typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: Is Duronto running on time today?
-A: For real-time running status of Duronto, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: What is the fare from Mumbai to Ahmedabad in Sleeper class?
-A: The approximate Sleeper class fare from Mumbai to Ahmedabad is ₹250. Final fare may vary based on dynamic pricing and quotas.
-
-Q: How long is the journey from Kolkata to Guwahati?
-A: The journey from Kolkata to Guwahati typically takes 16 hours by major express trains. Duration varies by train type.
-
-Q: How long is the journey from Mumbai to Ahmedabad?
-A: The journey from Mumbai to Ahmedabad typically takes 8 hours by major express trains. Duration varies by train type.
-
-Q: What classes are available on Rajdhani Express?
-A: Rajdhani Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: Is Tejas Express running on time today?
-A: For real-time running status of Tejas Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: Is Tejas Express running on time today?
-A: For real-time running status of Tejas Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: How long is the journey from Delhi to Lucknow?
-A: The journey from Delhi to Lucknow typically takes 7 hours by major express trains. Duration varies by train type.
-
-Q: Is Tejas Express running on time today?
-A: For real-time running status of Tejas Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: Is Duronto running on time today?
-A: For real-time running status of Duronto, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: What is the fare from Mumbai to Ahmedabad in Sleeper class?
-A: The approximate Sleeper class fare from Mumbai to Ahmedabad is ₹250. Final fare may vary based on dynamic pricing and quotas.
-
-Q: How long is the journey from Mumbai to Delhi?
-A: The journey from Mumbai to Delhi typically takes 16 hours by major express trains. Duration varies by train type.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: What classes are available on Shatabdi Express?
-A: Shatabdi Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
 
 Q: Can I book a lower berth?
 A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
@@ -742,149 +454,56 @@ A: For real-time running status of Garib Rath, please check NTES website or the 
 Q: Can I book a lower berth?
 A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
 
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+Q: What classes are available on Humsafar Express?
+A: Humsafar Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
 
-Q: Is Duronto running on time today?
-A: For real-time running status of Duronto, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+Q: What classes are available on Rajdhani Express?
+A: Rajdhani Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
 
-Q: What classes are available on Duronto?
-A: Duronto typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+Q: How long is the journey from Delhi to Lucknow?
+A: The journey from Delhi to Lucknow typically takes 7 hours by major express trains. Duration varies by train type.
 
-Q: Is Tejas Express running on time today?
-A: For real-time running status of Tejas Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+Q: Is Mail Express running on time today?
+A: For real-time running status of Mail Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: How long is the journey from Mumbai to Ahmedabad?
+A: The journey from Mumbai to Ahmedabad typically takes 8 hours by major express trains. Duration varies by train type.
 
 Q: What classes are available on Tejas Express?
 A: Tejas Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
 
-Q: Is Shatabdi Express running on time today?
-A: For real-time running status of Shatabdi Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: How long is the journey from Pune to Hyderabad?
-A: The journey from Pune to Hyderabad typically takes 10 hours by major express trains. Duration varies by train type.
-
-Q: What is the fare from Mumbai to Ahmedabad in Sleeper class?
-A: The approximate Sleeper class fare from Mumbai to Ahmedabad is ₹250. Final fare may vary based on dynamic pricing and quotas.
+Q: Is Garib Rath running on time today?
+A: For real-time running status of Garib Rath, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
 
 Q: What is the fare from Pune to Hyderabad in Sleeper class?
 A: The approximate Sleeper class fare from Pune to Hyderabad is ₹320. Final fare may vary based on dynamic pricing and quotas.
-
-Q: What is the fare from Mumbai to Delhi in Sleeper class?
-A: The approximate Sleeper class fare from Mumbai to Delhi is ₹485. Final fare may vary based on dynamic pricing and quotas.
-
-Q: What is the fare from Pune to Hyderabad in Sleeper class?
-A: The approximate Sleeper class fare from Pune to Hyderabad is ₹320. Final fare may vary based on dynamic pricing and quotas.
-
-Q: What classes are available on Shatabdi Express?
-A: Shatabdi Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: What is the fare from Kolkata to Guwahati in Sleeper class?
-A: The approximate Sleeper class fare from Kolkata to Guwahati is ₹450. Final fare may vary based on dynamic pricing and quotas.
-
-Q: What classes are available on Duronto?
-A: Duronto typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: What is the fare from Mumbai to Goa in Sleeper class?
-A: The approximate Sleeper class fare from Mumbai to Goa is ₹280. Final fare may vary based on dynamic pricing and quotas.
-
-Q: What classes are available on Garib Rath?
-A: Garib Rath typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: What is the fare from Delhi to Lucknow in Sleeper class?
-A: The approximate Sleeper class fare from Delhi to Lucknow is ₹240. Final fare may vary based on dynamic pricing and quotas.
-
-Q: How long is the journey from Mumbai to Ahmedabad?
-A: The journey from Mumbai to Ahmedabad typically takes 8 hours by major express trains. Duration varies by train type.
-
-Q: How long is the journey from Delhi to Jaipur?
-A: The journey from Delhi to Jaipur typically takes 5 hours by major express trains. Duration varies by train type.
-
-Q: How long is the journey from Mumbai to Ahmedabad?
-A: The journey from Mumbai to Ahmedabad typically takes 8 hours by major express trains. Duration varies by train type.
-
-Q: Is Tejas Express running on time today?
-A: For real-time running status of Tejas Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: What is the fare from Pune to Hyderabad in Sleeper class?
-A: The approximate Sleeper class fare from Pune to Hyderabad is ₹320. Final fare may vary based on dynamic pricing and quotas.
-
-Q: Is Vande Bharat running on time today?
-A: For real-time running status of Vande Bharat, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: How long is the journey from Kolkata to Guwahati?
-A: The journey from Kolkata to Guwahati typically takes 16 hours by major express trains. Duration varies by train type.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: What is the fare from Mumbai to Delhi in Sleeper class?
-A: The approximate Sleeper class fare from Mumbai to Delhi is ₹485. Final fare may vary based on dynamic pricing and quotas.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
 
 Q: Is Duronto running on time today?
 A: For real-time running status of Duronto, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
 
-Q: What classes are available on Garib Rath?
-A: Garib Rath typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+Q: What classes are available on Rajdhani Express?
+A: Rajdhani Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
 
-Q: What classes are available on Shatabdi Express?
-A: Shatabdi Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: What classes are available on Duronto?
-A: Duronto typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+Q: What classes are available on Mail Express?
+A: Mail Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
 
 Q: Can I book a lower berth?
 A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
 
-Q: Is Mail Express running on time today?
-A: For real-time running status of Mail Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
 
-Q: How long is the journey from Delhi to Lucknow?
-A: The journey from Delhi to Lucknow typically takes 7 hours by major express trains. Duration varies by train type.
-
-Q: Is Garib Rath running on time today?
-A: For real-time running status of Garib Rath, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+Q: How long is the journey from Mumbai to Goa?
+A: The journey from Mumbai to Goa typically takes 8 hours by major express trains. Duration varies by train type.
 
 Q: How long is the journey from Mumbai to Delhi?
 A: The journey from Mumbai to Delhi typically takes 16 hours by major express trains. Duration varies by train type.
 
-Q: What is the fare from Chennai to Kolkata in Sleeper class?
-A: The approximate Sleeper class fare from Chennai to Kolkata is ₹620. Final fare may vary based on dynamic pricing and quotas.
-
 Q: Can I book a lower berth?
 A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
 
-Q: What is the fare from Mumbai to Ahmedabad in Sleeper class?
-A: The approximate Sleeper class fare from Mumbai to Ahmedabad is ₹250. Final fare may vary based on dynamic pricing and quotas.
-
-Q: What is the fare from Kolkata to Guwahati in Sleeper class?
-A: The approximate Sleeper class fare from Kolkata to Guwahati is ₹450. Final fare may vary based on dynamic pricing and quotas.
-
-Q: How long is the journey from Delhi to Lucknow?
-A: The journey from Delhi to Lucknow typically takes 7 hours by major express trains. Duration varies by train type.
-
-Q: Is Mail Express running on time today?
-A: For real-time running status of Mail Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: Is Rajdhani Express running on time today?
-A: For real-time running status of Rajdhani Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: What classes are available on Vande Bharat?
-A: Vande Bharat typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: What classes are available on Duronto?
-A: Duronto typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: Is Shatabdi Express running on time today?
-A: For real-time running status of Shatabdi Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
 
 Q: How long is the journey from Mumbai to Goa?
 A: The journey from Mumbai to Goa typically takes 8 hours by major express trains. Duration varies by train type.
@@ -895,11 +514,35 @@ A: Vande Bharat typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), a
 Q: Can I book a lower berth?
 A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
 
-Q: What is the fare from Delhi to Lucknow in Sleeper class?
-A: The approximate Sleeper class fare from Delhi to Lucknow is ₹240. Final fare may vary based on dynamic pricing and quotas.
+Q: What classes are available on Humsafar Express?
+A: Humsafar Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: What classes are available on Mail Express?
+A: Mail Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: What classes are available on Mail Express?
+A: Mail Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: Is Vande Bharat running on time today?
+A: For real-time running status of Vande Bharat, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: What is the fare from Delhi to Bangalore in Sleeper class?
+A: The approximate Sleeper class fare from Delhi to Bangalore is ₹730. Final fare may vary based on dynamic pricing and quotas.
+
+Q: How long is the journey from Kolkata to Guwahati?
+A: The journey from Kolkata to Guwahati typically takes 16 hours by major express trains. Duration varies by train type.
+
+Q: How long is the journey from Mumbai to Delhi?
+A: The journey from Mumbai to Delhi typically takes 16 hours by major express trains. Duration varies by train type.
 
 Q: Can I book a lower berth?
 A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: What is the fare from Pune to Hyderabad in Sleeper class?
+A: The approximate Sleeper class fare from Pune to Hyderabad is ₹320. Final fare may vary based on dynamic pricing and quotas.
 
 Q: Is Vande Bharat running on time today?
 A: For real-time running status of Vande Bharat, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
@@ -907,95 +550,65 @@ A: For real-time running status of Vande Bharat, please check NTES website or th
 Q: Can I book a lower berth?
 A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
 
+Q: How long is the journey from Pune to Hyderabad?
+A: The journey from Pune to Hyderabad typically takes 10 hours by major express trains. Duration varies by train type.
+
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: What classes are available on Shatabdi Express?
+A: Shatabdi Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: Is Tejas Express running on time today?
+A: For real-time running status of Tejas Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
 Q: Is Rajdhani Express running on time today?
 A: For real-time running status of Rajdhani Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
 
-Q: What is the fare from Chennai to Kolkata in Sleeper class?
-A: The approximate Sleeper class fare from Chennai to Kolkata is ₹620. Final fare may vary based on dynamic pricing and quotas.
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
 
-Q: Is Shatabdi Express running on time today?
-A: For real-time running status of Shatabdi Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: What classes are available on Rajdhani Express?
-A: Rajdhani Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+Q: What is the fare from Chennai to Hyderabad in Sleeper class?
+A: The approximate Sleeper class fare from Chennai to Hyderabad is ₹380. Final fare may vary based on dynamic pricing and quotas.
 
 Q: How long is the journey from Delhi to Jaipur?
 A: The journey from Delhi to Jaipur typically takes 5 hours by major express trains. Duration varies by train type.
 
-Q: Is Shatabdi Express running on time today?
-A: For real-time running status of Shatabdi Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+Q: What classes are available on Rajdhani Express?
+A: Rajdhani Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
 
-Q: What is the fare from Delhi to Jaipur in Sleeper class?
-A: The approximate Sleeper class fare from Delhi to Jaipur is ₹195. Final fare may vary based on dynamic pricing and quotas.
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: What classes are available on Humsafar Express?
+A: Humsafar Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: How long is the journey from Mumbai to Goa?
+A: The journey from Mumbai to Goa typically takes 8 hours by major express trains. Duration varies by train type.
+
+Q: Is Garib Rath running on time today?
+A: For real-time running status of Garib Rath, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: How long is the journey from Kolkata to Guwahati?
+A: The journey from Kolkata to Guwahati typically takes 16 hours by major express trains. Duration varies by train type.
+
+Q: Is Garib Rath running on time today?
+A: For real-time running status of Garib Rath, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
 
 Q: Is Humsafar Express running on time today?
 A: For real-time running status of Humsafar Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
 
-Q: How long is the journey from Chennai to Kolkata?
-A: The journey from Chennai to Kolkata typically takes 27 hours by major express trains. Duration varies by train type.
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
 
-Q: How long is the journey from Mumbai to Delhi?
-A: The journey from Mumbai to Delhi typically takes 16 hours by major express trains. Duration varies by train type.
-
-Q: Is Mail Express running on time today?
-A: For real-time running status of Mail Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
 
 Q: How long is the journey from Mumbai to Ahmedabad?
 A: The journey from Mumbai to Ahmedabad typically takes 8 hours by major express trains. Duration varies by train type.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: How long is the journey from Chennai to Kolkata?
-A: The journey from Chennai to Kolkata typically takes 27 hours by major express trains. Duration varies by train type.
-
-Q: What is the fare from Mumbai to Goa in Sleeper class?
-A: The approximate Sleeper class fare from Mumbai to Goa is ₹280. Final fare may vary based on dynamic pricing and quotas.
-
-Q: Is Tejas Express running on time today?
-A: For real-time running status of Tejas Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: What classes are available on Duronto?
-A: Duronto typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: Is Garib Rath running on time today?
-A: For real-time running status of Garib Rath, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: What classes are available on Mail Express?
-A: Mail Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: Is Rajdhani Express running on time today?
-A: For real-time running status of Rajdhani Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: What is the fare from Delhi to Bangalore in Sleeper class?
-A: The approximate Sleeper class fare from Delhi to Bangalore is ₹730. Final fare may vary based on dynamic pricing and quotas.
-
-Q: What classes are available on Rajdhani Express?
-A: Rajdhani Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: What classes are available on Shatabdi Express?
-A: Shatabdi Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: What classes are available on Vande Bharat?
-A: Vande Bharat typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: How long is the journey from Delhi to Bangalore?
-A: The journey from Delhi to Bangalore typically takes 35 hours by major express trains. Duration varies by train type.
 
 Q: What is the fare from Mumbai to Delhi in Sleeper class?
 A: The approximate Sleeper class fare from Mumbai to Delhi is ₹485. Final fare may vary based on dynamic pricing and quotas.
@@ -1003,98 +616,44 @@ A: The approximate Sleeper class fare from Mumbai to Delhi is ₹485. Final fare
 Q: Can I book a lower berth?
 A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
 
-Q: What is the fare from Mumbai to Ahmedabad in Sleeper class?
-A: The approximate Sleeper class fare from Mumbai to Ahmedabad is ₹250. Final fare may vary based on dynamic pricing and quotas.
-
-Q: Is Tejas Express running on time today?
-A: For real-time running status of Tejas Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: What is the fare from Pune to Hyderabad in Sleeper class?
-A: The approximate Sleeper class fare from Pune to Hyderabad is ₹320. Final fare may vary based on dynamic pricing and quotas.
-
-Q: Is Shatabdi Express running on time today?
-A: For real-time running status of Shatabdi Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: Is Rajdhani Express running on time today?
-A: For real-time running status of Rajdhani Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: Is Garib Rath running on time today?
-A: For real-time running status of Garib Rath, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: What classes are available on Garib Rath?
-A: Garib Rath typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: How long is the journey from Mumbai to Delhi?
-A: The journey from Mumbai to Delhi typically takes 16 hours by major express trains. Duration varies by train type.
-
-Q: Is Rajdhani Express running on time today?
-A: For real-time running status of Rajdhani Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
 Q: Is Shatabdi Express running on time today?
 A: For real-time running status of Shatabdi Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
 
 Q: Can I book a lower berth?
 A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
 
-Q: What classes are available on Vande Bharat?
-A: Vande Bharat typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: What classes are available on Mail Express?
-A: Mail Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
 Q: Can I book a lower berth?
 A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
 
-Q: Is Vande Bharat running on time today?
-A: For real-time running status of Vande Bharat, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: What classes are available on Humsafar Express?
-A: Humsafar Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: Is Mail Express running on time today?
-A: For real-time running status of Mail Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: What classes are available on Garib Rath?
-A: Garib Rath typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
 Q: What is the fare from Delhi to Lucknow in Sleeper class?
 A: The approximate Sleeper class fare from Delhi to Lucknow is ₹240. Final fare may vary based on dynamic pricing and quotas.
 
-Q: What is the fare from Delhi to Lucknow in Sleeper class?
-A: The approximate Sleeper class fare from Delhi to Lucknow is ₹240. Final fare may vary based on dynamic pricing and quotas.
-
-Q: How long is the journey from Chennai to Hyderabad?
-A: The journey from Chennai to Hyderabad typically takes 12 hours by major express trains. Duration varies by train type.
-
-Q: What is the fare from Delhi to Jaipur in Sleeper class?
-A: The approximate Sleeper class fare from Delhi to Jaipur is ₹195. Final fare may vary based on dynamic pricing and quotas.
+Q: How long is the journey from Mumbai to Ahmedabad?
+A: The journey from Mumbai to Ahmedabad typically takes 8 hours by major express trains. Duration varies by train type.
 
 Q: How long is the journey from Chennai to Kolkata?
 A: The journey from Chennai to Kolkata typically takes 27 hours by major express trains. Duration varies by train type.
 
-Q: What classes are available on Duronto?
-A: Duronto typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
 
 Q: Is Vande Bharat running on time today?
 A: For real-time running status of Vande Bharat, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
 
-Q: How long is the journey from Delhi to Jaipur?
-A: The journey from Delhi to Jaipur typically takes 5 hours by major express trains. Duration varies by train type.
-
 Q: Can I book a lower berth?
 A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
 
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: How long is the journey from Mumbai to Delhi?
-A: The journey from Mumbai to Delhi typically takes 16 hours by major express trains. Duration varies by train type.
+Q: How long is the journey from Delhi to Lucknow?
+A: The journey from Delhi to Lucknow typically takes 7 hours by major express trains. Duration varies by train type.
 
 Q: What classes are available on Mail Express?
 A: Mail Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
 
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+Q: Is Vande Bharat running on time today?
+A: For real-time running status of Vande Bharat, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: What is the fare from Pune to Hyderabad in Sleeper class?
+A: The approximate Sleeper class fare from Pune to Hyderabad is ₹320. Final fare may vary based on dynamic pricing and quotas.
 
 Q: What is the fare from Kolkata to Guwahati in Sleeper class?
 A: The approximate Sleeper class fare from Kolkata to Guwahati is ₹450. Final fare may vary based on dynamic pricing and quotas.
@@ -1102,74 +661,20 @@ A: The approximate Sleeper class fare from Kolkata to Guwahati is ₹450. Final 
 Q: Is Rajdhani Express running on time today?
 A: For real-time running status of Rajdhani Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
 
-Q: What is the fare from Delhi to Lucknow in Sleeper class?
-A: The approximate Sleeper class fare from Delhi to Lucknow is ₹240. Final fare may vary based on dynamic pricing and quotas.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: What classes are available on Duronto?
-A: Duronto typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: What is the fare from Mumbai to Delhi in Sleeper class?
-A: The approximate Sleeper class fare from Mumbai to Delhi is ₹485. Final fare may vary based on dynamic pricing and quotas.
-
-Q: What is the fare from Delhi to Jaipur in Sleeper class?
-A: The approximate Sleeper class fare from Delhi to Jaipur is ₹195. Final fare may vary based on dynamic pricing and quotas.
-
-Q: Is Tejas Express running on time today?
-A: For real-time running status of Tejas Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: What is the fare from Delhi to Lucknow in Sleeper class?
-A: The approximate Sleeper class fare from Delhi to Lucknow is ₹240. Final fare may vary based on dynamic pricing and quotas.
-
-Q: What is the fare from Delhi to Bangalore in Sleeper class?
-A: The approximate Sleeper class fare from Delhi to Bangalore is ₹730. Final fare may vary based on dynamic pricing and quotas.
-
-Q: What classes are available on Humsafar Express?
-A: Humsafar Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: What is the fare from Delhi to Lucknow in Sleeper class?
-A: The approximate Sleeper class fare from Delhi to Lucknow is ₹240. Final fare may vary based on dynamic pricing and quotas.
-
-Q: What classes are available on Garib Rath?
-A: Garib Rath typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: How long is the journey from Chennai to Hyderabad?
-A: The journey from Chennai to Hyderabad typically takes 12 hours by major express trains. Duration varies by train type.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: What is the fare from Delhi to Jaipur in Sleeper class?
-A: The approximate Sleeper class fare from Delhi to Jaipur is ₹195. Final fare may vary based on dynamic pricing and quotas.
-
 Q: Is Shatabdi Express running on time today?
 A: For real-time running status of Shatabdi Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
 
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+Q: What classes are available on Mail Express?
+A: Mail Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: What classes are available on Vande Bharat?
+A: Vande Bharat typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
 
 Q: Can I book a lower berth?
 A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
 
-Q: What is the fare from Delhi to Lucknow in Sleeper class?
-A: The approximate Sleeper class fare from Delhi to Lucknow is ₹240. Final fare may vary based on dynamic pricing and quotas.
-
-Q: What is the fare from Chennai to Hyderabad in Sleeper class?
-A: The approximate Sleeper class fare from Chennai to Hyderabad is ₹380. Final fare may vary based on dynamic pricing and quotas.
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
 
 Q: What is the fare from Chennai to Kolkata in Sleeper class?
 A: The approximate Sleeper class fare from Chennai to Kolkata is ₹620. Final fare may vary based on dynamic pricing and quotas.
@@ -1177,110 +682,206 @@ A: The approximate Sleeper class fare from Chennai to Kolkata is ₹620. Final f
 Q: What is the fare from Delhi to Jaipur in Sleeper class?
 A: The approximate Sleeper class fare from Delhi to Jaipur is ₹195. Final fare may vary based on dynamic pricing and quotas.
 
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: How long is the journey from Pune to Hyderabad?
-A: The journey from Pune to Hyderabad typically takes 10 hours by major express trains. Duration varies by train type.
-
-Q: What classes are available on Rajdhani Express?
-A: Rajdhani Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: What is the fare from Chennai to Hyderabad in Sleeper class?
-A: The approximate Sleeper class fare from Chennai to Hyderabad is ₹380. Final fare may vary based on dynamic pricing and quotas.
-
-Q: What is the fare from Pune to Hyderabad in Sleeper class?
-A: The approximate Sleeper class fare from Pune to Hyderabad is ₹320. Final fare may vary based on dynamic pricing and quotas.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: What classes are available on Duronto?
-A: Duronto typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: Is Rajdhani Express running on time today?
-A: For real-time running status of Rajdhani Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: How long is the journey from Chennai to Kolkata?
-A: The journey from Chennai to Kolkata typically takes 27 hours by major express trains. Duration varies by train type.
-
-Q: Is Rajdhani Express running on time today?
-A: For real-time running status of Rajdhani Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: What classes are available on Mail Express?
-A: Mail Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: Is Shatabdi Express running on time today?
-A: For real-time running status of Shatabdi Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: How long is the journey from Mumbai to Ahmedabad?
-A: The journey from Mumbai to Ahmedabad typically takes 8 hours by major express trains. Duration varies by train type.
-
-Q: What classes are available on Duronto?
-A: Duronto typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: How long is the journey from Pune to Hyderabad?
-A: The journey from Pune to Hyderabad typically takes 10 hours by major express trains. Duration varies by train type.
-
-Q: What is the fare from Mumbai to Goa in Sleeper class?
-A: The approximate Sleeper class fare from Mumbai to Goa is ₹280. Final fare may vary based on dynamic pricing and quotas.
+Q: What is the fare from Delhi to Jaipur in Sleeper class?
+A: The approximate Sleeper class fare from Delhi to Jaipur is ₹195. Final fare may vary based on dynamic pricing and quotas.
 
 Q: What classes are available on Vande Bharat?
 A: Vande Bharat typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
 
-Q: What is the fare from Mumbai to Ahmedabad in Sleeper class?
-A: The approximate Sleeper class fare from Mumbai to Ahmedabad is ₹250. Final fare may vary based on dynamic pricing and quotas.
-
-Q: What is the fare from Pune to Hyderabad in Sleeper class?
-A: The approximate Sleeper class fare from Pune to Hyderabad is ₹320. Final fare may vary based on dynamic pricing and quotas.
-
-Q: How long is the journey from Pune to Hyderabad?
-A: The journey from Pune to Hyderabad typically takes 10 hours by major express trains. Duration varies by train type.
+Q: What classes are available on Tejas Express?
+A: Tejas Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
 
 Q: Can I book a lower berth?
 A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
 
-Q: How long is the journey from Mumbai to Delhi?
-A: The journey from Mumbai to Delhi typically takes 16 hours by major express trains. Duration varies by train type.
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: What classes are available on Tejas Express?
+A: Tejas Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: What classes are available on Duronto?
+A: Duronto typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: Is Garib Rath running on time today?
+A: For real-time running status of Garib Rath, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
 
 Q: What is the fare from Chennai to Hyderabad in Sleeper class?
 A: The approximate Sleeper class fare from Chennai to Hyderabad is ₹380. Final fare may vary based on dynamic pricing and quotas.
 
-Q: What is the fare from Kolkata to Guwahati in Sleeper class?
-A: The approximate Sleeper class fare from Kolkata to Guwahati is ₹450. Final fare may vary based on dynamic pricing and quotas.
-
-Q: What is the fare from Mumbai to Goa in Sleeper class?
-A: The approximate Sleeper class fare from Mumbai to Goa is ₹280. Final fare may vary based on dynamic pricing and quotas.
-
-Q: What classes are available on Shatabdi Express?
-A: Shatabdi Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
 Q: Can I book a lower berth?
 A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
 
-Q: Is Tejas Express running on time today?
-A: For real-time running status of Tejas Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: What is the fare from Mumbai to Delhi in Sleeper class?
-A: The approximate Sleeper class fare from Mumbai to Delhi is ₹485. Final fare may vary based on dynamic pricing and quotas.
+Q: Is Rajdhani Express running on time today?
+A: For real-time running status of Rajdhani Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
 
 Q: Is Shatabdi Express running on time today?
 A: For real-time running status of Shatabdi Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
 
-Q: What classes are available on Mail Express?
-A: Mail Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+Q: What is the fare from Mumbai to Delhi in Sleeper class?
+A: The approximate Sleeper class fare from Mumbai to Delhi is ₹485. Final fare may vary based on dynamic pricing and quotas.
+
+Q: What classes are available on Garib Rath?
+A: Garib Rath typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: What classes are available on Rajdhani Express?
+A: Rajdhani Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: What classes are available on Humsafar Express?
+A: Humsafar Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: How long is the journey from Pune to Hyderabad?
+A: The journey from Pune to Hyderabad typically takes 10 hours by major express trains. Duration varies by train type.
+
+Q: What is the fare from Kolkata to Guwahati in Sleeper class?
+A: The approximate Sleeper class fare from Kolkata to Guwahati is ₹450. Final fare may vary based on dynamic pricing and quotas.
+
+Q: How long is the journey from Kolkata to Guwahati?
+A: The journey from Kolkata to Guwahati typically takes 16 hours by major express trains. Duration varies by train type.
+
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: How long is the journey from Delhi to Lucknow?
+A: The journey from Delhi to Lucknow typically takes 7 hours by major express trains. Duration varies by train type.
+
+Q: What is the fare from Delhi to Jaipur in Sleeper class?
+A: The approximate Sleeper class fare from Delhi to Jaipur is ₹195. Final fare may vary based on dynamic pricing and quotas.
 
 Q: Is Rajdhani Express running on time today?
 A: For real-time running status of Rajdhani Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
 
 Q: Can I book a lower berth?
 A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: What is the fare from Delhi to Jaipur in Sleeper class?
+A: The approximate Sleeper class fare from Delhi to Jaipur is ₹195. Final fare may vary based on dynamic pricing and quotas.
+
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: What is the fare from Mumbai to Goa in Sleeper class?
+A: The approximate Sleeper class fare from Mumbai to Goa is ₹280. Final fare may vary based on dynamic pricing and quotas.
+
+Q: How long is the journey from Kolkata to Guwahati?
+A: The journey from Kolkata to Guwahati typically takes 16 hours by major express trains. Duration varies by train type.
+
+Q: Is Shatabdi Express running on time today?
+A: For real-time running status of Shatabdi Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: What is the fare from Mumbai to Delhi in Sleeper class?
+A: The approximate Sleeper class fare from Mumbai to Delhi is ₹485. Final fare may vary based on dynamic pricing and quotas.
+
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: What is the fare from Chennai to Kolkata in Sleeper class?
+A: The approximate Sleeper class fare from Chennai to Kolkata is ₹620. Final fare may vary based on dynamic pricing and quotas.
+
+Q: How long is the journey from Mumbai to Goa?
+A: The journey from Mumbai to Goa typically takes 8 hours by major express trains. Duration varies by train type.
+
+Q: What is the fare from Delhi to Lucknow in Sleeper class?
+A: The approximate Sleeper class fare from Delhi to Lucknow is ₹240. Final fare may vary based on dynamic pricing and quotas.
+
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: Is Vande Bharat running on time today?
+A: For real-time running status of Vande Bharat, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: What classes are available on Humsafar Express?
+A: Humsafar Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: What classes are available on Mail Express?
+A: Mail Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: What is the fare from Delhi to Bangalore in Sleeper class?
+A: The approximate Sleeper class fare from Delhi to Bangalore is ₹730. Final fare may vary based on dynamic pricing and quotas.
+
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: What is the fare from Chennai to Kolkata in Sleeper class?
+A: The approximate Sleeper class fare from Chennai to Kolkata is ₹620. Final fare may vary based on dynamic pricing and quotas.
+
+Q: How long is the journey from Chennai to Kolkata?
+A: The journey from Chennai to Kolkata typically takes 27 hours by major express trains. Duration varies by train type.
+
+Q: Is Duronto running on time today?
+A: For real-time running status of Duronto, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: What is the fare from Kolkata to Guwahati in Sleeper class?
+A: The approximate Sleeper class fare from Kolkata to Guwahati is ₹450. Final fare may vary based on dynamic pricing and quotas.
+
+Q: What is the fare from Kolkata to Guwahati in Sleeper class?
+A: The approximate Sleeper class fare from Kolkata to Guwahati is ₹450. Final fare may vary based on dynamic pricing and quotas.
+
+Q: What is the fare from Delhi to Lucknow in Sleeper class?
+A: The approximate Sleeper class fare from Delhi to Lucknow is ₹240. Final fare may vary based on dynamic pricing and quotas.
+
+Q: What is the fare from Mumbai to Delhi in Sleeper class?
+A: The approximate Sleeper class fare from Mumbai to Delhi is ₹485. Final fare may vary based on dynamic pricing and quotas.
+
+Q: What classes are available on Duronto?
+A: Duronto typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: What is the fare from Mumbai to Ahmedabad in Sleeper class?
+A: The approximate Sleeper class fare from Mumbai to Ahmedabad is ₹250. Final fare may vary based on dynamic pricing and quotas.
+
+Q: What classes are available on Tejas Express?
+A: Tejas Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: How long is the journey from Delhi to Lucknow?
+A: The journey from Delhi to Lucknow typically takes 7 hours by major express trains. Duration varies by train type.
+
+Q: What is the fare from Mumbai to Goa in Sleeper class?
+A: The approximate Sleeper class fare from Mumbai to Goa is ₹280. Final fare may vary based on dynamic pricing and quotas.
+
+Q: Is Shatabdi Express running on time today?
+A: For real-time running status of Shatabdi Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: How long is the journey from Delhi to Bangalore?
+A: The journey from Delhi to Bangalore typically takes 35 hours by major express trains. Duration varies by train type.
+
+Q: Is Shatabdi Express running on time today?
+A: For real-time running status of Shatabdi Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: How long is the journey from Pune to Hyderabad?
+A: The journey from Pune to Hyderabad typically takes 10 hours by major express trains. Duration varies by train type.
+
+Q: Is Garib Rath running on time today?
+A: For real-time running status of Garib Rath, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: How long is the journey from Chennai to Kolkata?
+A: The journey from Chennai to Kolkata typically takes 27 hours by major express trains. Duration varies by train type.
+
+Q: Is Duronto running on time today?
+A: For real-time running status of Duronto, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: How long is the journey from Mumbai to Ahmedabad?
+A: The journey from Mumbai to Ahmedabad typically takes 8 hours by major express trains. Duration varies by train type.
+
+Q: How long is the journey from Delhi to Lucknow?
+A: The journey from Delhi to Lucknow typically takes 7 hours by major express trains. Duration varies by train type.
+
+Q: What is the fare from Delhi to Lucknow in Sleeper class?
+A: The approximate Sleeper class fare from Delhi to Lucknow is ₹240. Final fare may vary based on dynamic pricing and quotas.
+
+Q: What is the fare from Delhi to Jaipur in Sleeper class?
+A: The approximate Sleeper class fare from Delhi to Jaipur is ₹195. Final fare may vary based on dynamic pricing and quotas.
 
 Q: Is Duronto running on time today?
 A: For real-time running status of Duronto, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
@@ -1288,71 +889,146 @@ A: For real-time running status of Duronto, please check NTES website or the IRC
 Q: Can I book a lower berth?
 A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
 
-Q: What classes are available on Mail Express?
-A: Mail Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: What is the fare from Mumbai to Delhi in Sleeper class?
-A: The approximate Sleeper class fare from Mumbai to Delhi is ₹485. Final fare may vary based on dynamic pricing and quotas.
-
-Q: What is the fare from Delhi to Lucknow in Sleeper class?
-A: The approximate Sleeper class fare from Delhi to Lucknow is ₹240. Final fare may vary based on dynamic pricing and quotas.
-
-Q: Is Tejas Express running on time today?
-A: For real-time running status of Tejas Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: What classes are available on Shatabdi Express?
-A: Shatabdi Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+Q: Is Rajdhani Express running on time today?
+A: For real-time running status of Rajdhani Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
 
 Q: How long is the journey from Delhi to Bangalore?
 A: The journey from Delhi to Bangalore typically takes 35 hours by major express trains. Duration varies by train type.
 
+Q: What classes are available on Mail Express?
+A: Mail Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: What is the fare from Kolkata to Guwahati in Sleeper class?
+A: The approximate Sleeper class fare from Kolkata to Guwahati is ₹450. Final fare may vary based on dynamic pricing and quotas.
+
 Q: Is Mail Express running on time today?
 A: For real-time running status of Mail Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: What classes are available on Rajdhani Express?
-A: Rajdhani Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: How long is the journey from Pune to Hyderabad?
-A: The journey from Pune to Hyderabad typically takes 10 hours by major express trains. Duration varies by train type.
-
-Q: What classes are available on Garib Rath?
-A: Garib Rath typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: What is the fare from Mumbai to Goa in Sleeper class?
-A: The approximate Sleeper class fare from Mumbai to Goa is ₹280. Final fare may vary based on dynamic pricing and quotas.
-
-Q: What is the fare from Mumbai to Delhi in Sleeper class?
-A: The approximate Sleeper class fare from Mumbai to Delhi is ₹485. Final fare may vary based on dynamic pricing and quotas.
-
-Q: Is Shatabdi Express running on time today?
-A: For real-time running status of Shatabdi Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: What classes are available on Rajdhani Express?
-A: Rajdhani Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: How long is the journey from Delhi to Lucknow?
-A: The journey from Delhi to Lucknow typically takes 7 hours by major express trains. Duration varies by train type.
-
-Q: How long is the journey from Delhi to Lucknow?
-A: The journey from Delhi to Lucknow typically takes 7 hours by major express trains. Duration varies by train type.
-
-Q: Is Shatabdi Express running on time today?
-A: For real-time running status of Shatabdi Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
 
 Q: What classes are available on Humsafar Express?
 A: Humsafar Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
 
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+Q: Is Humsafar Express running on time today?
+A: For real-time running status of Humsafar Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: Is Mail Express running on time today?
+A: For real-time running status of Mail Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
 
 Q: Can I book a lower berth?
 A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
 
-Q: What classes are available on Mail Express?
-A: Mail Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+Q: What classes are available on Vande Bharat?
+A: Vande Bharat typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: Is Shatabdi Express running on time today?
+A: For real-time running status of Shatabdi Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: Is Rajdhani Express running on time today?
+A: For real-time running status of Rajdhani Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: What classes are available on Rajdhani Express?
+A: Rajdhani Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: What is the fare from Kolkata to Guwahati in Sleeper class?
+A: The approximate Sleeper class fare from Kolkata to Guwahati is ₹450. Final fare may vary based on dynamic pricing and quotas.
+
+Q: Is Rajdhani Express running on time today?
+A: For real-time running status of Rajdhani Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: Is Mail Express running on time today?
+A: For real-time running status of Mail Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: Is Shatabdi Express running on time today?
+A: For real-time running status of Shatabdi Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: Is Shatabdi Express running on time today?
+A: For real-time running status of Shatabdi Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: Is Vande Bharat running on time today?
+A: For real-time running status of Vande Bharat, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: Is Shatabdi Express running on time today?
+A: For real-time running status of Shatabdi Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: How long is the journey from Mumbai to Delhi?
+A: The journey from Mumbai to Delhi typically takes 16 hours by major express trains. Duration varies by train type.
+
+Q: What classes are available on Rajdhani Express?
+A: Rajdhani Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: Is Garib Rath running on time today?
+A: For real-time running status of Garib Rath, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: How long is the journey from Delhi to Lucknow?
+A: The journey from Delhi to Lucknow typically takes 7 hours by major express trains. Duration varies by train type.
+
+Q: What is the fare from Mumbai to Goa in Sleeper class?
+A: The approximate Sleeper class fare from Mumbai to Goa is ₹280. Final fare may vary based on dynamic pricing and quotas.
+
+Q: Is Vande Bharat running on time today?
+A: For real-time running status of Vande Bharat, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: How long is the journey from Kolkata to Guwahati?
+A: The journey from Kolkata to Guwahati typically takes 16 hours by major express trains. Duration varies by train type.
+
+Q: What classes are available on Rajdhani Express?
+A: Rajdhani Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: Is Rajdhani Express running on time today?
+A: For real-time running status of Rajdhani Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: What classes are available on Rajdhani Express?
+A: Rajdhani Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: What classes are available on Shatabdi Express?
+A: Shatabdi Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: What is the fare from Mumbai to Ahmedabad in Sleeper class?
+A: The approximate Sleeper class fare from Mumbai to Ahmedabad is ₹250. Final fare may vary based on dynamic pricing and quotas.
+
+Q: How long is the journey from Mumbai to Goa?
+A: The journey from Mumbai to Goa typically takes 8 hours by major express trains. Duration varies by train type.
+
+Q: What classes are available on Shatabdi Express?
+A: Shatabdi Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: What classes are available on Duronto?
+A: Duronto typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: What is the fare from Delhi to Jaipur in Sleeper class?
+A: The approximate Sleeper class fare from Delhi to Jaipur is ₹195. Final fare may vary based on dynamic pricing and quotas.
+
+Q: How long is the journey from Pune to Hyderabad?
+A: The journey from Pune to Hyderabad typically takes 10 hours by major express trains. Duration varies by train type.
+
+Q: How long is the journey from Delhi to Jaipur?
+A: The journey from Delhi to Jaipur typically takes 5 hours by major express trains. Duration varies by train type.
+
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: What classes are available on Vande Bharat?
+A: Vande Bharat typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
 
 Q: What classes are available on Tejas Express?
 A: Tejas Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
@@ -1360,38 +1036,125 @@ A: Tejas Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), 
 Q: What classes are available on Rajdhani Express?
 A: Rajdhani Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
 
-Q: What is the fare from Mumbai to Goa in Sleeper class?
-A: The approximate Sleeper class fare from Mumbai to Goa is ₹280. Final fare may vary based on dynamic pricing and quotas.
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
 
 Q: Can I book a lower berth?
 A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
 
-Q: How long is the journey from Pune to Hyderabad?
-A: The journey from Pune to Hyderabad typically takes 10 hours by major express trains. Duration varies by train type.
+Q: What classes are available on Humsafar Express?
+A: Humsafar Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
 
-Q: What is the fare from Delhi to Bangalore in Sleeper class?
-A: The approximate Sleeper class fare from Delhi to Bangalore is ₹730. Final fare may vary based on dynamic pricing and quotas.
+Q: What classes are available on Garib Rath?
+A: Garib Rath typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
 
-Q: Is Shatabdi Express running on time today?
-A: For real-time running status of Shatabdi Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+Q: What is the fare from Delhi to Lucknow in Sleeper class?
+A: The approximate Sleeper class fare from Delhi to Lucknow is ₹240. Final fare may vary based on dynamic pricing and quotas.
+
+Q: How long is the journey from Chennai to Hyderabad?
+A: The journey from Chennai to Hyderabad typically takes 12 hours by major express trains. Duration varies by train type.
 
 Q: How long is the journey from Mumbai to Ahmedabad?
 A: The journey from Mumbai to Ahmedabad typically takes 8 hours by major express trains. Duration varies by train type.
 
-Q: How long is the journey from Delhi to Jaipur?
-A: The journey from Delhi to Jaipur typically takes 5 hours by major express trains. Duration varies by train type.
+Q: What classes are available on Vande Bharat?
+A: Vande Bharat typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
 
-Q: What classes are available on Humsafar Express?
-A: Humsafar Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+Q: How long is the journey from Delhi to Bangalore?
+A: The journey from Delhi to Bangalore typically takes 35 hours by major express trains. Duration varies by train type.
 
-Q: What classes are available on Mail Express?
-A: Mail Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+Q: What is the fare from Chennai to Kolkata in Sleeper class?
+A: The approximate Sleeper class fare from Chennai to Kolkata is ₹620. Final fare may vary based on dynamic pricing and quotas.
 
 Q: Is Mail Express running on time today?
 A: For real-time running status of Mail Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
 
-Q: Is Duronto running on time today?
-A: For real-time running status of Duronto, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+Q: How long is the journey from Chennai to Kolkata?
+A: The journey from Chennai to Kolkata typically takes 27 hours by major express trains. Duration varies by train type.
+
+Q: How long is the journey from Mumbai to Goa?
+A: The journey from Mumbai to Goa typically takes 8 hours by major express trains. Duration varies by train type.
+
+Q: Is Mail Express running on time today?
+A: For real-time running status of Mail Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: How long is the journey from Chennai to Hyderabad?
+A: The journey from Chennai to Hyderabad typically takes 12 hours by major express trains. Duration varies by train type.
+
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: What is the fare from Pune to Hyderabad in Sleeper class?
+A: The approximate Sleeper class fare from Pune to Hyderabad is ₹320. Final fare may vary based on dynamic pricing and quotas.
+
+Q: How long is the journey from Mumbai to Ahmedabad?
+A: The journey from Mumbai to Ahmedabad typically takes 8 hours by major express trains. Duration varies by train type.
+
+Q: What classes are available on Duronto?
+A: Duronto typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: What classes are available on Vande Bharat?
+A: Vande Bharat typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: What is the fare from Mumbai to Goa in Sleeper class?
+A: The approximate Sleeper class fare from Mumbai to Goa is ₹280. Final fare may vary based on dynamic pricing and quotas.
+
+Q: What classes are available on Vande Bharat?
+A: Vande Bharat typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: What is the fare from Delhi to Jaipur in Sleeper class?
+A: The approximate Sleeper class fare from Delhi to Jaipur is ₹195. Final fare may vary based on dynamic pricing and quotas.
+
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: How long is the journey from Kolkata to Guwahati?
+A: The journey from Kolkata to Guwahati typically takes 16 hours by major express trains. Duration varies by train type.
+
+Q: What is the fare from Chennai to Hyderabad in Sleeper class?
+A: The approximate Sleeper class fare from Chennai to Hyderabad is ₹380. Final fare may vary based on dynamic pricing and quotas.
+
+Q: How long is the journey from Delhi to Jaipur?
+A: The journey from Delhi to Jaipur typically takes 5 hours by major express trains. Duration varies by train type.
+
+Q: What classes are available on Shatabdi Express?
+A: Shatabdi Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: Is Garib Rath running on time today?
+A: For real-time running status of Garib Rath, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: What is the fare from Mumbai to Delhi in Sleeper class?
+A: The approximate Sleeper class fare from Mumbai to Delhi is ₹485. Final fare may vary based on dynamic pricing and quotas.
+
+Q: Is Garib Rath running on time today?
+A: For real-time running status of Garib Rath, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: What classes are available on Garib Rath?
+A: Garib Rath typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: What classes are available on Duronto?
+A: Duronto typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: How long is the journey from Mumbai to Goa?
+A: The journey from Mumbai to Goa typically takes 8 hours by major express trains. Duration varies by train type.
+
+Q: What is the fare from Delhi to Jaipur in Sleeper class?
+A: The approximate Sleeper class fare from Delhi to Jaipur is ₹195. Final fare may vary based on dynamic pricing and quotas.
+
+Q: How long is the journey from Chennai to Hyderabad?
+A: The journey from Chennai to Hyderabad typically takes 12 hours by major express trains. Duration varies by train type.
+
+Q: Is Vande Bharat running on time today?
+A: For real-time running status of Vande Bharat, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: What is the fare from Pune to Hyderabad in Sleeper class?
+A: The approximate Sleeper class fare from Pune to Hyderabad is ₹320. Final fare may vary based on dynamic pricing and quotas.
+
+Q: Is Mail Express running on time today?
+A: For real-time running status of Mail Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: What classes are available on Shatabdi Express?
+A: Shatabdi Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
 
 Q: Can I book a lower berth?
 A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
@@ -1399,65 +1162,56 @@ A: You can select berth preference at the time of booking, but it is subject to 
 Q: Is Vande Bharat running on time today?
 A: For real-time running status of Vande Bharat, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
 
-Q: Is Duronto running on time today?
-A: For real-time running status of Duronto, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: Is Shatabdi Express running on time today?
-A: For real-time running status of Shatabdi Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: What classes are available on Mail Express?
-A: Mail Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: What is the fare from Kolkata to Guwahati in Sleeper class?
-A: The approximate Sleeper class fare from Kolkata to Guwahati is ₹450. Final fare may vary based on dynamic pricing and quotas.
-
-Q: What classes are available on Duronto?
-A: Duronto typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: Is Humsafar Express running on time today?
-A: For real-time running status of Humsafar Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: What is the fare from Mumbai to Ahmedabad in Sleeper class?
-A: The approximate Sleeper class fare from Mumbai to Ahmedabad is ₹250. Final fare may vary based on dynamic pricing and quotas.
-
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
-
-Q: Is Tejas Express running on time today?
-A: For real-time running status of Tejas Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: What is the fare from Mumbai to Delhi in Sleeper class?
-A: The approximate Sleeper class fare from Mumbai to Delhi is ₹485. Final fare may vary based on dynamic pricing and quotas.
-
-Q: What is the fare from Delhi to Bangalore in Sleeper class?
-A: The approximate Sleeper class fare from Delhi to Bangalore is ₹730. Final fare may vary based on dynamic pricing and quotas.
-
-Q: Is Duronto running on time today?
-A: For real-time running status of Duronto, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: Is Tejas Express running on time today?
-A: For real-time running status of Tejas Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: How long is the journey from Delhi to Jaipur?
-A: The journey from Delhi to Jaipur typically takes 5 hours by major express trains. Duration varies by train type.
+Q: What is the fare from Mumbai to Goa in Sleeper class?
+A: The approximate Sleeper class fare from Mumbai to Goa is ₹280. Final fare may vary based on dynamic pricing and quotas.
 
 Q: How long is the journey from Delhi to Lucknow?
 A: The journey from Delhi to Lucknow typically takes 7 hours by major express trains. Duration varies by train type.
 
-Q: What classes are available on Duronto?
-A: Duronto typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+Q: How long is the journey from Delhi to Lucknow?
+A: The journey from Delhi to Lucknow typically takes 7 hours by major express trains. Duration varies by train type.
+
+Q: How long is the journey from Chennai to Kolkata?
+A: The journey from Chennai to Kolkata typically takes 27 hours by major express trains. Duration varies by train type.
 
 Q: What classes are available on Garib Rath?
 A: Garib Rath typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
 
-Q: Is Tejas Express running on time today?
-A: For real-time running status of Tejas Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+Q: What is the fare from Mumbai to Ahmedabad in Sleeper class?
+A: The approximate Sleeper class fare from Mumbai to Ahmedabad is ₹250. Final fare may vary based on dynamic pricing and quotas.
 
-Q: How long is the journey from Delhi to Bangalore?
-A: The journey from Delhi to Bangalore typically takes 35 hours by major express trains. Duration varies by train type.
+Q: What classes are available on Tejas Express?
+A: Tejas Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: What classes are available on Vande Bharat?
+A: Vande Bharat typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: How long is the journey from Pune to Hyderabad?
+A: The journey from Pune to Hyderabad typically takes 10 hours by major express trains. Duration varies by train type.
+
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: Is Rajdhani Express running on time today?
+A: For real-time running status of Rajdhani Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: What classes are available on Duronto?
+A: Duronto typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: Is Garib Rath running on time today?
+A: For real-time running status of Garib Rath, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: How long is the journey from Pune to Hyderabad?
+A: The journey from Pune to Hyderabad typically takes 10 hours by major express trains. Duration varies by train type.
+
+Q: What classes are available on Duronto?
+A: Duronto typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
 
 Q: What is the fare from Mumbai to Ahmedabad in Sleeper class?
 A: The approximate Sleeper class fare from Mumbai to Ahmedabad is ₹250. Final fare may vary based on dynamic pricing and quotas.
@@ -1465,57 +1219,282 @@ A: The approximate Sleeper class fare from Mumbai to Ahmedabad is ₹250. Final 
 Q: Can I book a lower berth?
 A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
 
-Q: Can I book a lower berth?
-A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+Q: What is the fare from Mumbai to Ahmedabad in Sleeper class?
+A: The approximate Sleeper class fare from Mumbai to Ahmedabad is ₹250. Final fare may vary based on dynamic pricing and quotas.
 
-Q: What classes are available on Mail Express?
-A: Mail Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+Q: How long is the journey from Delhi to Lucknow?
+A: The journey from Delhi to Lucknow typically takes 7 hours by major express trains. Duration varies by train type.
 
-Q: Is Shatabdi Express running on time today?
-A: For real-time running status of Shatabdi Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+Q: What is the fare from Pune to Hyderabad in Sleeper class?
+A: The approximate Sleeper class fare from Pune to Hyderabad is ₹320. Final fare may vary based on dynamic pricing and quotas.
 
-Q: Is Duronto running on time today?
-A: For real-time running status of Duronto, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
-
-Q: What is the fare from Chennai to Hyderabad in Sleeper class?
-A: The approximate Sleeper class fare from Chennai to Hyderabad is ₹380. Final fare may vary based on dynamic pricing and quotas.
-
-Q: What classes are available on Garib Rath?
-A: Garib Rath typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
-
-Q: Is Mail Express running on time today?
-A: For real-time running status of Mail Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+Q: What is the fare from Delhi to Bangalore in Sleeper class?
+A: The approximate Sleeper class fare from Delhi to Bangalore is ₹730. Final fare may vary based on dynamic pricing and quotas.
 
 Q: How long is the journey from Mumbai to Delhi?
 A: The journey from Mumbai to Delhi typically takes 16 hours by major express trains. Duration varies by train type.
 
-Q: Can I transfer my confirmed train ticket to a family member?
-A: Yes, Indian Railways and IRCTC permit ticket transfer to immediate family members (father, mother, brother, sister, spouse, son, or daughter). You must submit a written application along with your original photo ID proof and proof of relationship (Aadhaar, Ration Card, or Passport) to the Chief Reservation Supervisor at the station at least 24 hours prior to the scheduled departure of the train. For marriage party members or NCC cadets, application can be made 48 hours and 24 hours in advance respectively.
+Q: What classes are available on Mail Express?
+A: Mail Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
 
-Q: What is the process for transferring a railway ticket to someone else?
-A: Railway tickets cannot be transferred to unrelated individuals. However, ticket transfer to blood relatives and spouse (father, mother, brother, sister, son, daughter, spouse) is permitted by submitting a written request with relationship proof to the Chief Reservation Supervisor at least 24 hours before train departure. Government servants on duty can also request transfer 24 hours prior.
+Q: How long is the journey from Delhi to Bangalore?
+A: The journey from Delhi to Bangalore typically takes 35 hours by major express trains. Duration varies by train type.
 
-Q: What is the free luggage allowance on Indian Railways?
-A: The free luggage allowance per passenger is: AC First Class (1A): 70 kg (marginal allowance 15 kg), AC 2-Tier (2A): 50 kg (marginal allowance 10 kg), AC 3-Tier and AC Chair Car (3A/CC): 40 kg (marginal allowance 10 kg), Sleeper Class (SL): 40 kg (marginal allowance 10 kg), Second Class: 35 kg (marginal allowance 10 kg). Excess luggage exceeding the allowance must be booked in advance in the parcel van at standard parcel rates.
+Q: What is the fare from Kolkata to Guwahati in Sleeper class?
+A: The approximate Sleeper class fare from Kolkata to Guwahati is ₹450. Final fare may vary based on dynamic pricing and quotas.
 
-Q: Can I carry excess baggage on a train?
-A: Yes, excess baggage beyond the permissible free allowance can be booked in advance in the brake van or parcel office at standard parcel tariff rates. Carrying unbooked excess luggage in the compartment can attract a penalty of up to 6 times the normal luggage rate.
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
 
-Q: What are the child fare rules on Indian Railways?
-A: Children under 5 years of age travel free without a separate berth. For children between 5 and 11 years: if a separate berth/seat is requested, full adult fare is payable; if no separate berth is requested, half of the basic adult fare plus full reservation charge applies. Children aged 12 years and above are charged full adult fare with full berth entitlement.
+Q: What is the fare from Pune to Hyderabad in Sleeper class?
+A: The approximate Sleeper class fare from Pune to Hyderabad is ₹320. Final fare may vary based on dynamic pricing and quotas.
 
-Q: Do children need tickets on trains?
-A: Children under 5 years of age travel free and do not require a separate reservation or berth. Children between 5 and 11 years require a ticket: choose between half fare (without berth) or full adult fare (with dedicated berth).
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
 
-Q: What classes and amenities are available on Vande Bharat Express?
-A: Vande Bharat Express features semi-high-speed aerodynamic coaches (cruising up to 160 km/h) with AC Chair Car (CC) and Executive Chair Car (EC), as well as Vande Bharat Sleeper (1A, 2A, 3A). Amenities include 360-degree rotating seats in EC, automatic plug doors, onboard infotainment, bio-vacuum toilets, GPS passenger information systems, and optional catering.
+Q: What classes are available on Duronto?
+A: Duronto typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
 
-Q: What is the difference between CC and EC in Shatabdi and Vande Bharat?
-A: AC Chair Car (CC) features 3x2 seating arrangement with comfortable push-back seats. Executive Chair Car (EC) offers premium 2x2 spacious seating, wider armrests, greater legroom, 360-degree rotating seats (on Vande Bharat), and enhanced personalized catering services.
+Q: How long is the journey from Mumbai to Goa?
+A: The journey from Mumbai to Goa typically takes 8 hours by major express trains. Duration varies by train type.
 
-Q: What should I do in case of a medical emergency during train travel?
-A: In a medical emergency, immediately notify the Train Superintendent, Conductor, or TTE, or dial Railway Helpline 139 / tweet to @RailMinIndia. All passenger-carrying trains have first-aid boxes with emergency life-saving medicines and doctors in the train are requested for assistance. A railway medical officer will be summoned at the next scheduled halt for urgent treatment or hospital evacuation.
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
 
-Q: Are doctors available on Indian Railway trains?
-A: While dedicated doctors are not stationed in every coach, TTEs and train staff carry emergency first-aid kits and can announce across coaches for traveling medical professionals. For critical medical situations, train controllers arrange for a railway doctor and ambulance to meet the train at the next major station halt.
+Q: What classes are available on Rajdhani Express?
+A: Rajdhani Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: How long is the journey from Mumbai to Delhi?
+A: The journey from Mumbai to Delhi typically takes 16 hours by major express trains. Duration varies by train type.
+
+Q: Is Rajdhani Express running on time today?
+A: For real-time running status of Rajdhani Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: How long is the journey from Pune to Hyderabad?
+A: The journey from Pune to Hyderabad typically takes 10 hours by major express trains. Duration varies by train type.
+
+Q: What classes are available on Shatabdi Express?
+A: Shatabdi Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: How long is the journey from Delhi to Jaipur?
+A: The journey from Delhi to Jaipur typically takes 5 hours by major express trains. Duration varies by train type.
+
+Q: What is the fare from Delhi to Jaipur in Sleeper class?
+A: The approximate Sleeper class fare from Delhi to Jaipur is ₹195. Final fare may vary based on dynamic pricing and quotas.
+
+Q: What is the fare from Mumbai to Ahmedabad in Sleeper class?
+A: The approximate Sleeper class fare from Mumbai to Ahmedabad is ₹250. Final fare may vary based on dynamic pricing and quotas.
+
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: How long is the journey from Pune to Hyderabad?
+A: The journey from Pune to Hyderabad typically takes 10 hours by major express trains. Duration varies by train type.
+
+Q: Is Vande Bharat running on time today?
+A: For real-time running status of Vande Bharat, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: What is the fare from Mumbai to Delhi in Sleeper class?
+A: The approximate Sleeper class fare from Mumbai to Delhi is ₹485. Final fare may vary based on dynamic pricing and quotas.
+
+Q: How long is the journey from Chennai to Hyderabad?
+A: The journey from Chennai to Hyderabad typically takes 12 hours by major express trains. Duration varies by train type.
+
+Q: Is Mail Express running on time today?
+A: For real-time running status of Mail Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: Is Garib Rath running on time today?
+A: For real-time running status of Garib Rath, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: How long is the journey from Delhi to Jaipur?
+A: The journey from Delhi to Jaipur typically takes 5 hours by major express trains. Duration varies by train type.
+
+Q: How long is the journey from Delhi to Bangalore?
+A: The journey from Delhi to Bangalore typically takes 35 hours by major express trains. Duration varies by train type.
+
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: Is Shatabdi Express running on time today?
+A: For real-time running status of Shatabdi Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: What classes are available on Garib Rath?
+A: Garib Rath typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: Is Humsafar Express running on time today?
+A: For real-time running status of Humsafar Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: Is Duronto running on time today?
+A: For real-time running status of Duronto, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: How long is the journey from Delhi to Jaipur?
+A: The journey from Delhi to Jaipur typically takes 5 hours by major express trains. Duration varies by train type.
+
+Q: What classes are available on Mail Express?
+A: Mail Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: Is Vande Bharat running on time today?
+A: For real-time running status of Vande Bharat, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: What is the fare from Delhi to Jaipur in Sleeper class?
+A: The approximate Sleeper class fare from Delhi to Jaipur is ₹195. Final fare may vary based on dynamic pricing and quotas.
+
+Q: What is the fare from Mumbai to Delhi in Sleeper class?
+A: The approximate Sleeper class fare from Mumbai to Delhi is ₹485. Final fare may vary based on dynamic pricing and quotas.
+
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: Is Garib Rath running on time today?
+A: For real-time running status of Garib Rath, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: Is Vande Bharat running on time today?
+A: For real-time running status of Vande Bharat, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: What is the fare from Kolkata to Guwahati in Sleeper class?
+A: The approximate Sleeper class fare from Kolkata to Guwahati is ₹450. Final fare may vary based on dynamic pricing and quotas.
+
+Q: Is Shatabdi Express running on time today?
+A: For real-time running status of Shatabdi Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: How long is the journey from Mumbai to Delhi?
+A: The journey from Mumbai to Delhi typically takes 16 hours by major express trains. Duration varies by train type.
+
+Q: How long is the journey from Mumbai to Goa?
+A: The journey from Mumbai to Goa typically takes 8 hours by major express trains. Duration varies by train type.
+
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: Is Vande Bharat running on time today?
+A: For real-time running status of Vande Bharat, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: What classes are available on Duronto?
+A: Duronto typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: What is the fare from Pune to Hyderabad in Sleeper class?
+A: The approximate Sleeper class fare from Pune to Hyderabad is ₹320. Final fare may vary based on dynamic pricing and quotas.
+
+Q: Is Garib Rath running on time today?
+A: For real-time running status of Garib Rath, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: How long is the journey from Mumbai to Delhi?
+A: The journey from Mumbai to Delhi typically takes 16 hours by major express trains. Duration varies by train type.
+
+Q: What classes are available on Garib Rath?
+A: Garib Rath typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: Is Rajdhani Express running on time today?
+A: For real-time running status of Rajdhani Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: How long is the journey from Delhi to Lucknow?
+A: The journey from Delhi to Lucknow typically takes 7 hours by major express trains. Duration varies by train type.
+
+Q: Is Humsafar Express running on time today?
+A: For real-time running status of Humsafar Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: What is the fare from Delhi to Bangalore in Sleeper class?
+A: The approximate Sleeper class fare from Delhi to Bangalore is ₹730. Final fare may vary based on dynamic pricing and quotas.
+
+Q: What is the fare from Delhi to Bangalore in Sleeper class?
+A: The approximate Sleeper class fare from Delhi to Bangalore is ₹730. Final fare may vary based on dynamic pricing and quotas.
+
+Q: How long is the journey from Mumbai to Goa?
+A: The journey from Mumbai to Goa typically takes 8 hours by major express trains. Duration varies by train type.
+
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: How long is the journey from Delhi to Jaipur?
+A: The journey from Delhi to Jaipur typically takes 5 hours by major express trains. Duration varies by train type.
+
+Q: How long is the journey from Delhi to Jaipur?
+A: The journey from Delhi to Jaipur typically takes 5 hours by major express trains. Duration varies by train type.
+
+Q: Is Mail Express running on time today?
+A: For real-time running status of Mail Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: Is Shatabdi Express running on time today?
+A: For real-time running status of Shatabdi Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: What classes are available on Shatabdi Express?
+A: Shatabdi Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: How long is the journey from Delhi to Bangalore?
+A: The journey from Delhi to Bangalore typically takes 35 hours by major express trains. Duration varies by train type.
+
+Q: How long is the journey from Delhi to Jaipur?
+A: The journey from Delhi to Jaipur typically takes 5 hours by major express trains. Duration varies by train type.
+
+Q: How long is the journey from Delhi to Jaipur?
+A: The journey from Delhi to Jaipur typically takes 5 hours by major express trains. Duration varies by train type.
+
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: How long is the journey from Delhi to Lucknow?
+A: The journey from Delhi to Lucknow typically takes 7 hours by major express trains. Duration varies by train type.
+
+Q: What classes are available on Mail Express?
+A: Mail Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: Is Rajdhani Express running on time today?
+A: For real-time running status of Rajdhani Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: What is the fare from Mumbai to Goa in Sleeper class?
+A: The approximate Sleeper class fare from Mumbai to Goa is ₹280. Final fare may vary based on dynamic pricing and quotas.
+
+Q: Is Vande Bharat running on time today?
+A: For real-time running status of Vande Bharat, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: What is the fare from Chennai to Kolkata in Sleeper class?
+A: The approximate Sleeper class fare from Chennai to Kolkata is ₹620. Final fare may vary based on dynamic pricing and quotas.
+
+Q: What is the fare from Mumbai to Delhi in Sleeper class?
+A: The approximate Sleeper class fare from Mumbai to Delhi is ₹485. Final fare may vary based on dynamic pricing and quotas.
+
+Q: How long is the journey from Mumbai to Ahmedabad?
+A: The journey from Mumbai to Ahmedabad typically takes 8 hours by major express trains. Duration varies by train type.
+
+Q: What classes are available on Rajdhani Express?
+A: Rajdhani Express typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: Is Garib Rath running on time today?
+A: For real-time running status of Garib Rath, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: What is the fare from Delhi to Lucknow in Sleeper class?
+A: The approximate Sleeper class fare from Delhi to Lucknow is ₹240. Final fare may vary based on dynamic pricing and quotas.
+
+Q: Can I book a lower berth?
+A: You can select berth preference at the time of booking, but it is subject to availability. Senior citizens and pregnant women are given priority for lower berths.
+
+Q: What is the fare from Chennai to Kolkata in Sleeper class?
+A: The approximate Sleeper class fare from Chennai to Kolkata is ₹620. Final fare may vary based on dynamic pricing and quotas.
+
+Q: How long is the journey from Mumbai to Goa?
+A: The journey from Mumbai to Goa typically takes 8 hours by major express trains. Duration varies by train type.
+
+Q: What classes are available on Duronto?
+A: Duronto typically offers SL (Sleeper), 3A (AC 3-Tier), 2A (AC 2-Tier), and in some trains 1A (AC First Class). Please check availability on IRCTC.
+
+Q: How long is the journey from Mumbai to Ahmedabad?
+A: The journey from Mumbai to Ahmedabad typically takes 8 hours by major express trains. Duration varies by train type.
+
+Q: Is Rajdhani Express running on time today?
+A: For real-time running status of Rajdhani Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
+
+Q: Is Shatabdi Express running on time today?
+A: For real-time running status of Shatabdi Express, please check NTES website or the IRCTC Rail Connect app's 'Where is my Train' feature.
 

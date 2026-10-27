@@ -20,6 +20,8 @@ class FarePredictRequest(BaseModel):
     base_fare: Optional[float] = Field(default=None, description="Starting base fare in INR (auto-looked up if omitted)")
     booking_date: Optional[date] = Field(default_factory=date.today, description="Booking date (defaults to today)")
     tatkal_flag: bool = Field(default=False, description="Whether booking under Tatkal quota dynamic pricing")
+    source_station: Optional[str] = Field(default=None, description="Boarding station (defaults to the train's origin)")
+    destination_station: Optional[str] = Field(default=None, description="Alighting station (defaults to its terminus)")
 
 
 class FareForecastPoint(BaseModel):
@@ -52,6 +54,11 @@ class FarePredictResponse(BaseModel):
     demand_surge_from_days: Optional[int] = Field(default=None, description="Days before departure when demand turns High/Surge")
     pricing_anomaly: Optional[str] = Field(default=None, description="Set when the raw prediction is outside the historical range")
     policy_note: Optional[str] = None
+    fare_breakdown: Dict[str, Any] = Field(default_factory=dict,
+                                           description="Official base fare + reservation + superfast + GST for the journey")
+    pricing_rule: str = Field(default="", description="flexi | fixed | tatkal — how Indian Railways prices this ticket")
+    source_station: Optional[str] = None
+    destination_station: Optional[str] = None
     model_version: str = "v1.0.0"
     confidence_score: float = Field(default=0.94)
     governance_telemetry: Optional[GovernanceBadge] = None

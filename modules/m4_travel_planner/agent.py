@@ -36,6 +36,7 @@ from typing import Any, Dict, List, Optional, Tuple
 import pandas as pd
 
 from core.config import settings
+from core.network import network
 from governance.context import report_inference
 from governance.hooks import governance_hook
 from governance.telemetry_bus import telemetry_bus
@@ -270,23 +271,20 @@ class RouteAgent:
         return {"row": row, "dep": dep, "arr": arr}
 
     def search(self, src: str, dst: str, day: date, trace: _Trace) -> List[List[Dict[str, Any]]]:
-        t = self.trains
+        """Direct trains that halt at both stations (any station in the same city), then one-change
+        connections through an interchange hub, on the real timetable."""
         journeys: List[List[Dict[str, Any]]] = []
-        for _, r in t[(t["source"] == src) & (t["destination"] == dst)].iterrows():
+        for _, r in network.segments(src, dst, nearby=True).iterrows():
             journeys.append([self._leg(r, day)])
         direct = len(journeys)
-        # One-change connections: src → X on the day, X → dst leaving after a feasible layover
-        firsts = t[(t["source"] == src) & (t["destination"] != dst)]
-        seconds = t[t["destination"] == dst]
-        for _, a in firsts.iterrows():
+        for a, b, _lay, _h in network.connections(src, dst, MIN_LAYOVER_MIN, MAX_LAYOVER_MIN, nearby=True, limit=6):
             la = self._leg(a, day)
-            for _, b in seconds[seconds["source"] == a["destination"]].iterrows():
-                for dd in (la["arr"].date(), la["arr"].date() + timedelta(days=1)):
-                    lb = self._leg(b, dd)
-                    lay = (lb["dep"] - la["arr"]).total_seconds() / 60
-                    if MIN_LAYOVER_MIN <= lay <= MAX_LAYOVER_MIN:
-                        journeys.append([la, lb])
-                        break
+            for dd in (la["arr"].date(), la["arr"].date() + timedelta(days=1)):
+                lb = self._leg(b, dd)
+                lay = (lb["dep"] - la["arr"]).total_seconds() / 60
+                if MIN_LAYOVER_MIN <= lay <= MAX_LAYOVER_MIN:
+                    journeys.append([la, lb])
+                    break
         trace.step("RouteAgent", "Search routes", direct_trains=direct, connections=len(journeys) - direct,
                    corridor=f"{src} → {dst}", date=str(day))
         return journeys
@@ -350,8 +348,9 @@ class ValidatorAgent:
         if opt is None:
             return {"valid": False, "violations": ["no itinerary produced"], "checks": {}}
         checks = {
-            "starts_at_requested_origin": opt.source == c["source"],
-            "ends_at_requested_destination": opt.destination == c["destination"],
+            # a station in the same city counts (Mumbai CSMT / Mumbai Central / Bandra Terminus …)
+            "starts_at_requested_origin": opt.source in network.city_stations(c["source"]),
+            "ends_at_requested_destination": opt.destination in network.city_stations(c["destination"]),
             "departs_on_requested_date": bool(opt.departure_datetime and opt.departure_datetime[:10] == str(c["travel_date"])),
             "legs_connect": all(opt.legs[i].destination == opt.legs[i + 1].source for i in range(len(opt.legs) - 1)),
             "fare_is_sum_of_legs": abs(opt.estimated_fare_inr - sum(l.fare_inr for l in opt.legs)) < 1.0,

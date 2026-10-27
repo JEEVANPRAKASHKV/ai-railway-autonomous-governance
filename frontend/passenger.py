@@ -21,10 +21,10 @@ from frontend.components.shap_chart import render_shap_chart
 from frontend.components.telemetry_badge import render_telemetry_badge
 from frontend.ui import (
     NEG, POS, TONE_BAR, api_get, api_post, badge, callout, esc, hero, inject_theme, kpi, kpi_row,
-    label_for, load_reference, meter, mono, rows_card, section, send_outcome, style_fig,
+    halt_labels, label_for, load_reference, meter, mono, provenance, rows_card, section, send_outcome, style_fig,
 )
 
-CLASSES = ["3A", "2A", "1A", "SL", "CC"]
+CLASSES = ["3A", "2A", "1A", "SL", "CC", "EC", "2S"]
 PERSONAS = ["budget", "business", "family", "senior", "student", "premium"]
 
 
@@ -168,6 +168,20 @@ def home(pages: Dict[str, Any]) -> None:
         f'<div class="s" style="margin-top:4px;font-size:.84rem;color:#1F1F1F">{d}</div></div>' for i, t, d in steps) + "</div>",
         unsafe_allow_html=True)
 
+    section("Where the data comes from", "Real where open data exists; simulated, and labelled, where it does not.")
+    rows = [
+        ("Trains, halts, timings", "REAL", "Indian Railways timetable via datameet/railways (CC0)", "2016 snapshot"),
+        ("Stations & coordinates", "REAL", "datameet/railways — 2,719 stations served by these trains", "2016"),
+        ("Fares", "REAL", "Railway Board Tariff (TAG 2025) fare tables + standard charges", "2025"),
+        ("Weather", "LIVE", "Open-Meteo forecast at the station's coordinates", "up to 15 days ahead"),
+        ("Booking outcomes, delays, demand, crowding", "SIM", "Simulated on the real network (no public data exists)", "seeded"),
+        ("Passenger profiles, fraud sessions", "SIM", "Simulated", "seeded"),
+    ]
+    st.markdown('<table class="rb-table"><thead><tr><th>Data</th><th>Type</th><th>Source</th><th>As of</th></tr></thead><tbody>'
+                + "".join(f'<tr><td>{esc(a)}</td><td>{badge(b, "ok" if b in ("REAL", "LIVE") else "warn")}</td>'
+                          f'<td>{esc(c)}</td><td class="rb-mono">{esc(d)}</td></tr>' for a, b, c, d in rows)
+                + "</tbody></table>", unsafe_allow_html=True)
+
 
 # ──────────────────────────────────────────────────────────────────────────────
 # M1 — Ticket confirmation
@@ -178,6 +192,7 @@ def ticket() -> None:
     hero("Ticket Confirmation Predictor",
          "Waitlisted or RAC? See the chance your ticket confirms before you travel, the likely berth, and exactly why.",
          ["XGBoost", "SHAP explanations", "Booking & cancellation trends", "Retrained when live accuracy drops"])
+    provenance("timetable", "outcomes")
     ref = load_reference()
     trains = ref["trains"]
 
@@ -197,7 +212,7 @@ def ticket() -> None:
             cls = c1.selectbox("Class", CLASSES, key="t_cls")
             quota = c2.selectbox("Quota", ["GN", "TQ", "LADIES", "DEFENCE", "SENIOR"], key="t_quota")
             wl = c1.number_input("Waitlist / RAC no.", 1, 500, key="t_wl")
-            days = c2.slider("Days to departure", 1, 120, key="t_days")
+            days = c2.slider("Days to departure", 1, 60, key="t_days", help="Reservations open 60 days before the journey.")
             with st.expander("More options"):
                 senior = st.checkbox("Senior citizen (60+)")
                 disab = st.checkbox("Divyangjan quota")
@@ -295,6 +310,7 @@ def recommend() -> None:
     hero("Smart Train Recommender",
          "The best train for you — balancing fare, speed, punctuality, availability and comfort for your travel style.",
          ["Persona-aware scoring", "Personalised from history", "Learns from your choices", "Fairness audit"])
+    provenance("timetable", "fares", "outcomes")
     stations = load_reference()["stations"]
     names = list(stations.keys())
 
@@ -304,7 +320,9 @@ def recommend() -> None:
             o = st.selectbox("From", names, index=names.index(label_for(stations, "NDLS")))
             d = st.selectbox("To", names, index=names.index(label_for(stations, "CSTM")))
             dt = st.date_input("Travel date", value=date.today() + timedelta(days=5), min_value=date.today(),
-                               max_value=date.today() + timedelta(days=120))
+                               max_value=date.today() + timedelta(days=60))
+            st.caption("Finds every train that stops at both stations — including ones that start or end elsewhere — "
+                       "and other stations in the same city.")
             c1, c2 = st.columns(2)
             persona = c1.selectbox("I travel as", PERSONAS)
             cls = c2.selectbox("Preferred class", CLASSES)
@@ -352,11 +370,12 @@ def recommend() -> None:
                         f'<div class="rk{" top" if top else ""}">{r.get("rank")}</div>'
                         f'<div><b>{esc(r.get("train_name"))}</b><br><span class="rb-mono rb-sub">{esc(r.get("train_number"))}</span>'
                         f'{" &nbsp;" + badge("Best match", "ok") if top else ""}</div>'
-                        f'<div class="rb-mono"><b>{esc(r.get("departure_time"))}</b> {esc(oc)}<br><b>{esc(r.get("arrival_time"))}</b> {esc(dc)}</div>'
+                        f'<div class="rb-mono"><b>{esc(r.get("departure_time"))}</b> {esc(r.get("source") or oc)}<br><b>{esc(r.get("arrival_time"))}</b> {esc(r.get("destination") or dc)}</div>'
                         f'<div><span class="rb-sub">Duration</span><br><span class="rb-mono">{r.get("duration_hours", 0):.1f} h</span></div>'
                         f'<div><span class="rb-sub">On time</span><br><span class="rb-mono">{r.get("punctuality_score", 0):.0%}</span></div>'
                         f'<div><span class="rb-sub">Match</span><br><span class="rb-mono">{r.get("composite_score", 0):.2f}</span></div>'
-                        f'<div class="fare rb-mono">₹{r.get("fare_estimate_inr", 0):,.0f}</div></div>'
+                        f'<div class="fare rb-mono">₹{r.get("fare_estimate_inr", 0):,.0f}'
+                        f'<br><span class="rb-sub" style="font-size:.75rem">{esc(r.get("fare_class", ""))}</span></div></div>'
                         f'<div style="padding:8px 14px;border-top:1px solid #ddd"><span class="rb-sub">{esc(r.get("recommendation_reason"))}</span>'
                         f'<div style="margin-top:6px">{tags}</div></div></div>',
                         unsafe_allow_html=True)
@@ -397,13 +416,14 @@ def delay() -> None:
     inject_theme("delay")
     hero("Delay & Disruption Predictor",
          "Know before you leave: expected delay, station congestion, and better trains if things look bad.",
-         ["LightGBM", "Arrival & departure delay", "Station congestion history", "SHAP", "Proactive alerts"])
+         ["LightGBM", "Arrival & departure delay", "Live weather", "Station congestion history", "SHAP", "Proactive alerts"])
+    provenance("timetable", "weather", "outcomes")
     ref = load_reference()
     trains, stations = ref["trains"], ref["stations"]
 
     presets([
         ("Clear day", {"d_train": label_for(trains, "12002"), "d_station": label_for(stations, "BPL"), "d_weather": 0.05, "d_cong": 0.15, "d_auto": False}),
-        ("Monsoon tracks", {"d_train": label_for(trains, "12951"), "d_station": label_for(stations, "CSTM"), "d_weather": 0.70, "d_cong": 0.65, "d_auto": False}),
+        ("Monsoon tracks", {"d_train": label_for(trains, "12952"), "d_station": label_for(stations, "BCT"), "d_weather": 0.70, "d_cong": 0.65, "d_auto": False}),
         ("Dense fog + congestion", {"d_train": label_for(trains, "12301"), "d_station": label_for(stations, "NDLS"), "d_weather": 0.95, "d_cong": 0.90, "d_auto": False}),
     ], "d_run", "dl")
 
@@ -412,15 +432,24 @@ def delay() -> None:
         st.session_state.setdefault("d_auto", True)
         st.session_state.setdefault("d_weather", 0.25)
         st.session_state.setdefault("d_cong", 0.45)
+        train = st.selectbox("Train", list(trains.keys()), key="d_train")
+        halts = halt_labels(ref, trains[train])
+        if st.session_state.get("d_station") not in halts:
+            st.session_state["d_station"] = halts[-1]
+        stn = st.selectbox("Station (this train's halts, in order)", halts, key="d_station")
+        stop = next((h for h in ref["stops"].get(trains[train], []) if h[0] == stations.get(stn, stn)), None)
+        if stop:
+            st.caption(f"Scheduled {'arrival ' + stop[1] if stop[1] else 'departure ' + stop[2]} · "
+                       f"{stop[3]:,.0f} km from {ref['stops'][trains[train]][0][0]} (2016 timetable)")
         auto = st.toggle("Estimate weather & congestion automatically", key="d_auto",
-                         help="Uses the month's weather pattern and this station's own congestion history.")
+                         help="Weather: live Open-Meteo forecast at this station (up to 15 days ahead), otherwise the "
+                              "station's usual weather for that time of year. Congestion: this station's own history.")
         with st.form("delay_form"):
-            train = st.selectbox("Train", list(trains.keys()), key="d_train")
-            stn = st.selectbox("Station", list(stations.keys()), key="d_station")
-            jd = st.date_input("Journey date", value=date.today() + timedelta(days=1), min_value=date.today())
+            jd = st.date_input("Journey date", value=date.today() + timedelta(days=1), min_value=date.today(),
+                               max_value=date.today() + timedelta(days=60))
             if auto:
-                st.caption("Weather and congestion will be estimated from the travel month and this station's history. "
-                           "Switch the toggle off to set them yourself.")
+                st.caption("Weather comes from the live forecast for the station and day; congestion from the station's "
+                           "history. Switch the toggle off to set them yourself.")
                 wx, cg = None, None
             else:
                 wx = st.slider("Weather severity", 0.0, 1.0, step=0.05, key="d_weather",
@@ -454,6 +483,16 @@ def delay() -> None:
                       f'{ci.get("coverage", 0.8):.0%} prediction interval', ""),
                      ("Station congestion", esc(lvl), f'{sci:.0%} · {esc(res.get("congestion_source", ""))}' if sci is not None else "",
                       {"Low": "ok", "Moderate": "warn"}.get(lvl, "bad"))])
+            wc = res.get("weather_conditions") or {}
+            wline = (f"rain {wc.get('precip_mm', 0):.0f} mm · visibility {wc.get('min_visibility_m', 0) / 1000:.1f} km · "
+                     f"wind {wc.get('wind_kmh', 0):.0f} km/h{' · thunderstorm' if wc.get('storm') else ''}") if wc else ""
+            rows_card("Inputs used", [
+                ("Weather", f"{esc(res.get('weather_source', ''))}" + (f" — {esc(wline)}" if wline else "")
+                 + (f" · index {res['weather_index_used']:.1f}/10" if res.get("weather_index_used") is not None else "")),
+                ("Distance from origin", mono("%s km" % format(res.get("distance_from_origin_km") or 0, ",.0f"))
+                 + " · " + esc(res.get("distance_source", ""))),
+                ("Scheduled time", mono(res.get("scheduled_time") or "—")),
+            ])
             callout(f"<b>Travel alert:</b> {esc(res.get('proactive_alert', ''))}"
                     + (f" &nbsp;·&nbsp; <b>{res['disruption_probability']:.0%}</b> chance of a delay over 60 min."
                        if res.get("disruption_probability") is not None else ""), tone, "📢")
@@ -512,6 +551,7 @@ def planner() -> None:
          "Describe your trip in your own words. A team of AI agents searches trains, checks confirmation odds, delays and fares — "
          "then proposes a plan. <b>Nothing is booked until you approve.</b>",
          ["Multi-agent", "One-change connections", "Validator agent", "Human-in-the-loop booking", "Injection guard"])
+    provenance("timetable", "fares", "weather", "outcomes")
 
     st.caption("Try an example")
     cols = st.columns(len(EXAMPLES))
@@ -681,23 +721,40 @@ def planner() -> None:
 def fare() -> None:
     inject_theme("fare")
     hero("Fare Forecast & Booking Window",
-         "See where the fare is heading, when demand surges, and the smartest day to book.",
-         ["XGBoost forecast", "Demand surge detection", "SHAP fare drivers", "Pricing-anomaly guard"])
-    trains = load_reference()["trains"]
+         "The official fare for your exact journey, how it moves as seats sell on flexi-fare trains, and when to book.",
+         ["Official TAG 2025 fares", "Flexi-fare forecast", "Tatkal rules", "SHAP fare drivers", "Pricing-anomaly guard"])
+    provenance("timetable", "fares", "outcomes")
+    ref = load_reference()
+    trains = ref["trains"]
     left, right = st.columns([1, 1.65], gap="large")
     with left:
+        train = st.selectbox("Train", list(trains.keys()), key="f_train")
+        num = trains[train]
+        halts = halt_labels(ref, num)
+        if st.session_state.get("f_from") not in halts[:-1]:
+            st.session_state["f_from"] = halts[0]
+        if st.session_state.get("f_to") not in halts[1:]:
+            st.session_state["f_to"] = halts[-1]
+        c1, c2 = st.columns(2)
+        frm = c1.selectbox("From", halts[:-1], key="f_from")
+        to = c2.selectbox("To", halts[1:], key="f_to")
+        offered = [c for c in CLASSES if c in ref["classes"].get(num, CLASSES)] or CLASSES
         with st.form("fare_form"):
-            train = st.selectbox("Train", list(trains.keys()))
-            cls = st.selectbox("Class", CLASSES)
+            cls = st.selectbox("Class", offered)
             jd = st.date_input("Journey date", value=date.today() + timedelta(days=20), min_value=date.today(),
-                               max_value=date.today() + timedelta(days=120))
-            tk = st.checkbox("Tatkal quota")
+                               max_value=date.today() + timedelta(days=60))
+            tk = st.checkbox("Tatkal quota", help="Tatkal opens one day before the journey and adds a fixed charge.")
             go_btn = st.form_submit_button("Forecast fare", type="primary", width="stretch")
     with right:
+        bad_pair = halts.index(frm) >= halts.index(to) if frm in halts and to in halts else False
+        if go_btn and bad_pair:
+            callout("The train reaches the 'To' station before the 'From' station — pick a later 'To' station.", "warn")
+            go_btn = False
         if go_btn:
-            with st.spinner("Forecasting fare trajectory…"):
-                res = api_post("/predict/fare", {"train_number": trains[train], "journey_class": cls,
-                                                 "journey_date": str(jd), "tatkal_flag": tk})
+            with st.spinner("Pricing the journey…"):
+                res = api_post("/predict/fare", {"train_number": num, "journey_class": cls, "journey_date": str(jd),
+                                                 "tatkal_flag": tk, "source_station": ref["stations"].get(frm),
+                                                 "destination_station": ref["stations"].get(to)})
             st.session_state["f_res"] = res
         res = st.session_state.get("f_res")
         if not res:
@@ -706,17 +763,37 @@ def fare() -> None:
             _err(res, "the fare forecast")
         else:
             dem = res.get("demand_level", "—")
-            kpi_row([("Predicted fare", f'₹{res["current_predicted_fare_inr"]:,.0f}', f'base ₹{res.get("base_fare_inr", 0):,.0f}', ""),
-                     ("Surge", f'{res.get("surge_multiplier", 1):.2f}×', "vs. base fare",
+            rule = res.get("pricing_rule", "")
+            kpi_row([("Fare", f'₹{res["current_predicted_fare_inr"]:,.0f}', f'standard ₹{res.get("base_fare_inr", 0):,.0f}', ""),
+                     ("Pricing", {"flexi": "Flexi", "fixed": "Fixed", "tatkal": "Tatkal"}.get(rule, "—"),
+                      {"flexi": "rises as seats sell", "fixed": "same on any booking day", "tatkal": "Tatkal charge added"}.get(rule, ""),
+                      "ok" if rule == "fixed" else "warn"),
+                     ("Surge", f'{res.get("surge_multiplier", 1):.2f}×', "vs. standard fare",
                       "ok" if res.get("surge_multiplier", 1) < 1.1 else "warn"),
-                     ("Demand", esc(dem), "booking pressure", {"Low": "ok", "Moderate": "ok", "High": "warn"}.get(dem, "bad"))])
+                     ("Demand", esc(dem), "booking pressure", {"Low": "ok", "Moderate": "ok", "High": "warn"}.get(dem, "bad"))
+                     if rule != "fixed" else
+                     ("Distance", f'{float((res.get("fare_breakdown") or {}).get("distance_km", 0)):,.0f} km', "for this journey", "")])
             callout(f"<b>Best time to book:</b> {esc(res.get('optimal_booking_window', ''))}"
                     + (f" &nbsp;·&nbsp; Demand surge expected from <b>{res['demand_surge_from_days']} days</b> before departure."
-                       if res.get("demand_surge_from_days") is not None else ""), "info", "💡")
+                       if res.get("demand_surge_from_days") is not None and rule != "fixed" else ""), "info")
             if res.get("pricing_anomaly"):
-                callout(f"<b>Pricing check:</b> {esc(res['pricing_anomaly'])} The governance layer logged this for review.", "warn", "🧪")
+                callout(f"<b>Pricing check:</b> {esc(res['pricing_anomaly'])} The governance layer logged this for review.", "warn")
             if res.get("policy_note"):
                 st.caption(esc(res["policy_note"]))
+            fb = res.get("fare_breakdown") or {}
+            if fb:
+                def inr(v: float) -> str:
+                    return mono("₹" + format(float(v or 0), ",.0f"))
+                rows_card(f"Standard fare · {esc(res.get('source_station') or '')} → {esc(res.get('destination_station') or '')} · "
+                          f"{float(fb.get('distance_km', 0)):,.0f} km",
+                          [("Base fare (" + str(fb.get("tariff_table", "")) + " table)", inr(fb.get("base_fare"))),
+                           ("Reservation charge", inr(fb.get("reservation_charge"))),
+                           ("Superfast charge", inr(fb.get("superfast_charge"))),
+                           ("Tatkal charge", inr(fb.get("tatkal_charge"))),
+                           ("GST (5%, AC classes)", inr(fb.get("gst"))),
+                           ("Total payable", "<b>" + inr(fb.get("total")) + "</b>")],
+                          note="Base fare from the Railway Board TAG 2025 fare tables for this distance. Catering on "
+                               "Rajdhani/Duronto/Shatabdi and concessions are not included — confirm on IRCTC.")
             curve = res.get("forecast_curve") or []
             if curve:
                 df = pd.DataFrame(curve)
@@ -724,9 +801,11 @@ def fare() -> None:
                                            line=dict(color=POS, width=2), marker=dict(size=5),
                                            name="Predicted fare"))
                 fig.add_hline(y=res.get("base_fare_inr", 0), line_dash="dash", line_color="#7A7A7A",
-                              annotation_text="Base fare", annotation_position="bottom right")
+                              annotation_text="Standard fare", annotation_position="bottom right")
                 fig.update_layout(title="<b>Fare vs days before departure</b>", xaxis_title="Days before departure",
-                                  yaxis_title="₹", xaxis_autorange="reversed")
+                                  yaxis_title="₹", xaxis_autorange="reversed", yaxis_tickformat=",.0f")
+                if rule == "fixed":
+                    fig.update_yaxes(range=[0, float(res["current_predicted_fare_inr"]) * 1.2])
                 style_fig(fig, 300)
                 st.plotly_chart(fig, width="stretch")
     res = st.session_state.get("f_res")
@@ -757,6 +836,7 @@ def fraud() -> None:
          "Security operations for the booking platform: every session is scored for bot, scalper and account-misuse risk, "
          "each alert carries its evidence, and analyst verdicts feed live false-positive / false-negative monitoring.",
          ["AI Governance · security", "XGBoost classifier", "Anomaly detection", "Account-misuse checks", "SHAP investigations"])
+    provenance("fraud")
     presets([
         ("Genuine passenger", {"f_rpm": 4.0, "f_pnr": 1, "f_tatkal": False, "f_cap": 0, "f_age": 365, "f_pay": 1, "f_ip": 0.10, "f_bulk": False, "f_sess": "SESS-GENUINE-PASSENGER"}),
         ("Fast Tatkal user", {"f_rpm": 35.0, "f_pnr": 4, "f_tatkal": True, "f_cap": 1, "f_age": 45, "f_pay": 2, "f_ip": 0.40, "f_bulk": False, "f_sess": "SESS-TATKAL-FREQUENT"}),

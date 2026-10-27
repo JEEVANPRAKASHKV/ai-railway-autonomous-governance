@@ -23,34 +23,11 @@ logger = logging.getLogger(__name__)
 
 
 class RouteSearchTool:
-    """Tool to search candidate railway routes and schedules."""
-
-    def __init__(self) -> None:
-        self._df: Optional[pd.DataFrame] = None
-        self._load()
-
-    def _load(self) -> None:
-        path = os.path.join(settings.data_raw_dir, "trains.csv")
-        if os.path.exists(path):
-            try:
-                self._df = pd.read_csv(path)
-            except Exception as e:
-                logger.error(f"[RouteSearchTool] Load error: {e}")
+    """Tool to search trains between two stations on the real timetable (any two halts of a train)."""
 
     def run(self, source: str, destination: str) -> List[Dict[str, Any]]:
-        src = source.strip().upper()
-        dst = destination.strip().upper()
-        if self._df is None or len(self._df) == 0:
-            self._load()
-
-        if self._df is not None:
-            mask = (self._df["source"].str.upper() == src) & (self._df["destination"].str.upper() == dst)
-            matches = self._df[mask]
-            if len(matches) == 0:
-                # Return representative corridor trains
-                matches = self._df.head(4)
-            return matches.to_dict(orient="records")
-        return []
+        from core.network import network
+        return network.segments(source.strip().upper(), destination.strip().upper(), nearby=True).to_dict(orient="records")
 
 
 class FareEstimatorTool:

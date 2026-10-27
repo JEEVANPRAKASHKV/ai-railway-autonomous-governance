@@ -65,14 +65,15 @@ def test_knowledge_base_is_english_only():
 # ── Train recommender: connections, same-station and time validation ──────────────────
 
 def test_recommender_offers_connections_when_no_direct_train():
-    r = client.post("/api/v1/recommend/trains", json={"source_station": "NDLS", "destination_station": "PUNE",
+    # no train in the timetable runs Ranchi → Pune, but there are one-change journeys via a hub
+    r = client.post("/api/v1/recommend/trains", json={"source_station": "RNC", "destination_station": "PUNE",
                                                        "journey_date": NEXT_WEEK})
     assert r.status_code == 200
     body = r.json()
     assert body["recommendations"] == []
     assert body["connections"], "expected at least one one-change connection"
     c = body["connections"][0]
-    assert c["legs"][0]["source"] == "NDLS" and c["legs"][-1]["destination"] == "PUNE"
+    assert c["legs"][0]["source"] == "RNC" and c["legs"][-1]["destination"] == "PUNE"
     assert c["legs"][0]["destination"] == c["legs"][1]["source"] == c["via"]
     assert 45 <= c["layover_minutes"] <= 8 * 60
     assert c["total_fare_inr"] == pytest.approx(sum(l["fare_inr"] for l in c["legs"]))

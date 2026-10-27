@@ -31,6 +31,10 @@ class PlatformSettings(BaseSettings):
     azure_openai_deployment_name: str = Field(default="", alias="AZURE_OPENAI_DEPLOYMENT_NAME")
     azure_openai_api_version: str = Field(default="2024-02-15-preview", alias="AZURE_OPENAI_API_VERSION")
 
+    # ── Live weather (Open-Meteo, free, no key) ──────────────────────────────
+    weather_live: bool = Field(default=True, alias="WEATHER_LIVE")
+    open_meteo_url: str = Field(default="https://api.open-meteo.com/v1/forecast", alias="OPEN_METEO_URL")
+
     # ── Platform ─────────────────────────────────────────────────────────────
     random_seed: int = Field(default=42, alias="RANDOM_SEED")
     log_level: str = Field(default="INFO", alias="LOG_LEVEL")

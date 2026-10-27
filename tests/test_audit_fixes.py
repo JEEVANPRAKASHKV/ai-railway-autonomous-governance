@@ -247,7 +247,7 @@ def test_support_looks_up_pnr_record():
 def test_recommender_explains_and_does_not_invent_routes():
     r = client.post("/api/v1/recommend/trains", json={"source_station": "NDLS", "destination_station": "XYZ",
                                                       "journey_date": TOMORROW}).json()
-    assert r["recommendations"] == [] and "No direct trains" in r["message"]
+    assert r["recommendations"] == [] and "No direct train" in r["message"]
     ok = client.post("/api/v1/recommend/trains", json={"source_station": "NDLS", "destination_station": "SBC",
                                                        "journey_date": TOMORROW}).json()
     assert ok["recommendations"][0]["factor_contributions"]

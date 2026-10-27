@@ -15,6 +15,7 @@ import numpy as np
 import pandas as pd
 
 from core.config import settings
+from core.network import network
 from governance.context import report_inference
 from governance.hooks import governance_hook
 from modules.m2_train_recommender.schema import (
@@ -74,10 +75,9 @@ PERSONA_WEIGHTS: Dict[str, Dict[str, float]] = {
 }
 
 TRAIN_TYPE_COMFORT = {
-    "Vande Bharat Express": 0.95, "Rajdhani Express": 0.92, "Tejas Express": 0.9, "Shatabdi Express": 0.9,
-    "Duronto Express": 0.85, "Humsafar Express": 0.82, "Queen Express": 0.8, "Superfast Express": 0.75,
-    "Sampark Kranti": 0.74, "Jan Shatabdi": 0.72, "Garib Rath": 0.7, "Intercity Express": 0.7,
-    "Express": 0.66, "Mail": 0.64, "Passenger": 0.5,
+    "Vande Bharat": 0.95, "Rajdhani": 0.92, "Tejas": 0.9, "Shatabdi": 0.9, "Duronto": 0.85, "Humsafar": 0.82,
+    "Superfast": 0.75, "Sampark Kranti": 0.74, "Jan Shatabdi": 0.72, "Garib Rath": 0.7,
+    "Express": 0.66, "Mail": 0.64,
 }
 FACTORS = ("price", "punctuality", "availability", "duration", "comfort")
 LEARNING_RATE = 0.05
@@ -151,39 +151,27 @@ class TrainRecommenderService:
 
     def connections(self, src: str, dst: str, pref_class: str, max_budget: Optional[float],
                     limit: int = 3) -> List[ConnectionOption]:
-        """One-change journeys src → X → dst with a 45 min – 8 h layover (same rule as the travel planner),
-        ordered by door-to-door time."""
-        df = self._trains_df
-        if df is None or not len(df):
-            return []
+        """One-change journeys src → hub → dst over the real network with a 45 min – 8 h layover (same rule as
+        the travel planner), ordered by door-to-door time."""
 
         def fare(row) -> float:
-            col = f"base_fare_{pref_class.lower()}"
-            v = float(row.get(col, 0) or 0) if col in row else 0.0
-            return v if v > 0 else float(row.get("base_fare_sl", 350)) + 200
+            v = float(row.get(f"base_fare_{pref_class.lower()}", 0) or 0)
+            if v > 0:
+                return v
+            offered = [float(row.get(f"base_fare_{c.lower()}", 0) or 0) for c in str(row["classes"]).split("|")]
+            return min([f for f in offered if f > 0] or [400.0])
 
-        firsts = df[(df["source"] == src) & (df["destination"] != dst)]
-        seconds = df[(df["destination"] == dst) & (df["source"] != src)]
         out = []
-        for _, a in firsts.iterrows():
-            arr_a = _hhmm(a["departure_time"]) + float(a["duration_hours"]) * 60      # minutes from day-0 midnight
-            for _, b in seconds[seconds["source"] == a["destination"]].iterrows():
-                dep_b = _hhmm(b["departure_time"])
-                while dep_b < arr_a + 45:
-                    dep_b += 24 * 60
-                lay = dep_b - arr_a
-                if lay > 8 * 60:
-                    continue
-                total_h = (dep_b + float(b["duration_hours"]) * 60 - _hhmm(a["departure_time"])) / 60
-                legs = [ConnectionLeg(train_number=str(r["train_number"]), train_name=str(r["train_name"]),
-                                      source=str(r["source"]), destination=str(r["destination"]),
-                                      departure_time=str(r["departure_time"]), arrival_time=str(r["arrival_time"]),
-                                      duration_hours=round(float(r["duration_hours"]), 1), fare_inr=round(fare(r), 0))
-                        for r in (a, b)]
-                total_fare = sum(l.fare_inr for l in legs)
-                out.append(ConnectionOption(via=str(a["destination"]), legs=legs, layover_minutes=int(lay),
-                                            total_hours=round(total_h, 1), total_fare_inr=round(total_fare, 0),
-                                            within_budget=not (max_budget and total_fare > max_budget)))
+        for a, b, lay, total_h in network.connections(src, dst, nearby=True, limit=limit * 2):
+            legs = [ConnectionLeg(train_number=str(r["train_number"]), train_name=str(r["train_name"]),
+                                  source=str(r["source"]), destination=str(r["destination"]),
+                                  departure_time=str(r["departure_time"]), arrival_time=str(r["arrival_time"]),
+                                  duration_hours=round(float(r["duration_hours"]), 1), fare_inr=round(fare(r), 0))
+                    for r in (a, b)]
+            total_fare = sum(l.fare_inr for l in legs)
+            out.append(ConnectionOption(via=str(a["destination"]), legs=legs, layover_minutes=int(lay),
+                                        total_hours=round(total_h, 1), total_fare_inr=round(total_fare, 0),
+                                        within_budget=not (max_budget and total_fare > max_budget)))
         out.sort(key=lambda c: (not c.within_budget, c.total_hours))
         return out[:limit]
 
@@ -195,10 +183,8 @@ class TrainRecommenderService:
     @governance_hook("m2_train_recommender", endpoint="/api/v1/recommend/trains")
     def recommend(self, request: RecommendRequest) -> RecommendResponse:
         """Filter candidate trains, score according to persona and history, audit fairness, and rank."""
-        STATION_ALIASES = {"BCT": "CSTM", "MMCT": "CSTM", "BDTS": "CSTM", "DLI": "NDLS", "NZM": "NDLS",
-                           "ANVT": "NDLS", "SDAH": "HWH", "MS": "MAS", "YPR": "SBC"}
-        src = STATION_ALIASES.get(request.source_station.strip().upper(), request.source_station.strip().upper())
-        dst = STATION_ALIASES.get(request.destination_station.strip().upper(), request.destination_station.strip().upper())
+        src = request.source_station.strip().upper()
+        dst = request.destination_station.strip().upper()
 
         # ── Personalisation from the passenger's profile / travel history ────
         persona = (request.persona or "budget").lower()
@@ -220,10 +206,8 @@ class TrainRecommenderService:
         pref_class = pref_class or "3A"
         frequent = set(str(personal.get("frequent_routes", "")).split("|")) if personal else set()
 
-        if self._trains_df is None or len(self._trains_df) == 0:
-            self._load_data()
-        df = self._trains_df if self._trains_df is not None else pd.DataFrame()
-        candidates = df[(df["source"].str.upper() == src) & (df["destination"].str.upper() == dst)].copy() if len(df) else df
+        # every train that halts at both stations (or at another station in the same city), in order
+        candidates = network.segments(src, dst, nearby=True) if src != dst else pd.DataFrame()
 
         conns = self.connections(src, dst, pref_class, max_budget) if len(candidates) < 3 and src != dst else []
         if conns and len(candidates):   # only worth showing if not much slower than the fastest direct train
@@ -238,14 +222,15 @@ class TrainRecommenderService:
         if src == dst:
             return empty("The origin and destination are the same station — pick two different stations.")
         if len(candidates) == 0:
-            return empty(f"No direct trains run from {src} to {dst} in the timetable."
+            return empty(f"No direct train in the timetable stops at {src} and then at {dst}."
                          + (f" Showing {len(conns)} one-change connection(s) instead." if conns else
                             " No one-change connection was found either."))
 
         fare_col = f"base_fare_{pref_class.lower()}"
         if fare_col not in candidates.columns:
             fare_col = "base_fare_3a"
-        fares = candidates[fare_col].replace(0, np.nan).fillna(candidates["base_fare_sl"] + 250).values
+        cheapest = candidates[[c for c in candidates.columns if c.startswith("base_fare_")]].replace(0, np.nan).min(axis=1)
+        fares = candidates[fare_col].replace(0, np.nan).fillna(cheapest).fillna(400).values
         durations = candidates["duration_hours"].values
         min_fare, max_fare = np.min(fares), max(np.max(fares), np.min(fares) + 1.0)
         min_dur, max_dur = np.min(durations), max(np.max(durations), np.min(durations) + 1.0)
@@ -255,8 +240,11 @@ class TrainRecommenderService:
         over_budget = 0
         for _, row in candidates.iterrows():
             f_val = float(row.get(fare_col, 0) or 0)
-            if f_val <= 0:
-                f_val = float(row.get("base_fare_sl", 350)) + 200
+            fare_class = pref_class
+            if f_val <= 0:      # preferred class not offered: quote the cheapest class it has, labelled as such
+                offered = {c[len("base_fare_"):].upper(): float(row[c]) for c in candidates.columns
+                           if c.startswith("base_fare_") and float(row[c] or 0) > 0}
+                fare_class, f_val = min(offered.items(), key=lambda kv: kv[1]) if offered else (pref_class, 400.0)
             if max_budget and f_val > max_budget:
                 over_budget += 1
                 continue
@@ -270,7 +258,10 @@ class TrainRecommenderService:
             if pref_class not in classes_list:
                 avail_val *= 0.4   # preferred class not offered on this train
 
-            fs = {"price": 1.0 - ((f_val - min_fare) / (max_fare - min_fare + 1e-5)),
+            price_score = float(np.clip(1.0 - ((f_val - min_fare) / (max_fare - min_fare + 1e-5)), 0.0, 1.0))
+            if fare_class != pref_class:
+                price_score *= 0.5   # a cheaper fare in a different class is not a like-for-like saving
+            fs = {"price": price_score,
                   "punctuality": punc_val,
                   "availability": avail_val,
                   "duration": 1.0 - ((dur_val - min_dur) / (max_dur - min_dur + 1e-5)),
@@ -306,7 +297,7 @@ class TrainRecommenderService:
                 "source": str(row.get("source", src)), "destination": str(row.get("destination", dst)),
                 "departure_time": str(row.get("departure_time", "08:00")), "arrival_time": str(row.get("arrival_time", "20:00")),
                 "duration_hours": round(dur_val, 1), "available_classes": classes_list,
-                "fare_estimate_inr": round(f_val, 0), "punctuality_score": round(punc_val, 2),
+                "fare_estimate_inr": round(f_val, 0), "fare_class": fare_class, "punctuality_score": round(punc_val, 2),
                 "comfort_score": round(comfort_val, 2), "composite_score": round(composite, 4),
                 "is_affordable": bool(f_val <= np.median(fares)), "recommendation_reason": reason, "tags": tags,
                 "factor_scores": {f: round(v, 3) for f, v in fs.items()}, "factor_contributions": contrib,

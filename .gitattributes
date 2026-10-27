@@ -1,0 +1,3 @@
+*.pkl binary
+*.pickle binary
+*.parquet binary

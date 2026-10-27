@@ -1,19 +1,26 @@
 """
 data/generate_synthetic_data.py
 ================================
-Master Synthetic Data Generator — Golden Rule 1: 100% Self-Contained.
+Dataset builder — real network and official fares, simulated outcomes.
 
-Generates all datasets needed for the platform to run out-of-the-box.
+Real inputs (no download needed; see data/real/):
+  - stations and trains: Indian Railways timetable, datameet/railways (CC0, 2016 snapshot)
+  - every halt with its real distance and schedule: data/real/train_stops.csv.gz
+  - fares: Railway Board TAG 2025 fare tables (core/fares.py)
+  - weather: regional climatology here; live Open-Meteo forecasts at prediction time (core/weather.py)
+
+Simulated (no public data exists for these): booking outcomes (WL/RAC/confirmed), how full trains are,
+delays, station crowding, user personas, fraud sessions, punctuality and coach counts.
 All random operations are seeded with RANDOM_SEED=42 for reproducibility.
 
 Outputs (saved to data/raw/):
-  - trains.csv           : 500 Indian railway routes
-  - stations.csv         : 200 major Indian stations
-  - pnr_history.csv      : 50,000 historical PNR/WL/RAC records
-  - pricing_history.csv  : 100,000 dynamic pricing records
+  - trains.csv           : real reservable trains with official fares
+  - stations.csv         : real stations with coordinates
+  - pnr_history.csv      : 50,000 simulated WL/RAC outcomes on real trains
+  - pricing_history.csv  : 100,000 fares on real segments (official rules, simulated occupancy)
   - user_profiles.csv    : 5,000 user personas
-  - congestion_logs.csv  : 73,000 station congestion time-series
-  - delay_logs.csv       : 200,000 train delay records
+  - congestion_logs.csv  : station congestion time-series (400 busiest real stations)
+  - delay_logs.csv       : 200,000 simulated delays at real halts
   - fraud_events.csv     : 10,000 labeled booking sessions
   - irctc_policies.txt   : IRCTC policy document for RAG
   - railway_faq.txt      : 500 Q&A pairs for RAG
@@ -49,201 +56,16 @@ random.seed(RANDOM_SEED)
 
 # ── Reference Data ─────────────────────────────────────────────────────────────
 
-STATION_NAMES = [
-    ("NDLS", "New Delhi", "NR", "Delhi", "Metro"),
-    ("CSTM", "Chhatrapati Shivaji Terminus Mumbai", "CR", "Maharashtra", "Metro"),
-    ("HWH", "Howrah Junction", "ER", "West Bengal", "Metro"),
-    ("MAS", "Chennai Central", "SR", "Tamil Nadu", "Metro"),
-    ("SBC", "Bengaluru City Junction", "SWR", "Karnataka", "Metro"),
-    ("SC", "Secunderabad Junction", "SCR", "Telangana", "Metro"),
-    ("PUNE", "Pune Junction", "CR", "Maharashtra", "A1"),
-    ("ADI", "Ahmedabad Junction", "WR", "Gujarat", "A1"),
-    ("JP", "Jaipur Junction", "NWR", "Rajasthan", "A1"),
-    ("LKO", "Lucknow Charbagh NR", "NR", "Uttar Pradesh", "A1"),
-    ("CNB", "Kanpur Central", "NCR", "Uttar Pradesh", "A1"),
-    ("PRYJ", "Prayagraj Junction", "NCR", "Uttar Pradesh", "A"),
-    ("BSB", "Varanasi Junction", "NER", "Uttar Pradesh", "A"),
-    ("PATNA", "Patna Junction", "ECR", "Bihar", "A1"),
-    ("GHY", "Guwahati", "NFR", "Assam", "A"),
-    ("BBS", "Bhubaneswar", "ECOR", "Odisha", "A"),
-    ("NGP", "Nagpur Junction", "CR", "Maharashtra", "A"),
-    ("INDB", "Indore Junction BG", "WR", "Madhya Pradesh", "A"),
-    ("BPL", "Bhopal Junction", "WCR", "Madhya Pradesh", "A"),
-    ("JAT", "Jammu Tawi", "NR", "J&K", "A"),
-    ("AMRITSAR", "Amritsar Junction", "NR", "Punjab", "A"),
-    ("LDH", "Ludhiana Junction", "NR", "Punjab", "A"),
-    ("ASR", "Amritsar Junction", "NR", "Punjab", "A"),
-    ("UDZ", "Udaipur City", "NWR", "Rajasthan", "B"),
-    ("JU", "Jodhpur Junction", "NWR", "Rajasthan", "A"),
-    ("AII", "Ajmer Junction", "NWR", "Rajasthan", "A"),
-    ("KOTA", "Kota Junction", "WCR", "Rajasthan", "A"),
-    ("RTM", "Ratlam Junction", "WR", "Madhya Pradesh", "A"),
-    ("BCT", "Mumbai Central", "WR", "Maharashtra", "Metro"),
-    ("VSKP", "Visakhapatnam Junction", "ECOR", "Andhra Pradesh", "A"),
-    ("GNT", "Guntur Junction", "SCR", "Andhra Pradesh", "B"),
-    ("TVM", "Thiruvananthapuram Central", "SR", "Kerala", "A"),
-    ("ERS", "Ernakulam Junction", "SR", "Kerala", "A"),
-    ("CBE", "Coimbatore Junction", "SR", "Tamil Nadu", "A"),
-    ("MDU", "Madurai Junction", "SR", "Tamil Nadu", "A"),
-    ("TPJ", "Tiruchirappalli Junction", "SR", "Tamil Nadu", "A"),
-    ("SA", "Salem Junction", "SR", "Tamil Nadu", "B"),
-    ("RPM", "Perambur", "SR", "Tamil Nadu", "B"),
-    ("MS", "Chennai Egmore", "SR", "Tamil Nadu", "A"),
-    ("DLI", "Delhi Junction", "NR", "Delhi", "A"),
-    ("GZB", "Ghaziabad Junction", "NR", "Uttar Pradesh", "B"),
-    ("AGC", "Agra Cantt", "NCR", "Uttar Pradesh", "A"),
-    ("MTJ", "Mathura Junction", "NCR", "Uttar Pradesh", "A"),
-    ("AF", "Agra Fort", "NCR", "Uttar Pradesh", "B"),
-    ("GWL", "Gwalior Junction", "NCR", "Madhya Pradesh", "A"),
-    ("JHS", "Jhansi Junction", "NCR", "Uttar Pradesh", "A"),
-    ("STA", "Satna", "WCR", "Madhya Pradesh", "B"),
-    ("KGKP", "Kathgodam", "NER", "Uttarakhand", "B"),
-    ("DDN", "Dehradun", "NR", "Uttarakhand", "A"),
-    ("HW", "Haridwar Junction", "NR", "Uttarakhand", "A"),
-    ("RKSH", "Rishikesh", "NR", "Uttarakhand", "C"),
-    ("UHL", "Una Himachal", "NR", "Himachal Pradesh", "C"),
-    ("SHM", "Shimla", "NR", "Himachal Pradesh", "B"),
-    ("KLK", "Kalka", "NR", "Haryana", "B"),
-    ("UMB", "Ambala Cant Junction", "NR", "Haryana", "A"),
-    ("ROK", "Rohtak Junction", "NR", "Haryana", "B"),
-    ("RE", "Rewari Junction", "NR", "Haryana", "B"),
-    ("GGN", "Gurgaon", "NR", "Haryana", "B"),
-    ("FDKD", "Faridabad", "NR", "Haryana", "B"),
-    ("PANIPAT", "Panipat Junction", "NR", "Haryana", "B"),
-    ("KRK", "Kurukshetra Junction", "NR", "Haryana", "B"),
-    ("AMBALA", "Ambala City", "NR", "Haryana", "B"),
-    ("BRC", "Vadodara Junction", "WR", "Gujarat", "A"),
-    ("ST", "Surat", "WR", "Gujarat", "A"),
-    ("ANND", "Anand Junction", "WR", "Gujarat", "B"),
-    ("NKDA", "Navsari", "WR", "Gujarat", "C"),
-    ("JT", "Jetpur Junction", "WR", "Gujarat", "B"),
-    ("RJT", "Rajkot Junction", "WR", "Gujarat", "A"),
-    ("BVP", "Bhavnagar Terminus", "WR", "Gujarat", "B"),
-    ("JAM", "Jamnagar", "WR", "Gujarat", "B"),
-    ("OKHA", "Okha", "WR", "Gujarat", "C"),
-    ("VAPI", "Vapi", "WR", "Gujarat", "B"),
-    ("DDAR", "Dahanu Road", "WR", "Maharashtra", "C"),
-    ("KYN", "Kalyan Junction", "CR", "Maharashtra", "A"),
-    ("LNL", "Lonavala", "CR", "Maharashtra", "B"),
-    ("DD", "Dadar Central", "CR", "Maharashtra", "A"),
-    ("DR", "Mumbai Dadar WR", "WR", "Maharashtra", "A"),
-    ("BSL", "Bhusaval Junction", "CR", "Maharashtra", "A"),
-    ("AWB", "Aurangabad", "CR", "Maharashtra", "A"),
-    ("SOT", "Sholapur Junction", "CR", "Maharashtra", "A"),
-    ("WD", "Wadi Junction", "SCR", "Karnataka", "B"),
-    ("UBL", "Hubli Junction", "SWR", "Karnataka", "A"),
-    ("MYS", "Mysuru Junction", "SWR", "Karnataka", "A"),
-    ("BANG", "Yesvantpur Junction", "SWR", "Karnataka", "A"),
-    ("DWR", "Dharwad", "SWR", "Karnataka", "B"),
-    ("GDG", "Gadag Junction", "SWR", "Karnataka", "B"),
-    ("BJP", "Vijayapura", "SWR", "Karnataka", "B"),
-    ("GR", "Gulbarga", "SCR", "Karnataka", "B"),
-    ("BIDAR", "Bidar", "SCR", "Karnataka", "C"),
-    ("NED", "Nanded", "SCR", "Maharashtra", "B"),
-    ("PBN", "Parbhani Junction", "SCR", "Maharashtra", "B"),
-    ("MUE", "Mudkhed Junction", "SCR", "Maharashtra", "C"),
-    ("HYB", "Hyderabad Deccan", "SCR", "Telangana", "A"),
-    ("KCG", "Kacheguda", "SCR", "Telangana", "A"),
-    ("FM", "Faizabad Junction", "NER", "Uttar Pradesh", "B"),
-    ("GKP", "Gorakhpur Junction", "NER", "Uttar Pradesh", "A"),
-    ("NJP", "New Jalpaiguri", "NFR", "West Bengal", "A"),
-    ("MLDT", "Malda Town", "ER", "West Bengal", "B"),
-    ("BWN", "Bardhaman Junction", "ER", "West Bengal", "B"),
-    ("SDAH", "Sealdah", "ER", "West Bengal", "Metro"),
-    ("BGP", "Bhagalpur Junction", "ECR", "Bihar", "A"),
-    ("RJPB", "Rajendra Nagar Bihar", "ECR", "Bihar", "B"),
-    ("DNKD", "Danapur", "ECR", "Bihar", "A"),
-    ("MFP", "Muzaffarpur Junction", "ECR", "Bihar", "A"),
-    ("SPJ", "Samastipur Junction", "ECR", "Bihar", "B"),
-    ("RXL", "Raxaul Junction", "ECR", "Bihar", "B"),
-    ("DBG", "Darbhanga Junction", "ECR", "Bihar", "B"),
-    ("JYG", "Jaynagar", "ECR", "Bihar", "C"),
-    ("SHC", "Sitamarhi", "ECR", "Bihar", "C"),
-    ("SGR", "Siliguri Junction", "NFR", "West Bengal", "B"),
-    ("AGTL", "Agartala", "NFR", "Tripura", "B"),
-    ("LMG", "Lumding Junction", "NFR", "Assam", "B"),
-    ("DBRG", "Dibrugarh", "NFR", "Assam", "A"),
-    ("TGM", "Tangla", "NFR", "Assam", "C"),
-    ("RNG", "Rangiya Junction", "NFR", "Assam", "B"),
-    ("GHY", "Guwahati", "NFR", "Assam", "A"),
-    ("JTTN", "Jiribam", "NFR", "Manipur", "C"),
-    ("TPTY", "Tirupati", "SCR", "Andhra Pradesh", "A"),
-    ("GTL", "Guntakal Junction", "SCR", "Andhra Pradesh", "A"),
-    ("RU", "Renigunta Junction", "SCR", "Andhra Pradesh", "B"),
-    ("QLN", "Kollam Junction", "SR", "Kerala", "A"),
-    ("ALLP", "Alappuzha", "SR", "Kerala", "B"),
-    ("TCR", "Thrissur", "SR", "Kerala", "A"),
-    ("CLT", "Kozhikode", "SR", "Kerala", "A"),
-    ("SRR", "Shoranur Junction", "SR", "Kerala", "B"),
-    ("CAN", "Kannur", "SR", "Kerala", "B"),
-    ("MAJN", "Mangaluru Junction", "SR", "Karnataka", "A"),
-    ("UDZ", "Udupi", "SR", "Karnataka", "B"),
-    ("MAQ", "Mangaluru Central", "SR", "Karnataka", "A"),
-    ("KUDA", "Kundapura", "SR", "Karnataka", "C"),
-    ("BKLN", "Bhatkal", "SR", "Karnataka", "C"),
-    ("GOA", "Madgaon Junction", "KR", "Goa", "A"),
-    ("PANAJI", "Karmali", "KR", "Goa", "B"),
-    ("THVM", "Thivim", "KR", "Goa", "B"),
-    ("RN", "Ratnagiri", "KR", "Maharashtra", "B"),
-    ("CHI", "Chiplun", "KR", "Maharashtra", "B"),
-    ("KED", "Khed", "KR", "Maharashtra", "C"),
-    ("RWP", "Roha", "KR", "Maharashtra", "C"),
-    ("PEN", "Pen", "CR", "Maharashtra", "C"),
-    ("PANVEL", "Panvel Junction", "CR", "Maharashtra", "A"),
-    ("VR", "Vasai Road", "WR", "Maharashtra", "B"),
-    ("BVI", "Borivali", "WR", "Maharashtra", "B"),
-    ("ANDHERI", "Andheri", "WR", "Maharashtra", "B"),
-    ("PNVL", "Panvel", "CR", "Maharashtra", "A"),
-    ("TL", "Titwala", "CR", "Maharashtra", "C"),
-    ("AMBV", "Ambivli", "CR", "Maharashtra", "C"),
-    ("BR", "Badlapur", "CR", "Maharashtra", "C"),
-    ("VB", "Vangani", "CR", "Maharashtra", "C"),
-    ("SRD", "Shahapur", "CR", "Maharashtra", "C"),
-    ("KJT", "Khopoli", "CR", "Maharashtra", "C"),
-    ("KYN", "Kalyan Junction", "CR", "Maharashtra", "A"),
-    ("THANE", "Thane", "CR", "Maharashtra", "A"),
-    ("CSMT", "Mumbai CST", "CR", "Maharashtra", "Metro"),
-    ("PUNE", "Pune Junction", "CR", "Maharashtra", "A1"),
-    ("KOLHAPUR", "Kolhapur", "CR", "Maharashtra", "B"),
-    ("SNG", "Sangli", "CR", "Maharashtra", "B"),
-    ("MRJ", "Miraj Junction", "CR", "Maharashtra", "B"),
-    ("KOP", "Kopargaon", "CR", "Maharashtra", "C"),
-    ("DD", "Dhond Junction", "CR", "Maharashtra", "B"),
-    ("DD", "Daund Junction", "CR", "Maharashtra", "B"),
-    ("KWV", "Kurduvadi Junction", "CR", "Maharashtra", "B"),
-    ("WD", "Wadi Junction", "SCR", "Karnataka", "B"),
-    ("GTL", "Guntakal Junction", "SCR", "Andhra Pradesh", "A"),
-    ("VSKP", "Visakhapatnam", "ECOR", "Andhra Pradesh", "A"),
-    ("SHM", "Shalimar", "ER", "West Bengal", "A"),
-    ("KHURDA", "Khurda Road", "ECOR", "Odisha", "B"),
-    ("CTC", "Cuttack Junction", "ECOR", "Odisha", "A"),
-    ("RGDA", "Rayagada", "ECOR", "Odisha", "B"),
-    ("TIG", "Titlagarh Junction", "ECOR", "Odisha", "B"),
-    ("ROU", "Rourkela Junction", "SER", "Odisha", "A"),
-    ("JSG", "Jharsuguda Junction", "SER", "Odisha", "B"),
-    ("IB", "Ib", "SER", "Odisha", "C"),
-    ("BSPB", "Bilaspur Junction", "SECR", "Chhattisgarh", "A"),
-    ("R", "Raipur Junction", "SECR", "Chhattisgarh", "A"),
-    ("DURG", "Durg Junction", "SECR", "Chhattisgarh", "A"),
-    ("RIG", "Rajnandgaon", "SECR", "Chhattisgarh", "B"),
-    ("GGP", "Gondia Junction", "SECR", "Maharashtra", "B"),
-    ("WADI", "Wadi", "SCR", "Karnataka", "B"),
-    ("RGA", "Raichur", "SCR", "Karnataka", "B"),
-    ("DMM", "Dharmavaram Junction", "SCR", "Andhra Pradesh", "B"),
-    ("AK", "Akola Junction", "CR", "Maharashtra", "A"),
-    ("WR", "Wardha Junction", "CR", "Maharashtra", "B"),
-    ("SWV", "Sawantwadi Road", "KR", "Maharashtra", "C"),
-    ("KUDAL", "Kudal", "KR", "Maharashtra", "C"),
-    ("KADAM", "Kadamba", "KR", "Maharashtra", "C"),
-][:200]
+# ── Real network (data/real, built from the datameet timetable) ───────────────
+sys.path.insert(0, ROOT)
+from core.fares import fare_breakdown, payable_fare, tatkal_charge   # noqa: E402
+from core.weather import sample_conditions, weather_index             # noqa: E402
 
-TRAIN_TYPES = ["Rajdhani Express", "Shatabdi Express", "Duronto Express", "Superfast Express",
-               "Express", "Mail", "Garib Rath", "Jan Shatabdi", "Humsafar Express",
-               "Tejas Express", "Vande Bharat Express", "Intercity Express", "Passenger"]
-
-TRAIN_ZONES = ["NR", "CR", "WR", "SR", "ER", "NER", "NFR", "SCR", "SER", "SWR", "ECR", "ECOR", "NWR", "WCR", "NCR", "SECR"]
+REAL_DIR = os.path.join(ROOT, "data", "real")
+RNG = np.random.default_rng(RANDOM_SEED)
 
 CLASSES = ["SL", "3A", "2A", "1A", "CC", "EC", "2S"]
+CLASS_POPULARITY = {"SL": 35, "3A": 25, "2A": 15, "1A": 5, "CC": 10, "EC": 3, "2S": 7}
 QUOTAS = ["GN", "TQ", "LADIES", "DEFENCE", "SENIOR", "HO", "DP"]
 BERTH_TYPES = ["Lower", "Middle", "Upper", "Side Lower", "Side Upper", "RAC"]
 FINAL_STATUSES = ["Confirmed", "RAC", "WL"]
@@ -252,13 +74,22 @@ REASON_CODES = ["HEAVY_TRAFFIC", "SIGNAL_FAILURE", "ENGINE_FAILURE", "WEATHER", 
                 "CREW_DELAY", "GATE_OBSTRUCTION", "FLOOD", "FOG", "PASSENGER_EMERGENCY", "ON_TIME"]
 FRAUD_LABELS = ["legitimate", "suspicious", "bot"]
 
+# Major city terminals (the busiest platforms on the network)
+METRO_TERMINALS = {"NDLS", "DLI", "NZM", "ANVT", "CSTM", "BCT", "LTT", "DR", "BDTS", "HWH", "SDAH", "KOAA",
+                   "MAS", "MS", "SBC", "YPR", "SC", "HYB", "KCG", "ADI", "PUNE", "LKO", "CNB", "PNBE", "JP"}
+TIER_CONGESTION = {"Metro": 70, "A1": 55, "A": 45, "B": 30, "C": 20}
+TIER_PLATFORMS = {"Metro": 16, "A1": 10, "A": 7, "B": 4, "C": 2}
+# Simulated on-time performance by service (no open punctuality data exists)
+TYPE_PUNCTUALITY = {"Rajdhani": 86, "Shatabdi": 88, "Duronto": 82, "Jan Shatabdi": 80, "Garib Rath": 72,
+                    "Superfast": 74, "Sampark Kranti": 72, "Mail": 70, "Express": 68}
+FLEXI_TYPES = {"Rajdhani", "Duronto", "Shatabdi"}
+FLEXI_CAP = {"3A": 1.4}                                      # others 1.5; 1A and EC are outside flexi fare
 
 
-def _arrival(departure: str, duration_hours: float, *_legacy_draws) -> str:
-    """Clock arrival time for a journey that leaves at `departure` and takes `duration_hours`."""
-    h, m = map(int, departure.split(":"))
-    total = (h * 60 + m + int(round(duration_hours * 60))) % (24 * 60)
-    return f"{total // 60:02d}:{total % 60:02d}"
+def _hhmm(t: str) -> int:
+    h, m = str(t).split(":")[:2]
+    return int(h) * 60 + int(m)
+
 
 def season_factor(d: date) -> float:
     """Returns congestion/demand multiplier based on season."""
@@ -279,167 +110,105 @@ def season_factor(d: date) -> float:
         return 1.0 + 0.1 * np.random.randn()
 
 
+def _tier(code: str, halting: int) -> str:
+    if code in METRO_TERMINALS:
+        return "Metro"
+    return "A1" if halting >= 120 else "A" if halting >= 50 else "B" if halting >= 15 else "C"
+
+
+def load_stops() -> pd.DataFrame:
+    return pd.read_csv(os.path.join(REAL_DIR, "train_stops.csv.gz"), dtype={"train_number": str})
+
+
 # ── Generator Functions ────────────────────────────────────────────────────────
 
 def generate_stations() -> pd.DataFrame:
-    logger.info("Generating stations.csv ...")
-    rows = []
-    for i, (code, name, zone, state, tier) in enumerate(STATION_NAMES[:200]):
-        baseline_congestion = {"Metro": 70, "A1": 55, "A": 45, "B": 30, "C": 20}.get(tier, 35)
-        rows.append({
-            "station_code": code,
-            "station_name": name,
-            "zone": zone,
-            "state": state,
-            "tier": tier,
-            "baseline_congestion": baseline_congestion + np.random.randint(-5, 5),
-            "platforms": {"Metro": 18, "A1": 12, "A": 8, "B": 5, "C": 3}.get(tier, 4),
-            "latitude": round(random.uniform(8.5, 37.0), 4),
-            "longitude": round(random.uniform(68.0, 97.0), 4),
-        })
-    df = pd.DataFrame(rows).drop_duplicates(subset=["station_code"]).reset_index(drop=True)
+    """Real stations (datameet) + derived tier; congestion baseline and platform count are estimates."""
+    logger.info("Building stations.csv from the real network ...")
+    st = pd.read_csv(os.path.join(REAL_DIR, "stations.csv"))
+    st["tier"] = [_tier(c, int(n)) for c, n in zip(st["station_code"], st["trains_halting"])]
+    st["baseline_congestion"] = [TIER_CONGESTION[t] + int(RNG.integers(-5, 5)) for t in st["tier"]]
+    st["platforms"] = st["tier"].map(TIER_PLATFORMS)
+    cols = ["station_code", "station_name", "zone", "state", "tier", "baseline_congestion", "platforms",
+            "latitude", "longitude", "trains_halting"]
+    df = st[cols].reset_index(drop=True)
     df.to_csv(os.path.join(RAW_DIR, "stations.csv"), index=False)
-    logger.info(f"  → {len(df)} stations saved.")
+    logger.info(f"  → {len(df)} real stations saved.")
     return df
 
 
 def generate_trains(stations_df: pd.DataFrame) -> pd.DataFrame:
-    logger.info("Generating trains.csv ...")
+    """Real trains (datameet 2016 timetable) + official TAG 2025 fares; punctuality and seats are simulated."""
+    logger.info("Building trains.csv from the real network ...")
+    t = pd.read_csv(os.path.join(REAL_DIR, "trains.csv"), dtype={"train_number": str, "return_train": str})
+    stops = load_stops()
+    coords = stations_df.set_index("station_code")[["latitude", "longitude"]]
+    fog_belt = set(coords[(coords.latitude.between(24, 32)) & (coords.longitude.between(73.5, 88.5))].index)
+    fog_trains = set(stops[stops["station_code"].isin(fog_belt)]["train_number"])
     rows = []
-    station_codes = stations_df["station_code"].tolist()
-
-    major_routes = [
-        ("NDLS", "CSTM", "12951", "Mumbai Rajdhani Express", 1385, 16.2, ["1A","2A","3A"], 88),
-        ("NDLS", "MAS", "12433", "Chennai Rajdhani Express", 2180, 28.5, ["1A","2A","3A"], 84),
-        ("NDLS", "HWH", "12301", "Howrah Rajdhani Express", 1441, 17.5, ["1A","2A","3A"], 86),
-        ("NDLS", "SBC", "12627", "Karnataka Express", 3100, 44.0, ["SL","3A","2A","1A"], 72),
-        ("NDLS", "JP", "12015", "Ajmer Shatabdi Express", 441, 5.0, ["CC","EC"], 91),
-        ("NDLS", "LKO", "12229", "Lucknow Mail", 497, 6.5, ["SL","3A","2A","1A"], 78),
-        ("NDLS", "PATNA", "12561", "Patna Sampark Kranti", 992, 12.0, ["SL","3A","2A"], 75),
-        ("CSTM", "HWH", "12809", "Mumbai-Howrah Mail", 2013, 31.5, ["SL","3A","2A","1A"], 70),
-        ("CSTM", "MAS", "11041", "Mumbai-Chennai Express", 1279, 20.5, ["SL","3A","2A"], 74),
-        ("CSTM", "SBC", "11301", "Udyan Express", 1160, 19.0, ["SL","3A","2A"], 68),
-        ("MAS", "HWH", "12841", "Coromandel Express", 1662, 26.5, ["SL","3A","2A","1A"], 82),
-        ("MAS", "SBC", "12007", "Chennai-Mysuru Shatabdi", 497, 6.0, ["CC","EC"], 89),
-        ("HWH", "NJP", "12343", "Darjeeling Mail", 600, 9.0, ["SL","3A","2A","1A"], 76),
-        ("NDLS", "ADI", "12957", "Ahmedabad Rajdhani", 942, 13.0, ["1A","2A","3A"], 85),
-        ("NDLS", "GHY", "12423", "Dibrugarh Rajdhani", 2423, 35.0, ["1A","2A","3A"], 80),
-        ("NDLS", "TVM", "12625", "Kerala Express", 3054, 47.0, ["SL","3A","2A","1A"], 69),
-        ("NDLS", "BSB", "13005", "Amritsar-Howrah Mail", 900, 14.0, ["SL","3A","2A"], 71),
-        ("PUNE", "NDLS", "12123", "Deccan Queen Express", 1545, 25.0, ["SL","3A","2A","CC"], 77),
-        ("ADI", "MAS", "12163", "Dadar-Chennai Express", 1856, 29.0, ["SL","3A","2A"], 73),
-        ("SBC", "MAS", "12658", "Bengaluru-Chennai Express", 362, 5.5, ["SL","3A","CC"], 83),
-    ]
-
-    for src, dst, tno, tname, dist, dur, classes, punct in major_routes:
-        base_sl = max(200, int(dist * 0.35 + random.randint(-20, 20)))
-        base_3a = max(600, int(dist * 0.70 + random.randint(-50, 50)))
-        base_2a = max(900, int(dist * 1.0 + random.randint(-80, 80)))
-        base_1a = max(1500, int(dist * 1.6 + random.randint(-100, 100)))
-        base_cc = max(400, int(dist * 0.45 + random.randint(-30, 30)))
-
-        rows.append({
-            "train_number": tno,
-            "train_name": tname,
-            "source": src,
-            "destination": dst,
-            "distance_km": dist,
-            "duration_hours": dur,
-            "avg_speed_kmph": round(dist / dur, 1),
-            "classes": "|".join(classes),
-            "quota_types": "GN|TQ|LADIES|DEFENCE|SENIOR",
-            "departure_time": (dep := f"{random.randint(0,23):02d}:{random.choice(['00','15','30','45'])}"),
-            # arrival = departure + journey time (the two extra draws keep the seeded sequence of later datasets unchanged)
-            "arrival_time": _arrival(dep, dur, random.randint(0, 23), random.choice(['00', '15', '30', '45'])),
-            "punctuality_pct": punct + random.randint(-5, 5),
-            "base_fare_sl": base_sl if "SL" in classes else 0,
-            "base_fare_3a": base_3a if "3A" in classes else 0,
-            "base_fare_2a": base_2a if "2A" in classes else 0,
-            "base_fare_1a": base_1a if "1A" in classes else 0,
-            "base_fare_cc": base_cc if "CC" in classes else 0,
-            "total_seats_sl": random.randint(400, 1200) if "SL" in classes else 0,
-            "total_seats_3a": random.randint(100, 400) if "3A" in classes else 0,
-            "zone": random.choice(TRAIN_ZONES),
-            "train_type": tname.split()[-2] + " " + tname.split()[-1] if len(tname.split()) > 2 else "Express",
-        })
-
-    # Generate remaining random trains
-    while len(rows) < 500:
-        src_idx = random.randint(0, min(50, len(station_codes)-1))
-        dst_idx = random.randint(0, min(50, len(station_codes)-1))
-        if src_idx == dst_idx:
+    for r in t.itertuples(index=False):
+        classes = [c for c in str(r.classes).split("|") if c in CLASSES]
+        if not classes:
             continue
-        src = station_codes[src_idx]
-        dst = station_codes[dst_idx]
-        dist = random.randint(100, 3500)
-        speed = random.uniform(50, 100)
-        dur = round(dist / speed, 1)
-        classes = random.sample(CLASSES, random.randint(2, 4))
-        base_sl = max(150, int(dist * 0.35))
-        ttype = random.choice(TRAIN_TYPES)
-        punct = random.randint(60, 95)
-
-        rows.append({
-            "train_number": str(10000 + len(rows)),
-            "train_name": f"{src}-{dst} {ttype}",
-            "source": src,
-            "destination": dst,
-            "distance_km": dist,
-            "duration_hours": dur,
-            "avg_speed_kmph": round(speed, 1),
-            "classes": "|".join(classes),
-            "quota_types": "GN|TQ" + ("|LADIES" if random.random() > 0.5 else ""),
-            "departure_time": (dep := f"{random.randint(0,23):02d}:{random.choice(['00','15','30','45'])}"),
-            # arrival = departure + journey time (the two extra draws keep the seeded sequence of later datasets unchanged)
-            "arrival_time": _arrival(dep, dur, random.randint(0, 23), random.choice(['00', '15', '30', '45'])),
-            "punctuality_pct": punct,
-            "base_fare_sl": base_sl if "SL" in classes else 0,
-            "base_fare_3a": max(500, int(base_sl * 2.0)) if "3A" in classes else 0,
-            "base_fare_2a": max(800, int(base_sl * 3.0)) if "2A" in classes else 0,
-            "base_fare_1a": max(1200, int(base_sl * 5.0)) if "1A" in classes else 0,
-            "base_fare_cc": max(300, int(base_sl * 1.2)) if "CC" in classes else 0,
-            "total_seats_sl": random.randint(200, 1200) if "SL" in classes else 0,
-            "total_seats_3a": random.randint(60, 400) if "3A" in classes else 0,
-            "zone": random.choice(TRAIN_ZONES),
-            "train_type": ttype,
-        })
-
-    df = pd.DataFrame(rows[:500])
+        dist, dur_h = float(r.distance_km), float(r.duration_minutes) / 60.0
+        punct = TYPE_PUNCTUALITY.get(r.train_type, 70) - 4.0 * dist / 1000.0 - (6 if r.train_number in fog_trains else 0)
+        row = {
+            "train_number": r.train_number, "train_name": r.train_name,
+            "source": r.source, "destination": r.destination,
+            "distance_km": int(dist), "duration_hours": round(dur_h, 2),
+            "avg_speed_kmph": round(dist / max(dur_h, 0.1), 1),
+            "classes": "|".join(classes), "quota_types": "GN|TQ|LADIES|SENIOR|HO",
+            "departure_time": r.departure_time, "arrival_time": r.arrival_time,
+            "punctuality_pct": int(np.clip(round(punct + RNG.normal(0, 4)), 45, 97)),
+            "zone": r.zone, "train_type": r.train_type, "halts": int(r.halts),
+        }
+        for cls in CLASSES:
+            f = payable_fare(r.train_type, cls, dist, r.train_number) if cls in classes else None
+            row[f"base_fare_{cls.lower()}"] = int(f) if f else 0
+        sl_coaches = int(RNG.integers(8, 13)) if "SL" in classes else 0
+        ac3_coaches = (int(RNG.integers(8, 12)) if r.train_type in ("Rajdhani", "Duronto") else
+                       12 if r.train_type == "Garib Rath" else int(RNG.integers(2, 7))) if "3A" in classes else 0
+        row["total_seats_sl"] = sl_coaches * 72
+        row["total_seats_3a"] = ac3_coaches * (74 if r.train_type == "Garib Rath" else 64)
+        rows.append(row)
+    df = pd.DataFrame(rows)
     df.to_csv(os.path.join(RAW_DIR, "trains.csv"), index=False)
-    logger.info(f"  → {len(df)} trains saved.")
+    logger.info(f"  → {len(df)} real trains saved (fares: TAG 2025).")
     return df
 
 
+def _pick_class(classes: List[str]) -> str:
+    return random.choices(classes, weights=[CLASS_POPULARITY.get(c, 5) for c in classes])[0]
+
+
 def generate_pnr_history(trains_df: pd.DataFrame) -> pd.DataFrame:
+    """Simulated booking outcomes on real trains (no public PNR-outcome data exists)."""
     logger.info("Generating pnr_history.csv (50,000 records) ...")
     rows = []
-    train_numbers = trains_df["train_number"].tolist()
+    trains = trains_df[["train_number", "classes"]].to_dict("records")
     start_date = date(2023, 1, 1)
     end_date = date(2026, 10, 1)
     total_days = (end_date - start_date).days
 
     for i in tqdm(range(50000), desc="PNR records"):
         journey_date = start_date + timedelta(days=random.randint(0, total_days))
-        booking_days_before = random.randint(1, 120)
+        # Advance reservation period: 120 days until 31 Oct 2024, 60 days from 1 Nov 2024
+        arp = 120 if journey_date < date(2024, 11, 1) + timedelta(days=60) else 60
+        booking_days_before = random.randint(1, arp)
         booking_date = journey_date - timedelta(days=booking_days_before)
         if booking_date < start_date:
             booking_date = start_date
 
-        train = random.choice(train_numbers)
-        cls = random.choices(CLASSES, weights=[35, 25, 15, 5, 10, 3, 7])[0]
+        t = random.choice(trains)
+        train = t["train_number"]
+        cls = _pick_class(str(t["classes"]).split("|"))
         quota = random.choices(QUOTAS, weights=[70, 10, 5, 5, 5, 3, 2])[0]
         initial_wl = random.randint(1, 150)
 
-        # WL clearance probability: depends on class, quota, days before
-        # SL clears more (65%), 3A (50%), 2A (42%), 1A (38%)
         clearance_probs = {"SL": 0.65, "3A": 0.50, "2A": 0.42, "1A": 0.38, "CC": 0.55, "EC": 0.45, "2S": 0.70}
         base_prob = clearance_probs.get(cls, 0.50)
-
-        # Quota adjustments
         quota_adj = {"TQ": 0.85, "GN": 1.0, "LADIES": 1.1, "DEFENCE": 1.05, "SENIOR": 1.0}
         base_prob *= quota_adj.get(quota, 1.0)
-
-        # WL number adjustments
         if initial_wl <= 10:
             base_prob = min(0.95, base_prob * 1.5)
         elif initial_wl <= 30:
@@ -450,11 +219,8 @@ def generate_pnr_history(trains_df: pd.DataFrame) -> pd.DataFrame:
             base_prob *= 0.7
         else:
             base_prob *= 0.3
-
-        # Season adjustment
         sf = season_factor(journey_date)
-        base_prob /= sf  # Higher demand → lower clearance
-
+        base_prob /= sf
         base_prob = max(0.05, min(0.98, base_prob))
 
         rand = random.random()
@@ -468,9 +234,6 @@ def generate_pnr_history(trains_df: pd.DataFrame) -> pd.DataFrame:
             final_status = "WL"
             berth = "WL"
 
-        seniority_flag = random.random() < 0.08
-        disability_flag = random.random() < 0.03
-
         rows.append({
             "pnr": f"PNR{i+1:07d}",
             "train_number": train,
@@ -482,8 +245,8 @@ def generate_pnr_history(trains_df: pd.DataFrame) -> pd.DataFrame:
             "initial_wl_number": initial_wl,
             "final_status": final_status,
             "berth_type": berth,
-            "seniority_flag": int(seniority_flag),
-            "disability_flag": int(disability_flag),
+            "seniority_flag": int(random.random() < 0.08),
+            "disability_flag": int(random.random() < 0.03),
             "season_factor": round(sf, 2),
             "cancellation_date": (journey_date - timedelta(days=random.randint(1, 10))).isoformat()
                 if final_status == "WL" and random.random() < 0.4 else None,
@@ -496,45 +259,51 @@ def generate_pnr_history(trains_df: pd.DataFrame) -> pd.DataFrame:
 
 
 def generate_pricing_history(trains_df: pd.DataFrame) -> pd.DataFrame:
+    """Fares paid on real trains and real journey segments, priced by the official rules:
+    TAG 2025 fare for the distance; flexi fare (+10% per 10% of berths sold, up to 1.5×, 1.4× in 3A, none in
+    1A/EC) on Rajdhani, Duronto and Shatabdi; Tatkal charge in the Tatkal window. How full the train is
+    (demand, route popularity) is simulated."""
     logger.info("Generating pricing_history.csv (100,000 records) ...")
     rows = []
-    train_numbers = trains_df["train_number"].tolist()
+    stops = load_stops()
+    km_by_train = {k: g["km_from_origin"].values for k, g in stops.groupby("train_number")}
+    trains = trains_df[["train_number", "classes", "train_type", "distance_km"]].to_dict("records")
     start_date = date(2024, 1, 1)
     end_date = date(2026, 10, 1)
     total_days = (end_date - start_date).days
-    trains_lookup = trains_df.set_index("train_number").to_dict("index")
 
     for i in tqdm(range(100000), desc="Pricing records"):
-        train = random.choice(train_numbers)
-        t_info = trains_lookup.get(train, {})
+        t = random.choice(trains)
+        train, ttype = t["train_number"], t["train_type"]
         journey_date = start_date + timedelta(days=random.randint(0, total_days))
+        cls = _pick_class(str(t["classes"]).split("|"))
+        kms = km_by_train.get(train)
+        if kms is not None and len(kms) > 2 and random.random() < 0.5:     # an intermediate segment
+            a, b = sorted(random.sample(range(len(kms)), 2))
+            km = max(1.0, float(kms[b] - kms[a]))
+        else:
+            km = float(t["distance_km"])
+        base_fare = payable_fare(ttype, cls, km, train) or 0.0
+        if base_fare <= 0:
+            continue
 
-        # Select class
-        cls_list = [c for c in (t_info.get("classes", "SL|3A") or "SL|3A").split("|") if c]
-        cls = random.choice(cls_list) if cls_list else "SL"
-
-        fare_col = f"base_fare_{cls.lower().replace('a','a')}"
-        base_fare = t_info.get(fare_col, 400)
-        if not base_fare or base_fare == 0:
-            base_fare = {"SL": 350, "3A": 950, "2A": 1400, "1A": 2200, "CC": 500, "EC": 1800, "2S": 150}.get(cls, 400)
-
-        days_to_dep = random.randint(0, 120)
+        arp = 120 if journey_date < date(2024, 11, 1) + timedelta(days=60) else 60
+        days_to_dep = random.randint(0, arp)
         sf = season_factor(journey_date)
+        popularity = round(random.uniform(0.3, 1.0), 2)
+        demand_index = round(float(np.clip(1.0 + 0.5 * (1 - days_to_dep / arp) * sf + 0.2 * np.random.randn(), 0.5, 3.0)), 3)
 
-        # Demand: higher demand nearer departure for confirmed trains
-        demand_index = round(np.clip(
-            1.0 + (0.5 * (1 - days_to_dep / 120)) * sf + 0.2 * np.random.randn(),
-            0.5, 3.0
-        ), 3)
-
-        # Tatkal surcharge window
-        tatkal_flag = days_to_dep <= 1
-        tatkal_surcharge = 0
-        if tatkal_flag and cls in ("SL", "3A", "2A", "1A"):
-            tatkal_surcharge = {"SL": 100, "3A": 200, "2A": 300, "1A": 400}.get(cls, 100)
-
-        dynamic_fare = round(base_fare * demand_index + tatkal_surcharge, 2)
-        dynamic_fare = max(base_fare * 0.9, min(base_fare * 3.5, dynamic_fare))
+        flexi = ttype in FLEXI_TYPES and cls not in ("1A", "EC")
+        multiplier = 1.0
+        if flexi:
+            sold = float(np.clip((demand_index - 0.5) / 1.6 * (0.6 + 0.6 * popularity), 0.0, 1.0))
+            multiplier = min(FLEXI_CAP.get(cls, 1.5), 1.0 + 0.1 * int(max(0.0, sold - 0.1) / 0.1))
+        tatkal_flag = days_to_dep <= 1 and random.random() < 0.6
+        tq = 0.0
+        if tatkal_flag:
+            b = fare_breakdown(ttype, cls, km, train)
+            tq = tatkal_charge(cls, b["base_fare"]) if b else 0.0
+        dynamic_fare = round(base_fare * multiplier + tq, 2)
 
         rows.append({
             "record_id": i + 1,
@@ -543,13 +312,15 @@ def generate_pricing_history(trains_df: pd.DataFrame) -> pd.DataFrame:
             "journey_date": journey_date.isoformat(),
             "booking_date": (journey_date - timedelta(days=days_to_dep)).isoformat(),
             "days_to_departure": days_to_dep,
-            "base_fare": base_fare,
+            "distance_km": round(km, 1),
+            "base_fare": round(base_fare, 2),
             "dynamic_fare": dynamic_fare,
             "demand_index": demand_index,
+            "flexi_flag": int(flexi),
             "tatkal_flag": int(tatkal_flag),
-            "tatkal_surcharge": tatkal_surcharge,
+            "tatkal_surcharge": tq,
             "season_factor": round(sf, 2),
-            "route_popularity": round(random.uniform(0.3, 1.0), 2),
+            "route_popularity": popularity,
         })
 
     df = pd.DataFrame(rows)
@@ -562,7 +333,10 @@ def generate_user_profiles() -> pd.DataFrame:
     logger.info("Generating user_profiles.csv (5,000 records) ...")
     rows = []
     persona_weights = [0.30, 0.15, 0.25, 0.10, 0.12, 0.08]
-    station_codes = [s[0] for s in STATION_NAMES[:50]]
+    stops = load_stops()
+    major = set(pd.read_csv(os.path.join(REAL_DIR, "stations.csv")).nlargest(150, "trains_halting")["station_code"])
+    seqs = [g["station_code"].tolist() for _, g in stops[stops["station_code"].isin(major)].groupby("train_number")]
+    seqs = [s for s in seqs if len(s) >= 2]
 
     for i in range(5000):
         persona = random.choices(PERSONAS, weights=persona_weights)[0]
@@ -580,8 +354,11 @@ def generate_user_profiles() -> pd.DataFrame:
             "senior": (400, 1500), "business": (2000, 8000), "family": (600, 2500),
         }.get(persona, (300, 1200))
 
-        n_routes = random.randint(1, 4)
-        frequent_routes = [f"{random.choice(station_codes)}-{random.choice(station_codes)}" for _ in range(n_routes)]
+        frequent_routes = []
+        for _ in range(random.randint(1, 4)):        # real station pairs served by a direct train
+            s = random.choice(seqs)
+            a, b = sorted(random.sample(range(len(s)), 2))
+            frequent_routes.append(f"{s[a]}-{s[b]}")
 
         rows.append({
             "user_id": f"USR{i+1:05d}",
@@ -594,7 +371,7 @@ def generate_user_profiles() -> pd.DataFrame:
             "disability_flag": int(random.random() < 0.03),
             "preferred_quota": random.choices(QUOTAS[:5], weights=[70, 10, 5, 5, 10])[0],
             "booking_frequency_per_month": round(random.uniform(0.5, 8.0), 1),
-            "avg_advance_booking_days": random.randint(5, 90),
+            "avg_advance_booking_days": random.randint(5, 60),
             "loyalty_score": round(random.uniform(0, 100), 1),
         })
 
@@ -605,29 +382,26 @@ def generate_user_profiles() -> pd.DataFrame:
 
 
 def generate_congestion_logs(stations_df: pd.DataFrame) -> pd.DataFrame:
-    logger.info("Generating congestion_logs.csv (~73,000 records) ...")
+    """Simulated platform-crowding history for the 400 busiest real stations."""
+    logger.info("Generating congestion_logs.csv ...")
     rows = []
-    station_sample = stations_df.sample(min(200, len(stations_df)), random_state=RANDOM_SEED)
+    station_sample = stations_df.nlargest(400, "trains_halting")
     start_date = date(2025, 1, 1)
     end_date = date(2026, 10, 1)
     current = start_date
 
     while current <= end_date:
         sf = season_factor(current)
-        hour = random.choice([7, 10, 13, 16, 19, 22])  # Sample 1 record per station per day at key hours
-        for _, row in station_sample.sample(min(50, len(station_sample)), random_state=random.randint(0,999)).iterrows():
+        hour = random.choice([7, 10, 13, 16, 19, 22])
+        for _, row in station_sample.sample(60, random_state=random.randint(0, 999)).iterrows():
             baseline = row["baseline_congestion"]
             hour_factor = {7: 1.3, 10: 1.5, 13: 1.1, 16: 1.4, 19: 1.6, 22: 0.7}.get(hour, 1.0)
-            congestion = np.clip(
-                baseline * sf * hour_factor + np.random.normal(0, 8),
-                0, 100
-            )
+            congestion = np.clip(baseline * sf * hour_factor + np.random.normal(0, 8), 0, 100)
             reason = "NORMAL"
             if congestion > 85:
                 reason = random.choice(["FESTIVAL", "HOLIDAY_RUSH", "SPECIAL_TRAIN", "CANCELLATION_SURGE"])
             elif congestion > 70:
                 reason = random.choice(["PEAK_HOUR", "WEEKEND", "EXAM_SEASON"])
-
             rows.append({
                 "station_code": row["station_code"],
                 "date": current.isoformat(),
@@ -645,62 +419,74 @@ def generate_congestion_logs(stations_df: pd.DataFrame) -> pd.DataFrame:
 
 
 def generate_delay_logs(trains_df: pd.DataFrame, stations_df: pd.DataFrame) -> pd.DataFrame:
+    """Simulated arrival delays at real halts of real trains. Each record uses the halt's real distance from the
+    origin and scheduled time, and a day of weather drawn from that station's regional climatology (the same
+    climate model and weather index used for live Open-Meteo data at prediction time)."""
     logger.info("Generating delay_logs.csv (200,000 records) ...")
     rows = []
-    train_numbers = trains_df["train_number"].tolist()
-    station_codes = stations_df["station_code"].tolist()
+    stops = load_stops()
+    stops = stops[stops["seq"] > 0]
+    stops = stops[stops["train_number"].isin(set(trains_df["train_number"]))].reset_index(drop=True)
+    st = stations_df.set_index("station_code")
+    lat = st["latitude"].to_dict()
+    lon = st["longitude"].to_dict()
+    base_cong = st["baseline_congestion"].to_dict()
     start_date = date(2024, 1, 1)
     end_date = date(2026, 10, 1)
     total_days = (end_date - start_date).days
+    picks = RNG.integers(0, len(stops), size=200000)
 
     for i in tqdm(range(200000), desc="Delay records"):
+        s = stops.iloc[int(picks[i])]
+        code = s["station_code"]
         journey_date = start_date + timedelta(days=random.randint(0, total_days))
         sf = season_factor(journey_date)
-        month = journey_date.month
+        cond = sample_conditions(lat.get(code, 23.0) if pd.notna(lat.get(code)) else 23.0,
+                                 lon.get(code, 79.0) if pd.notna(lon.get(code)) else 79.0, journey_date, RNG)
+        weather = weather_index(**cond)
 
-        # Causal structure (so the model can actually learn it):
-        #   season base delay  +  weather effect  +  station congestion effect  +  distance effect  + noise
-        if month in (6, 7, 8, 9):  # Monsoon: rain / flooding
-            weather = float(np.clip(np.random.normal(6.0, 2.2), 0, 10))
-            base_delay = np.random.exponential(12)
-            reason = random.choices(REASON_CODES, weights=[20, 5, 3, 30, 5, 5, 5, 20, 2, 3, 2])[0]
-        elif month in (12, 1):  # Winter fog
-            weather = float(np.clip(np.random.normal(5.5, 2.5), 0, 10))
-            base_delay = np.random.exponential(10)
-            reason = random.choices(REASON_CODES, weights=[15, 5, 3, 10, 5, 5, 3, 2, 40, 3, 9])[0]
+        # station crowding on the day (0–100) → the model's congestion scale (same mapping as the service)
+        cong_idx = float(np.clip(base_cong.get(code, 30) + np.random.normal(0, 18), 0, 100))
+        congestion = (10.0 + 0.8 * cong_idx) * sf
+        distance = float(s["km_from_origin"])
+
+        if cond["min_visibility_m"] < 1000:
+            reason = "FOG"
+        elif cond["precip_mm"] >= 60:
+            reason = "FLOOD"
+        elif cond["storm"] or cond["precip_mm"] >= 15:
+            reason = "WEATHER"
         else:
-            weather = float(np.clip(np.random.normal(2.5, 2.0), 0, 10))
-            base_delay = np.random.exponential(6)
-            reason = random.choices(REASON_CODES, weights=[15, 8, 4, 5, 10, 8, 8, 2, 2, 4, 34])[0]
+            reason = random.choices(REASON_CODES, weights=[15, 8, 4, 0, 10, 8, 8, 0, 0, 4, 34])[0]
 
-        congestion = float(np.random.uniform(10, 90) * sf)
-        distance = random.randint(0, 2000)
-        weather_effect = 0.45 * weather ** 1.6           # 0 → ~18 min at 10/10
-        congestion_effect = 0.22 * max(0.0, congestion - 30)   # crowded platforms hold trains
-        distance_effect = distance / 120.0               # delay accumulates along the route
-        delay = base_delay * sf + weather_effect + congestion_effect + distance_effect + np.random.normal(0, 4)
-        if reason == "ON_TIME" and weather < 4 and congestion < 60:
+        base_delay = np.random.exponential(7)
+        weather_effect = 1.2 * weather ** 1.5            # 0 → ~38 min at 10/10
+        congestion_effect = 0.22 * max(0.0, congestion - 30)
+        distance_effect = distance / 100.0               # delay accumulates along the route
+        delay = base_delay * sf + weather_effect + congestion_effect + distance_effect + np.random.normal(0, 5)
+        if reason == "ON_TIME" and weather < 2 and congestion < 60:
             delay = max(0, np.random.normal(2, 3))
         delay = max(0.0, delay)
 
-        scheduled_hour = random.randint(0, 23)
-        scheduled_min = random.choice([0, 15, 30, 45])
-        scheduled_arr = datetime.combine(journey_date, __import__("datetime").time(scheduled_hour, scheduled_min))
+        sched = str(s["arrival"]) if isinstance(s["arrival"], str) and s["arrival"] else "12:00"
+        scheduled_arr = datetime.combine(journey_date, datetime.min.time()) + timedelta(minutes=_hhmm(sched))
         actual_arr = scheduled_arr + timedelta(minutes=delay)
 
         rows.append({
             "log_id": i + 1,
-            "train_number": random.choice(train_numbers),
-            "station_code": random.choice(station_codes),
+            "train_number": s["train_number"],
+            "station_code": code,
             "journey_date": journey_date.isoformat(),
             "scheduled_arrival": scheduled_arr.strftime("%H:%M"),
             "actual_arrival": actual_arr.strftime("%H:%M"),
             "delay_minutes": round(delay, 1),
             "reason_code": reason,
-            "weather_index": round(weather, 1),
+            "weather_index": round(weather, 2),
+            "precip_mm": cond["precip_mm"],
+            "min_visibility_m": cond["min_visibility_m"],
             "congestion_at_station": round(congestion, 1),
-            "distance_from_origin_km": distance,
-            "month": month,
+            "distance_from_origin_km": round(distance, 1),
+            "month": journey_date.month,
             "season_factor": round(sf, 2),
         })
 

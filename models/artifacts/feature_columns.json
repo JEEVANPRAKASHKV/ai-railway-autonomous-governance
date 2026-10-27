@@ -33,6 +33,7 @@
     "class_enc",
     "days_to_departure",
     "demand_index",
+    "flexi_flag",
     "tatkal_flag",
     "season_factor",
     "route_popularity",

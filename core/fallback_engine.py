@@ -332,15 +332,20 @@ class FallbackEngine:
             # Filter by source and destination (case-insensitive partial match)
             src = constraints.get("source", "").lower()
             dst = constraints.get("destination", "").lower()
-            filtered = trains_df.copy()
-            if src:
-                filtered = filtered[filtered["source"].str.lower().str.contains(src, na=False)]
-            if dst:
-                filtered = filtered[filtered["destination"].str.lower().str.contains(dst, na=False)]
+            filtered = pd.DataFrame()
+            if src and dst:   # every train that halts at both stations, on the real timetable
+                from core.network import network
+                filtered = network.segments(src.upper(), dst.upper(), nearby=True)
+            if not len(filtered):
+                filtered = trains_df.copy()
+                if src:
+                    filtered = filtered[filtered["source"].str.lower().str.contains(src, na=False)]
+                if dst:
+                    filtered = filtered[filtered["destination"].str.lower().str.contains(dst, na=False)]
 
             budget = constraints.get("budget")
             if budget and "base_fare_sl" in filtered.columns:
-                filtered = filtered[filtered["base_fare_sl"] <= budget]
+                filtered = filtered[(filtered["base_fare_sl"] > 0) & (filtered["base_fare_sl"] <= budget)]
 
             # Sort by base_fare_sl (cheapest first), take top 3
             sort_col = "base_fare_sl" if "base_fare_sl" in filtered.columns else filtered.columns[0]

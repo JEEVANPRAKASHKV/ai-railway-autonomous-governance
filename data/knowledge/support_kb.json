@@ -20,7 +20,7 @@
         "how can you help me",
         "what is railway buddy"
       ],
-      "answer": "Railway Buddy is an AI assistant for Indian Railways travel. You can:\n- Ticket confirmation: see the chance a waitlisted or RAC ticket gets confirmed, the likely berth, and why.\n- Train recommender: find the best train for your budget, timing and travel style.\n- Delay & disruption: get an expected delay, station congestion and better alternatives.\n- AI travel planner: describe a trip in one sentence; it plans it and books only after you approve.\n- Fare forecast: see where the fare is heading and the best day to book.\n- This chat: check a demo PNR (type PNR and a 7-digit number, e.g. PNR 0000001), refunds, cancellations, Tatkal, waitlist and RAC rules.\nThe operations side (AI Governance) shows how every model is monitored. Train data and bookings here are a demo, not live IRCTC data.",
+      "answer": "Railway Buddy is an AI assistant for Indian Railways travel. You can:\n- Ticket confirmation: see the chance a waitlisted or RAC ticket gets confirmed, the likely berth, and why.\n- Train recommender: find the best train for your budget, timing and travel style.\n- Delay & disruption: get an expected delay, station congestion and better alternatives.\n- AI travel planner: describe a trip in one sentence; it plans it and books only after you approve.\n- Fare forecast: the official fare for your journey, whether it is fixed or flexi, and the best day to book.\n- This chat: check a demo PNR (type PNR and a 7-digit number, e.g. PNR 0000001), refunds, cancellations, Tatkal, waitlist and RAC rules.\nThe operations side (AI Governance) shows how every model is monitored. Trains come from the 2016 Indian Railways timetable, fares from the official 2025 tariff and delay forecasts use live weather; bookings and PNRs are a demo, not live IRCTC data.",
       "sources": [
         "Railway Buddy"
       ]
@@ -38,7 +38,7 @@
         "is this data real",
         "are these real trains"
       ],
-      "answer": "No. Railway Buddy is an independent demo project, not IRCTC or Indian Railways. Train data, PNRs and bookings here are simulated, so nothing you book is a real ticket. To book or manage real tickets use irctc.co.in or the IRCTC Rail Connect app. The railway rules this chat explains are checked against official announcements and news reports.",
+      "answer": "No. Railway Buddy is an independent demo project, not IRCTC or Indian Railways. Trains and timings come from the open Indian Railways timetable (a 2016 snapshot) and fares from the official Railway Board tariff, but PNRs and bookings here are simulated, so nothing you book is a real ticket. To book or manage real tickets use irctc.co.in or the IRCTC Rail Connect app. The railway rules this chat explains are checked against official announcements and news reports.",
       "sources": [
         "Railway Buddy"
       ]

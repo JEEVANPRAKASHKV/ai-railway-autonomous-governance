@@ -208,7 +208,7 @@ section[data-testid="stSidebar"] [data-testid="stNavSectionHeader"] { color: var
 .rb-kpi.ok { border-left-color: var(--green) !important; } .rb-kpi.warn { border-left-color: var(--amber) !important; } .rb-kpi.bad { border-left-color: var(--red) !important; }
 .rb-kpi .l { font-size: .8rem; color: var(--muted); font-weight: 600; }
 .rb-kpi .v { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 1.55rem; font-weight: 600; color: var(--ink); line-height: 1.3; letter-spacing: -0.02em; }
-.rb-kpi .v.txt { font-family: var(--sans); font-weight: 800; letter-spacing: -0.01em; }
+.rb-kpi .v.txt { font-family: var(--sans); font-weight: 800; letter-spacing: -0.01em; font-size: clamp(1.05rem, 1.5vw, 1.55rem); word-break: keep-all; overflow-wrap: normal; }
 .rb-kpi .s { font-size: .76rem; color: var(--muted); }
 @media (max-width: 760px) { .rb-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .rb-thead { display: none; } }
 
@@ -263,6 +263,14 @@ section[data-testid="stSidebar"] [data-testid="stNavSectionHeader"] { color: var
 .rb-meter .bar { display: grid; grid-template-columns: repeat(20, 1fr); gap: 2px; margin: 8px 0 4px; }
 .rb-meter .bar i { height: 12px; background: #E6E6E3; display: block; }
 .rb-meter .scale { display: flex; justify-content: space-between; font-family: var(--mono); font-size: .72rem; color: var(--muted); }
+
+/* Data provenance strip: which inputs are real and which are simulated */
+.rb-prov { display: flex; flex-wrap: wrap; border: 1px solid var(--rule); border-right: 0; margin: -4px 0 12px; background: var(--panel); }
+.rb-prov span { border-right: 1px solid var(--rule); padding: 3px 9px; font-size: .74rem; color: var(--muted); }
+.rb-prov b { color: var(--ink); font-weight: 600; }
+.rb-prov .real b::before { content: "REAL "; font-family: var(--mono); font-size: .68rem; color: var(--green); }
+.rb-prov .live b::before { content: "LIVE "; font-family: var(--mono); font-size: .68rem; color: var(--green); }
+.rb-prov .sim b::before { content: "SIM "; font-family: var(--mono); font-size: .68rem; color: var(--amber); }
 
 /* Anchor nav (Control Tower) */
 .rb-anchors { position: sticky; top: 46px; z-index: 50; background: var(--canvas); display: flex; flex-wrap: wrap;
@@ -376,6 +384,23 @@ def rows_card(title: str, rows: Sequence[tuple], note: str = "") -> None:
                 unsafe_allow_html=True)
 
 
+PROVENANCE = {
+    "timetable": ("real", "Timetable", "Indian Railways 2016 (datameet)"),
+    "stations": ("real", "Stations", "2,719 real stations with coordinates"),
+    "fares": ("real", "Fares", "Railway Board TAG 2025 tariff"),
+    "weather": ("live", "Weather", "Open-Meteo forecast"),
+    "outcomes": ("sim", "Outcomes", "booking, delay & demand history simulated"),
+    "fraud": ("sim", "Sessions", "simulated booking traffic"),
+}
+
+
+def provenance(*keys: str) -> None:
+    """One strip under the header saying which inputs on this screen are real, live or simulated."""
+    cells = "".join(f'<span class="{PROVENANCE[k][0]}"><b>{esc(PROVENANCE[k][1])}</b> {esc(PROVENANCE[k][2])}</span>'
+                    for k in keys if k in PROVENANCE)
+    st.markdown(f'<div class="rb-prov">{cells}</div>', unsafe_allow_html=True)
+
+
 def meter(value: float, label: str, suffix: str = "%", lo: float = 0, hi: float = 100, tone: str = "",
           decimals: int = 1) -> str:
     """Readout instead of a gauge: big monospace value and a 20-segment bar in the signal colour."""
@@ -446,41 +471,54 @@ def footer() -> None:
 # Reference data (train & station pickers) and small chart helpers
 # ──────────────────────────────────────────────────────────────────────────────
 
-_CURATED_TRAINS = ["12951", "12002", "12301", "22691", "12622", "20901", "12137", "12260"]
-_CURATED_STATIONS = ["NDLS", "CSTM", "MAS", "HWH", "SBC", "BPL", "ADI", "LKO", "KOAA", "PUNE", "JP"]
+_CURATED_TRAINS = ["12951", "12952", "12002", "12301", "12138", "12627", "12622", "12260"]
+_CURATED_STATIONS = ["NDLS", "CSTM", "BCT", "MAS", "HWH", "SBC", "BPL", "ADI", "LKO", "PUNE", "JP", "KOTA"]
 
 
 @st.cache_data(show_spinner=False)
 def load_reference() -> Dict[str, Any]:
-    """Train and station pickers built from the platform's own dataset (falls back to a curated list)."""
+    """Train and station pickers from the real network, plus each train's halts and classes."""
     from pathlib import Path
     root = Path(__file__).resolve().parents[1]
     trains: Dict[str, str] = {}
     stations: Dict[str, str] = {}
+    stops: Dict[str, list] = {}
+    classes: Dict[str, list] = {}
     try:
         import pandas as pd
         t = pd.read_csv(root / "data" / "raw" / "trains.csv", dtype={"train_number": str})
         s = pd.read_csv(root / "data" / "raw" / "stations.csv")
-        names = dict(zip(s["station_code"], s["station_name"]))
         t["label"] = t.apply(lambda r: f'{r.train_number} · {r.train_name}  ({r.source} → {r.destination})', axis=1)
         order = {n: i for i, n in enumerate(_CURATED_TRAINS)}
         t["o"] = t["train_number"].map(order).fillna(999)
-        for r in t.sort_values(["o", "train_name"]).itertuples():
+        for r in t.sort_values(["o", "train_number"]).itertuples():
             trains[r.label] = r.train_number
-        codes = sorted(set(t["source"]) | set(t["destination"]))
+            classes[r.train_number] = str(r.classes).split("|")
         pri = {c: i for i, c in enumerate(_CURATED_STATIONS)}
-        for c in sorted(codes, key=lambda c: (pri.get(c, 999), c)):
-            nm = names.get(c, c)
-            stations[f"{nm.title() if nm.isupper() else nm} ({c})"] = c
+        s["o"] = s["station_code"].map(pri).fillna(999)
+        for r in s.sort_values(["o", "trains_halting"], ascending=[True, False]).itertuples():
+            stations[f"{r.station_name} ({r.station_code})"] = r.station_code
+        h = pd.read_csv(root / "data" / "real" / "train_stops.csv.gz", dtype={"train_number": str},
+                        usecols=["train_number", "seq", "station_code", "arrival", "departure", "km_from_origin"])
+        for num, g in h.sort_values(["train_number", "seq"]).groupby("train_number"):
+            stops[num] = [(r.station_code, r.arrival if isinstance(r.arrival, str) else "",
+                           r.departure if isinstance(r.departure, str) else "", float(r.km_from_origin))
+                          for r in g.itertuples()]
     except Exception:
         trains = {
-            "12951 · Mumbai Rajdhani Express  (NDLS → CSTM)": "12951",
-            "12002 · Bhopal Shatabdi Express  (NDLS → BPL)": "12002",
-            "12301 · Howrah Rajdhani Express  (NDLS → HWH)": "12301",
+            "12951 · Mumbai Central-New Delhi Rajdhani Express  (BCT → NDLS)": "12951",
+            "12002 · New Delhi-Bhopal Shatabdi Express  (NDLS → BPL)": "12002",
+            "12301 · Howrah-New Delhi Rajdhani Express  (HWH → NDLS)": "12301",
         }
-        stations = {"New Delhi (NDLS)": "NDLS", "Mumbai CSMT (CSTM)": "CSTM", "Chennai Central (MAS)": "MAS",
-                    "Howrah Jn (HWH)": "HWH", "Bengaluru (SBC)": "SBC", "Pune Jn (PUNE)": "PUNE"}
-    return {"trains": trains, "stations": stations}
+        stations = {"New Delhi (NDLS)": "NDLS", "Mumbai Cst (CSTM)": "CSTM", "Mumbai Central (BCT)": "BCT",
+                    "Bhopal Jn (BPL)": "BPL", "Howrah Jn (HWH)": "HWH"}
+    return {"trains": trains, "stations": stations, "stops": stops, "classes": classes}
+
+
+def halt_labels(ref: Dict[str, Any], train_number: str) -> list:
+    """Station-picker labels for one train's halts, in running order."""
+    by_code = {v: k for k, v in ref["stations"].items()}
+    return [by_code.get(c, c) for c, *_ in ref["stops"].get(str(train_number), [])] or list(ref["stations"].keys())
 
 
 def label_for(mapping: Dict[str, str], code: str, default_index: int = 0) -> str:

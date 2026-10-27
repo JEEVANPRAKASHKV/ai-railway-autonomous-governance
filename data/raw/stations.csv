@@ -1,176 +1,2720 @@
-station_code,station_name,zone,state,tier,baseline_congestion,platforms,latitude,longitude
-NDLS,New Delhi,NR,Delhi,Metro,71,18,26.7237,68.7253
-CSTM,Chhatrapati Shivaji Terminus Mumbai,CR,Maharashtra,Metro,68,18,16.3383,74.4731
-HWH,Howrah Junction,ER,West Bengal,Metro,72,18,29.4894,87.6243
-MAS,Chennai Central,SR,Tamil Nadu,Metro,69,18,33.9271,70.5212
-SBC,Bengaluru City Junction,SWR,Karnataka,Metro,71,18,20.5248,68.8641
-SC,Secunderabad Junction,SCR,Telangana,Metro,74,18,14.7312,82.6553
-PUNE,Pune Junction,CR,Maharashtra,A1,52,12,9.2563,73.7663
-ADI,Ahmedabad Junction,WR,Gujarat,A1,56,12,27.0217,83.8033
-JP,Jaipur Junction,NWR,Rajasthan,A1,57,12,14.7826,85.0887
-LKO,Lucknow Charbagh NR,NR,Uttar Pradesh,A1,54,12,31.5688,68.1885
-CNB,Kanpur Central,NCR,Uttar Pradesh,A1,53,12,31.4658,88.246
-PRYJ,Prayagraj Junction,NCR,Uttar Pradesh,A,47,8,18.1971,72.5089
-BSB,Varanasi Junction,NER,Uttar Pradesh,A,47,8,35.7806,77.7612
-PATNA,Patna Junction,ECR,Bihar,A1,52,12,11.1433,70.8048
-GHY,Guwahati,NFR,Assam,A,45,8,32.6536,85.5081
-BBS,Bhubaneswar,ECOR,Odisha,A,44,8,31.5032,89.1622
-NGP,Nagpur Junction,CR,Maharashtra,A,41,8,23.7825,96.2204
-INDB,Indore Junction BG,WR,Madhya Pradesh,A,47,8,19.2882,84.0092
-BPL,Bhopal Junction,WCR,Madhya Pradesh,A,45,8,32.138,85.9371
-JAT,Jammu Tawi,NR,J&K,A,41,8,33.0586,84.7432
-AMRITSAR,Amritsar Junction,NR,Punjab,A,44,8,28.5803,69.3289
-LDH,Ludhiana Junction,NR,Punjab,A,40,8,14.9951,76.3923
-ASR,Amritsar Junction,NR,Punjab,A,49,8,10.7741,74.7509
-UDZ,Udaipur City,NWR,Rajasthan,B,30,5,11.3785,76.0612
-JU,Jodhpur Junction,NWR,Rajasthan,A,48,8,26.617,78.5801
-AII,Ajmer Junction,NWR,Rajasthan,A,40,8,19.0502,74.0757
-KOTA,Kota Junction,WCR,Rajasthan,A,49,8,16.1089,95.163
-RTM,Ratlam Junction,WR,Madhya Pradesh,A,42,8,26.969,85.6648
-BCT,Mumbai Central,WR,Maharashtra,Metro,71,18,13.3775,89.1447
-VSKP,Visakhapatnam Junction,ECOR,Andhra Pradesh,A,43,8,13.157,79.0042
-GNT,Guntur Junction,SCR,Andhra Pradesh,B,33,5,36.7014,86.56
-TVM,Thiruvananthapuram Central,SR,Kerala,A,42,8,24.3731,87.8538
-ERS,Ernakulam Junction,SR,Kerala,A,44,8,32.5213,90.504
-CBE,Coimbatore Junction,SR,Tamil Nadu,A,42,8,15.0279,68.9309
-MDU,Madurai Junction,SR,Tamil Nadu,A,46,8,17.4904,75.7645
-TPJ,Tiruchirappalli Junction,SR,Tamil Nadu,A,44,8,14.513,95.3444
-SA,Salem Junction,SR,Tamil Nadu,B,33,5,33.4765,77.1257
-RPM,Perambur,SR,Tamil Nadu,B,31,5,27.18,79.4733
-MS,Chennai Egmore,SR,Tamil Nadu,A,41,8,34.5646,81.3067
-DLI,Delhi Junction,NR,Delhi,A,43,8,16.0491,75.1522
-GZB,Ghaziabad Junction,NR,Uttar Pradesh,B,33,5,24.499,75.6195
-AGC,Agra Cantt,NCR,Uttar Pradesh,A,41,8,25.1607,94.0369
-MTJ,Mathura Junction,NCR,Uttar Pradesh,A,49,8,19.8829,74.3603
-AF,Agra Fort,NCR,Uttar Pradesh,B,33,5,36.9298,82.7763
-GWL,Gwalior Junction,NCR,Madhya Pradesh,A,49,8,11.0909,69.3664
-JHS,Jhansi Junction,NCR,Uttar Pradesh,A,44,8,11.625,86.1959
-STA,Satna,WCR,Madhya Pradesh,B,26,5,31.0743,80.2426
-KGKP,Kathgodam,NER,Uttarakhand,B,28,5,10.3105,79.067
-DDN,Dehradun,NR,Uttarakhand,A,46,8,36.8895,83.3443
-HW,Haridwar Junction,NR,Uttarakhand,A,47,8,36.1757,92.9626
-RKSH,Rishikesh,NR,Uttarakhand,C,17,3,8.8272,88.9009
-UHL,Una Himachal,NR,Himachal Pradesh,C,15,3,27.9287,83.5721
-SHM,Shimla,NR,Himachal Pradesh,B,28,5,16.1045,86.5879
-KLK,Kalka,NR,Haryana,B,26,5,11.6792,80.6082
-UMB,Ambala Cant Junction,NR,Haryana,A,47,8,21.4311,95.6607
-ROK,Rohtak Junction,NR,Haryana,B,28,5,33.4618,75.6383
-RE,Rewari Junction,NR,Haryana,B,26,5,22.7667,73.1809
-GGN,Gurgaon,NR,Haryana,B,30,5,34.5099,93.245
-FDKD,Faridabad,NR,Haryana,B,30,5,17.0057,86.5295
-PANIPAT,Panipat Junction,NR,Haryana,B,34,5,25.8557,72.4323
-KRK,Kurukshetra Junction,NR,Haryana,B,28,5,30.2316,83.642
-AMBALA,Ambala City,NR,Haryana,B,30,5,30.6909,83.3803
-BRC,Vadodara Junction,WR,Gujarat,A,41,8,8.5163,77.4005
-ST,Surat,WR,Gujarat,A,49,8,9.0551,94.9439
-ANND,Anand Junction,WR,Gujarat,B,26,5,33.5436,92.1183
-NKDA,Navsari,WR,Gujarat,C,24,3,17.2642,69.6798
-JT,Jetpur Junction,WR,Gujarat,B,28,5,33.5233,95.4615
-RJT,Rajkot Junction,WR,Gujarat,A,47,8,10.9411,82.0937
-BVP,Bhavnagar Terminus,WR,Gujarat,B,31,5,10.4726,90.0575
-JAM,Jamnagar,WR,Gujarat,B,33,5,30.3263,71.7234
-OKHA,Okha,WR,Gujarat,C,22,3,22.0455,83.9443
-VAPI,Vapi,WR,Gujarat,B,29,5,16.0541,93.3006
-DDAR,Dahanu Road,WR,Maharashtra,C,16,3,20.5594,74.1421
-KYN,Kalyan Junction,CR,Maharashtra,A,44,8,23.8699,89.168
-LNL,Lonavala,CR,Maharashtra,B,32,5,14.2328,77.0398
-DD,Dadar Central,CR,Maharashtra,A,49,8,36.8618,86.8465
-DR,Mumbai Dadar WR,WR,Maharashtra,A,48,8,20.9859,83.0097
-BSL,Bhusaval Junction,CR,Maharashtra,A,48,8,11.9486,74.5162
-AWB,Aurangabad,CR,Maharashtra,A,40,8,18.1354,85.061
-SOT,Sholapur Junction,CR,Maharashtra,A,48,8,15.0583,74.3863
-WD,Wadi Junction,SCR,Karnataka,B,31,5,10.5233,86.302
-UBL,Hubli Junction,SWR,Karnataka,A,48,8,15.0248,94.2572
-MYS,Mysuru Junction,SWR,Karnataka,A,47,8,32.9996,70.0549
-BANG,Yesvantpur Junction,SWR,Karnataka,A,40,8,15.2831,87.4004
-DWR,Dharwad,SWR,Karnataka,B,32,5,14.6057,71.837
-GDG,Gadag Junction,SWR,Karnataka,B,32,5,35.1622,84.5602
-BJP,Vijayapura,SWR,Karnataka,B,27,5,21.9711,90.754
-GR,Gulbarga,SCR,Karnataka,B,25,5,31.5137,73.5219
-BIDAR,Bidar,SCR,Karnataka,C,22,3,11.2625,80.5005
-NED,Nanded,SCR,Maharashtra,B,27,5,20.572,81.5437
-PBN,Parbhani Junction,SCR,Maharashtra,B,27,5,29.2787,87.5276
-MUE,Mudkhed Junction,SCR,Maharashtra,C,15,3,36.5487,70.8541
-HYB,Hyderabad Deccan,SCR,Telangana,A,44,8,19.9747,77.8398
-KCG,Kacheguda,SCR,Telangana,A,49,8,33.0577,75.211
-FM,Faizabad Junction,NER,Uttar Pradesh,B,31,5,13.921,81.0098
-GKP,Gorakhpur Junction,NER,Uttar Pradesh,A,49,8,20.5236,76.0778
-NJP,New Jalpaiguri,NFR,West Bengal,A,48,8,15.6195,94.7747
-MLDT,Malda Town,ER,West Bengal,B,31,5,21.1292,92.9791
-BWN,Bardhaman Junction,ER,West Bengal,B,33,5,24.1843,69.4671
-SDAH,Sealdah,ER,West Bengal,Metro,72,18,36.9796,92.2448
-BGP,Bhagalpur Junction,ECR,Bihar,A,41,8,36.1164,94.8646
-RJPB,Rajendra Nagar Bihar,ECR,Bihar,B,25,5,32.6878,72.823
-DNKD,Danapur,ECR,Bihar,A,46,8,22.3408,74.1987
-MFP,Muzaffarpur Junction,ECR,Bihar,A,46,8,19.9296,69.7004
-SPJ,Samastipur Junction,ECR,Bihar,B,32,5,19.3007,96.574
-RXL,Raxaul Junction,ECR,Bihar,B,29,5,16.0583,90.738
-DBG,Darbhanga Junction,ECR,Bihar,B,27,5,21.4677,80.2672
-JYG,Jaynagar,ECR,Bihar,C,22,3,35.7836,96.8673
-SHC,Sitamarhi,ECR,Bihar,C,20,3,24.3394,88.8338
-SGR,Siliguri Junction,NFR,West Bengal,B,27,5,12.9117,76.6045
-AGTL,Agartala,NFR,Tripura,B,25,5,36.1082,84.7962
-LMG,Lumding Junction,NFR,Assam,B,27,5,23.9526,89.6913
-DBRG,Dibrugarh,NFR,Assam,A,44,8,10.1292,84.9412
-TGM,Tangla,NFR,Assam,C,17,3,22.8312,92.7289
-RNG,Rangiya Junction,NFR,Assam,B,25,5,12.9868,95.8626
-JTTN,Jiribam,NFR,Manipur,C,24,3,25.4585,87.5812
-TPTY,Tirupati,SCR,Andhra Pradesh,A,46,8,15.2033,71.4767
-GTL,Guntakal Junction,SCR,Andhra Pradesh,A,46,8,33.8732,75.1402
-RU,Renigunta Junction,SCR,Andhra Pradesh,B,33,5,25.4438,85.9621
-QLN,Kollam Junction,SR,Kerala,A,49,8,20.4479,84.9265
-ALLP,Alappuzha,SR,Kerala,B,34,5,23.3993,95.1065
-TCR,Thrissur,SR,Kerala,A,42,8,14.3214,88.7696
-CLT,Kozhikode,SR,Kerala,A,46,8,15.3025,79.4778
-SRR,Shoranur Junction,SR,Kerala,B,25,5,27.6432,76.6999
-CAN,Kannur,SR,Kerala,B,28,5,17.5111,89.8041
-MAJN,Mangaluru Junction,SR,Karnataka,A,43,8,10.5675,81.2903
-MAQ,Mangaluru Central,SR,Karnataka,A,46,8,10.5879,74.1815
-KUDA,Kundapura,SR,Karnataka,C,21,3,16.0582,95.0645
-BKLN,Bhatkal,SR,Karnataka,C,18,3,33.6046,93.4988
-GOA,Madgaon Junction,KR,Goa,A,46,8,19.0315,72.5747
-PANAJI,Karmali,KR,Goa,B,27,5,32.2617,88.4027
-THVM,Thivim,KR,Goa,B,30,5,25.9328,96.6298
-RN,Ratnagiri,KR,Maharashtra,B,26,5,27.1383,68.2269
-CHI,Chiplun,KR,Maharashtra,B,34,5,31.7875,76.682
-KED,Khed,KR,Maharashtra,C,23,3,27.4066,95.229
-RWP,Roha,KR,Maharashtra,C,19,3,12.3273,71.3474
-PEN,Pen,CR,Maharashtra,C,20,3,11.5505,84.0435
-PANVEL,Panvel Junction,CR,Maharashtra,A,43,8,16.2619,85.5401
-VR,Vasai Road,WR,Maharashtra,B,34,5,28.9519,73.9043
-BVI,Borivali,WR,Maharashtra,B,31,5,26.5758,75.6555
-ANDHERI,Andheri,WR,Maharashtra,B,33,5,22.4232,94.2548
-PNVL,Panvel,CR,Maharashtra,A,46,8,32.614,70.6767
-TL,Titwala,CR,Maharashtra,C,15,3,20.5719,76.0237
-AMBV,Ambivli,CR,Maharashtra,C,15,3,8.6011,90.3625
-BR,Badlapur,CR,Maharashtra,C,23,3,26.6577,75.5967
-VB,Vangani,CR,Maharashtra,C,23,3,29.6251,83.9987
-SRD,Shahapur,CR,Maharashtra,C,18,3,20.6891,68.2804
-KJT,Khopoli,CR,Maharashtra,C,23,3,10.6445,93.6101
-THANE,Thane,CR,Maharashtra,A,46,8,32.286,84.8928
-CSMT,Mumbai CST,CR,Maharashtra,Metro,70,18,12.7207,71.6959
-KOLHAPUR,Kolhapur,CR,Maharashtra,B,33,5,31.1895,92.9604
-SNG,Sangli,CR,Maharashtra,B,29,5,34.1194,74.0922
-MRJ,Miraj Junction,CR,Maharashtra,B,25,5,15.6116,70.981
-KOP,Kopargaon,CR,Maharashtra,C,17,3,30.7333,93.6399
-KWV,Kurduvadi Junction,CR,Maharashtra,B,30,5,33.1413,96.31
-KHURDA,Khurda Road,ECOR,Odisha,B,25,5,31.6064,75.7374
-CTC,Cuttack Junction,ECOR,Odisha,A,49,8,30.9402,71.1348
-RGDA,Rayagada,ECOR,Odisha,B,28,5,33.3568,92.8992
-TIG,Titlagarh Junction,ECOR,Odisha,B,31,5,14.8394,91.681
-ROU,Rourkela Junction,SER,Odisha,A,41,8,21.6186,76.8505
-JSG,Jharsuguda Junction,SER,Odisha,B,27,5,31.1673,74.6003
-IB,Ib,SER,Odisha,C,15,3,9.1744,73.6008
-BSPB,Bilaspur Junction,SECR,Chhattisgarh,A,44,8,17.8555,93.0662
-R,Raipur Junction,SECR,Chhattisgarh,A,40,8,36.0563,76.0946
-DURG,Durg Junction,SECR,Chhattisgarh,A,47,8,26.7822,79.5907
-RIG,Rajnandgaon,SECR,Chhattisgarh,B,25,5,36.4628,83.5503
-GGP,Gondia Junction,SECR,Maharashtra,B,25,5,35.2683,71.3449
-WADI,Wadi,SCR,Karnataka,B,26,5,36.1564,73.1785
-RGA,Raichur,SCR,Karnataka,B,26,5,35.9322,75.6985
-DMM,Dharmavaram Junction,SCR,Andhra Pradesh,B,30,5,11.5895,80.6023
-AK,Akola Junction,CR,Maharashtra,A,46,8,29.2635,77.0966
-WR,Wardha Junction,CR,Maharashtra,B,29,5,25.777,82.8313
-SWV,Sawantwadi Road,KR,Maharashtra,C,15,3,19.4781,84.7211
-KUDAL,Kudal,KR,Maharashtra,C,15,3,15.7596,88.5548
-KADAM,Kadamba,KR,Maharashtra,C,17,3,8.5482,94.8417
+station_code,station_name,zone,state,tier,baseline_congestion,platforms,latitude,longitude,trains_halting
+CNB,Kanpur Central,NCR,Uttar Pradesh,Metro,65,16,26.45424,80.35097,234
+BZA,Vijayawada Jn,SCR,Andhra Pradesh,A1,57,10,16.51826,80.61865,198
+NDLS,New Delhi,NR,Delhi NCT,Metro,71,16,28.64231,77.22,195
+HWH,Howrah Jn,SER,West Bengal,Metro,69,16,22.58408,88.341,194
+BRC,Vadodara Jn,WR,Gujarat,A1,54,10,22.31076,73.18107,193
+LKO,Lucknow,NER,Uttar Pradesh,Metro,73,16,26.83067,80.92529,186
+MGS,Mughal Sarai Jn,NER,Uttar Pradesh,A1,50,10,25.27815,83.11925,185
+ET,Itarsi Jn,WCR,Madhya Pradesh,A1,56,10,22.60826,77.76713,184
+BPL,Bhopal Jn,WCR,Madhya Pradesh,A1,52,10,23.26688,77.41314,179
+JHS,Jhansi Jn,NCR,Uttar Pradesh,A1,50,10,25.44358,78.55298,178
+KYN,Kalyan Jn,CR,Maharashtra,A1,55,10,19.23472,73.12974,173
+ALD,Allahabad Jn,NER,Uttar Pradesh,A1,59,10,25.44624,81.82882,171
+NGP,Nagpur,SECR,Maharashtra,A1,57,10,21.15357,79.089,169
+ADI,Ahmedabad Jn,WR,Gujarat,Metro,72,16,23.02551,72.60152,164
+ST,Surat,WR,Gujarat,A1,57,10,21.20657,72.84079,161
+PNBE,Patna Jn,ECR,Bihar,Metro,72,16,25.60256,85.13682,157
+BSB,Varanasi Jn,NER,Uttar Pradesh,A1,55,10,25.32728,82.98647,154
+BSL,Bhusaval Jn,CR,Maharashtra,A1,51,10,21.04728,75.78867,151
+ASN,Asansol Jn,SER,West Bengal,A1,58,10,23.69144,86.97515,147
+UMB,Ambala Cant Jn,NR,Haryana,A1,54,10,30.33892,76.82697,144
+NZM,Delhi H Nizamuddin,NR,Delhi NCT,Metro,70,16,28.58733,77.25425,143
+BBS,Bhubaneswar,ECoR,Orissa,A1,53,10,20.26539,85.84259,136
+MB,Moradabad,NER,Uttar Pradesh,A1,51,10,28.83162,78.7658,134
+PUNE,Pune Jn,CR,Maharashtra,Metro,74,16,18.52938,73.87309,134
+MMR,Manmad Jn,SCR,Maharashtra,A1,57,10,20.24989,74.4383,131
+MAS,Chennai Central,SR,Tamil Nadu,Metro,71,16,13.08476,80.27486,130
+GZB,Ghaziabad,NR,Uttar Pradesh,A1,54,10,28.6497,77.4311,129
+TCR,Thrisur,SR,Kerala,A1,58,10,10.51479,76.20792,129
+AGC,Agra Cantt,NCR,Uttar Pradesh,A1,55,10,27.15799,77.99015,123
+LDH,Ludhiana Jn,NR,Punjab,A1,54,10,30.91237,75.84787,123
+MTJ,Mathura Jn,WCR,Uttar Pradesh,A1,54,10,27.48015,77.67312,123
+ED,Erode Jn,SR,Tamil Nadu,A1,52,10,11.32768,77.72593,122
+BWN,Barddhaman Jn,ER,West Bengal,A1,50,10,23.24972,87.87028,120
+KGP,Kharagpur Jn,SER,West Bengal,A,45,7,22.34143,87.32846,119
+BE,Bareilly,NER,Uttar Pradesh,A,48,7,28.33715,79.41084,114
+KPD,Katpadi Jn,SR,Tamil Nadu,A,40,7,12.97273,79.13534,114
+KUR,Khurda Road Jn,ECoR,Orissa,A,48,7,20.15308,85.70823,114
+BINA,Bina Jn,WCR,Madhya Pradesh,A,48,7,24.17097,78.1832,111
+GWL,Gwalior Jn,NCR,Madhya Pradesh,A,42,7,26.21648,78.18229,111
+SA,Salem Jn,SWR,Tamil Nadu,A,46,7,11.67173,78.11342,110
+GKP,Gorakhpur Jn,NER,Uttar Pradesh,A,41,7,26.75931,83.3815,107
+DLI,Old Delhi,NR,Delhi NCT,Metro,72,16,28.66182,77.22836,105
+SC,Secunderabad Jn,SCR,Andhra Pradesh,Metro,72,16,17.43315,78.50148,105
+AWY,Aluva,SR,Kerala,A,43,7,10.10816,76.35651,103
+KIUL,Kiul Jn,ECR,Jharkhand,A,40,7,25.1715,86.1062,102
+BJU,Barauni Jn,ECR,Bihar,A,49,7,25.46177,85.98875,100
+JP,Jaipur,NWR,Rajasthan,Metro,69,16,26.9202,75.78692,100
+DGR,Durgapur,ER,West Bengal,A,48,7,23.49505,87.2979,98
+TNA,Thane,CR,Maharashtra,A,46,7,19.18576,72.97542,98
+ANND,Anand Jn,WR,Gujarat,A,47,7,22.56131,72.96573,97
+OGL,Ongole,SCR,Andhra Pradesh,A,47,7,15.49806,80.0574,97
+JTJ,Jolarpettai,SWR,Karnataka,A,41,7,12.56085,78.57782,96
+GDR,Gudur Jn,SCR,Andhra Pradesh,A,43,7,14.14823,79.84512,95
+NK,Nasik Road,CR,Maharashtra,A,44,7,19.94763,73.8419,95
+WL,Warangal,SCR,Andhra Pradesh,A,44,7,17.97248,79.60493,95
+CTC,Cuttack,ECoR,Orissa,A,40,7,20.46659,85.90156,94
+TUP,Tiruppur,SR,Tamil Nadu,A,45,7,11.10891,77.34125,94
+ND,Nadiad Jn,WR,Gujarat,A,41,7,22.69411,72.85572,93
+NJP,New Jalpaiguri,NFR,West Bengal,A,47,7,26.68303,88.44339,93
+NLR,Nellore,SCR,Andhra Pradesh,A,46,7,14.46059,79.98938,92
+QLN,Kollam Jn,SR,Kerala,A,49,7,8.88659,76.59675,92
+R,Raipur Jn,SECR,Chhattisgarh,A,47,7,21.25646,81.62933,92
+RJY,Rajamundry,SCR,Andhra Pradesh,A,43,7,16.98416,81.7839,92
+JBP,Jabalpur,WCR,Madhya Pradesh,A,49,7,23.16464,79.95092,91
+CPR,Chhapra,NER,Bihar,A,44,7,25.78832,84.725,90
+DR,Mumbai Dadar Central,WR,Maharashtra,Metro,68,16,19.01718,72.84297,89
+JL,Jalgaon Jn,CR,Maharashtra,A,49,7,21.01811,75.56287,88
+KNE,Kishanganj,NFR,Bihar,A,43,7,26.09775,87.94966,88
+SRR,Shoranur Jn,SR,Kerala,A,40,7,10.75885,76.2722,87
+TDL,Tundla Jn,NCR,Uttar Pradesh,A,44,7,27.20775,78.23328,87
+CSTM,Mumbai Cst,CR,Maharashtra,Metro,72,16,18.94448,72.8369,86
+GAYA,Gaya Jn,ECR,Bihar,A,41,7,24.80398,84.99929,86
+MKA,Mokameh Jn,ECR,Bihar,A,44,7,25.39188,85.91305,86
+BSP,Bilaspur Jn,SECR,Chhattisgarh,A,41,7,22.05747,82.16759,85
+CBE,Coimbatore Jn,SR,Tamil Nadu,A,46,7,10.99764,76.9663,85
+ERS,Ernakulam Jn,SR,Kerala,A,44,7,9.96954,76.29067,85
+MFP,Muzaffarpur Jn,ECR,Bihar,A,43,7,26.12231,85.37801,85
+PGT,Palakkad,SR,Kerala,A,42,7,10.80209,76.64193,85
+SBC,Bangalore City Jn,SWR,Karnataka,Metro,70,16,12.9776,77.56808,85
+DURG,Durg,SECR,Chhattisgarh,A,46,7,21.20033,81.29184,84
+JSME,Jasidih Jn,ER,Jharkhand,A,49,7,24.51452,86.64426,84
+KOTA,Kota Jn,WCR,Rajasthan,A,44,7,25.22355,75.8805,84
+MDP,Madhupur Jn,ER,Jharkhand,A,41,7,24.27063,86.64218,84
+SPJ,Samastipur Jn,ECR,Bihar,A,48,7,25.8583,85.78736,84
+VSKP,Vishakapatnam,ECoR,Andhra Pradesh,A,46,7,17.72159,83.28951,84
+KNW,Khandwa,CR,Madhya Pradesh,A,47,7,21.8236,76.35323,83
+KTE,Katni,WCR,Madhya Pradesh,A,40,7,23.83338,80.40054,83
+SPN,Shahjehanpur,NER,Uttar Pradesh,A,43,7,27.89422,79.90461,83
+BKP,Bakhtiyarpur Jn,ECR,Bihar,A,47,7,25.45611,85.52956,82
+BLS,Balasore,SER,Orissa,A,48,7,21.50052,86.91958,82
+BPQ,Balharshah,SECR,Maharashtra,A,44,7,19.84902,79.34859,82
+DHN,Dhanbad Jn,SER,West Bengal,A,48,7,23.79097,86.42896,82
+RTM,Ratlam Jn,WR,Madhya Pradesh,A,48,7,23.34038,75.05083,82
+BL,Valsad,WR,Gujarat,A,43,7,20.60856,72.93353,81
+IGP,Igatpuri,CR,Maharashtra,A,48,7,19.69405,73.56238,80
+JAJ,Jhajha,ER,Jharkhand,A,42,7,24.77946,86.39985,80
+DD,Daund Jn,CR,Maharashtra,A,42,7,18.46355,74.57862,79
+STA,Satna,WCR,Madhya Pradesh,A,46,7,24.56862,80.82772,79
+JRC,Jalandhar Cant,NR,Punjab,A,46,7,31.30624,75.63211,77
+BH,Bharuch Jn,WR,Gujarat,A,41,7,21.70691,72.99769,76
+HJP,Hajipur Jn,ECR,Bihar,A,48,7,25.70291,85.2155,76
+LTT,Lokmanya Tilak Term,WR,Maharashtra,Metro,66,16,19.07032,72.89174,76
+SRE,Saharanpur,NR,Uttar Pradesh,A,48,7,29.96053,77.54174,76
+TVC,Trivandrum Central,SR,Kerala,A,40,7,8.48668,76.95121,76
+VZM,Vizianagram Jn,ECoR,Andhra Pradesh,A,47,7,18.11137,83.39559,75
+BHC,Bhadrakh,ECoR,Orissa,A,47,7,21.09175,86.51623,74
+BVI,Borivali,WR,Maharashtra,A,47,7,19.22874,72.85641,74
+KYJ,Kayankulam Jn,SR,Kerala,A,46,7,9.18259,76.51293,74
+LNL,Lonavala,CR,Maharashtra,A,44,7,18.74888,73.40766,74
+YPR,Yesvantpur Jn,SWR,Karnataka,Metro,72,16,13.02284,77.55117,74
+JUC,Jalandhar City,NR,Punjab,A,42,7,31.33167,75.5915,73
+BAM,Brahmapur,ECoR,Orissa,A,47,7,19.29613,84.79669,72
+MLDT,Malda Town,ER,Jharkhand,A,45,7,25.01566,88.13034,72
+RU,Renigunta Jn,SCR,Andhra Pradesh,A,44,7,13.63626,79.50629,71
+SWM,Sawai Madhopur,WCR,Rajasthan,A,45,7,26.01828,76.35622,71
+VAPI,Vapi,WR,Gujarat,A,45,7,20.37434,72.90913,71
+VG,Viramgam Jn,WR,Gujarat,A,40,7,23.1291,72.05297,71
+BXR,Buxar,NER,Uttar Pradesh,A,41,7,25.56207,83.98218,70
+AJJ,Arakkonam,SR,Tamil Nadu,A,42,7,13.08151,79.66799,69
+GD,Gonda Jn,NER,Uttar Pradesh,A,41,7,27.15461,81.97815,69
+KZJ,Kazipet Jn,SCR,Andhra Pradesh,A,44,7,17.97421,79.51103,69
+AK,Akola Jn,SCR,Maharashtra,A,46,7,20.72308,77.0055,68
+CLT,Kozhikode,SR,Kerala,A,46,7,11.24623,75.78041,68
+DNR,Danapur,ECR,Bihar,A,44,7,25.58192,85.04463,68
+PNC,Patna Saheb,ECR,Bihar,A,48,7,25.58586,85.23094,68
+BBK,Barabanki Jn,NER,Uttar Pradesh,A,45,7,26.93533,81.18104,67
+CRJ,Chittaranjan,SER,West Bengal,A,40,7,23.85714,86.87804,67
+ERN,Ernakulam Town,SR,Kerala,A,47,7,9.99158,76.2861,67
+NAD,Nagda Jn,WR,Madhya Pradesh,A,45,7,23.45592,75.41249,67
+NBQ,New Bongaigaon,NFR,Assam,A,46,7,26.47584,90.53684,67
+CAN,Kannur,SR,Kerala,A,45,7,11.87069,75.36833,66
+G,Gondia Jn,SECR,Maharashtra,A,45,7,21.46243,80.19084,66
+GHY,Guwahati,NFR,Assam,A,40,7,26.18264,91.75185,66
+AII,Ajmer Jn,NWR,Rajasthan,A,45,7,26.45661,74.63746,65
+ASR,Amritsar Jn,NR,Punjab,A,47,7,31.63151,74.85802,65
+MS,Chennai Egmore,SR,Tamil Nadu,Metro,68,16,13.07768,80.26019,65
+ARA,Ara,ECR,Bihar,A,46,7,25.54889,84.6626,64
+BZU,Betul,CR,Madhya Pradesh,A,40,7,21.89639,77.9059,64
+HBJ,Habibganj,WCR,Madhya Pradesh,A,43,7,23.22198,77.43943,63
+JAT,Jammu Tawi,NR,Jammu and Kashmir,A,44,7,32.70697,74.88012,63
+TPTY,Tirupati Main,SCR,Andhra Pradesh,A,49,7,13.62763,79.41897,63
+BD,Badnera Jn,CR,Maharashtra,A,42,7,20.85679,77.73232,62
+PGW,Phagwara Jn,NR,Punjab,A,42,7,31.21756,75.7655,62
+TEL,Tenali Jn,SCR,Andhra Pradesh,A,44,7,16.24241,80.64041,62
+EE,Eluru,SCR,Andhra Pradesh,A,49,7,16.71782,81.11976,61
+KQR,Koderma,ECR,Bihar,A,48,7,24.43474,85.52946,61
+RJPB,Rajendra Nagar Bihar,ECR,Bihar,A,40,7,25.60335,85.16245,61
+BDC,Bandel Jn,ER,West Bengal,A,42,7,22.92366,88.37936,60
+JJKR,Jajpur Keonjhar Road,ECoR,Orissa,A,48,7,20.94354,86.13252,60
+KIR,Katihar Jn,NFR,Bihar,A,40,7,25.54895,87.56641,60
+RK,Roorkee,NR,Uttarakhand,A,48,7,29.85167,77.87417,60
+SEE,Sonpur Jn,ECR,Bihar,A,42,7,25.69685,85.16685,60
+BEAS,Beas,NR,Punjab,A,49,7,31.51937,75.29081,59
+DOS,Dehri On Sone,ECR,Bihar,A,42,7,24.91489,84.18543,59
+NCB,New Cooch Behar,NFR,West Bengal,A,44,7,26.35316,89.46977,59
+SLO,Samalkot Jn,SCR,Andhra Pradesh,A,46,7,17.04483,82.16872,59
+TPJ,Tiruchirappalli,SR,Tamil Nadu,A,41,7,10.79407,78.68536,59
+UJN,Ujjain Jn,WR,Madhya Pradesh,A,45,7,23.17815,75.7814,59
+ALJN,Aligarh Jn,NCR,Uttar Pradesh,A,45,7,27.88958,78.07456,58
+BYT,Bhatapara,SECR,Chhattisgarh,A,47,7,21.73246,81.94606,58
+CLX,Chirala,SCR,Andhra Pradesh,A,49,7,15.83075,80.3536,58
+KJT,Karjat,CR,Maharashtra,A,46,7,18.91116,73.32069,58
+PNP,Panipat Jn,NR,Haryana,A,44,7,29.38895,76.96379,58
+RPH,Rampur Hat,ER,West Bengal,A,44,7,24.1798,87.78215,58
+TATA,Tatanagar Jn,SER,Jharkhand,A,44,7,22.76895,86.20056,58
+DEOS,Deoria Sadar,NER,Uttar Pradesh,A,48,7,26.50768,83.78196,57
+BST,Basti,NER,Uttar Pradesh,A,43,7,26.81568,82.77006,56
+ETW,Etawah,NCR,Madhya Pradesh,A,41,7,26.78597,79.0215,56
+KGQ,Kasaragod,SR,Kerala,A,43,7,12.49118,74.98765,56
+KMT,Khammam,SCR,Andhra Pradesh,A,40,7,17.24935,80.13849,56
+KTYM,Kottayam,SR,Kerala,A,41,7,9.59418,76.53217,56
+LAR,Lalitpur,NCR,Uttar Pradesh,A,40,7,24.68822,78.39579,56
+PURI,Puri,ECoR,Orissa,A,47,7,19.81146,85.83999,56
+RMU,Rampur,NER,Uttarakhand,A,47,7,28.77886,79.02342,56
+TIR,Tirur,SR,Kerala,A,46,7,10.91776,75.92187,56
+HW,Haridwar Jn,NR,Uttarakhand,A,44,7,29.94779,78.1549,55
+RJT,Rajkot Jn,WR,Gujarat,A,47,7,22.31221,70.80345,55
+SKZR,Sirpur Kagaznagar,SECR,Maharashtra,A,41,7,19.34566,79.4892,55
+VM,Villupuram Jn,SR,Tamil Nadu,A,49,7,11.94297,79.5001,55
+CHKB,Chakki Bank,NR,Punjab,A,45,7,32.25965,75.63665,54
+CNGR,Chengannur,SR,Kerala,A,49,7,9.3195,76.60827,54
+GTL,Guntakal Jn,SCR,Andhra Pradesh,A,41,7,15.17556,77.36661,54
+HRI,Hardoi,NR,Uttar Pradesh,A,44,7,27.39941,80.14788,54
+JSG,Jharsuguda Jn,SER,Orissa,A,46,7,21.86227,84.01743,54
+LJN,Lucknow Jn,NER,Uttar Pradesh,A,44,7,26.83197,80.91859,54
+NOQ,New Alipurdaur,NFR,West Bengal,A,44,7,26.48572,89.5414,54
+ON,Unnao Jn,NR,Uttar Pradesh,A,41,7,26.54835,80.4862,54
+SUR,Solapur Jn,SWR,Karnataka,A,43,7,17.6645,75.8934,54
+AKV,Ankleshwar Jn,WR,Gujarat,A,42,7,21.62389,73.00063,53
+BARH,Barh,ECR,Bihar,A,43,7,25.46165,85.70943,53
+BOE,Barsoi Jn,NFR,Bihar,A,46,7,25.65124,87.92294,53
+CGL,Chengalpattu,SR,Tamil Nadu,A,46,7,12.69286,79.98152,53
+FDB,Faridabad,NR,Delhi NCT,A,46,7,28.41147,77.30735,53
+RNC,Ranchi,SER,Jharkhand,A,43,7,23.34881,85.33352,53
+SUNR,Surendranagar,WR,Gujarat,A,49,7,22.7443,71.63006,53
+FUT,Fatwa,?,Bihar,A,40,7,25.50144,85.30549,52
+MKP,Manikpur Jn,NCR,Uttar Pradesh,A,43,7,25.06349,81.09366,52
+MZP,Mirzapur,NER,Uttar Pradesh,A,41,7,25.13435,82.56987,52
+SEGM,Sevagram,CR,Maharashtra,A,43,7,20.73908,78.61923,52
+SSM,Sasaram,ECR,Bihar,A,49,7,24.95593,84.01942,52
+BWT,Bangarapet,SWR,Karnataka,A,43,7,12.98481,78.17819,51
+NFK,New Farakka Jn,ER,West Bengal,A,49,7,24.79456,87.91524,51
+WR,Wardha Jn,CR,Maharashtra,A,44,7,20.73278,78.59416,51
+BBU,Bhabua Road,ECR,Uttar Pradesh,A,46,7,25.17301,83.61891,50
+BHP,Bolpur Shantiniketan,ER,West Bengal,A,44,7,23.6578,87.69814,50
+BNC,Bangalore Cant,SWR,Karnataka,A,42,7,12.99367,77.59933,50
+DMM,Dharmavaram Jn,SCR,Andhra Pradesh,A,47,7,14.42437,77.71712,50
+FD,Faizabad Jn,NR,Uttar Pradesh,A,49,7,26.769,82.13557,50
+MURI,Muri,SER,Jharkhand,A,42,7,23.37628,85.86699,50
+NVS,Navsari,WR,Gujarat,A,47,7,20.94685,72.91429,50
+RE,Rewari,NWR,Haryana,A,42,7,28.20278,76.60941,50
+BHS,Vidisha,WCR,Madhya Pradesh,B,32,4,23.52229,77.81484,49
+CD,Chandrapur,SECR,Maharashtra,B,32,4,19.96013,79.30051,49
+JU,Jodhpur Jn,NWR,Rajasthan,B,29,4,26.28376,73.02319,49
+KTHU,Kathua,NR,Jammu and Kashmir,B,32,4,32.3979,75.55192,49
+KYQ,Kamakhya,NFR,Assam,B,27,4,26.15615,91.6895,49
+MDU,Madurai Jn,SR,Tamil Nadu,B,25,4,9.91991,78.11031,49
+RKM,Raja Ki Mandi,NCR,Uttar Pradesh,B,25,4,27.19381,77.99661,49
+ABR,Abu Road,NWR,Rajasthan,B,29,4,24.47077,72.77569,48
+CHE,Srikakulam Road,ECoR,Andhra Pradesh,B,34,4,18.40868,83.90377,48
+GY,Gooty Jn,SCR,Andhra Pradesh,B,26,4,15.14921,77.62582,48
+KGG,Khagaria Jn,ECR,Bihar,B,29,4,25.50589,86.46525,48
+KJM,Krishnarajapuram,SWR,Karnataka,B,32,4,13.00053,77.67402,48
+PNU,Palanpur Jn,WR,Gujarat,B,27,4,24.17443,72.43017,48
+PPI,Pipariya,WCR,Madhya Pradesh,B,32,4,22.75394,78.35454,48
+PSA,Palasa,ECoR,Andhra Pradesh,B,28,4,18.75678,84.42209,48
+ROU,Rourkela,SER,Orissa,B,33,4,22.22844,84.86313,48
+INDB,Indore Jn Bg,WR,Madhya Pradesh,B,30,4,22.71757,75.86843,47
+LRJ,Laksar Jn,NR,Uttarakhand,B,30,4,29.75404,78.01963,47
+MAO,Madgaon,KR,Goa,B,26,4,15.26791,73.97072,47
+RJN,Raj Nandgaon,SECR,Chhattisgarh,B,29,4,21.10119,81.03902,47
+UBL,Hubli Jn,SWR,Karnataka,B,33,4,15.3503,75.1481,47
+BSR,Vasai Road,WR,Maharashtra,B,25,4,19.38245,72.83222,46
+BTT,Bhatni Jn,NER,Uttar Pradesh,B,32,4,26.38126,83.93403,46
+DEC,Delhi Cantt,NR,Delhi NCT,B,29,4,28.61353,77.11658,46
+DHD,Dahod,WR,Gujarat,B,32,4,22.84361,74.25337,46
+KUN,Karnal,NR,Haryana,B,31,4,29.69457,76.96982,46
+MRJ,Miraj Jn,CR,Maharashtra,B,29,4,16.81995,74.63884,46
+ORAI,Orai,NCR,Uttar Pradesh,B,28,4,25.98254,79.45953,46
+RPJ,Rajpura Jn,NR,Punjab,B,31,4,30.48646,76.59402,46
+TLY,Thalassery,SR,Kerala,B,26,4,11.75314,75.49299,46
+ATP,Anantapur,SCR,Andhra Pradesh,B,30,4,14.68648,77.59531,45
+DEE,Delhi Sarai Rohilla,NR,Delhi NCT,B,25,4,28.66299,77.18711,45
+HBD,Hoshangabad,WCR,Madhya Pradesh,B,31,4,22.75274,77.71559,45
+JUD,Yamunanagar-Jagadhri,NR,Uttar Pradesh,B,31,4,30.11684,77.2876,45
+KOJ,Kokrajhar,NFR,Assam,B,25,4,26.40506,90.27412,45
+MRA,Morena,NCR,Madhya Pradesh,B,32,4,26.5005,78.00344,45
+SV,Siwan Jn,NER,Bihar,B,29,4,26.21072,84.35927,45
+BAU,Burhanpur,CR,Madhya Pradesh,B,32,4,21.3344,76.19868,44
+BDTS,Mumbai Bandra Terminus,WR,Maharashtra,Metro,65,16,19.06191,72.84054,44
+BGP,Bhagalpur,ER,Bihar,B,26,4,25.24191,86.97679,44
+DVD,Duvvada,ECoR,Andhra Pradesh,B,29,4,17.70384,83.15206,44
+HPU,Hapur,NR,Uttar Pradesh,B,26,4,28.73961,77.77958,44
+KKDE,Kurukshetra Jn,NR,Haryana,B,28,4,29.96944,76.8528,44
+KPG,Kopargaon,CR,Maharashtra,B,31,4,19.90294,74.50333,44
+PNVL,Panvel,CR,Maharashtra,B,26,4,18.99092,73.12176,44
+RBL,Rae Bareli Jn,NR,Uttar Pradesh,B,31,4,26.23268,81.23932,44
+AF,Agra Fort,NCR,Uttar Pradesh,B,26,4,27.18331,78.0191,43
+ALLP,Alleppey,SR,Kerala,B,26,4,9.48376,76.32248,43
+BTE,Bharatpur Jn,WCR,Rajasthan,B,30,4,27.23711,77.48861,43
+DWX,Dewas,WR,Madhya Pradesh,B,32,4,22.97756,76.05119,43
+MTC,Meerut City,NR,Uttar Pradesh,B,26,4,28.97761,77.67511,43
+SRC,Santragachi Jn,SER,West Bengal,B,27,4,22.58393,88.28401,43
+TBM,Tambaram,SR,Tamil Nadu,B,34,4,12.92604,80.11916,43
+TRVL,Tiruvalla,SR,Kerala,B,34,4,9.39215,76.58027,43
+WADI,Wadi,SCR,Andhra Pradesh,B,30,4,17.05431,76.99155,43
+BALU,Balugaon,ECoR,Orissa,B,29,4,19.74737,85.20095,42
+BKSC,Bokaro Steel City,ECR,Jharkhand,B,28,4,23.65655,86.08502,42
+DG,Dindigul Jn,SR,Tamil Nadu,B,31,4,10.35381,77.98547,42
+GMO,Gomoh Jn,SER,Jharkhand,B,30,4,23.87311,86.14823,42
+GR,Gulbarga,SCR,Karnataka,B,27,4,17.31437,76.82444,42
+JMP,Jamalpur Jn,ECR,Bihar,B,25,4,25.31391,86.49228,42
+MUR,Mankapur Jn,NER,Uttar Pradesh,B,26,4,27.03906,82.22765,42
+PAR,Pandhurna,SECR,Madhya Pradesh,B,34,4,21.59,78.52539,42
+RDM,Ramgundam,SCR,Andhra Pradesh,B,29,4,18.76333,79.4351,42
+RNY,Rangiya Jn,NFR,Assam,B,29,4,26.4479,91.60593,42
+SDAH,Kolkata Sealdah,ER,West Bengal,Metro,69,16,22.56676,88.37471,42
+SHG,Shahganj Jn,NR,Uttar Pradesh,B,32,4,26.0614,82.67966,42
+SLN,Sultanpur,NR,Uttar Pradesh,B,25,4,26.26303,82.06611,42
+VAK,Varkala,SR,Kerala,B,25,4,8.74073,76.72287,42
+BRYA,Barhiya,ECR,Jharkhand,B,27,4,25.2832,86.01508,41
+BUI,Ballia,NER,Uttar Pradesh,B,29,4,25.76057,84.15312,41
+GDA,Godhra Jn,WR,Gujarat,B,31,4,22.77697,73.60367,41
+LKR,Luckeesarai Jn,ECR,Jharkhand,B,29,4,25.17166,86.09321,41
+MCI,Manchiryal,SCR,Andhra Pradesh,B,29,4,18.87875,79.44885,41
+NU,Narsinghpur,WCR,Madhya Pradesh,B,34,4,22.94311,79.21438,41
+PNME,Parasnath,SER,Jharkhand,B,26,4,23.98797,86.03786,41
+SIR,Sirhind Jn,NR,Punjab,B,30,4,30.62422,76.38319,41
+AWR,Alwar,NWR,Rajasthan,B,30,4,27.55927,76.62127,40
+KOAA,Kolkata Chitpur,ER,West Bengal,Metro,69,16,22.60117,88.38518,40
+MSH,Mahesana Jn,WR,Gujarat,B,33,4,23.60262,72.38871,40
+KWV,Kurduvadi,CR,Maharashtra,B,27,4,18.09135,75.41712,39
+MKC,Maksi,SER,Jharkhand,B,34,4,23.25163,76.15912,39
+MTD,Merta Road Jn,NWR,Rajasthan,B,28,4,26.72808,73.9179,39
+SKB,Shikohabad Jn,NCR,Uttar Pradesh,B,30,4,27.08569,78.57495,39
+UBC,Ambala City,NR,Haryana,B,30,4,30.3785,76.764,39
+VRI,Vridhachalam Jn,SR,Tamil Nadu,B,33,4,11.53496,79.31607,39
+ASK,Arsikere Jn,SWR,Karnataka,B,29,4,13.31442,76.25208,38
+FZD,Firozabad,NCR,Uttar Pradesh,B,27,4,27.14741,78.38669,38
+GGN,Gurgaon,NR,Haryana,B,25,4,28.48916,77.01074,38
+HTZ,Hathidah Jn,ECR,Bihar,B,28,4,25.36703,85.98783,38
+KLD,Khalilabad,?,Uttar Pradesh,B,33,4,26.77453,83.05507,38
+MAJN,Mangalore Jn,SR,Karnataka,B,25,4,12.86619,74.88006,38
+MJ,Marwar Jn,NWR,Rajasthan,B,33,4,25.72048,73.6093,38
+NCJ,Nagercoil Jn,SR,Tamil Nadu,B,30,4,8.17385,77.44347,38
+RC,Raichur,SCR,Andhra Pradesh,B,26,4,16.19244,77.33916,38
+RNG,Raniganj,ER,West Bengal,B,28,4,23.60285,87.11698,38
+ABP,Akbarpur,NR,Uttar Pradesh,B,30,4,26.42982,82.53907,37
+AKP,Anakapalle,ECoR,Andhra Pradesh,B,28,4,17.6955,83.00885,37
+AY,Ayodhya,NR,Uttar Pradesh,B,26,4,26.78778,82.2006,37
+BGS,Begu Sarai,ECR,Bihar,B,31,4,25.4253,86.13448,37
+BKI,Bandikui Jn,NWR,Rajasthan,B,31,4,27.03927,76.56672,37
+HD,Harda,WCR,Madhya Pradesh,B,26,4,22.33841,77.10084,37
+JMU,Jamui,ECR,Jharkhand,B,27,4,24.97195,86.25478,37
+MAU,Mau Jn,NER,Uttar Pradesh,B,27,4,25.93948,83.56435,37
+MGN,Meghnagar,WR,Madhya Pradesh,B,31,4,22.90746,74.53983,37
+SNP,Sonipat,NR,Uttar Pradesh,B,32,4,28.98942,77.01734,37
+VPT,Virudunagar Jn,SR,Tamil Nadu,B,32,4,9.59641,77.95774,37
+AMLA,Amla Jn,CR,Madhya Pradesh,B,34,4,21.91972,78.12319,36
+ANG,Ahmadnagar,CR,Maharashtra,B,32,4,19.07552,74.72188,36
+BDJ,Vadakara,SR,Kerala,B,28,4,11.59332,75.58694,36
+BPP,Bapatla,SCR,Andhra Pradesh,B,26,4,15.90861,80.46842,36
+CPH,Champa,SECR,Chhattisgarh,B,31,4,22.03473,82.66515,36
+DLN,Dildarnagar Jn,ECR,Uttar Pradesh,B,34,4,25.41942,83.66832,36
+GNT,Guntur Jn,SCR,Andhra Pradesh,B,34,4,16.30078,80.44197,36
+HUP,Hindupur,SWR,Karnataka,B,27,4,13.81914,77.50036,36
+MKU,Malkapur,CR,Maharashtra,B,27,4,20.89197,76.20295,36
+NED,Huzur Sahib Nanded,SCR,Maharashtra,B,25,4,19.16052,77.31048,36
+OTP,Ottappalam,SR,Kerala,B,26,4,10.77005,76.37799,36
+PAY,Payyanur,SR,Kerala,B,30,4,12.09225,75.19511,36
+PBH,Partapgarh Jn,NR,Uttar Pradesh,B,30,4,25.91331,82.00178,36
+RN,Ratnagiri,KR,Maharashtra,B,28,4,17.00279,73.35694,36
+RRB,Birur Jn,SWR,Karnataka,B,28,4,13.5911,75.97475,36
+SZM,Subzi Mandi,NR,Delhi NCT,B,33,4,28.66868,77.1997,36
+DBG,Darbhanga Jn,ECR,Bihar,B,29,4,26.15709,85.90757,35
+DDN,Dehradun,NR,Uttarakhand,B,33,4,30.31404,78.0336,35
+DWR,Dharwar,SWR,Karnataka,B,34,4,15.44039,75.00455,35
+HAPA,Hapa,WR,Gujarat,B,28,4,22.46897,70.11814,35
+LMG,Lumding Jn,NFR,Assam,B,27,4,25.75004,93.1766,35
+MOZ,Muzaffarnagar,NR,Uttar Pradesh,B,34,4,29.46869,77.70781,35
+PRR,Purulia Jn,SER,West Bengal,B,31,4,23.32491,86.37787,35
+AFK,Angamali,SR,Kerala,B,27,4,10.18368,76.37786,34
+AHA,Abhaipur,ECR,Bihar,B,31,4,25.21599,86.32307,34
+BCT,Mumbai Central,WR,Maharashtra,Metro,70,16,18.97067,72.81938,34
+FA,Falna,NWR,Rajasthan,B,34,4,25.23581,73.23495,34
+GDYA,Ghoradongri,CR,Madhya Pradesh,B,27,4,22.12642,78.00199,34
+KTU,Kuttippuram,SR,Kerala,B,34,4,10.84572,76.0334,34
+KVZ,Kavali,SCR,Andhra Pradesh,B,34,4,14.91599,79.98827,34
+MAN,Mani Nagar,WR,Gujarat,B,26,4,23.00014,72.61041,34
+SJP,Shujalpur,SER,Jharkhand,B,26,4,23.38124,76.72348,34
+SNT,Sainthia,ER,West Bengal,B,30,4,23.94974,87.6812,34
+UD,Udupi,KR,Karnataka,B,25,4,13.33634,74.77173,34
+AMRO,Amroha,NR,Uttar Pradesh,B,27,4,28.89269,78.47433,33
+BDL,Vindhyachal,NER,Uttar Pradesh,B,29,4,25.16077,82.50202,33
+BRD,Bhandara Road,SECR,Maharashtra,B,34,4,21.23851,79.64752,33
+BTI,Bhatinda Jn,NR,Punjab,B,34,4,30.20949,74.93208,33
+MLMR,Melmaruvattur,SR,Tamil Nadu,B,26,4,12.42955,79.8338,33
+NBD,Najibabad Jn,NR,Uttar Pradesh,B,33,4,29.60354,78.33573,33
+NDD,Nidadavolu Jn,SCR,Andhra Pradesh,B,25,4,16.8983,81.6755,33
+PKR,Pakur,ER,West Bengal,B,32,4,24.638,87.85605,33
+ROK,Rohtak Jn,NR,Haryana,B,33,4,28.8909,76.57955,33
+SBP,Sambalpur,SER,Orissa,B,33,4,21.48305,83.96033,33
+TDD,Tadepalligudem,SCR,Andhra Pradesh,B,27,4,16.80996,81.52631,33
+TEN,Tirunelveli,SR,Tamil Nadu,B,33,4,8.73636,77.70798,33
+AD,Adoni,SCR,Andhra Pradesh,B,26,4,15.61703,77.27485,32
+AME,Amethi,NR,Uttar Pradesh,B,30,4,26.15302,81.80628,32
+BOY,Bhadohi,NER,Uttar Pradesh,B,29,4,25.39526,82.55836,32
+CKI,Chalakudi,SR,Kerala,B,28,4,10.3018,76.32181,32
+DVG,Davangere,SWR,Karnataka,B,25,4,14.46783,75.92229,32
+DVL,Devlali,CR,Maharashtra,B,32,4,19.89751,73.83729,32
+IJK,Irinjalakuda,SR,Kerala,B,28,4,10.33946,76.28092,32
+MABD,Mahbubabad,SCR,Andhra Pradesh,B,31,4,17.59756,79.99979,32
+NNA,Naugachia,ER,Bihar,B,29,4,25.38526,87.09387,32
+PAU,Purna Jn,SCR,Maharashtra,B,28,4,19.18053,77.02499,32
+PBN,Parbhani Jn,SCR,Maharashtra,B,33,4,19.25746,76.77412,32
+STR,Satara,CR,Maharashtra,B,25,4,17.68836,74.06373,32
+WKR,Wankaner Jn,WR,Gujarat,B,32,4,22.62255,70.96562,32
+AUBR,Anugraha Narayan Road,ECR,Bihar,B,32,4,24.85596,84.32984,31
+BAQ,Ganj Basoda,WCR,Madhya Pradesh,B,28,4,23.84535,77.94483,31
+CVP,Kovilpatti,SR,Tamil Nadu,B,27,4,9.18258,77.87285,31
+DHO,Dhaulpur,NCR,Rajasthan,B,25,4,26.69759,77.90605,31
+FL,Phulera Jn,NWR,Rajasthan,B,34,4,26.87281,75.24546,31
+GGC,Gangapur City,WCR,Rajasthan,B,34,4,26.46898,76.72771,31
+HTE,Hatia,SER,Jharkhand,B,27,4,23.31161,85.30822,31
+JAM,Jamnagar,WR,Gujarat,B,25,4,22.49399,70.05388,31
+LD,Londa Jn,SWR,Karnataka,B,26,4,15.45027,74.49698,31
+NDB,Nandurbar,CR,Maharashtra,B,25,4,21.37481,74.24648,31
+PHR,Phillaur Jn,NR,Punjab,B,33,4,31.01691,75.78576,31
+RIG,Raigarh,SECR,Chhattisgarh,B,33,4,21.89129,83.39067,31
+SRT,Satur,SR,Tamil Nadu,B,26,4,9.35755,77.92157,31
+TUNI,Tuni,SCR,Andhra Pradesh,B,32,4,17.36108,82.54246,31
+ADRA,Adra Jn,SER,West Bengal,B,26,4,23.49599,86.67466,30
+APR,Anuppur Jn,SECR,Madhya Pradesh,B,28,4,23.11731,81.69597,30
+BIRD,Bhiwandi Road,CR,Maharashtra,B,30,4,19.26854,73.04565,30
+BPA,Belampalli,SECR,Maharashtra,B,32,4,19.05369,79.48634,30
+CSN,Chalisgaon Jn,CR,Maharashtra,B,33,4,20.46411,74.99905,30
+HVR,Haveri,SWR,Karnataka,B,25,4,14.7943,75.41069,30
+KAWR,Karwar,KR,Karnataka,B,26,4,14.82139,74.18314,30
+KZE,Kanhangad,SR,Kerala,B,27,4,12.32027,75.08525,30
+PGI,Parpanangadi,SR,Kerala,B,28,4,11.04591,75.86101,30
+RNR,Ranibennur,SWR,Karnataka,B,34,4,14.62546,75.63505,30
+SGG,Sultanganj,ER,Bihar,B,32,4,25.24085,86.73618,30
+SGO,Saugor,WCR,Madhya Pradesh,B,28,4,23.84735,78.74292,30
+SIL,Sakhi Gopal,ECoR,Orissa,B,34,4,19.94288,85.81607,30
+SLI,Sangli,CR,Maharashtra,B,29,4,16.85867,74.58894,30
+TK,Tumkur,SWR,Karnataka,B,30,4,13.33303,77.10244,30
+CAR,Chunar,NCR,Uttar Pradesh,B,29,4,25.10335,82.8747,29
+DMV,Dimapur,NFR,Nagaland,B,26,4,25.9057,93.72782,29
+DO,Dausa,NWR,Rajasthan,B,34,4,26.90005,76.33034,29
+DURE,Dumraon,NER,Uttar Pradesh,B,25,4,25.57198,84.14386,29
+KOO,Khusropur,?,Bihar,B,26,4,25.48489,85.38731,29
+PER,Perambur,SR,Tamil Nadu,B,27,4,13.10702,80.24453,29
+PND,Pendra Road,SECR,Madhya Pradesh,B,27,4,22.75582,81.89917,29
+TLD,Tilda,SECR,Chhattisgarh,B,26,4,21.55073,81.79459,29
+ANVT,Anand Vihar Trm,NR,Delhi NCT,Metro,65,16,28.6505,77.31521,28
+AWB,Aurangabad,SCR,Maharashtra,B,31,4,19.85928,75.31065,28
+BGM,Belgaum,SWR,Karnataka,B,34,4,15.84924,74.50956,28
+BUP,Bariarpur,ECR,Bihar,B,26,4,25.28103,86.57404,28
+DBA,Dabra,NCR,Madhya Pradesh,B,27,4,25.8812,78.33101,28
+DGG,Dongargarh,SECR,Chhattisgarh,B,30,4,21.18549,80.75986,28
+DHNE,Dhone,SCR,Andhra Pradesh,B,34,4,15.39673,77.86573,28
+DNA,Degana Jn,NWR,Rajasthan,B,31,4,26.89735,74.31639,28
+FTP,Fatehpur,NR,Uttar Pradesh,B,32,4,25.91749,80.80187,28
+HYB,Hyderabad Deccan,SCR,Andhra Pradesh,Metro,70,16,17.39336,78.46738,28
+JNH,Janghai Jn,NR,Uttar Pradesh,B,29,4,25.54991,82.31096,28
+KNN,Khanna,NR,Punjab,B,26,4,30.70797,76.22513,28
+KRD,Karad,CR,Maharashtra,B,33,4,17.31001,74.21569,28
+LUNI,Luni Jn,NWR,Rajasthan,B,33,4,26.00126,73.00317,28
+MAQ,Mangalore Cntl,SR,Karnataka,B,25,4,12.86233,74.84407,28
+MVLK,Mavelikara,SR,Kerala,B,32,4,9.23949,76.54569,28
+MYS,Mysore Jn,SWR,Karnataka,B,25,4,12.31895,76.64601,28
+UDL,Andal Jn,ER,West Bengal,B,32,4,23.57901,87.18119,28
+ANV,Annavaram,SCR,Andhra Pradesh,B,33,4,17.26963,82.41968,27
+BAP,Belapur,CR,Maharashtra,B,26,4,19.61957,74.66174,27
+BXN,Bayana Jn,WCR,Rajasthan,B,29,4,26.91635,77.29713,27
+CDG,Chandigarh,NR,Chandigarh,B,26,4,30.70198,76.82208,27
+CKP,Chakradharpur,SER,Jharkhand,B,30,4,22.67898,85.62777,27
+CTO,Chittoor,SCR,Andhra Pradesh,B,34,4,13.21986,79.10325,27
+DQG,Dhupguri,NFR,West Bengal,B,25,4,26.57353,88.99497,27
+DSS,Dalsingh Sarai,ECR,Bihar,B,28,4,25.66475,85.84147,27
+JNU,Jaunpur Jn,NR,Uttar Pradesh,B,34,4,25.76285,82.6997,27
+MEJ,Vanchimaniyachi,SR,Tamil Nadu,B,28,4,8.8821,77.89065,27
+MNE,Mansi Jn,ECR,Bihar,B,26,4,25.5094,86.55445,27
+MYR,Maihar,WCR,Madhya Pradesh,B,29,4,24.25549,80.76315,27
+SDL,Shahdol,SECR,Madhya Pradesh,B,30,4,23.28596,81.36407,27
+SRTL,Shertalai,SR,Kerala,B,31,4,9.69099,76.32515,27
+TIG,Titlagarh,ECoR,Orissa,B,28,4,20.2844,83.15438,27
+VKB,Vikarabad Jn,SCR,Andhra Pradesh,B,34,4,17.33713,77.90941,27
+BKN,Bikaner Jn,NWR,Rajasthan,B,30,4,28.01414,73.3166,26
+BQA,Bankura,SER,West Bengal,B,27,4,23.22439,87.07469,26
+BWM,Bhawani Mandi,WCR,Rajasthan,B,34,4,24.41947,75.82981,26
+CGY,Changanaseri,SR,Kerala,B,34,4,9.44988,76.54841,26
+CRP,Chandrapura,ECR,Jharkhand,B,29,4,23.75568,86.11978,26
+DKJ,Dornakal Jn,SCR,Andhra Pradesh,B,25,4,17.44599,80.15316,26
+DPU,Diphu,NFR,Assam,B,30,4,25.83725,93.43838,26
+DRD,Dahanu Road,WR,Maharashtra,B,30,4,19.99122,72.74337,26
+HRR,Harihar,SWR,Karnataka,B,26,4,14.51543,75.81231,26
+KCG,Kacheguda,SCR,Andhra Pradesh,Metro,71,16,17.38956,78.49976,26
+KSG,Kishangarh,NWR,Rajasthan,B,33,4,26.58897,74.85555,26
+NH,Naihati Jn,ER,West Bengal,B,26,4,22.88856,88.4185,26
+NHH,Nihalgarh,NR,Uttar Pradesh,B,32,4,26.46013,81.63258,26
+PKW,Pilkhua,NR,Uttar Pradesh,B,26,4,28.71233,77.66801,26
+PTJ,Podanur Jn,SR,Tamil Nadu,B,32,4,10.96542,76.99013,26
+QLD,Quilandi,SR,Kerala,B,29,4,11.44614,75.69392,26
+SEG,Shegaon,SCR,Maharashtra,B,25,4,20.80172,76.69033,26
+WKI,Wadakancheri,SR,Kerala,B,34,4,10.64896,76.23704,26
+BGZ,Bahadurgarh,NR,Haryana,B,26,4,28.70086,76.93089,25
+BPHB,Bhilai Power House,SECR,Chhattisgarh,B,30,4,21.20812,81.3759,25
+DBD,Deoband,NR,Uttar Pradesh,B,26,4,29.68003,77.67087,25
+DMN,Dhamangaon,CR,Maharashtra,B,34,4,20.78467,78.13805,25
+FK,Ferok,SR,Kerala,B,32,4,11.17497,75.83028,25
+GADJ,Gandhinagar Jaipur,NWR,Rajasthan,B,33,4,26.87307,75.79828,25
+KPY,Karunagapalli,SR,Kerala,B,29,4,9.06527,76.54402,25
+MALM,Manthralayam Rd,SCR,Andhra Pradesh,B,29,4,15.94904,77.2992,25
+MXN,Mariani Jn,NFR,Assam,B,31,4,26.65243,94.3082,25
+SGZ,Shamgarh,WR,Madhya Pradesh,B,32,4,24.19114,75.64284,25
+SSB,Shakurbasti,NR,Delhi NCT,B,33,4,28.68023,77.12991,25
+ANGL,Angul,ECoR,Orissa,B,25,4,20.85945,85.09999,24
+ARJ,Aunrihar Jn,NER,Uttar Pradesh,B,31,4,25.54466,83.18727,24
+BMT,Begampet,SCR,Andhra Pradesh,B,26,4,17.43887,78.45863,24
+BVH,Ballabgarh,NR,Delhi NCT,B,27,4,28.34086,77.31278,24
+COR,Chittaurgarh,WR,Rajasthan,B,33,4,24.87434,74.62369,24
+DAA,Datia,NCR,Uttar Pradesh,B,27,4,25.64107,78.45636,24
+DMO,Damoh,WCR,Madhya Pradesh,B,32,4,23.83669,79.43225,24
+DNKL,Dhenkanal,ECoR,Orissa,B,29,4,20.67683,85.59088,24
+DUI,Dhuri Jn,NR,Punjab,B,27,4,30.37274,75.8666,24
+GHD,Garwa Road,ECR,Jharkhand,B,28,4,24.21442,83.88512,24
+GIMB,Gandhidham Bg,WR,Gujarat,B,30,4,23.06909,70.14775,24
+HZD,Hazaribagh Road,ER,Jharkhand,B,32,4,24.17458,85.89204,24
+J,Jalna,SCR,Maharashtra,B,31,4,19.83078,75.89314,24
+KOP,C Shahu M Raj Kolhapur Term,CR,Maharashtra,B,34,4,16.70257,74.2377,24
+KUH,Khachrod,WR,Madhya Pradesh,B,33,4,23.44267,75.28634,24
+MDR,Madhira,SCR,Andhra Pradesh,B,32,4,16.92183,80.36685,24
+MKN,Makrana Jn,NWR,Rajasthan,B,31,4,27.03753,74.72315,24
+RDL,Rudauli,NR,Uttar Pradesh,B,27,4,26.76219,81.7542,24
+SBG,Sahibganj Jn,NFR,Bihar,B,29,4,25.24139,87.63458,24
+SIOB,Samakhiali Jn,WR,Gujarat,B,26,4,23.30982,70.50339,24
+TTR,Tiptur,SWR,Karnataka,B,28,4,13.25615,76.47599,24
+HGT,Hinganghat,CR,Maharashtra,B,34,4,20.54263,78.83393,23
+JHL,Jakhal Jn,NR,Haryana,B,29,4,29.80181,75.8245,23
+KRJ,Khurja Jn,NR,Uttar Pradesh,B,26,4,28.20641,77.81904,23
+KRR,Karur,SR,Tamil Nadu,B,31,4,10.96564,78.08509,23
+KSV,Kosi Kalan,NCR,Uttar Pradesh,B,34,4,27.78855,77.446,23
+NDO,Nidubrolu,SCR,Andhra Pradesh,B,33,4,16.0679,80.55724,23
+NYN,Naini,NER,Uttar Pradesh,B,27,4,25.39314,81.86004,23
+PHD,Phaphund,NCR,Uttar Pradesh,B,29,4,26.63212,79.55426,23
+PLO,Pulgaon Jn,CR,Maharashtra,B,30,4,20.72673,78.31811,23
+PRG,Prayag,NR,Uttar Pradesh,B,27,4,25.46794,81.86708,23
+RMA,Ramganj Mandi,WCR,Rajasthan,B,27,4,24.64461,75.93941,23
+SKM,Singarayakonda,SCR,Andhra Pradesh,B,27,4,15.25312,80.02713,23
+SMBX,Samba,NR,Jammu and Kashmir,B,34,4,32.52836,75.12026,23
+TMR,Tumsar Road,SECR,Maharashtra,B,32,4,21.34244,79.75142,23
+TPT,Tirupattur Jn,SWR,Karnataka,B,33,4,12.49795,78.56142,23
+ALU,Ariyalur,SR,Tamil Nadu,B,33,4,11.15004,79.06832,22
+BHW,Barharwa Jn,ER,Jharkhand,B,34,4,24.85775,87.77449,22
+BNZ,Badshahnagar,NER,Uttar Pradesh,B,26,4,26.86861,80.96136,22
+BPRD,Barpeta Road,NFR,Assam,B,33,4,26.50285,90.96396,22
+DGA,Dighwara,ECR,Bihar,B,25,4,25.74394,85.00317,22
+DLK,Dalkolha,NFR,Bihar,B,29,4,25.87342,87.83888,22
+DTO,Daltonganj,ECR,Jharkhand,B,30,4,24.03308,84.07484,22
+DZA,Dasuya,NR,Punjab,B,28,4,31.80853,75.65793,22
+GAR,Gadarwara,WCR,Madhya Pradesh,B,26,4,22.89946,78.79173,22
+GDV,Gudivada Jn,SCR,Andhra Pradesh,B,26,4,16.42989,80.98759,22
+GUNA,Guna,WCR,Madhya Pradesh,B,33,4,24.6405,77.3141,22
+HX,Cuddapah,SCR,Andhra Pradesh,B,28,4,14.45169,78.82918,22
+MBNR,Mahbubnagar,SCR,Andhra Pradesh,B,28,4,16.75777,77.99943,22
+MEX,Mukerian,NR,Punjab,B,34,4,31.94187,75.61184,22
+MHD,Mahemdavad Kheda Rd,WR,Gujarat,B,26,4,22.81956,72.75248,22
+MUE,Mudkhed,SCR,Maharashtra,B,34,4,19.14809,77.50966,22
+PTB,Pattambi,SR,Kerala,B,34,4,10.80193,76.18134,22
+SAN,Sandila,NR,Uttar Pradesh,B,30,4,27.05945,80.51735,22
+SGL,Sagauli Jn,ECR,Bihar,B,26,4,26.75819,84.73934,22
+SIP,Suraimanpur,NER,Bihar,B,26,4,25.80918,84.48002,22
+SRID,Shridham,WCR,Madhya Pradesh,B,27,4,23.03384,79.4844,22
+SSPN,Satya Sai P Nilayam,SCR,Andhra Pradesh,B,30,4,14.16047,77.75756,22
+TJ,Thanjavur,SR,Tamil Nadu,B,26,4,10.77809,79.1383,22
+VMA,Vikramgarh Alot,WR,Madhya Pradesh,B,29,4,23.76512,75.53838,22
+YG,Yadgir,SCR,Andhra Pradesh,B,26,4,16.7444,77.13037,22
+ADH,Andheri,WR,Maharashtra,B,30,4,19.11743,72.84685,21
+AH,Achhnera Jn,NCR,Uttar Pradesh,B,25,4,27.18176,77.75784,21
+AZ,Azimganj Jn,ER,West Bengal,B,32,4,24.21905,88.25676,21
+BAB,Babina,NCR,Uttar Pradesh,B,25,4,25.23783,78.45175,21
+BCN,Bachhrawan,NR,Uttar Pradesh,B,26,4,26.47732,81.10546,21
+BLGR,Balangir,SECR,Chhattisgarh,B,26,4,20.68859,83.49421,21
+BLM,Balamu Jn,NR,Uttar Pradesh,B,33,4,27.16736,80.3525,21
+GGJ,Goshainganj,NR,Uttar Pradesh,B,25,4,26.56952,82.38412,21
+GOTN,Gotan,NWR,Rajasthan,B,29,4,26.6522,73.73728,21
+GYN,Gyanpur Road,NER,Uttar Pradesh,B,30,4,25.28014,82.42729,21
+KATL,Katol,SECR,Maharashtra,B,30,4,21.2632,78.59066,21
+KEI,Kashi,NER,Uttar Pradesh,B,31,4,25.32656,83.03194,21
+KRH,Khairthal,NWR,Rajasthan,B,33,4,27.79732,76.6417,21
+KRNT,Kurnool Town,SCR,Andhra Pradesh,B,28,4,15.83371,78.03266,21
+PAN,Panagarh,ER,West Bengal,B,33,4,23.44303,87.43959,21
+RGDA,Rayagada,ECoR,Orissa,B,28,4,19.17564,83.41051,21
+TMV,Tindivanam,SR,Tamil Nadu,B,34,4,12.22941,79.65133,21
+UMR,Umaria,WCR,Madhya Pradesh,B,30,4,23.52273,80.82324,21
+YNK,Yelhanka Jn,SWR,Karnataka,B,32,4,13.1028,77.59307,21
+AMP,Ahmadpur Jn,ER,West Bengal,B,33,4,23.83251,87.69284,20
+AMPA,Ambalapuzha,SR,Kerala,B,32,4,9.38606,76.36382,20
+BCH,Berchha,SER,Jharkhand,B,33,4,23.28248,76.33419,20
+BCY,Varanasi City,NER,Uttar Pradesh,B,30,4,25.33412,83.01411,20
+BEA,Bihiya,ECR,Bihar,B,25,4,25.55889,84.44898,20
+BIH,Bairagarh,WCR,Madhya Pradesh,B,29,4,23.27361,77.33622,20
+BNDA,Banda Jn,NCR,Uttar Pradesh,B,26,4,25.47768,80.33625,20
+BRR,Barakar,SER,West Bengal,B,33,4,23.74168,86.81886,20
+BTA,Bihta,ECR,Bihar,B,27,4,25.56095,84.87409,20
+BTTR,Bitragunta,SCR,Andhra Pradesh,B,27,4,14.76858,79.98315,20
+CAP,Chatrapur,ECoR,Andhra Pradesh,B,27,4,19.35896,84.97327,20
+CKTD,Chitrakutdham Karwi,NCR,Uttar Pradesh,B,31,4,25.21761,80.92278,20
+CLG,Kahalgaon,CR,Maharashtra,B,30,4,25.26219,87.23375,20
+GCT,Ghazipur City,NER,Uttar Pradesh,B,34,4,25.58314,83.56804,20
+HAD,Harippad,SR,Kerala,B,29,4,9.2796,76.46223,20
+HRS,Hathras Jn,NCR,Uttar Pradesh,B,27,4,27.62483,78.13707,20
+KMU,Kumbakonam,SR,Tamil Nadu,B,25,4,10.95296,79.38864,20
+KY,Kareli,WCR,Madhya Pradesh,B,25,4,22.93234,79.06677,20
+KYE,Khurai,WCR,Madhya Pradesh,B,28,4,24.05153,78.33113,20
+LSI,Laheria Sarai,ECR,Bihar,B,34,4,26.11063,85.90382,20
+MDN,Midnapore,SER,West Bengal,B,30,4,22.42498,87.30738,20
+MML,Madan Mahal,WCR,Madhya Pradesh,B,33,4,23.15948,79.92042,20
+NGO,Nagaur,NWR,Rajasthan,B,26,4,27.19999,73.72357,20
+NLDA,Nalgonda,SCR,Andhra Pradesh,B,25,4,17.06118,79.28344,20
+PLG,Palghar,WR,Maharashtra,B,33,4,19.69804,72.77248,20
+SMBJ,Shri Mahabirji,WCR,Rajasthan,B,26,4,26.68416,76.96766,20
+AKT,Akaltara,SECR,Chhattisgarh,B,25,4,22.02912,82.42205,19
+AMH,Azamgarh,NER,Uttar Pradesh,B,29,4,26.03861,83.16061,19
+BRGA,Bargarh Road,SECR,Chhattisgarh,B,34,4,21.3329,83.64259,19
+BRRG,Biyavra Rajgarh,WCR,Rajasthan,B,31,4,23.93591,76.90701,19
+JIND,Jind Jn,NR,Haryana,B,25,4,29.32888,76.28962,19
+KHT,Sri Kalahasti,SCR,Andhra Pradesh,B,33,4,13.74636,79.68304,19
+KQN,Kodaikanal Road,SR,Tamil Nadu,B,33,4,10.17961,77.90959,19
+KSNG,Kesinga,ECoR,Orissa,B,33,4,20.1881,83.22471,19
+PFM,Phaphamau Jn,NR,Uttar Pradesh,B,34,4,25.52426,81.86641,19
+SPE,Sullurupeta,SR,Tamil Nadu,B,27,4,13.69646,80.01816,19
+ZBD,Zafarabad Jn,NR,Uttar Pradesh,B,34,4,25.70844,82.71901,19
+ZN,Jangaon,SCR,Andhra Pradesh,B,28,4,17.72511,79.15473,19
+ALY,Allahabad City,NER,Uttar Pradesh,B,33,4,25.44241,81.82974,18
+ATE,Atarra,NCR,Uttar Pradesh,B,30,4,25.29137,80.57649,18
+BCOB,Bhachau Bg,WR,Gujarat,B,32,4,23.30139,70.34497,18
+BER,Beawar,NWR,Rajasthan,B,31,4,26.10891,74.31497,18
+BLTR,Belthara Road,NER,Uttar Pradesh,B,31,4,26.12142,83.84172,18
+BRKA,Barkakana,SER,Jharkhand,B,31,4,23.62416,85.46955,18
+BRWD,Barwadih Jn,ECR,Jharkhand,B,32,4,23.84384,84.11878,18
+BTH,Bettiah,ECR,Bihar,B,32,4,26.80588,84.52296,18
+CHI,Chiplun,KR,Maharashtra,B,26,4,17.54251,73.52243,18
+DDR,Mumbai Dadar West,WR,Maharashtra,B,33,4,19.01973,72.84347,18
+DSA,Delhi Shahdara,NR,Delhi NCT,B,30,4,28.6731,77.29315,18
+GJL,Gajraula Jn,NR,Uttar Pradesh,B,28,4,28.83494,78.25078,18
+GKH,Guskara,ER,West Bengal,B,30,4,23.49,87.7334,18
+GPB,Ghatprabha,SWR,Karnataka,B,34,4,16.24072,74.75982,18
+JOP,Jaunpur City,NR,Uttar Pradesh,B,33,4,25.73412,82.667,18
+KCVL,Kochuveli,SR,Kerala,B,33,4,8.50925,76.8961,18
+KJH,Kajra,ECR,Bihar,B,29,4,25.18277,86.26157,18
+KPQ,Kannapuram,SR,Kerala,B,32,4,11.98408,75.31381,18
+KSB,Kosamba Jn,WR,Gujarat,B,28,4,21.46405,72.9546,18
+MAHE,Mahe,SR,Puducherry,B,31,4,11.69923,75.54697,18
+MFKA,Musafir Khana,NR,Uttar Pradesh,B,31,4,26.37958,81.79982,18
+MRGA,Miryalaguda,SCR,Andhra Pradesh,B,27,4,16.86039,79.5335,18
+MTY,Multai,CR,Madhya Pradesh,B,27,4,21.78354,78.26283,18
+MV,Mayiladuturai Jn,SR,Tamil Nadu,B,25,4,11.09524,79.62868,18
+MW,Mairwa,NER,Bihar,B,26,4,26.24031,84.15198,18
+MYA,Mandya,SWR,Karnataka,B,29,4,12.52918,76.89726,18
+NKE,Narkatiaganj Jn,ECR,Bihar,B,29,4,27.10504,84.46404,18
+NOK,Nokha,NWR,Rajasthan,B,26,4,27.5562,73.47485,18
+NRKR,Narkher,SECR,Madhya Pradesh,B,29,4,21.46872,78.52481,18
+NZB,Nizamabad,SCR,Andhra Pradesh,B,31,4,18.67916,78.10324,18
+PC,Pachora Jn,CR,Maharashtra,B,27,4,20.66839,75.34831,18
+PHA,Patharia,WCR,Madhya Pradesh,B,28,4,23.90573,79.1929,18
+PTU,Partur,SCR,Maharashtra,B,28,4,19.57571,76.21277,18
+RFJ,Rafiganj,ECR,Bihar,B,30,4,24.81969,84.6348,18
+RJP,Razampeta,SCR,Andhra Pradesh,B,28,4,14.18452,79.15274,18
+SBB,Sahibabad,NR,Delhi NCT,B,32,4,28.67404,77.36418,18
+SBPD,Sambalpur Road,SER,Orissa,B,28,4,21.4779,83.97571,18
+SDB,Shahabad,SCR,Andhra Pradesh,B,29,4,17.12166,76.94351,18
+SELU,Selu,SCR,Maharashtra,B,28,4,19.44806,76.43326,18
+SHR,Sihora Road,WCR,Madhya Pradesh,B,26,4,23.46714,80.11026,18
+TDU,Tandur,SCR,Andhra Pradesh,B,31,4,17.25044,77.58504,18
+TLHD,Talcher Road,ECoR,Orissa,B,27,4,20.88665,85.20793,18
+TU,Tadipatri,SCR,Andhra Pradesh,B,27,4,14.90756,77.97898,18
+WJR,Walajah Road Jn,SR,Tamil Nadu,B,32,4,12.97068,79.36051,18
+YA,Yerraguntla,SCR,Andhra Pradesh,B,34,4,14.64233,78.534,18
+ZNA,Zamania,NER,Uttar Pradesh,B,31,4,25.37386,83.54365,18
+AJNI,Ajni,SECR,Maharashtra,B,34,4,21.12686,79.08252,17
+BIM,Bilimora Jn,WR,Gujarat,B,33,4,20.76332,72.97047,17
+CH,Chandausi Jn,NR,Uttar Pradesh,B,29,4,28.45863,78.78027,17
+DWK,Dwarka,WR,Gujarat,B,32,4,22.25102,68.98043,17
+FKG,Furkating Jn,NFR,Assam,B,28,4,26.46565,94.00269,17
+GLPT,Goalpara Town,NFR,Assam,B,29,4,26.12653,90.62066,17
+GP,Raj Gangpur,SER,Orissa,B,30,4,22.18606,84.58205,17
+HAN,Hindaun City,WCR,Rajasthan,B,34,4,26.75616,77.03169,17
+JMT,Jamtara,SER,West Bengal,B,33,4,23.9589,86.80518,17
+JUDW,Jagadhri Workshop,NR,Uttar Pradesh,B,29,4,30.13556,77.24082,17
+KPN,Kuppam,SWR,Karnataka,B,31,4,12.74683,78.33955,17
+KSRA,Kasara,CR,Maharashtra,B,27,4,19.64716,73.472,17
+KTQ,Kudra,ECR,Bihar,B,33,4,25.04855,83.79337,17
+KWAE,Katwa,ER,West Bengal,B,30,4,23.64032,88.12408,17
+LTHR,Latehar,SER,Jharkhand,B,30,4,23.72509,84.46812,17
+MLPR,Malipur,NR,Uttar Pradesh,B,32,4,26.28148,82.6313,17
+MNGD,Muniguda,ECoR,Orissa,B,31,4,19.62753,83.48834,17
+MZR,Murtajapur,CR,Maharashtra,B,25,4,20.73647,77.35482,17
+NDAE,Nabadwip Dham,ER,West Bengal,B,27,4,23.39659,88.35647,17
+NN,Nandura,SCR,Maharashtra,B,26,4,20.83889,76.46016,17
+NRW,Narwana Jn,NR,Haryana,B,32,4,29.58863,76.10929,17
+OKHA,Okha,WR,Gujarat,B,25,4,22.47096,69.07377,17
+PVPT,Parvatipuram Tn,ECoR,Andhra Pradesh,B,27,4,18.78387,83.4337,17
+PWL,Palwal,NR,Delhi NCT,B,30,4,28.15184,77.34223,17
+RTA,Ruthiyai,WCR,Rajasthan,B,31,4,24.53192,77.17583,17
+SBI,Sabarmati Jn,WR,Gujarat,B,30,4,23.07298,72.58716,17
+SCM,Simhachalam,ECoR,Andhra Pradesh,B,33,4,17.74467,83.22045,17
+SFY,Shajapur,SER,Jharkhand,B,34,4,23.42507,76.29784,17
+TDO,Tanda Urmar,NR,Punjab,B,26,4,31.67218,75.6376,17
+THB,Thana Bihpur Jn,ER,Bihar,B,34,4,25.39357,86.93476,17
+THVM,Thivim,KR,Goa,B,31,4,15.62955,73.8761,17
+TORI,Tori,SER,Jharkhand,B,31,4,23.68081,84.73977,17
+YLM,Ellamanchili,ECoR,Andhra Pradesh,B,25,4,17.55365,82.85262,17
+AB,Ambur,SR,Tamil Nadu,B,31,4,12.78293,78.72127,16
+AKVD,Akividu,SCR,Andhra Pradesh,B,32,4,16.58265,81.36905,16
+AUB,Aluabari Road,NFR,West Bengal,B,30,4,26.26968,88.18561,16
+BHTR,Bhatpar Rani,NER,Uttar Pradesh,B,25,4,26.31048,84.0331,16
+BTJL,Bhatkal,KR,Karnataka,B,30,4,13.98866,74.56556,16
+BUG,Bagaha,ECR,Bihar,B,34,4,27.13005,84.06699,16
+BV,Babhnan,NR,Uttar Pradesh,B,32,4,26.93853,82.50013,16
+BVRT,Bhimavaram Town,SCR,Andhra Pradesh,B,26,4,16.54735,81.51685,16
+BYNR,Mookambika Road,KR,Karnataka,B,34,4,13.87259,74.63279,16
+CAPE,Kanyakumari,SR,Tamil Nadu,B,34,4,8.08803,77.5425,16
+CHV,Charvattur,SR,Kerala,B,26,4,12.21332,75.15435,16
+CNI,Chandil Jn,SER,Jharkhand,B,33,4,22.95601,86.07211,16
+CPK,Chaparmukh Jn,NFR,Assam,B,29,4,26.20227,92.51172,16
+CPU,Chopan,ECR,Uttar Pradesh,B,30,4,24.51403,83.02584,16
+DHG,Dhrangdhra,WR,Gujarat,B,29,4,22.98717,71.47911,16
+DOL,Dholi,ECR,Bihar,B,32,4,25.97695,85.56249,16
+HJI,Hojai,NFR,Assam,B,34,4,26.00179,92.85175,16
+IAA,Indara Jn,NER,Uttar Pradesh,B,32,4,25.98783,83.61961,16
+JER,Jaleswar,SER,Orissa,B,34,4,21.79749,87.22049,16
+JHD,Jehanabad,ECR,Bihar,B,34,4,25.22471,84.98996,16
+KOU,Koduru,SCR,Andhra Pradesh,B,25,4,13.94858,79.34569,16
+KRBP,Khudiram B Pusa,ECR,Bihar,B,27,4,25.90643,85.67268,16
+KT,Kumta,KR,Karnataka,B,32,4,14.43687,74.42065,16
+KUDA,Kundapura,KR,Karnataka,B,30,4,13.61291,74.72837,16
+KUDL,Kudal,KR,Maharashtra,B,25,4,16.01765,73.67813,16
+LKU,Lal Kuan,NER,Uttarakhand,B,25,4,29.07157,79.51764,16
+LS,Lasalgaon,SCR,Maharashtra,B,30,4,20.15485,74.22598,16
+LSR,Lasur,SCR,Maharashtra,B,31,4,19.92608,75.01149,16
+MUV,Manduadih,NER,Uttar Pradesh,B,26,4,25.3,82.97208,16
+MVO,Manwath Road,SCR,Maharashtra,B,26,4,19.35816,76.53452,16
+NDKD,Nadikode,SCR,Andhra Pradesh,B,26,4,16.59063,79.72357,16
+NLE,Nileshwar,SR,Kerala,B,30,4,12.25589,75.13575,16
+NYP,Nayadupeta,SR,Tamil Nadu,B,25,4,13.90832,79.9009,16
+PGRL,Piduguralla,SCR,Andhra Pradesh,B,30,4,16.47779,79.87629,16
+PMY,Pali Marwar,NWR,Rajasthan,B,29,4,25.79069,73.32731,16
+RAIR,Rairakhol,SER,Odisha,B,29,4,21.04674,84.33356,16
+RGO,Rotegaon,SCR,Maharashtra,B,31,4,19.95613,74.75787,16
+ROZA,Roza Jn,NER,Uttar Pradesh,B,30,4,27.85312,79.95604,16
+SAP,Sattenapalle,SCR,Andhra Pradesh,B,32,4,16.40502,80.1527,16
+SEB,Son Nagar,ECR,Bihar,B,32,4,24.88221,84.22927,16
+SEH,Sehore,WCR,Madhya Pradesh,B,34,4,23.2151,77.07788,16
+SRGM,Srirangam,SR,Tamil Nadu,B,32,4,10.85792,78.69635,16
+SRJ,Shankargarh,NCR,Madhya Pradesh,B,30,4,25.1813,81.61903,16
+SURI,Siuri,ER,West Bengal,B,29,4,23.89018,87.5327,16
+TA,Tanur,SR,Kerala,B,27,4,10.97954,75.8806,16
+THAN,Than Jn,WR,Gujarat,B,30,4,22.57896,71.20653,16
+TRL,Tiruvallur,SR,Tamil Nadu,B,26,4,13.11576,79.91311,16
+TVP,Trivandrum Pettai,SR,Kerala,B,34,4,8.49452,76.93167,16
+UDN,Udhna Jn,WR,Gujarat,B,33,4,21.17116,72.85146,16
+VSU,Bishnupur,SER,West Bengal,B,26,4,23.0655,87.30107,16
+APDJ,Alipur Duar Jn,NFR,West Bengal,B,32,4,26.52328,89.53405,15
+APT,Anaparti,SCR,Andhra Pradesh,B,26,4,16.93582,81.95318,15
+BG,Bhongir,SCR,Andhra Pradesh,B,32,4,17.5247,78.89847,15
+BHL,Bhilwara,NWR,Rajasthan,B,25,4,25.34355,74.63077,15
+BMB,Bamra,SER,Orissa,B,29,4,22.05136,84.29104,15
+BNT,Bharthana,NCR,Madhya Pradesh,B,31,4,26.75022,79.21636,15
+BOR,Boisar,WR,Maharashtra,B,32,4,19.79853,72.7619,15
+BURN,Burnpur,SER,West Bengal,B,29,4,23.67191,86.93862,15
+DBRG,Dibrugarh,NFR,Assam,B,34,4,27.46361,94.93526,15
+DKZ,Delhi Kishanganj,NR,Delhi NCT,B,32,4,28.66473,77.20126,15
+DWP,Dwarapudi,SCR,Andhra Pradesh,B,27,4,16.92756,81.92266,15
+DYD,Daryabad,NER,Uttar Pradesh,B,31,4,26.8613,81.55011,15
+IDH,Idgah Agra Jn,NCR,Uttar Pradesh,B,32,4,27.17265,77.99781,15
+JAA,Jhalida,SER,Jharkhand,B,28,4,23.37,85.97528,15
+JPE,Jalpaiguri Road,NFR,West Bengal,B,32,4,26.55902,88.70945,15
+KMBL,Khambhaliya,WR,Gujarat,B,33,4,22.21751,69.65734,15
+KMME,Kumardubi,SER,West Bengal,B,33,4,23.74745,86.79407,15
+KVR,Kovvur,SCR,Andhra Pradesh,B,32,4,17.00708,81.72649,15
+MABA,Mandi Bamora,WCR,Madhya Pradesh,B,31,4,24.05403,78.08244,15
+MBA,Mahoba,NCR,Uttar Pradesh,B,27,4,25.30691,79.84908,15
+MBM,Mambalam,SR,Tamil Nadu,B,32,4,13.03815,80.22816,15
+MCA,Mecheda,SER,West Bengal,B,28,4,22.4141,87.85883,15
+MNP,Mananpur,ECR,Jharkhand,B,30,4,25.10493,86.15541,15
+MUT,Meerut Cant,NR,Uttar Pradesh,B,28,4,29.016,77.68694,15
+NGN,Nandgaon,SCR,Maharashtra,B,28,4,20.30762,74.65953,15
+NIA,Naila,SECR,Chhattisgarh,B,26,4,22.02296,82.56459,15
+NMH,Nimach,WR,Madhya Pradesh,B,34,4,24.45987,74.85303,15
+NPNR,Nepanagar,CR,Madhya Pradesh,B,26,4,21.46393,76.39703,15
+NTSK,New Tinsukia Jn,NFR,Assam,B,25,4,27.47975,95.33413,15
+PAP,Pithapuram,SCR,Andhra Pradesh,B,34,4,17.11087,82.25751,15
+PTRD,Pataudi Road,NR,Haryana,B,30,4,28.35074,76.75557,15
+PTRU,Patratu,SER,Jharkhand,B,29,4,23.66702,85.30588,15
+SVJR,Shivajinagar,CR,Maharashtra,B,32,4,18.53174,73.85115,15
+UDZ,Udaipur City,NWR,Rajasthan,B,28,4,24.56686,73.69963,15
+VBL,Bobbili,ECoR,Andhra Pradesh,B,26,4,18.57676,83.34572,15
+VKI,Venkatagiri,SCR,Andhra Pradesh,B,32,4,13.94386,79.60399,15
+AJI,Anjhi Shahabad,NER,Uttar Pradesh,C,16,2,27.64399,79.97331,14
+AO,Aonla,NR,Uttar Pradesh,C,20,2,28.29605,79.16915,14
+BCA,Bachwara Jn,ECR,Bihar,C,24,2,25.58126,85.90014,14
+BRJN,Brajrajnagar,SER,Orissa,C,24,2,21.82272,83.92365,14
+BRS,Birsinghpur,WCR,Madhya Pradesh,C,18,2,23.36721,81.04335,14
+CAA,Chakia,ECR,Bihar,C,22,2,26.41718,85.04636,14
+CLJ,Colonelganj,NER,Uttar Pradesh,C,21,2,27.1377,81.69418,14
+CRR,Karagola Road,CR,Maharashtra,C,19,2,25.50001,87.37783,14
+CRY,Chirayinkil,SR,Kerala,C,16,2,8.65834,76.78537,14
+DBR,Dabhaura,NCR,Uttar Pradesh,C,18,2,25.11793,81.30313,14
+DPJ,Dharmapuri,SWR,Tamil Nadu,C,21,2,12.1266,78.15474,14
+DPR,Dhampur,NR,Uttar Pradesh,C,24,2,29.30545,78.50159,14
+DRH,Dharhara,ECR,Bihar,C,15,2,25.25789,86.41154,14
+FZR,Firozpur Cant,NR,Punjab,C,22,2,30.94249,74.61844,14
+GDG,Gadag Jn,SWR,Karnataka,C,23,2,15.43705,75.64248,14
+GDL,Gondal,WR,Gujarat,C,24,2,21.97247,70.79559,14
+GHR,Gidhaur,ECR,Jharkhand,C,19,2,24.85617,86.324,14
+GNU,Ganaur,NR,Haryana,C,16,2,29.13078,77.01075,14
+GRRU,Guraru,ECR,Bihar,C,17,2,24.81111,84.79183,14
+GTS,Ghatsila,SER,Jharkhand,C,23,2,22.58616,86.47977,14
+GWD,Gadwal,SCR,Andhra Pradesh,C,23,2,16.22509,77.80967,14
+HDW,Haldwani,NER,Uttarakhand,C,21,2,29.2151,79.53373,14
+HSRA,Hosur,SWR,Tamil Nadu,C,16,2,12.71761,77.82284,14
+IPM,Ichchpuram,ECoR,Andhra Pradesh,C,16,2,19.11075,84.68043,14
+JID,Jagi Road,NFR,Assam,C,19,2,26.12611,92.19746,14
+JLD,Jarwal Road,NER,Uttar Pradesh,C,20,2,27.12039,81.54041,14
+JLL,Jalalganj,NR,Uttar Pradesh,C,15,2,25.61252,82.77246,14
+JYG,Jaynagar,ECR,Bihar,C,21,2,26.58947,86.13487,14
+KBJ,Kantabanji,SECR,Chhattisgarh,C,20,2,20.47406,82.90652,14
+KDM,Kesamudram,SCR,Andhra Pradesh,C,15,2,17.68625,79.89647,14
+KDP,Kondapuram,SCR,Andhra Pradesh,C,15,2,14.77355,78.19346,14
+KGM,Kathgodam,NER,Uttarakhand,C,19,2,29.26658,79.54633,14
+KHNM,Kunda Harnamganj,NR,Uttar Pradesh,C,22,2,25.71418,81.50955,14
+KHS,Kharsia,SECR,Chhattisgarh,C,23,2,21.99178,83.10241,14
+KKW,Kankavali,KR,Maharashtra,C,19,2,16.25878,73.71987,14
+KMC,Kamareddi,SCR,Andhra Pradesh,C,17,2,18.32586,78.33586,14
+KMNC,Kuchaman City,NWR,Rajasthan,C,24,2,27.05355,74.85146,14
+KMZ,Katni Murwara,WCR,Madhya Pradesh,C,19,2,23.83436,80.40148,14
+KRAR,Khariar Road,SECR,Chhattisgarh,C,18,2,20.90139,82.51051,14
+KSN,Krishna,SCR,Andhra Pradesh,C,19,2,16.40932,77.32856,14
+KVU,Kadakavur,SR,Kerala,C,15,2,8.67908,76.76667,14
+LPI,Lingampalli,SCR,Andhra Pradesh,C,18,2,17.48287,78.31677,14
+LTRR,Latur Road,SCR,Maharashtra,C,20,2,18.50649,76.84529,14
+MAP,Morappur,SWR,Tamil Nadu,C,24,2,12.12407,78.39387,14
+MBI,Madhubani,ECR,Bihar,C,22,2,26.34817,86.07678,14
+MVJ,Mavli Jn,NWR,Rajasthan,C,22,2,24.79459,73.97372,14
+NGG,Nagina,NR,Uttar Pradesh,C,20,2,29.43792,78.42412,14
+NSL,Nagarsol,SCR,Maharashtra,C,16,2,20.10245,74.54165,14
+NUR,Narela,NR,Delhi NCT,C,18,2,28.84689,77.08573,14
+PAZ,Payangadi,SR,Kerala,C,24,2,12.02151,75.2596,14
+PLP,Phulpur,NR,Uttar Pradesh,C,15,2,25.55253,82.09153,14
+PPT,Pirpainti,CR,Maharashtra,C,23,2,25.29038,87.42182,14
+PVU,Paravur,SR,Kerala,C,21,2,8.81576,76.66824,14
+RUPC,Rudrapur City,NER,Uttarakhand,C,17,2,28.96928,79.37921,14
+SAG,Sangrur,NR,Punjab,C,22,2,30.24379,75.83052,14
+SKT,Sakti,SECR,Chhattisgarh,C,23,2,22.01179,82.95653,14
+SPT,Sompeta,ECoR,Andhra Pradesh,C,15,2,18.9813,84.5815,14
+SWV,Sawantwadi Road,KR,Maharashtra,C,16,2,15.86651,73.78531,14
+TEA,Taregna,ECR,Bihar,C,21,2,25.35523,85.03811,14
+TLH,Tilhar,NER,Uttar Pradesh,C,24,2,27.97298,79.74178,14
+UCR,Unchahar Junction,NR,Uttar Pradesh,C,15,2,25.90232,81.30014,14
+VDS,Vidyasagar,ER,Jharkhand,C,21,2,24.10382,86.69842,14
+ANR,Anara,SER,West Bengal,C,16,2,23.48108,86.55976,13
+BBM,Barabhum,SER,Jharkhand,C,21,2,23.09129,86.21124,13
+BNCE,Bangalore East,SWR,Karnataka,C,21,2,13.00148,77.61847,13
+BYL,Belha,SECR,Chhattisgarh,C,15,2,21.96197,82.07719,13
+CC,Chauri Chaura,NER,Uttar Pradesh,C,21,2,26.67388,83.54589,13
+GBD,Gauribidanur,SWR,Karnataka,C,23,2,13.61308,77.51278,13
+GMR,Gahmar,NER,Uttar Pradesh,C,23,2,25.48869,83.80443,13
+GNG,Gauriganj,NR,Uttar Pradesh,C,15,2,26.20341,81.68673,13
+HPP,Harpalpur,NCR,Madhya Pradesh,C,17,2,25.2905,79.33546,13
+HTK,Hatkanagale,CR,Maharashtra,C,17,2,16.74842,74.42207,13
+JWP,Jwalapur,NR,Uttarakhand,C,19,2,29.92846,78.12077,13
+KGB,Kargi Road,SECR,Chhattisgarh,C,16,2,22.29793,82.02683,13
+KKLR,Kaikolur,SCR,Andhra Pradesh,C,23,2,16.55103,81.21832,13
+KLK,Kalka,NR,Haryana,C,22,2,30.83767,76.93176,13
+KLRE,Khalari,SER,Jharkhand,C,23,2,23.65105,85.00163,13
+LWR,Alnavar Jn,SWR,Karnataka,C,16,2,15.42424,74.73812,13
+MDS,Mandasor,WR,Madhya Pradesh,C,15,2,24.07594,75.07634,13
+MJA,Meja Road,NER,Uttar Pradesh,C,24,2,25.22154,82.08934,13
+MRPR,Mau Ranipur,NCR,Uttar Pradesh,C,17,2,25.26127,79.13679,13
+NHT,Nalhati Jn,ER,West Bengal,C,21,2,24.29571,87.83867,13
+PHK,Punarakh,ECR,Bihar,C,24,2,25.4815,85.80376,13
+PTK,Pathankot,NR,Punjab,C,15,2,32.2718,75.64443,13
+RGL,Rengali,SER,Orissa,C,15,2,21.63689,84.0423,13
+RHG,Rajgarh,NWR,Rajasthan,C,15,2,27.24083,76.60754,13
+RPR,Raghunathpur,ECR,Bihar,C,16,2,25.56544,84.30523,13
+SLGR,Simaluguri Jn,NFR,Assam,C,15,2,26.91728,94.75682,13
+SPRD,Singapuram Road,ECoR,Orissa,C,23,2,19.25867,83.40307,13
+TBN,Timarni,WCR,Madhya Pradesh,C,21,2,22.37586,77.2294,13
+VN,Vaniyambadi,SWR,Karnataka,C,24,2,12.67849,78.62165,13
+ABKA,Ambika Kalna,ER,West Bengal,C,23,2,23.21138,88.35398,12
+AKN,Akbarnagar,ER,Bihar,C,24,2,25.23488,86.83453,12
+ALER,Aler,SCR,Andhra Pradesh,C,17,2,17.64596,79.04834,12
+AMG,Alamnagar,NER,Uttar Pradesh,C,17,2,26.84708,80.86031,12
+AN,Amalner,CR,Maharashtra,C,23,2,21.04901,75.05731,12
+ASKN,Ashok Nagar,WCR,Madhya Pradesh,C,17,2,24.58015,77.72673,12
+AZR,Azamnagar Road,NFR,Bihar,C,15,2,25.55556,87.85233,12
+BAY,Bellary Jn,SWR,Karnataka,C,21,2,15.14513,76.92199,12
+BGBR,Bagbahra,SECR,Chhattisgarh,C,23,2,21.04629,82.38415,12
+BHUJ,Bhuj,WR,Gujarat,C,24,2,23.26602,69.67783,12
+BNN,Barnala,NR,Punjab,C,24,2,30.3704,75.54925,12
+BNW,Bhiwani,NWR,Haryana,C,16,2,28.79843,76.12558,12
+BONA,Boinda,SER,Odisha,C,22,2,20.92004,84.74821,12
+BSX,Basar,SCR,Andhra Pradesh,C,23,2,18.86512,77.93851,12
+BTP,Babatpur,NER,Uttar Pradesh,C,21,2,25.45362,82.88002,12
+BUW,Burhwal,NER,Uttar Pradesh,C,23,2,27.08708,81.39016,12
+CDM,Chidambaram,SR,Tamil Nadu,C,23,2,11.39147,79.70334,12
+CMU,Chau Mahla,WR,Madhya Pradesh,C,19,2,23.9482,75.60086,12
+CPP,Chipurupalle,ECoR,Andhra Pradesh,C,15,2,18.31626,83.56961,12
+DRU,Kadur,SWR,Karnataka,C,19,2,13.5525,76.00885,12
+FDK,Faridkot,NR,Punjab,C,17,2,30.68286,74.76138,12
+GB,Gauri Bazar,NER,Uttar Pradesh,C,16,2,26.59493,83.6678,12
+HAS,Hassan Junction,SWR,Karnataka,C,16,2,13.00318,76.11736,12
+HPT,Hospet Jn,SWR,Karnataka,C,21,2,15.28681,76.38578,12
+HRNR,Hira Nagar,NR,Jammu and Kashmir,C,20,2,32.48701,75.26873,12
+IDG,Indargarh,WCR,Rajasthan,C,20,2,25.72787,76.23294,12
+JGM,Jhargram,SER,West Bengal,C,22,2,22.45496,86.99853,12
+JWB,Jawai Bandh,NWR,Rajasthan,C,20,2,25.11404,73.14733,12
+KBL,Koppal,SWR,Karnataka,C,21,2,15.35387,76.14396,12
+KGI,Kengeri,SWR,Karnataka,C,15,2,12.91805,77.48431,12
+KKN,Khirkiya,WCR,Madhya Pradesh,C,23,2,22.16644,76.85945,12
+KP,Kamptee,SECR,Maharashtra,C,19,2,21.21172,79.19795,12
+KPI,Kalpi,NCR,Uttar Pradesh,C,16,2,26.11934,79.75561,12
+KRND,Khorason Road,NR,Uttar Pradesh,C,23,2,26.08975,82.86717,12
+KUD,Kudachi,SWR,Karnataka,C,22,2,16.62608,74.85869,12
+KZT,Kulitthurai,SR,Tamil Nadu,C,15,2,8.30235,77.21882,12
+LBA,Lambhua,NR,Uttar Pradesh,C,16,2,26.13369,82.22328,12
+LGH,Lalgarh Jn,NWR,Rajasthan,C,15,2,28.04364,73.31391,12
+MDNR,Modinagar,NR,Uttar Pradesh,C,17,2,28.82791,77.57172,12
+MKI,Bapudham Motihari,ECR,Bihar,C,15,2,26.65552,84.90525,12
+MSMD,Mahasamund,SECR,Chhattisgarh,C,22,2,21.11314,82.10389,12
+MYG,Miyagam Karjan,WR,Gujarat,C,20,2,22.05072,73.12035,12
+NBA,Nabha,NR,Punjab,C,24,2,30.36382,76.1464,12
+NRE,Nandalur,SCR,Andhra Pradesh,C,22,2,14.26492,79.10572,12
+NWP,Naupada Jn,ECoR,Andhra Pradesh,C,21,2,18.57941,84.28292,12
+PAK,Pakala Jn,SCR,Andhra Pradesh,C,20,2,13.45113,79.11408,12
+PBR,Porbandar,WR,Gujarat,C,15,2,21.6436,69.61551,12
+PGR,Pugalur,SR,Tamil Nadu,C,15,2,11.0517,77.99071,12
+PMR,Pitambarpur,NER,Uttar Pradesh,C,21,2,28.20011,79.53807,12
+PQN,Pariawan Kalakankar Road,NR,Uttar Pradesh,C,15,2,25.82579,81.3686,12
+PRLI,Parli Vaijnath,SCR,Maharashtra,C,15,2,18.853,76.52442,12
+PRP,Paharpur,?,Bihar,C,17,2,24.62493,85.20457,12
+PTA,Patiala,NR,Punjab,C,23,2,30.34425,76.4041,12
+PVRD,Piravam Road,SR,Kerala,C,19,2,9.82867,76.45473,12
+RNQ,Renukut,ECR,Uttar Pradesh,C,22,2,24.20356,83.0399,12
+RWL,Raiwala,NR,Uttarakhand,C,19,2,30.03214,78.20988,12
+SEM,Seram,SCR,Andhra Pradesh,C,16,2,17.18068,77.28353,12
+SGP,Sohagpur,WCR,Madhya Pradesh,C,18,2,22.69381,78.19434,12
+SHC,Saharsa Jn,ECR,Bihar,C,15,2,25.87521,86.59495,12
+SHM,Kolkata Shalimar,SER,West Bengal,C,22,2,22.55551,88.31561,12
+SKI,Sakri Jn,ECR,Bihar,C,16,2,26.20895,86.07814,12
+SKP,Shankarpalli,SCR,Andhra Pradesh,C,18,2,17.45082,78.13112,12
+SMK,Samalkha,NR,Haryana,C,24,2,29.24017,77.00303,12
+SMR,Samdhari Jn,NWR,Rajasthan,C,20,2,25.8372,72.57301,12
+SNSI,Sainagar Shirdi,CR,Maharashtra,C,19,2,19.78079,74.48069,12
+SOH,Sirohi Road,NWR,Rajasthan,C,20,2,24.79104,73.03983,12
+SORO,Soro,?,Orissa,C,22,2,21.29108,86.69254,12
+SRU,Salempur Jn,NER,Uttar Pradesh,C,17,2,26.29805,83.92327,12
+SVA,Suwasra,WR,Madhya Pradesh,C,21,2,24.06984,75.64834,12
+SY,Sirkazhi,SR,Tamil Nadu,C,23,2,11.2403,79.72635,12
+TRO,Tirora,SECR,Maharashtra,C,20,2,21.41504,79.91803,12
+TRT,Tiruttani,SR,Tamil Nadu,C,19,2,13.17922,79.61139,12
+UJA,Unjha,WR,Gujarat,C,16,2,23.79646,72.38167,12
+ULT,Kulti,SER,West Bengal,C,17,2,23.73782,86.84887,12
+VLY,Valliyur,SR,Tamil Nadu,C,24,2,8.37616,77.61399,12
+YFP,Yusufpur,NER,Uttar Pradesh,C,20,2,25.63901,83.74868,12
+ABS,Abohar,NR,Punjab,C,18,2,30.13938,74.19569,11
+AMB,Ambodala,ECoR,Orissa,C,19,2,19.83632,83.45635,11
+ATL,Athmal Gola,ECR,Bihar,C,20,2,25.45301,85.62137,11
+BJNR,Bijainagar,NWR,Rajasthan,C,20,2,25.931,74.65306,11
+BNXR,Bidhan Nagar,ER,West Bengal,C,21,2,22.59243,88.39105,11
+BUH,Burhar,SECR,Madhya Pradesh,C,17,2,23.2132,81.52841,11
+CJM,Chinna Ganjam,SCR,Andhra Pradesh,C,21,2,15.6895,80.23677,11
+CND,Chandur,CR,Maharashtra,C,19,2,20.80452,77.98216,11
+DAKE,Dakshineswar,ER,West Bengal,C,24,2,22.65348,88.36364,11
+GMS,Garhmuktesar,NR,Uttar Pradesh,C,16,2,28.78174,78.07351,11
+HCR,Harischandrpur,NFR,Bihar,C,16,2,25.404,87.86705,11
+HYT,Haiaghat,ECR,Bihar,C,19,2,26.02032,85.87821,11
+JJK,Jhinjhak,NCR,Uttar Pradesh,C,20,2,26.55499,79.73422,11
+JM,Jalamb Jn,SCR,Maharashtra,C,21,2,20.81301,76.57324,11
+JMKT,Jamikunta,SCR,Andhra Pradesh,C,19,2,18.29002,79.47692,11
+JPL,Japla,ECR,Jharkhand,C,24,2,24.53897,84.00287,11
+JRLE,Jangipur Road,ER,West Bengal,C,19,2,24.45951,88.04076,11
+KAD,Khandala,CR,Maharashtra,C,16,2,18.75509,73.37747,11
+KGLE,Khagraghat Road,ER,West Bengal,C,16,2,24.10684,88.22648,11
+KK,Khadki,CR,Maharashtra,C,24,2,18.56301,73.84051,11
+KTV,Kottavalasa,ECoR,Andhra Pradesh,C,16,2,17.89237,83.1851,11
+KUE,Kursela,CR,Maharashtra,C,24,2,25.44077,87.25365,11
+LC,Lucknow City,NER,Uttar Pradesh,C,17,2,26.85911,80.91787,11
+MNI,Mangaon,KR,Maharashtra,C,15,2,18.24729,73.27568,11
+MRR,Murarai,ER,West Bengal,C,18,2,24.44089,87.85865,11
+NAC,Nawa City,NWR,Rajasthan,C,21,2,27.02948,74.99883,11
+NBG,Nabenagar Road,ECR,Bihar,C,19,2,24.65394,84.09404,11
+NRLR,Norla Road,ECoR,Orissa,C,22,2,20.04139,83.3733,11
+PB,Puntamba,CR,Maharashtra,C,21,2,19.76203,74.62196,11
+PDPL,Peddapalli,SCR,Andhra Pradesh,C,19,2,18.6138,79.39208,11
+PNE,Prantik,ER,West Bengal,C,21,2,23.69444,87.6935,11
+PVP,Parvatipuram,ECoR,Andhra Pradesh,C,24,2,18.77067,83.42697,11
+RMT,Ramgarh Cant,SER,Jharkhand,C,19,2,23.61733,85.52025,11
+RPRD,Rupra Road,ECoR,Orissa,C,16,2,20.08447,83.33096,11
+SBV,Simri Bhakhtiyarpur,ECR,Bihar,C,19,2,25.72086,86.59738,11
+SGNR,Shri Ganganagar,NWR,Rajasthan,C,23,2,29.93179,73.87142,11
+SM,Samsi,ER,Jharkhand,C,17,2,25.2762,88.00976,11
+STL,Simultala,ER,Jharkhand,C,24,2,24.71336,86.54178,11
+SWA,Sahjanwa,?,Uttar Pradesh,C,20,2,26.76308,83.2147,11
+THV,Therubali,ECoR,Orissa,C,21,2,19.33583,83.42131,11
+TNKU,Tanuku,SCR,Andhra Pradesh,C,18,2,16.75203,81.67408,11
+TUN,Tohana,NR,Haryana,C,24,2,29.7266,75.90458,11
+TUVR,Turavur,SR,Kerala,C,15,2,9.77281,76.30998,11
+VDD,Vendodu,SCR,Andhra Pradesh,C,17,2,14.02695,79.7284,11
+WRR,Warora,CR,Maharashtra,C,19,2,20.24426,79.00994,11
+AAL,Amlai,SECR,Madhya Pradesh,C,19,2,23.17347,81.59351,10
+AI,Adipur,WR,Gujarat,C,19,2,23.07705,70.07866,10
+AIT,Ait,NCR,Uttar Pradesh,C,16,2,25.90372,79.23044,10
+AJE,Anjar,WR,Gujarat,C,17,2,23.11947,70.03661,10
+AKD,Akodia,SER,Jharkhand,C,15,2,23.37825,76.59924,10
+AL,Attili,SCR,Andhra Pradesh,C,20,2,16.68015,81.61636,10
+BAND,Banaswadi,SWR,Karnataka,C,18,2,13.00573,77.6282,10
+BHLK,Bhalki,SCR,Karnataka,C,20,2,18.04701,77.22808,10
+BIDR,Bidar,SCR,Karnataka,C,20,2,17.91168,77.51378,10
+BIG,Belgahna,SECR,Chhattisgarh,C,22,2,22.43108,82.03237,10
+BKNG,Bhakti Nagar,WR,Gujarat,C,20,2,22.28296,70.79228,10
+BMI,Bamnia,WR,Madhya Pradesh,C,21,2,23.09576,74.75902,10
+BNR,Bhagwanpur,ECR,Bihar,C,20,2,25.85832,85.30109,10
+BPF,Banapura,WCR,Madhya Pradesh,C,21,2,22.47036,77.48073,10
+BRPL,Barpali,SECR,Chhattisgarh,C,21,2,21.18364,83.59488,10
+BZM,Bhimsen,NCR,Uttar Pradesh,C,18,2,26.41975,80.21814,10
+CCT,Kakinada Town,SCR,Andhra Pradesh,C,17,2,16.96701,82.23292,10
+CGN,Chirgaon,NCR,Uttar Pradesh,C,22,2,25.57505,78.80576,10
+CKU,Chakulia,SER,Orissa,C,18,2,22.47815,86.72116,10
+CLR,Castle Rock,SWR,Karnataka,C,20,2,15.39788,74.33448,10
+CPA,Kanpur Anwarganj,NCR,Uttar Pradesh,C,16,2,26.45623,80.32844,10
+CPJ,Kaptanganj Jn,NER,Uttar Pradesh,C,19,2,26.92639,83.69991,10
+CSA,Chausa,NER,Uttar Pradesh,C,20,2,25.49849,83.89633,10
+CT,Chittapur,SCR,Andhra Pradesh,C,21,2,17.11978,77.09045,10
+DAB,Dharmabad,SCR,Maharashtra,C,20,2,18.88826,77.84934,10
+DGHA,Digha Flag Station,?,West Bengal,C,18,2,21.62238,87.50765,10
+DPA,Durgapura,NWR,Rajasthan,C,24,2,26.85595,75.78644,10
+DUD,Dudhani,SWR,Karnataka,C,20,2,17.36242,76.37871,10
+DWO,Doiwala,NR,Uttarakhand,C,23,2,30.17545,78.12218,10
+EKMA,Ekma,NER,Bihar,C,22,2,25.9671,84.53637,10
+FLK,Falakata,NFR,West Bengal,C,20,2,26.5384,89.19227,10
+GHH,Garhi Harsaru,NR,Haryana,C,23,2,28.43755,76.9297,10
+GHQ,Garhwa,ECR,Jharkhand,C,16,2,24.1752,83.81322,10
+GJUT,Gangsar Jaitu,NR,Punjab,C,24,2,30.44508,74.87951,10
+GNH,Gangakher,SCR,Maharashtra,C,23,2,18.97338,76.75551,10
+GRMR,Garhi Manikpur,NR,Uttar Pradesh,C,20,2,25.78633,81.40315,10
+GVG,Govindgarh,NR,Punjab,C,22,2,30.66948,76.29707,10
+HIR,Harinagar,ECR,Bihar,C,20,2,27.15665,84.32451,10
+HMH,Hanumangarh Jn,NWR,Rajasthan,C,17,2,29.6149,74.29763,10
+JCL,Jadcherla,SCR,Andhra Pradesh,C,22,2,16.75266,78.14197,10
+JLR,Jetalsar Jn,WR,Gujarat,C,17,2,21.72937,70.57391,10
+JND,Junagadh Jn,WR,Gujarat,C,18,2,21.53061,70.45761,10
+JTW,Jaitwar,WCR,Madhya Pradesh,C,20,2,24.74023,80.86388,10
+KIT,Khallikot,ECoR,Orissa,C,23,2,19.6112,85.12809,10
+KKM,Kamalapuram,SCR,Andhra Pradesh,C,18,2,14.59176,78.66611,10
+KKP,Kot Kapura,NR,Punjab,C,19,2,30.5785,74.81817,10
+KL,Kherli,NCR,Rajasthan,C,15,2,27.20026,77.03642,10
+KPP,Kalapipal,SER,Jharkhand,C,16,2,23.33278,76.834,10
+KRE,Kartarpur,NR,Punjab,C,15,2,31.43239,75.49254,10
+KRMI,Karmali,KR,Goa,C,15,2,15.49021,73.92466,10
+KSD,Keshod,WR,Gujarat,C,23,2,21.29766,70.25227,10
+KTH,Katrasgarh,SER,Jharkhand,C,23,2,23.79576,86.3024,10
+LGO,LalgopalGanj,NR,Uttar Pradesh,C,23,2,25.6422,81.63018,10
+LKA,Lanka,NFR,Assam,C,15,2,25.91443,92.958,10
+LKE,Lakheri,WCR,Rajasthan,C,15,2,25.63986,76.19215,10
+LKN,Lakhminia,ECR,Bihar,C,17,2,25.42607,86.30927,10
+LMN,Lachhmanpur,NR,Uttar Pradesh,C,20,2,26.05047,81.25726,10
+LRD,Lar Road,NER,Uttar Pradesh,C,18,2,26.21389,83.91018,10
+MEP,Mahidpur Road,WR,Madhya Pradesh,C,19,2,23.56751,75.50034,10
+MET,Malerkotla,NR,Punjab,C,16,2,30.5294,75.87169,10
+MMA,Muhammadabad,NER,Uttar Pradesh,C,22,2,26.02623,83.37601,10
+MNM,Manamadurai Jn,SR,Tamil Nadu,C,18,2,9.68154,78.45351,10
+MOO,Muddanuru,SCR,Andhra Pradesh,C,15,2,14.68842,78.39539,10
+MOTH,Moth,NCR,Uttar Pradesh,C,22,2,25.74157,78.94867,10
+MQR,Malkhaid Road,SCR,Andhra Pradesh,C,24,2,17.14711,77.17396,10
+MRDW,Murdeshwar,KR,Karnataka,C,15,2,14.10028,74.50525,10
+MRK,Markapur Road,SCR,Andhra Pradesh,C,19,2,15.71468,79.30111,10
+MSK,Mahes Khunt,ECR,Bihar,C,23,2,25.46082,86.64182,10
+MSW,Maskanwa,NER,Uttar Pradesh,C,22,2,27.00138,82.35974,10
+MURD,Mandawar Mahua Rd,NWR,Rajasthan,C,23,2,27.1561,76.85082,10
+NBH,Nimbahera,WR,Rajasthan,C,19,2,24.62325,74.69431,10
+NDL,Nandyal,SCR,Andhra Pradesh,C,18,2,15.46802,78.47254,10
+NNO,Nangloi,NR,Delhi NCT,C,22,2,28.68626,77.05697,10
+NR,Niphad,SCR,Maharashtra,C,16,2,20.09658,74.07948,10
+NRPD,Narayanpet Road,SCR,Karnataka,C,17,2,,,10
+NSD,Nasirabad,NWR,Rajasthan,C,21,2,26.29446,74.71699,10
+NUQ,Nagar Untari,ECR,Jharkhand,C,21,2,24.28573,83.51416,10
+NW,Nalwar,SCR,Andhra Pradesh,C,16,2,16.93604,77.01994,10
+NYY,Neyyattinkara,SR,Kerala,C,20,2,8.41041,77.08111,10
+OBR,Obra Dam,ECR,Uttar Pradesh,C,18,2,24.43866,82.97595,10
+PGK,Pili Bangan,NWR,Rajasthan,C,20,2,29.48382,74.07928,10
+PHN,Pokhrayan,NCR,Uttar Pradesh,C,24,2,26.22296,79.84089,10
+PKD,Penukonda,SCR,Andhra Pradesh,C,15,2,14.09964,77.59252,10
+PMK,Paramakkudi,SR,Tamil Nadu,C,24,2,9.53907,78.59113,10
+PUL,Rampura Phul,NR,Punjab,C,19,2,30.26936,75.23738,10
+PUT,Puttur,SR,Tamil Nadu,C,22,2,13.43964,79.55267,10
+PWS,Phulwari Sharif,ECR,Bihar,C,19,2,25.5863,85.07943,10
+QLM,Kulem,SWR,Goa,C,18,2,15.33404,74.24423,10
+RANI,Rani,NWR,Rajasthan,C,22,2,25.34758,73.31039,10
+RBG,Raybag,SWR,Karnataka,C,21,2,16.48337,74.80683,10
+RBGJ,Roberts Ganj,NCR,Uttar Pradesh,C,16,2,24.68314,83.07782,10
+RKB,Raika Bagh,NWR,Rajasthan,C,22,2,26.29163,73.03974,10
+RMD,Ramanathapuram,SR,Tamil Nadu,C,22,2,9.35839,78.83686,10
+RMM,Rameswaram,SR,Tamil Nadu,C,18,2,9.28097,79.30679,10
+SAW,Suriawan,NR,Uttar Pradesh,C,24,2,25.46104,82.42366,10
+SBZ,Siswa Bazar,NER,Uttar Pradesh,C,21,2,27.14957,83.75635,10
+SEO,Seohara,NR,Uttar Pradesh,C,18,2,29.20481,78.58098,10
+SGUJ,Siliguri Jn,NFR,West Bengal,C,15,2,26.7232,88.41366,10
+SHDM,Shahbad Marknda,NR,Haryana,C,21,2,30.16619,76.86155,10
+SL,Surathkal,KR,Karnataka,C,17,2,12.98919,74.80618,10
+SOG,Suratgarh Jn,NWR,Rajasthan,C,22,2,29.32415,73.90725,10
+STN,Sitarampur,SER,West Bengal,C,20,2,23.72386,86.89647,10
+SVM,Sanverdam Chuch,SWR,Goa,C,19,2,15.26406,74.10866,10
+TAN,Tarana Road,SER,Jharkhand,C,16,2,23.26458,76.06702,10
+TKD,Tuglakabad,NR,Delhi NCT,C,22,2,28.51196,77.29405,10
+TMZ,Tamluk,SER,West Bengal,C,16,2,22.27581,87.91914,10
+TNGL,Toranagallu,SWR,Karnataka,C,19,2,15.20314,76.66392,10
+TPH,Tinpahar Jn,ER,Jharkhand,C,23,2,24.99693,87.74381,10
+UDGR,Udgir,SCR,Maharashtra,C,24,2,18.3906,77.10994,10
+VJPJ,Vijaypur Jammu,NR,Jammu and Kashmir,C,24,2,32.57197,75.021,10
+VRL,Veraval,WR,Gujarat,C,24,2,20.91335,70.37069,10
+VSG,Vasco Da Gama,SWR,Goa,C,20,2,15.39724,73.81342,10
+ZB,Zahirabad,SCR,Andhra Pradesh,C,17,2,17.67496,77.61021,10
+ACND,Acharya Narendra Dev Nagar,NR,Uttar Pradesh,C,23,2,26.77458,82.157,9
+AGN,Amgaon,SECR,Maharashtra,C,23,2,21.36129,80.37465,9
+ANH,Ankorah Akorha,ECR,Bihar,C,24,2,24.76117,84.16954,9
+BNDM,Bondamunda,SER,Orissa,C,21,2,22.23552,84.92506,9
+BQI,Bommidi,SWR,Tamil Nadu,C,16,2,11.9847,78.24628,9
+BSQP,Bansipur,ECR,Jharkhand,C,20,2,25.12451,86.14482,9
+COI,Cheoki,NER,Uttar Pradesh,C,19,2,25.37967,81.86492,9
+DSO,Deshnok,NWR,Rajasthan,C,23,2,27.7913,73.33848,9
+FKM,Fakiragram Jn,NFR,Assam,C,18,2,26.36524,90.18619,9
+GUR,Ganagapur Road,SWR,Karnataka,C,18,2,17.34044,76.5903,9
+GZH,Gulzarbagh,ECR,Bihar,C,15,2,25.59754,85.20523,9
+HDN,Haidarnagar,ECR,Jharkhand,C,23,2,24.49808,83.95105,9
+JAIS,Jais,NR,Uttar Pradesh,C,22,2,26.26216,81.51914,9
+JEUR,Jeur,CR,Maharashtra,C,15,2,18.26093,75.16247,9
+JHN,Jakhim,ECR,Bihar,C,19,2,24.8288,84.52568,9
+JHW,Jhalawar Road,WCR,Rajasthan,C,19,2,24.54189,75.91969,9
+KDPR,Kumedpur,NFR,Bihar,C,19,2,25.43345,87.80436,9
+KHED,Khed,KR,Maharashtra,C,24,2,17.71206,73.40881,9
+KLAR,Kulpahar,NCR,Uttar Pradesh,C,16,2,25.29552,79.63751,9
+MDJ,Muhammadganj,ECR,Jharkhand,C,18,2,24.42644,83.86998,9
+MJRI,Majri Jn,CR,Maharashtra,C,16,2,20.13928,79.04352,9
+MSZ,Mansa,NR,Punjab,C,17,2,29.98969,75.40258,9
+MTR,Motipur,ECR,Bihar,C,24,2,26.25704,85.1682,9
+NILE,Nimtita,ER,West Bengal,C,24,2,24.62534,88.00764,9
+NKM,Namkon,SER,Jharkhand,C,15,2,23.35176,85.37667,9
+NRP,Narsipatnam Rd,ECoR,Andhra Pradesh,C,21,2,17.45285,82.7246,9
+PKU,Panskura,SER,West Bengal,C,17,2,22.3931,87.74302,9
+PLJ,Palej,WR,Gujarat,C,16,2,21.92158,73.07239,9
+PRF,Parsipur,NER,Uttar Pradesh,C,17,2,25.37052,82.63716,9
+RURA,Rura,NCR,Uttar Pradesh,C,16,2,26.48538,79.90822,9
+SALE,Salar,ER,West Bengal,C,19,2,23.77458,88.1111,9
+SHU,Sholinghur,SR,Tamil Nadu,C,24,2,13.01397,79.48459,9
+SID,Siddhpur,WR,Gujarat,C,20,2,23.91807,72.36796,9
+SLW,Sohwal,NR,Uttar Pradesh,C,22,2,26.75305,81.98384,9
+SMZ,Sarai Mir,NR,Uttar Pradesh,C,19,2,26.02814,82.92395,9
+SNI,Sindi,CR,Maharashtra,C,15,2,20.81645,78.88334,9
+SPZ,Sampla,NR,Haryana,C,15,2,28.78193,76.7733,9
+SRP,Serampore,ER,West Bengal,C,17,2,22.75397,88.33803,9
+SWPR,Sewapuri,NER,Uttar Pradesh,C,17,2,25.35077,82.76955,9
+URD,Untare Road,ECR,Jharkhand,C,23,2,24.34094,83.8345,9
+USL,Usalapur,SECR,Chhattisgarh,C,23,2,22.10255,82.11155,9
+WFD,Whitefield,SWR,Karnataka,C,23,2,12.99525,77.76131,9
+ADB,Adilabad,SCR,Andhra Pradesh,C,21,2,19.6801,78.53529,8
+AML,Amalsad,WR,Gujarat,C,20,2,20.81137,72.95609,8
+BANO,Bano,SER,Orissa,C,21,2,22.66478,84.90299,8
+BLDA,Belda,SER,West Bengal,C,19,2,22.07144,87.33691,8
+BLDI,Bhildi,WR,Gujarat,C,21,2,24.19425,72.00819,8
+BLQR,Bilaspur Road,NER,Uttar Pradesh,C,22,2,28.8656,79.25426,8
+BLT,Balotra Jn,NWR,Rajasthan,C,22,2,25.83007,72.24868,8
+BME,Barmer,NWR,Rajasthan,C,21,2,25.74452,71.39707,8
+BMKI,Bapudham Motihari,ECR,Bihar,C,15,2,26.65573,84.90529,8
+BMO,Bolarum,SCR,Andhra Pradesh,C,22,2,17.53355,78.51542,8
+BPH,Belpahar,SER,Orissa,C,18,2,21.82721,83.84908,8
+BRE,Bharwari,NR,Uttar Pradesh,C,22,2,25.55919,81.49187,8
+BSE,Badshahpur,NR,Uttar Pradesh,C,20,2,25.65227,82.19055,8
+BTD,Botad Jn,WR,Gujarat,C,23,2,22.18287,71.6656,8
+BXJ,Bokajan,NFR,Assam,C,18,2,26.01843,93.77947,8
+BYN,Banahi,ECR,Bihar,C,24,2,25.5613,84.38992,8
+CBM,Cumbum,SCR,Andhra Pradesh,C,23,2,15.59295,79.11083,8
+CDGR,Chandrakona Rd,SER,West Bengal,C,18,2,22.73908,87.34059,8
+CGR,Chandan Nagar,ER,West Bengal,C,19,2,22.86747,88.35442,8
+CHD,Chandia Road,WCR,Madhya Pradesh,C,20,2,23.64544,80.70144,8
+CRLM,Carmelaram,SWR,Karnataka,C,22,2,12.90763,77.70601,8
+CUK,Churk,NCR,Uttar Pradesh,C,21,2,24.64968,83.1032,8
+DBU,Dodballapur,SWR,Karnataka,C,23,2,13.27894,77.55016,8
+DDA,Duraundha Jn,NER,Bihar,C,18,2,26.08697,84.45895,8
+DES,Desari,ECR,Bihar,C,20,2,25.66836,85.40877,8
+DKD,Donakonda,SCR,Andhra Pradesh,C,19,2,15.83463,79.48411,8
+DLO,Dalgaon,NFR,West Bengal,C,24,2,26.71538,89.13624,8
+DLR,Dullahapur,NER,Uttar Pradesh,C,18,2,25.7999,83.42326,8
+DRL,Derol,WR,Gujarat,C,20,2,22.63021,73.46216,8
+DUA,Dhaura,WCR,Madhya Pradesh,C,16,2,24.44965,78.32179,8
+DXN,Duddhinagar,ECR,Uttar Pradesh,C,23,2,24.20903,83.21679,8
+FBD,Farrukhabad,NCR,Uttar Pradesh,C,18,2,27.38236,79.57174,8
+GID,Giddalur,SCR,Andhra Pradesh,C,18,2,15.37901,78.92558,8
+GNP,Ghanpur,SCR,Andhra Pradesh,C,20,2,17.85063,79.3769,8
+GOY,Govindpuri,NCR,Uttar Pradesh,C,19,2,26.45442,80.3132,8
+GRL,Goraul,ECR,Bihar,C,23,2,25.93105,85.31848,8
+GYM,Gudiyattam,SR,Tamil Nadu,C,20,2,12.93747,78.91616,8
+HCP,Harchandpur,NR,Uttar Pradesh,C,20,2,26.34316,81.16084,8
+HGH,Haidergarh,NR,Uttar Pradesh,C,16,2,26.62153,81.36316,8
+HLN,Hole Narsipur,SWR,Karnataka,C,15,2,12.78649,76.24646,8
+HNL,Hingoli Deccan,SCR,Maharashtra,C,18,2,19.72636,77.14676,8
+HSK,Harishanker Rd,SECR,Chhattisgarh,C,24,2,20.62679,82.76604,8
+HSR,Hisar,NWR,Haryana,C,24,2,29.15234,75.72431,8
+JAO,Jaora,WR,Madhya Pradesh,C,21,2,23.62777,75.11563,8
+JNL,Jandiala,NR,Punjab,C,21,2,31.58998,75.05441,8
+JRU,Chikjajur Jn,SWR,Karnataka,C,18,2,14.12611,76.13871,8
+JSP,Jayasingpur,CR,Maharashtra,C,16,2,16.79134,74.55161,8
+KAPG,Kalupara Ghat,ECoR,Orissa,C,15,2,19.89659,85.40365,8
+KAT,Khatauli,NR,Uttar Pradesh,C,18,2,29.27371,77.73699,8
+KATI,Kanthi P Halt,?,West Bengal,C,18,2,21.78874,87.73413,8
+KDU,Kadambur,SR,Tamil Nadu,C,16,2,9.00202,77.86363,8
+KGA,Khaga,NR,Uttar Pradesh,C,17,2,25.76185,81.10266,8
+KIM,Kim,WR,Gujarat,C,15,2,21.3997,72.9267,8
+KMQ,Kumbla,SR,Kerala,C,21,2,12.59026,74.9435,8
+KOV,Kirloskarvadi,CR,Maharashtra,C,24,2,17.08415,74.41636,8
+KPGM,Karpurigram,ECR,Bihar,C,21,2,25.8698,85.72418,8
+KRNR,Krishnarajanagara,SWR,Karnataka,C,19,2,12.44541,76.38863,8
+KSH,Kali Sindh,SER,Jharkhand,C,19,2,23.34448,76.43031,8
+KSJ,Kasganj,NER,Uttar Pradesh,C,18,2,27.80189,78.64603,8
+LHU,Loharu,NWR,Haryana,C,16,2,28.42705,75.80161,8
+LKS,Lunkaransar,NWR,Rajasthan,C,20,2,28.49339,73.74316,8
+LUR,Latur,CR,Maharashtra,C,20,2,18.42917,76.55605,8
+MAG,Mangalagiri,SCR,Andhra Pradesh,C,15,2,16.43826,80.56499,8
+MAI,Mehsi,ECR,Bihar,C,19,2,26.3549,85.09632,8
+MALB,Maliya Miyana,WR,Gujarat,C,17,2,23.10317,70.75488,8
+MBY,Mandi Dabwali,NWR,Haryana,C,16,2,29.96623,74.70015,8
+MHH,Maghar,?,Uttar Pradesh,C,22,2,26.75001,83.13374,8
+MHJ,Mahajan,NWR,Rajasthan,C,20,2,28.79301,73.85367,8
+MNF,Manda Road,NER,Uttar Pradesh,C,21,2,25.16272,82.23668,8
+MNV,Mungaoli,WCR,Madhya Pradesh,C,22,2,24.40217,78.11099,8
+MOR,Mor,ECR,Bihar,C,24,2,25.43035,85.85676,8
+MRL,Maroli,WR,Gujarat,C,23,2,21.01995,72.89,8
+MZM,Muzzampur Narain,NR,Uttar Pradesh,C,21,2,29.58301,78.22236,8
+NBI,Nadbai,WCR,Rajasthan,C,23,2,27.21367,77.20809,8
+NEW,Nivari,NCR,Uttar Pradesh,C,19,2,25.32806,78.82007,8
+NHN,Nigohan,NR,Uttar Pradesh,C,24,2,26.56723,81.04536,8
+NMZ,New Mal Jn,NFR,West Bengal,C,22,2,26.87368,88.72484,8
+NRT,Narasaraopet,SCR,Andhra Pradesh,C,21,2,16.23153,80.04161,8
+OKA,Okhla,NR,Delhi NCT,C,24,2,28.55933,77.26483,8
+PM,Palam,NR,Delhi NCT,C,20,2,28.58566,77.09295,8
+RAA,Barara,NR,Haryana,C,22,2,30.21333,77.0355,8
+RHE,Rakha Mines,SER,Jharkhand,C,17,2,22.67429,86.35413,8
+RJA,Rajanagar,ECR,Bihar,C,24,2,26.4018,86.15299,8
+RKD,Rukadi,CR,Maharashtra,C,21,2,16.72487,74.35671,8
+RPZ,Ranapratapnagar,NWR,Rajasthan,C,22,2,24.58242,73.72806,8
+RSR,Rasra,NER,Uttar Pradesh,C,19,2,25.86171,83.85785,8
+RV,Raver,CR,Maharashtra,C,23,2,21.2222,76.04459,8
+SDLP,Sadulpur Junction,NWR,Rajasthan,C,15,2,28.63114,75.38699,8
+SFM,Sunam,NR,Punjab,C,16,2,30.13034,75.80876,8
+SGRA,Sangaria,NWR,Rajasthan,C,20,2,29.79251,74.46605,8
+SGRL,Singrauli,ECR,Madhya Pradesh,C,22,2,24.20426,82.64274,8
+SHE,Seoraphuli,ER,West Bengal,C,23,2,22.77475,88.32881,8
+SKJ,Sahibpur Kamal Jn,ECR,Bihar,C,19,2,25.42704,86.40013,8
+SKN,Srikrishna Nagar,NR,Uttar Pradesh,C,21,2,25.88403,82.4478,8
+SNDD,Sindhudurg,KR,Maharashtra,C,20,2,16.11132,73.67934,8
+SOD,Sojat Road,NWR,Rajasthan,C,24,2,25.8622,73.75567,8
+SPP,Shahpur Patoree,ECR,Bihar,C,21,2,25.63943,85.5813,8
+SRO,Sirathu,NR,Uttar Pradesh,C,19,2,25.65064,81.31786,8
+STKT,Sasthankotta,SR,Kerala,C,24,2,9.03231,76.59888,8
+STW,Sahatwar,NER,Uttar Pradesh,C,16,2,25.82783,84.29549,8
+SVPI,Shivpuri,WCR,Madhya Pradesh,C,24,2,25.43844,77.63825,8
+TDPR,Tirupadripulyur,SR,Tamil Nadu,C,16,2,11.74888,79.75335,8
+TKR,Takari,CR,Maharashtra,C,17,2,17.12976,74.36338,8
+TPZ,Tapri Jn,NR,Uttar Pradesh,C,23,2,29.91573,77.58327,8
+TRTR,Triupunittura,SR,Kerala,C,22,2,9.9501,76.35276,8
+UHR,Unchhera,WCR,Madhya Pradesh,C,24,2,24.38137,80.79457,8
+ULB,Ulubaria,ER,West Bengal,C,22,2,22.47243,88.09321,8
+UMD,Usmanabad,CR,Maharashtra,C,21,2,18.24815,76.02266,8
+UMRI,Umri,SCR,Maharashtra,C,18,2,19.0418,77.64268,8
+VNUP,Vishnupuram,SCR,Andhra Pradesh,C,15,2,16.70451,79.63879,8
+VR,Virar,WR,Maharashtra,C,16,2,19.45441,72.81174,8
+VRR,Virpur,WR,Gujarat,C,17,2,21.84834,70.70721,8
+VTM,Vetapalemu,SCR,Andhra Pradesh,C,15,2,15.78338,80.30065,8
+VV,Valivade,CR,Maharashtra,C,20,2,16.70357,74.29896,8
+WDM,Wyndhamganj,ECR,Uttar Pradesh,C,22,2,24.26411,83.40161,8
+WHM,Washim,SCR,Maharashtra,C,24,2,20.1031,77.14799,8
+WSJ,Wansjaliya,WR,Gujarat,C,19,2,21.79938,69.87357,8
+AHH,Ahmadgarh,NR,Punjab,C,23,2,30.68364,75.82952,7
+BAT,Batala Junction,NR,Punjab,C,24,2,31.82148,75.19443,7
+BBMN,Bari Brahman,NR,Jammu and Kashmir,C,23,2,32.63896,74.91617,7
+BEHS,Bihar Sharif,ECR,Bihar,C,19,2,25.20612,85.53907,7
+BELA,Bela,ECR,Bihar,C,18,2,24.97843,84.98135,7
+BGVN,Bhigwan,CR,Maharashtra,C,24,2,18.31726,74.77504,7
+BJO,Bijnor,NR,Uttar Pradesh,C,17,2,29.38563,78.1468,7
+BU,Baswa,NWR,Haryana,C,19,2,27.14969,76.57564,7
+BUDM,Badmal,ECoR,Orissa,C,15,2,20.3849,83.27115,7
+CAER,Chhanera,WCR,Madhya Pradesh,C,22,2,21.96397,76.70777,7
+CDMR,Chandauli Mjhwr,NER,Uttar Pradesh,C,21,2,25.26109,83.26772,7
+CHJ,Chata,NCR,Uttar Pradesh,C,15,2,27.71199,77.50298,7
+CPS,Chandpur Siau Halt,NR,Uttar Pradesh,C,17,2,29.13201,78.27585,7
+DINR,Divine Nagar,SR,Kerala,C,20,2,10.2854,76.33631,7
+DOA,Doraha,NR,Punjab,C,20,2,30.80414,76.0433,7
+ERL,Eraniel,SR,Tamil Nadu,C,23,2,8.21255,77.30816,7
+GDB,Giddarbaha,NR,Punjab,C,17,2,30.20132,74.66334,7
+GOL,Goilkera,SER,Jharkhand,C,24,2,22.50529,85.37935,7
+GSP,Gurdaspur,NR,Punjab,C,19,2,32.04411,75.42077,7
+GTNR,Gomati Nagar,NER,Uttar Pradesh,C,23,2,26.86034,81.00343,7
+GZN,New Ghaziabad,NR,Uttar Pradesh,C,17,2,28.6744,77.43801,7
+HLDR,Haldaur,NR,Uttar Pradesh,C,15,2,29.29008,78.27506,7
+IPL,Edappally,SR,Kerala,C,15,2,10.03434,76.29827,7
+ITR,Itwari,SECR,Maharashtra,C,18,2,21.15782,79.11924,7
+JOB,Asalpur Jobner,NWR,Rajasthan,C,24,2,26.90008,75.42347,7
+JOC,Joychandi Pahar,SER,West Bengal,C,15,2,23.51639,86.68034,7
+KND,Kandra,SER,Jharkhand,C,18,2,22.85297,86.04786,7
+KNT,Kanth,NER,Uttar Pradesh,C,16,2,29.05977,78.62147,7
+KRBA,Korba,SECR,Chhattisgarh,C,24,2,22.33758,82.71301,7
+MAD,Maddur,SWR,Karnataka,C,21,2,12.60474,77.04952,7
+MDE,Makhdumpur Gaya,ECR,Bihar,C,22,2,25.07713,84.97911,7
+MJS,Manjeshwar,SR,Kerala,C,22,2,12.7242,74.88758,7
+MNDR,Mandi Dhanaura,NR,Uttar Pradesh,C,21,2,28.95312,78.2615,7
+MOT,Malout,NR,Punjab,C,22,2,30.18467,74.49551,7
+MOU,Manoharpur,SER,Jharkhand,C,15,2,22.37336,85.19689,7
+MUD,Muradnagar,NR,Uttar Pradesh,C,23,2,28.75902,77.50677,7
+MWM,Malleswaram,SWR,Karnataka,C,22,2,13.00129,77.56321,7
+NKD,Nekonda,SCR,Andhra Pradesh,C,22,2,17.79488,79.80459,7
+NLD,Nalanda,ECR,Bihar,C,18,2,25.12236,85.46277,7
+ODG,Obaidulla Ganj,WCR,Madhya Pradesh,C,23,2,22.99491,77.5873,7
+OYR,Waria,ER,West Bengal,C,18,2,23.53756,87.24618,7
+PQE,Pawapuri Road,ECR,Bihar,C,15,2,25.15921,85.51171,7
+PSB,Parsabad,ECR,Bihar,C,24,2,24.30756,85.73873,7
+RGD,Rajgir,ECR,Bihar,C,17,2,25.03307,85.4147,7
+SINI,Sini Jn,SER,Jharkhand,C,16,2,22.78946,85.94703,7
+SYJ,Saidraja,NER,Uttar Pradesh,C,21,2,25.25353,83.35118,7
+TIS,Tatisilwai,SER,Jharkhand,C,17,2,23.36984,85.43571,7
+TKN,Tankuppa,ECR,Bihar,C,23,2,24.70405,85.1194,7
+VLI,Vallikunnu,SR,Kerala,C,19,2,11.09046,75.85165,7
+AKE,Akanapet,SCR,Andhra Pradesh,C,15,2,18.11086,78.39631,6
+AMI,Amravati,CR,Maharashtra,C,24,2,20.93008,77.75779,6
+ANB,Ammanabrolu,SCR,Andhra Pradesh,C,20,2,15.5964,80.14835,6
+ANDI,Adarsh Nagar Delhi,NR,Delhi NCT,C,17,2,28.7142,77.16671,6
+ANDN,Anand Nagar,NER,Uttar Pradesh,C,21,2,27.10371,83.2707,6
+ANKL,Ankola,KR,Karnataka,C,20,2,14.64535,74.33294,6
+ANSB,Anandpur Sahib,NR,Punjab,C,15,2,31.23051,76.5006,6
+AQG,Ashapura Gomat,NWR,Rajasthan,C,22,2,26.95023,71.89266,6
+BAL,Budalur,SR,Tamil Nadu,C,19,2,10.78284,78.98144,6
+BDVT,Bhadravati,SWR,Karnataka,C,21,2,13.84243,75.70283,6
+BDWD,Bodwad,CR,Maharashtra,C,23,2,20.90358,76.01705,6
+BEB,Beldanga,ER,West Bengal,C,21,2,23.93206,88.24297,6
+BGKT,Bhagat Ki Kothi,NWR,Rajasthan,C,21,2,26.2485,73.01334,6
+BGTA,Bagra Tawa,WCR,Madhya Pradesh,C,17,2,22.63071,77.99371,6
+BHLP,Bhulanpur,NER,Uttar Pradesh,C,17,2,25.28788,82.95752,6
+BJE,Bhojudih Junction,SER,Jharkhand,C,19,2,23.64217,86.447,6
+BKH,Bankhedi,WCR,Madhya Pradesh,C,23,2,22.77488,78.538,6
+BNU,Bandakpur,WCR,Madhya Pradesh,C,20,2,23.84821,79.57596,6
+BPB,Badarpur Jn,NFR,Assam,C,18,2,24.86518,92.55632,6
+BPC,Berhampore Court,ER,West Bengal,C,22,2,24.08908,88.26364,6
+BPR,Bhojipura Jn,NER,Uttar Pradesh,C,23,2,28.49398,79.44724,6
+BTK,Bankata,NER,Uttar Pradesh,C,24,2,26.26592,84.09492,6
+BTW,Barsi Town,CR,Maharashtra,C,17,2,18.24099,75.71817,6
+BTY,Bethuadahari,ER,West Bengal,C,22,2,23.61028,88.3846,6
+BVC,Bhavnagar Terminus,WR,Gujarat,C,20,2,21.78167,72.14106,6
+BVQ,Bhilavdi,CR,Maharashtra,C,19,2,17.00805,74.51678,6
+BWH,Bhadaura,ECR,Uttar Pradesh,C,18,2,25.45043,83.73835,6
+CCH,Chinchvad,CR,Maharashtra,C,16,2,18.6389,73.79139,6
+CNA,Chanderiya,WR,Rajasthan,C,17,2,24.93956,74.62998,6
+CNDM,Chandi Mandir,NR,Chandigarh,C,20,2,30.72707,76.88684,6
+CNO,Cancona,KR,Goa,C,23,2,15.00691,74.03945,6
+CPT,Channapatna,SWR,Karnataka,C,23,2,12.65967,77.20382,6
+CUR,Churu,NWR,Rajasthan,C,16,2,28.28828,74.9662,6
+DDE,Dondaicha,CR,Maharashtra,C,21,2,21.33141,74.5631,6
+DGO,Durgauti,NER,Uttar Pradesh,C,15,2,25.2079,83.53968,6
+DIG,Duggirala,SCR,Andhra Pradesh,C,21,2,16.32756,80.62357,6
+DKNT,Dakaniya Talav,WCR,Rajasthan,C,18,2,25.14519,75.8655,6
+DLJ,Dhola Jn,WR,Gujarat,C,19,2,21.82255,71.73827,6
+DND,Dandupur,NR,Uttar Pradesh,C,22,2,25.80159,82.04063,6
+DSJ,Delhi Safdarjung,NR,Delhi NCT,C,19,2,28.58212,77.18697,6
+EKC,Ekchari,CR,Maharashtra,C,23,2,25.22762,87.21387,6
+EKM,Ekambarakuppam,SR,Tamil Nadu,C,20,2,13.3186,79.57313,6
+GAJ,Ganeshganj,WCR,Madhya Pradesh,C,24,2,23.89586,79.07463,6
+GBA,Garhbeta,SER,West Bengal,C,21,2,22.84456,87.32097,6
+GGA,Ghoga,ER,Bihar,C,17,2,25.21031,87.16086,6
+GHGL,Ghagwal,NR,Jammu and Kashmir,C,22,2,32.50429,75.2136,6
+GNC,Gandhinagar Capital,WR,Gujarat,C,19,2,23.23338,72.62916,6
+GOH,Garot,WR,Madhya Pradesh,C,20,2,24.27909,75.68432,6
+GOK,Gokarna Road,KR,Karnataka,C,16,2,14.58279,74.3672,6
+GTJT,Getor Jagatpura,NWR,Rajasthan,C,16,2,26.83693,75.83238,6
+HG,Hotgi,SWR,Karnataka,C,20,2,17.56567,75.98994,6
+HKG,Hirakud,SER,Orissa,C,16,2,21.47983,83.9051,6
+HNA,Honnavar,KR,Karnataka,C,24,2,14.31693,74.4332,6
+HSA,Hasimara,NFR,West Bengal,C,23,2,26.72689,89.34766,6
+HVD,Halvad,WR,Gujarat,C,22,2,23.01852,71.18291,6
+JJR,Jejuri,CR,Maharashtra,C,22,2,18.28656,74.17145,6
+JNA,Julana,NR,Haryana,C,20,2,29.12012,76.39651,6
+JSM,Jaisalmer,NWR,Rajasthan,C,15,2,26.91655,70.92824,6
+JVN,Jorawarnagar Jn,WR,Gujarat,C,18,2,22.71246,71.64159,6
+KFA,Koparia,ECR,Bihar,C,19,2,25.66104,86.59816,6
+KHU,Khurhand,NCR,Uttar Pradesh,C,24,2,25.35258,80.49498,6
+KI,Kondapalli,SCR,Andhra Pradesh,C,17,2,16.62324,80.54669,6
+KJI,Khajauli,ECR,Bihar,C,19,2,26.48394,86.16142,6
+KKDI,Karaikkudi Junction,SR,Tamil Nadu,C,18,2,10.06852,78.79331,6
+KLL,Kalol Jn,WR,Gujarat,C,16,2,23.24458,72.50363,6
+KLT,Kulitalai,SR,Tamil Nadu,C,16,2,10.93273,78.42089,6
+KMD,Kodumudi,SR,Tamil Nadu,C,18,2,11.07607,77.88577,6
+KNJ,Krishnanagar City Junction,ER,West Bengal,C,15,2,23.38871,88.49364,6
+KNVT,Kinwat,SCR,Maharashtra,C,15,2,19.6185,78.20244,6
+KQK,Kotikulam,SR,Kerala,C,18,2,12.42351,75.02401,6
+KQT,Kurgunta,SCR,Andhra Pradesh,C,17,2,17.19117,77.35957,6
+KQU,Kamarkundu,ER,West Bengal,C,20,2,22.82163,88.20513,6
+KRG,Koregaon,CR,Maharashtra,C,15,2,17.69098,74.14762,6
+KSF,Khalispur,NER,Uttar Pradesh,C,18,2,25.5258,82.83175,6
+KSX,Kotshila,SER,West Bengal,C,19,2,23.41169,86.07955,6
+KWM,Kampur,NFR,Assam,C,24,2,26.1606,92.65779,6
+LAV,Labha,NFR,Bihar,C,21,2,25.43965,87.74514,6
+LFG,Lower Haflong,NFR,Assam,C,23,2,,,6
+LNK,Lohian Khas Jn,NR,Punjab,C,18,2,31.16546,75.19644,6
+LNN,Lonand,CR,Maharashtra,C,19,2,18.04077,74.19048,6
+LPJ,Lalpur Jam,WR,Gujarat,C,19,2,22.19454,69.95242,6
+MAKM,Mararikulam,SR,Kerala,C,23,2,9.59799,76.31802,6
+MBG,Maibang,NFR,Assam,C,24,2,25.30497,93.13537,6
+MIL,Milak,NER,Uttarakhand,C,24,2,28.61247,79.16412,6
+MJG,Majhagawan,WCR,Madhya Pradesh,C,22,2,24.91339,80.81166,6
+MKRN,Makronia,WCR,Madhya Pradesh,C,20,2,23.86705,78.80808,6
+MKX,Morak,WCR,Rajasthan,C,20,2,24.73095,75.97334,6
+MLD,Malihabad,NER,Uttar Pradesh,C,24,2,26.9306,80.71503,6
+MLHA,Maliya Hatina,WR,Gujarat,C,17,2,21.15957,70.2997,6
+MLO,Malur,SWR,Karnataka,C,18,2,12.99211,77.94003,6
+MLZ,Malarna,WCR,Rajasthan,C,23,2,26.23108,76.53463,6
+MMM,Mandapam,SR,Tamil Nadu,C,18,2,9.28052,79.15735,6
+MNAE,Mankar,ER,West Bengal,C,17,2,23.42037,87.55582,6
+MOG,Mohiuddinnagar,ECR,Bihar,C,20,2,25.6063,85.70332,6
+MTM,Machilipatnam,SCR,Andhra Pradesh,C,18,2,16.17126,81.13776,6
+MVN,Milavittan,SR,Tamil Nadu,C,23,2,8.81158,78.08733,6
+MXH,Makhu,NR,Punjab,C,24,2,31.10593,74.9835,6
+MZC,Mirza Cheuki,CR,Maharashtra,C,18,2,25.25878,87.49798,6
+MZL,Mirzapali,SCR,Andhra Pradesh,C,20,2,18.01796,78.4153,6
+NGNT,New Guntur,SCR,Andhra Pradesh,C,24,2,16.31004,80.45822,6
+NGR,Annigeri,SWR,Karnataka,C,22,2,15.43216,75.43085,6
+NHK,Naharkatiya,NFR,Assam,C,17,2,27.2894,95.32978,6
+NIRA,Nira,CR,Maharashtra,C,20,2,18.10496,74.20908,6
+NKP,Nirakarpur,ECoR,Orissa,C,21,2,19.99174,85.53046,6
+NLDM,Nangal Dam,NR,Punjab,C,21,2,31.37054,76.37262,6
+NLV,Nalbari,NFR,Assam,C,15,2,26.45063,91.44029,6
+NMJ,Nidamangalam,SR,Tamil Nadu,C,17,2,10.77356,79.41274,6
+NNN,Nanguneri,SR,Tamil Nadu,C,23,2,8.4891,77.66259,6
+NNR,Narayanpur,ER,Bihar,C,17,2,25.39835,86.85939,6
+NPD,Nawapara Road,SECR,Chhattisgarh,C,17,2,20.80972,82.56256,6
+NRZB,Nowrozabad,WCR,Madhya Pradesh,C,18,2,23.39442,80.98036,6
+NTV,Nautanwa,NER,Uttar Pradesh,C,16,2,27.42688,83.4213,6
+NUD,Navagadh,WR,Gujarat,C,16,2,21.76434,70.61672,6
+NXN,Nuagaon,SER,Orissa,C,18,2,22.38658,84.94203,6
+NYO,Nayagaon,ECR,Bihar,C,23,2,25.76326,85.09937,6
+OBVP,Obulavaripalli,SCR,Andhra Pradesh,C,15,2,14.04083,79.26822,6
+PANP,Pandavapura,SWR,Karnataka,C,17,2,12.46302,76.68139,6
+PAO,Panoli,WR,Gujarat,C,15,2,21.5352,72.97837,6
+PDH,Padadhari,WR,Gujarat,C,20,2,22.4296,70.60534,6
+PDKT,Pudukkottai,SR,Tamil Nadu,C,17,2,10.37246,78.80195,6
+PDW,Pandaul,ECR,Bihar,C,22,2,26.28049,86.08664,6
+PDY,Puducherry,SR,Puducherry,C,20,2,11.92545,79.82813,6
+PIP,Piplia,WR,Madhya Pradesh,C,22,2,24.20369,75.00748,6
+PKF,Pokla,SER,Jharkhand,C,21,2,22.89496,84.95136,6
+PLCJ,Phalodi Jn,NWR,Rajasthan,C,19,2,27.12491,72.36686,6
+PLY,Plassey,ER,West Bengal,C,23,2,23.77799,88.28447,6
+PNW,Pundhag,ECR,Jharkhand,C,19,2,23.50891,86.08958,6
+PUK,Pudukad,SR,Kerala,C,24,2,10.42051,76.26071,6
+RAJP,Rajapur Road,KR,Maharashtra,C,24,2,16.63518,73.62656,6
+RDHP,Radhanpur,WR,Gujarat,C,20,2,23.84693,71.58559,6
+RDRA,Ramdevra,NWR,Rajasthan,C,21,2,27.00628,71.92984,6
+REWA,Rewa,WCR,Madhya Pradesh,C,17,2,24.53712,81.25061,6
+RHA,Ranaghat Junction,ER,West Bengal,C,23,2,23.17334,88.56818,6
+RJG,Rajgram,ER,West Bengal,C,21,2,24.54461,87.86764,6
+RMGM,Ramanagaram,SWR,Karnataka,C,24,2,12.7201,77.28345,6
+ROHA,Roha,CR,Maharashtra,C,17,2,18.44649,73.12358,6
+ROP,Rupsa Jn,SER,Orissa,C,22,2,21.62199,87.01851,6
+RPAR,Rupnagar,NR,Punjab,C,19,2,30.97282,76.53324,6
+RTGH,Ratangarh Junction,NWR,Rajasthan,C,16,2,28.06659,74.6236,6
+RXL,Raxaul Jn,ECR,Bihar,C,16,2,26.98702,84.84456,6
+S,Shrirangapatna,SWR,Karnataka,C,20,2,12.4247,76.67803,6
+SAU,Sanand,WR,Gujarat,C,18,2,23.02422,72.38475,6
+SBLT,Shri Bhadriya Lathi,NWR,Rajasthan,C,16,2,27.03042,71.51594,6
+SBO,Sabaur,ER,Bihar,C,19,2,25.23908,87.04592,6
+SBPY,Sambalpur City,SER,Orissa,C,21,2,21.47702,84.00762,6
+SBR,Sambhar Lake,NWR,Rajasthan,C,18,2,26.90431,75.17991,6
+SGE,Sankaridurg,SR,Tamil Nadu,C,24,2,11.44573,77.87044,6
+SGR,Sangmeshwar,KR,Maharashtra,C,22,2,17.202,73.54623,6
+SHNR,Shadnagar,SCR,Andhra Pradesh,C,20,2,17.06465,78.21327,6
+SHSK,Saharsrakund,SCR,Maharashtra,C,24,2,19.40266,78.00795,6
+SJNP,Sujanpur,NR,Punjab,C,19,2,32.31198,75.61346,6
+SLB,Salboni,SER,West Bengal,C,16,2,22.64097,87.3219,6
+SMET,Shimoga Town,SWR,Karnataka,C,15,2,13.94304,75.58317,6
+SMO,Semapur,NFR,Bihar,C,24,2,25.52448,87.47044,6
+SNF,Sanat Nagar,SCR,Andhra Pradesh,C,24,2,17.46161,78.43595,6
+SVGA,Sivaganga,SR,Tamil Nadu,C,22,2,9.85297,78.49907,6
+SZR,Sarupathar,NFR,Assam,C,16,2,26.1956,93.86202,6
+TBT,Talbahat,NCR,Uttar Pradesh,C,17,2,25.03926,78.41455,6
+TGN,Talegaon,CR,Maharashtra,C,15,2,18.73483,73.67201,6
+THDR,Thandla Rd,WR,Madhya Pradesh,C,15,2,23.03271,74.66694,6
+TKE,Tarikere Junction,SWR,Karnataka,C,17,2,13.71089,75.81221,6
+TLHR,Talcher,ECoR,Orissa,C,20,2,20.93226,85.20038,6
+TMQ,Tirumangalam,SR,Tamil Nadu,C,15,2,9.82478,77.9909,6
+TN,Tuticorin,SR,Tamil Nadu,C,24,2,8.80611,78.15536,6
+TNR,Tanguturu,SCR,Andhra Pradesh,C,19,2,15.33754,80.03355,6
+TP,Tiruchirappalli Fort,SR,Tamil Nadu,C,17,2,10.82559,78.68889,6
+UCA,Uchana,NR,Haryana,C,20,2,29.46606,76.17854,6
+UHP,Udhampur,NR,Jammu and Kashmir,C,22,2,32.92664,75.15488,6
+URI,Uruli,CR,Maharashtra,C,18,2,18.49424,74.13682,6
+URPR,Ugrasenpur,NR,Uttar Pradesh,C,15,2,25.56821,82.18917,6
+VBW,Vaibhavwadi Rd,KR,Maharashtra,C,15,2,16.51201,73.70764,6
+VKN,Vinukonda,SCR,Andhra Pradesh,C,23,2,16.05075,79.748,6
+WTR,Wathar,CR,Maharashtra,C,16,2,17.89054,74.13577,6
+AGY,Agori Khas,NCR,Uttar Pradesh,C,21,2,24.59896,83.05611,5
+ANTU,Antu,NR,Uttar Pradesh,C,18,2,26.05516,81.89779,5
+AST,Asaoti,NR,Delhi NCT,C,22,2,28.25088,77.32357,5
+ATS,Attabira,SER,Orissa,C,15,2,21.38804,83.79264,5
+BJD,Barejadi,WR,Gujarat,C,23,2,22.89543,72.67789,5
+BKG,Banka Ghat,?,Bihar,C,21,2,25.54701,85.27274,5
+BKRD,Bhaluka Road F,NFR,Bihar,C,19,2,25.34257,87.91213,5
+BLPU,Bilpur,NER,Uttar Pradesh,C,17,2,28.08367,79.62578,5
+BLZ,Budhlada,NR,Punjab,C,24,2,29.92174,75.54969,5
+BN,Bibinagar,SCR,Andhra Pradesh,C,18,2,17.47051,78.79435,5
+BNGN,Bongaigaon,NFR,Assam,C,19,2,26.47829,90.56055,5
+BNVD,Bhanvad,WR,Gujarat,C,18,2,21.93304,69.79886,5
+BOJ,Bhojo,NFR,Assam,C,17,2,27.0636,95.03241,5
+BZLE,Bazarsau,ER,West Bengal,C,19,2,23.87579,88.18288,5
+CBF,Coimbatore North,SR,Tamil Nadu,C,16,2,11.01994,76.9543,5
+CBK,Chachaura Binaganj,WCR,Rajasthan,C,15,2,24.17814,77.0166,5
+CI,Chhapra Kacheri,NER,Bihar,C,17,2,25.78599,84.74709,5
+DGLE,Dhulian Ganga,ER,West Bengal,C,16,2,24.67209,87.93764,5
+GJD,Gujhandi,ECR,Bihar,C,19,2,24.49812,85.46368,5
+GLG,Gulabhganj,WCR,Madhya Pradesh,C,23,2,23.68437,77.91235,5
+GLP,Gollaprolu,SCR,Andhra Pradesh,C,16,2,17.15166,82.29082,5
+GMIA,Gumia,ECR,Jharkhand,C,15,2,23.80265,85.82892,5
+GPR,Ghorpuri,CR,Maharashtra,C,16,2,18.52782,73.89345,5
+GRY,Goraya,NR,Punjab,C,20,2,31.12972,75.77419,5
+HJO,Harangajao,NFR,Assam,C,17,2,,,5
+HRT,Harnaut,ECR,Bihar,C,19,2,25.37176,85.54072,5
+JKN,Jakhanian,NER,Uttar Pradesh,C,15,2,25.74094,83.36956,5
+JLS,Jalesar Road,NCR,Uttar Pradesh,C,18,2,27.44546,78.16993,5
+JTG,Jatinga,NFR,Assam,C,19,2,25.13259,93.00796,5
+JTI,Jaithari,SECR,Madhya Pradesh,C,19,2,23.04519,81.79709,5
+KAMG,Kamakhyaguri,NFR,West Bengal,C,20,2,26.48417,89.72183,5
+KMS,Karamnasa,NER,Uttar Pradesh,C,22,2,25.23974,83.43089,5
+KS,Kheta Sarai,NR,Uttar Pradesh,C,19,2,25.96577,82.68866,5
+KWO,Karauta,ECR,Bihar,C,23,2,25.46864,85.46824,5
+KYF,Kajrat Nawadih,ECR,Bihar,C,20,2,24.59104,84.05014,5
+LUSA,Lusa,NCR,Uttar Pradesh,C,17,2,24.87655,82.84332,5
+MAUR,Maur,NR,Punjab,C,17,2,30.06275,75.22772,5
+MDDP,Mandi Dip,WCR,Madhya Pradesh,C,18,2,23.09375,77.51108,5
+MKB,Mankatha,ECR,Jharkhand,C,20,2,25.20722,86.05635,5
+MKH,Malakhera,NWR,Rajasthan,C,17,2,27.39024,76.61898,5
+MLN,Mailani,NER,Uttar Pradesh,C,24,2,28.28435,80.34732,5
+MLV,Mallarpur,ER,West Bengal,C,19,2,24.08003,87.72628,5
+MO,Mohol,CR,Maharashtra,C,23,2,17.80521,75.676,5
+MOF,Mondh,NR,Uttar Pradesh,C,21,2,25.42757,82.48464,5
+NS,Narasapur,SCR,Andhra Pradesh,C,18,2,16.44589,81.69991,5
+PBE,Pilibhit Jn,NER,Uttar Pradesh,C,17,2,28.61498,79.81395,5
+PKO,Palakollu,SCR,Andhra Pradesh,C,22,2,16.52224,81.71715,5
+PNK,Panki,NCR,Uttar Pradesh,C,18,2,26.45917,80.23644,5
+PP,Puranpur,NER,Uttar Pradesh,C,17,2,28.51491,80.15095,5
+PPC,Pipraich,NER,Uttar Pradesh,C,24,2,26.82831,83.53585,5
+PPN,Punpun,ECR,Bihar,C,19,2,25.48823,85.09877,5
+PUS,Phusro,ECR,Jharkhand,C,15,2,23.76749,86.01025,5
+QRP,Kila Raipur,NR,Punjab,C,19,2,30.75918,75.82749,5
+RAY,Ray,SER,Jharkhand,C,19,2,23.69008,85.07782,5
+RKSN,Rajkharsawan Jn,SER,Jharkhand,C,23,2,22.73353,85.81116,5
+SCI,Sanchi,WCR,Madhya Pradesh,C,22,2,23.4881,77.73578,5
+SCKR,Salichauka Road,WCR,Madhya Pradesh,C,16,2,22.83365,78.67629,5
+SDE,Sadisopur,ECR,Bihar,C,16,2,25.56617,84.91699,5
+SGJ,Safdarganj,NER,Uttar Pradesh,C,21,2,26.91445,81.36116,5
+SKGH,Saktesgarh,NCR,Uttar Pradesh,C,15,2,24.99974,82.82189,5
+SQN,Sarai Kansrai,NR,Uttar Pradesh,C,18,2,25.51663,82.3452,5
+SWR,Sonua,SER,Jharkhand,C,16,2,22.5765,85.46408,5
+TLV,Talvadya,WCR,Madhya Pradesh,C,15,2,21.9273,76.44378,5
+TME,Tuti Melur,SR,Tamil Nadu,C,24,2,8.80837,78.14581,5
+UBR,Umbargam Road,WR,Gujarat,C,15,2,20.1535,72.79082,5
+UJP,Ujiarpur,ECR,Bihar,C,15,2,25.78038,85.7996,5
+UVD,Udvada,WR,Gujarat,C,24,2,20.46124,72.9187,5
+WENA,Wena,ECR,Bihar,C,16,2,25.32662,85.53196,5
+ZRDE,Jiradei,NER,Bihar,C,23,2,26.22082,84.25614,5
+AAY,Aralvaymozhi,SR,Tamil Nadu,C,15,2,8.24945,77.52926,4
+ADT,Aduturai,SR,Tamil Nadu,C,16,2,11.00916,79.47867,4
+ADTP,Adityapur,SER,Jharkhand,C,16,2,22.78221,86.15895,4
+ADVI,Adavali,KR,Maharashtra,C,22,2,16.92175,73.59251,4
+AGI,Amguri,NFR,Assam,C,21,2,26.8126,94.52401,4
+AKJ,Akbarganj,NR,Uttar Pradesh,C,19,2,26.53146,81.50163,4
+AKOR,Akalkot Road,SWR,Karnataka,C,17,2,17.45024,76.13769,4
+ARCL,Arunachal,NFR,Assam,C,15,2,24.85559,92.74299,4
+ARQ,Arariya Court,ECR,Bihar,C,20,2,26.11492,87.44691,4
+BC,Bareilly City,NER,Uttar Pradesh,C,17,2,28.35566,79.40372,4
+BCU,Bhuchchu,NR,Punjab,C,20,2,30.20988,75.09519,4
+BEH,Bagdihi,SER,Orissa,C,21,2,21.95105,84.18631,4
+BEHR,Beohari,WCR,Madhya Pradesh,C,23,2,24.00027,81.37972,4
+BFM,Bhalui,ECR,Jharkhand,C,19,2,25.07322,86.17287,4
+BGH,Baghauli,NR,Uttar Pradesh,C,15,2,27.22808,80.29631,4
+BGK,Bagalkot,SWR,Karnataka,C,17,2,16.17879,75.70024,4
+BHB,Badla Ghat,ECR,Bihar,C,23,2,25.55376,86.58714,4
+BHTK,Bhanwar Tonk,SECR,Madhya Pradesh,C,20,2,22.60792,81.89779,4
+BHZ,Bihara,NFR,Assam,C,21,2,24.96282,92.68905,4
+BIA,Bhilai,SECR,Chhattisgarh,C,19,2,21.2026,81.42172,4
+BID,Bidadi,SWR,Karnataka,C,16,2,12.80043,77.3903,4
+BJP,Bijapur,SWR,Karnataka,C,23,2,16.83106,75.74,4
+BJRI,Bijuri,SECR,Madhya Pradesh,C,22,2,23.25034,82.11895,4
+BKL,Bona Kalu,SCR,Andhra Pradesh,C,24,2,17.03159,80.2615,4
+BLK,Belakoba,NFR,West Bengal,C,23,2,26.59144,88.58331,4
+BMD,Bhimadolu,SCR,Andhra Pradesh,C,17,2,16.80848,81.2611,4
+BMH,Betamcherla,SCR,Andhra Pradesh,C,17,2,15.44937,78.14864,4
+BNLW,Bansthali Niwai,WCR,Rajasthan,C,17,2,26.38393,75.93511,4
+BNTL,Bantawala,SWR,Karnataka,C,24,2,12.87855,75.03446,4
+BNV,Binnaguri,NFR,West Bengal,C,20,2,26.74709,89.05239,4
+BOKR,Bhokar,SCR,Maharashtra,C,19,2,19.21397,77.66653,4
+BRAG,Barang,ECoR,Orissa,C,24,2,20.4007,85.83257,4
+BRG,Bargarh,NCR,Uttar Pradesh,C,21,2,25.16427,81.45006,4
+BRY,Bareilly,NER,Uttar Pradesh,C,24,2,28.33728,79.41097,4
+BRZ,Bareta,NR,Punjab,C,24,2,29.85933,75.6924,4
+BSRX,Bagevadi Rd,SWR,Karnataka,C,15,2,16.47987,75.82815,4
+BTKP,Bharat Kup,NCR,Uttar Pradesh,C,18,2,25.21717,80.76768,4
+BTS,Basta,SER,Orissa,C,22,2,21.70292,87.06378,4
+BTX,Bela Tal,NCR,Uttar Pradesh,C,23,2,25.27679,79.55448,4
+BUA,Baradwar,SECR,Chhattisgarh,C,16,2,22.01173,82.81372,4
+BUDI,Bundi,WCR,Rajasthan,C,18,2,25.40792,75.6507,4
+BZY,Basai,NCR,Uttar Pradesh,C,20,2,25.14292,78.39425,4
+CAI,Chanpatia,ECR,Bihar,C,22,2,26.94163,84.53064,4
+CHH,Chaukhandi,NER,Uttar Pradesh,C,16,2,25.33989,82.83483,4
+CHP,Chhapi,WR,Gujarat,C,21,2,24.03452,72.40022,4
+CJ,Kanchipuram,SR,Tamil Nadu,C,17,2,12.84895,79.70315,4
+CJN,Chhatna,SER,West Bengal,C,17,2,23.30539,86.97573,4
+CKD,Charkhi Dadri,NWR,Haryana,C,20,2,28.6008,76.27992,4
+CKDL,Chakdayala,NR,Jammu and Kashmir,C,19,2,32.47891,75.30486,4
+CLDY,Chandlodiya,WR,Gujarat,C,21,2,23.07452,72.54361,4
+CLF,Chhulha,SECR,Madhya Pradesh,C,18,2,23.10672,81.73707,4
+CLKA,Chilka,ECoR,Orissa,C,23,2,19.68669,85.17991,4
+CLU,Chilakalapudi,SCR,Andhra Pradesh,C,15,2,16.20272,81.16214,4
+CNC,Chinchli,SWR,Karnataka,C,23,2,16.5717,74.85532,4
+CNH,Chaunrah,NCR,Uttar Pradesh,C,15,2,26.16506,79.78216,4
+CNK,Chandok,NR,Uttar Pradesh,C,22,2,29.57679,78.15278,4
+COA,Kakinada Port,SCR,Andhra Pradesh,C,18,2,16.9552,82.24006,4
+CTYL,Chityala,SCR,Andhra Pradesh,C,18,2,17.22196,79.13571,4
+CWA,Chhindwara Junction,SECR,Madhya Pradesh,C,15,2,22.0582,78.95321,4
+DABN,Dhaban,NWR,Rajasthan,C,22,2,29.86,74.54288,4
+DBRT,Dibrugarh Town,NFR,Assam,C,16,2,27.47811,94.90197,4
+DDL,Dhandari Kalan,NR,Punjab,C,21,2,30.87448,75.90949,4
+DEOR,Diyodar,WR,Gujarat,C,22,2,24.11349,71.77089,4
+DHRR,Dhirera,NWR,Rajasthan,C,23,2,28.36352,73.61635,4
+DHT,Dhamara Ghat,ECR,Bihar,C,22,2,25.59082,86.59952,4
+DJG,Duliajan,NFR,Assam,C,18,2,27.36771,95.30695,4
+DNWH,Daniyawan Bazar Halt,?,Bihar,C,22,2,25.4345,85.2909,4
+DOE,Deori,WCR,Madhya Pradesh,C,23,2,23.29843,80.00981,4
+DRTP,Dasharathpur,ECR,Bihar,C,18,2,25.26518,86.46453,4
+DUB,Dabtara,NR,Uttar Pradesh,C,16,2,28.36842,78.99116,4
+EKR,Ekangarsarai,ECR,Bihar,C,23,2,25.22248,85.23226,4
+ETM,Ettumanur,SR,Kerala,C,16,2,9.6762,76.54515,4
+FBG,Forbesganj,ECR,Bihar,C,20,2,26.2989,87.2628,4
+FTS,Fatehpur Sikri,NCR,Uttar Pradesh,C,17,2,27.09399,77.6706,4
+GAM,Ganjam,ECoR,Andhra Pradesh,C,16,2,19.39583,85.04672,4
+GBX,Govindpur Road,SER,Jharkhand,C,22,2,23.06186,85.04358,4
+GKC,Gorakhpur Cant,NER,Uttar Pradesh,C,16,2,26.75065,83.41682,4
+GLA,Garla,SCR,Andhra Pradesh,C,21,2,17.48708,80.13924,4
+GNA,Goneana,NR,Punjab,C,21,2,30.31872,74.90948,4
+GOGH,Gossaigaon Hat,NFR,Assam,C,15,2,26.42911,89.97159,4
+GPH,Garpos,SER,Orissa,C,16,2,22.1342,84.41843,4
+GQL,Gurla,WCR,Rajasthan,C,22,2,25.27023,75.88527,4
+GSPR,Gosalpur,WCR,Madhya Pradesh,C,20,2,23.38181,80.05922,4
+GTK,Ghutku,SECR,Chhattisgarh,C,16,2,22.16819,82.08532,4
+GTM,Ghatampur,NCR,Uttar Pradesh,C,24,2,26.1513,80.17471,4
+GUD,Galudih,SER,Jharkhand,C,17,2,22.64887,86.41049,4
+GUV,Guruvayur,SR,Kerala,C,15,2,10.5969,76.04546,4
+GVL,Gudlavalleru,SCR,Andhra Pradesh,C,24,2,16.34837,81.04604,4
+HDB,Haldibari,NFR,West Bengal,C,15,2,26.33495,88.78194,4
+HEM,Himayatnagar,SCR,Maharashtra,C,20,2,19.41671,77.86885,4
+HFG,Haflong Hill,NFR,Assam,C,24,2,,,4
+HIJ,Hijilli,SER,West Bengal,C,20,2,22.31992,87.32017,4
+HIL,Hilsa,ECR,Bihar,C,20,2,25.31735,85.27708,4
+HLDD,Haldi Road,NER,Uttarakhand,C,18,2,29.0396,79.45968,4
+HRB,Harri,SECR,Madhya Pradesh,C,16,2,22.82794,81.8826,4
+HRPG,Harpalganj,NR,Uttar Pradesh,C,20,2,25.94758,82.40542,4
+HTC,Hathras City,NCR,Uttar Pradesh,C,23,2,27.59982,78.05507,4
+IPR,Islampur,ECR,Bihar,C,15,2,25.13858,85.2173,4
+IZN,Izzatnagar,NER,Uttar Pradesh,C,23,2,28.38827,79.42117,4
+JAB,Yamuna Bridge Agra,NCR,Uttar Pradesh,C,19,2,27.19151,78.03813,4
+JBN,Jogbani,ECR,Bihar,C,20,2,26.40226,87.26326,4
+JJG,JiaGanj,ER,West Bengal,C,16,2,24.24427,88.27698,4
+JKE,Jukehi,WCR,Madhya Pradesh,C,21,2,23.98687,80.43239,4
+JLW,Jhalwara,WCR,Madhya Pradesh,C,16,2,23.77219,80.47361,4
+JNO,Junnor Deo,CR,Madhya Pradesh,C,17,2,22.19128,78.59205,4
+JOR,Jalor,NWR,Rajasthan,C,22,2,25.35418,72.63429,4
+JPG,Jalpaiguri,NFR,West Bengal,C,15,2,26.51816,88.72303,4
+JPH,Jhantipahari,?,West Bengal,C,19,2,23.35336,86.90449,4
+JRK,Jeruwa Khera,WCR,Madhya Pradesh,C,20,2,23.97374,78.47873,4
+JTTN,Jorhat Town,NFR,Assam,C,16,2,26.75069,94.21711,4
+JWO,Jawad Road,WR,Rajasthan,C,17,2,24.55758,74.76439,4
+KAH,Kalhar,WCR,Madhya Pradesh,C,18,2,23.97807,78.05718,4
+KAJ,Kaliyaganj,NFR,West Bengal,C,21,2,25.6393,88.3304,4
+KBM,Kotabommali,ECoR,Andhra Pradesh,C,24,2,18.48835,84.19984,4
+KBPR,Kabakaputtur,SWR,Karnataka,C,23,2,12.7684,75.2045,4
+KDG,Kedgaon,CR,Maharashtra,C,16,2,18.48209,74.37637,4
+KEH,Kapseti,NER,Uttar Pradesh,C,15,2,25.35785,82.71769,4
+KEPR,Koiripur,NR,Uttar Pradesh,C,15,2,26.02164,82.33959,4
+KGL,Kupgal,SCR,Andhra Pradesh,C,20,2,15.72626,77.21923,4
+KGS,Khongsara,SECR,Madhya Pradesh,C,16,2,22.55135,81.93415,4
+KHRJ,Kumbhraj,WCR,Rajasthan,C,17,2,24.3631,77.07957,4
+KID,Khairar Jn,NCR,Uttar Pradesh,C,23,2,25.45196,80.23607,4
+KIN,Kapasan,NWR,Rajasthan,C,23,2,24.86221,74.31276,4
+KJN,Kannauj,NR,Uttar Pradesh,C,23,2,27.02651,79.92611,4
+KKHT,Kakarghatti,ECR,Bihar,C,17,2,26.18348,85.94826,4
+KKI,Karkeli,WCR,Madhya Pradesh,C,21,2,23.46096,80.91906,4
+KLB,Kiraoli,NCR,Uttar Pradesh,C,21,2,27.1339,77.78581,4
+KLNK,Kalanaur Kalan,NWR,Haryana,C,16,2,28.83492,76.38961,4
+KO,Kosgi,SCR,Andhra Pradesh,C,20,2,15.84787,77.23641,4
+KOI,Khodri,SECR,Madhya Pradesh,C,20,2,22.66509,81.9357,4
+KPTN,Keshorai Patan,WCR,Rajasthan,C,18,2,25.32452,75.93773,4
+KRLR,Karaila Road Jn,ECR,Madhya Pradesh,C,22,2,24.26108,82.71931,4
+KRPU,Koraput,ECoR,Orissa,C,21,2,18.79219,82.71944,4
+KTMA,Kotma,SECR,Madhya Pradesh,C,20,2,23.20283,81.97902,4
+KTW,Kotdwara,NR,Uttarakhand,C,22,2,29.74293,78.52116,4
+KTX,Katakhal Jn,NFR,Assam,C,22,2,24.83436,92.62707,4
+KUA,Kulharia,ECR,Bihar,C,20,2,25.56817,84.75781,4
+KVM,Kavutaram,SCR,Andhra Pradesh,C,17,2,16.32892,81.06961,4
+KWR,Koelwar,ECR,Bihar,C,22,2,25.5687,84.79206,4
+KXH,Kapurthala,NR,Punjab,C,22,2,31.36685,75.38272,4
+KZA,Khada,NER,Uttar Pradesh,C,24,2,27.18293,83.86838,4
+LGL,Lalgola,ER,West Bengal,C,16,2,24.42115,88.25751,4
+LGT,Langting,NFR,Assam,C,19,2,25.49759,93.11026,4
+LHA,Lehra Gaga,NR,Punjab,C,24,2,29.93783,75.81008,4
+LKMR,Laxmipur Road,ECoR,Orissa,C,20,2,19.00399,83.1043,4
+LLI,Lalgudi,SR,Tamil Nadu,C,24,2,10.87573,78.81367,4
+LM,Limbdi,WR,Gujarat,C,15,2,22.56604,71.7896,4
+LMK,Limkheda,WR,Gujarat,C,15,2,22.83389,73.98452,4
+LMT,Almatti,SWR,Karnataka,C,22,2,16.3459,75.9005,4
+LTR,Lakhtar,WR,Gujarat,C,18,2,22.8734,71.77673,4
+MA,Madha,CR,Maharashtra,C,20,2,18.02971,75.54651,4
+MAY,Mariahu,NR,Uttar Pradesh,C,19,2,25.59701,82.59817,4
+MBB,Murshidabad,ER,West Bengal,C,19,2,24.17696,88.2816,4
+MBNL,Marwar Bhinmal,NWR,Rajasthan,C,24,2,25.00063,72.2754,4
+MCN,Mukundarayapurm,SR,Tamil Nadu,C,15,2,12.97768,79.28907,4
+MCQ,Mirchadhori,ECR,Madhya Pradesh,C,22,2,24.29185,82.79341,4
+MDPB,Madhopur Punjab,NR,Punjab,C,23,2,32.35917,75.59473,4
+MDW,Marwar Mundwa,NWR,Rajasthan,C,21,2,27.06361,73.81597,4
+MED,Medchal,SCR,Andhra Pradesh,C,18,2,17.63933,78.47456,4
+MGAE,Morgram,ER,West Bengal,C,16,2,24.30492,88.01841,4
+MGME,Mccluskieganj,SER,Jharkhand,C,21,2,23.65178,84.94085,4
+MHRG,Mahendragarh,NWR,Haryana,C,19,2,28.28143,76.14863,4
+MJF,Malkajgiri,SCR,Andhra Pradesh,C,16,2,17.44839,78.52961,4
+MKO,Markona,?,Orissa,C,18,2,21.19555,86.59612,4
+MKR,Maddikera,SCR,Andhra Pradesh,C,24,2,15.25664,77.4115,4
+MMK,Madurantakam,SR,Tamil Nadu,C,17,2,12.50442,79.89309,4
+MMY,Marwar Mathanya,NWR,Rajasthan,C,16,2,26.53217,72.97878,4
+MNO,Mehnar Road,ECR,Bihar,C,21,2,25.65431,85.50448,4
+MNSR,Manaksar,NWR,Rajasthan,C,16,2,29.68007,74.38362,4
+MPA,Manaparai,SR,Tamil Nadu,C,24,2,10.60756,78.41777,4
+MRB,Munirabad,SWR,Karnataka,C,23,2,15.30852,76.33554,4
+MSR,Masur,CR,Maharashtra,C,24,2,17.40424,74.14421,4
+MTU,Matmari,SCR,Andhra Pradesh,C,24,2,16.04672,77.30297,4
+MWX,Mallanwala Khas,NR,Punjab,C,17,2,31.047,74.81343,4
+MXR,Mahur,NFR,Assam,C,17,2,25.188,93.1263,4
+NAB,Nagbhir Junction,SECR,Maharashtra,C,18,2,20.57981,79.70014,4
+NAM,Namrup,NFR,Assam,C,19,2,27.19627,95.31364,4
+NAT,Nathnagar,ER,Bihar,C,23,2,25.23705,86.93537,4
+NAW,Nawandgi,SCR,Andhra Pradesh,C,22,2,17.2171,77.42791,4
+NAZJ,Nazirganj,ECR,Bihar,C,21,2,25.72432,85.80633,4
+NBR,Namburu,SCR,Andhra Pradesh,C,23,2,16.35872,80.49583,4
+NCR,Nagore,SR,Tamil Nadu,C,21,2,10.81843,79.84619,4
+NGT,Nagappattinam,SR,Tamil Nadu,C,18,2,10.75922,79.846,4
+NIQ,Nigaura,SECR,Madhya Pradesh,C,19,2,22.96155,81.87422,4
+NIU,Nabipur,WR,Gujarat,C,20,2,21.80754,73.03059,4
+NJT,Nagercoil Town,SR,Tamil Nadu,C,15,2,8.19957,77.41943,4
+NMX,New Maynaguri,NFR,West Bengal,C,22,2,26.57861,88.82287,4
+NNW,Narayanpur Tatwar,WCR,Rajasthan,C,21,2,26.34426,76.63558,4
+NOI,Nariaoli,WCR,Madhya Pradesh,C,22,2,23.89567,78.60415,4
+NRI,Naraina,NWR,Rajasthan,C,20,2,26.79646,75.19303,4
+NWD,Nawadih,ECR,Bihar,C,22,2,24.88676,85.54865,4
+NWU,Navapur,WR,Gujarat,C,24,2,21.16684,73.77118,4
+NZD,Nuzvid,SCR,Andhra Pradesh,C,20,2,16.64993,80.96153,4
+ODM,Ondagram,SER,West Bengal,C,19,2,23.14797,87.20228,4
+OEA,Odela,SCR,Andhra Pradesh,C,16,2,18.45655,79.44974,4
+ORGA,Orga,SER,Orissa,C,22,2,22.44855,84.91578,4
+OSN,Osiyan,NWR,Rajasthan,C,24,2,26.72922,72.89978,4
+PAV,Pedana,SCR,Andhra Pradesh,C,21,2,16.25211,81.14379,4
+PAW,Pandabeswar,ER,West Bengal,C,23,2,23.71196,87.27742,4
+PDU,Ponduru,ECoR,Andhra Pradesh,C,23,2,18.36288,83.77655,4
+PERN,Pernem,KR,Goa,C,22,2,15.70789,73.81654,4
+PFR,Pachor Road,SER,Jharkhand,C,20,2,23.7291,76.74161,4
+PIA,Pipraigaon,WCR,Madhya Pradesh,C,15,2,24.50364,77.96426,4
+PML,Papanasam,SR,Tamil Nadu,C,15,2,10.92277,79.26854,4
+PMP,Pimpri,CR,Maharashtra,C,17,2,18.62298,73.80199,4
+PMT,Pullampet,SCR,Andhra Pradesh,C,19,2,14.12062,79.20561,4
+PNGM,Panchgram,NFR,Assam,C,22,2,24.86436,92.59832,4
+PNQ,Punkunnam,SR,Kerala,C,19,2,10.53505,76.20943,4
+PNYA,Paniahwa,NER,Uttar Pradesh,C,15,2,27.16749,83.93384,4
+POK,Pokran,NWR,Rajasthan,C,17,2,26.93057,71.92313,4
+PPD,Piplod Jn,WR,Gujarat,C,24,2,22.81915,73.9091,4
+PRB,Parbati,WCR,Madhya Pradesh,C,24,2,23.25053,77.01239,4
+PRNA,Purnia Jn,ECR,Bihar,C,18,2,25.79068,87.51912,4
+PSR,Pasraha,ECR,Bihar,C,23,2,25.40376,86.74388,4
+PUX,Parasia,CR,Madhya Pradesh,C,22,2,22.19319,78.76432,4
+PVR,Pandharpur,CR,Maharashtra,C,24,2,17.66849,75.31928,4
+RBS,Rupbas,NCR,Rajasthan,C,23,2,26.99038,77.59096,4
+RDP,Radhikapur,NFR,West Bengal,C,21,2,25.64357,88.44815,4
+REI,Rithi,WCR,Madhya Pradesh,C,18,2,23.90417,80.14027,4
+RGH,Ramgarhwa,ECR,Bihar,C,21,2,26.87384,84.79715,4
+RGJ,RaiGanj,NFR,West Bengal,C,18,2,25.61913,88.1277,4
+RGP,Raghunathpalli,SCR,Andhra Pradesh,C,18,2,17.75648,79.2553,4
+RGU,Ragaul,NCR,Uttar Pradesh,C,21,2,25.68695,80.12968,4
+RJK,Raja Ka Sahaspur,NR,Uttar Pradesh,C,20,2,28.62622,78.7801,4
+RJR,Rajaldesar,NWR,Rajasthan,C,20,2,28.03367,74.47771,4
+RMNP,Ramannapet,SCR,Andhra Pradesh,C,18,2,17.28234,79.08702,4
+RMP,Rahimatpur,CR,Maharashtra,C,19,2,17.61215,74.17217,4
+RMRB,Ramnagar Bengal,?,West Bengal,C,15,2,21.67745,87.55405,4
+RNPR,Rupnarayanpur,SER,West Bengal,C,21,2,23.8187,86.88548,4
+ROA,Rusera Ghat,ECR,Bihar,C,20,2,25.7463,86.03574,4
+RPD,Rupaund,WCR,Madhya Pradesh,C,24,2,23.73175,80.57335,4
+RPUR,Ratanpur,ECR,Bihar,C,20,2,25.27979,86.57608,4
+RQJ,Raninagar Jalpaigiri,NFR,West Bengal,C,19,2,26.54466,88.64829,4
+RSI,Raisi,NR,Uttarakhand,C,15,2,29.69283,78.06643,4
+SAA,Sathiaon,NER,Uttar Pradesh,C,16,2,26.03419,83.28732,4
+SAE,Simaria,ECR,Bihar,C,18,2,25.41072,86.01373,4
+SAH,Saphale,WR,Maharashtra,C,18,2,19.57659,72.82183,4
+SBD,Sleemanabad Rd,WCR,Madhya Pradesh,C,18,2,23.61437,80.28521,4
+SBHR,Subrahmanya Road,SWR,Karnataka,C,18,2,12.73127,75.55762,4
+SBT,Sabarmati Jn,WR,Gujarat,C,22,2,23.07755,72.58928,4
+SCH,Sachin,WR,Gujarat,C,16,2,21.07767,72.87408,4
+SCL,Silchar,NFR,Assam,C,18,2,24.83034,92.78679,4
+SDGH,Sri Dungargarh,NWR,Rajasthan,C,16,2,28.07031,74.00801,4
+SDI,Sagardighi,ER,West Bengal,C,18,2,24.28779,88.1054,4
+SDN,Sholavandan,SR,Tamil Nadu,C,21,2,10.02227,77.96508,4
+SFC,Saintala,ECoR,Orissa,C,15,2,20.43388,83.33504,4
+SFG,Subedarganj,NER,Uttar Pradesh,C,18,2,25.43988,81.7899,4
+SFW,Sarangpur,SER,Jharkhand,C,15,2,23.58106,76.48719,4
+SGF,Sangat,NWR,Punjab,C,24,2,30.08806,74.83253,4
+SGLA,Sangola,CR,Maharashtra,C,22,2,17.43556,75.18758,4
+SHK,Sheikpura,ECR,Bihar,C,17,2,25.13209,85.85402,4
+SKLR,Sakleshpur,SWR,Karnataka,C,16,2,12.94537,75.77875,4
+SKS,Salekasa,SECR,Maharashtra,C,15,2,21.30163,80.49322,4
+SLD,Sakaldiha,NER,Uttar Pradesh,C,19,2,25.33147,83.28919,4
+SLKR,Salkaroad,SECR,Chhattisgarh,C,22,2,22.36745,82.01061,4
+SME,Shimoga,SWR,Karnataka,C,20,2,13.92761,75.59267,4
+SMLA,Samlaya Jn,WR,Gujarat,C,23,2,22.48397,73.3021,4
+SMNH,Somnath,WR,Gujarat,C,18,2,20.89613,70.40825,4
+SMT,Salamatpur,WCR,Madhya Pradesh,C,17,2,23.46164,77.67275,4
+SNLR,Santalpur,WR,Gujarat,C,19,2,23.75916,71.18154,4
+SOJN,Sihor Gujarat,WR,Gujarat,C,17,2,21.7248,71.9572,4
+SOR,Sonagir,NCR,Uttar Pradesh,C,24,2,25.73067,78.4091,4
+SOS,Somesar,NWR,Rajasthan,C,16,2,25.52023,73.451,4
+SQR,Sultanpur Lodi,NR,Punjab,C,19,2,31.21171,75.20302,4
+SSA,Sirsa,NWR,Haryana,C,20,2,29.53915,75.03494,4
+STLR,Sitalpur,ECR,Bihar,C,15,2,25.76874,85.03664,4
+SVRP,Shivanarayanpur,CR,Maharashtra,C,19,2,25.29373,87.33309,4
+SYA,Salaia,WCR,Madhya Pradesh,C,19,2,23.84608,79.96912,4
+SYN,Sayan,WR,Gujarat,C,17,2,21.3172,72.89029,4
+TAPA,Tapa,NR,Punjab,C,16,2,30.30284,75.36605,4
+TAZ,Targaon,CR,Maharashtra,C,15,2,17.51424,74.15582,4
+TET,Tetulmari,SER,Jharkhand,C,15,2,23.81444,86.34357,4
+TGA,Teghra,ECR,Bihar,C,19,2,25.51102,85.94177,4
+TGQ,Tenganmada,SECR,Madhya Pradesh,C,15,2,22.50703,81.99575,4
+TIU,Tilaru,ECoR,Andhra Pradesh,C,24,2,18.47049,84.07268,4
+TKJ,Tilak Bridge,NR,Delhi NCT,C,17,2,28.62763,77.23799,4
+TKQ,Trikarpur,SR,Kerala,C,21,2,12.14218,75.17614,4
+TRB,Tiruverumbur,SR,Tamil Nadu,C,21,2,10.78717,78.77642,4
+TRR,Taraori,NR,Haryana,C,19,2,29.79791,76.93858,4
+TRS,Tarsarai,ECR,Bihar,C,23,2,26.19436,86.01331,4
+TUA,Tirunnavaya,SR,Kerala,C,16,2,10.87472,75.98568,4
+TVR,Thiruvarur Jn,SR,Tamil Nadu,C,17,2,10.76435,79.6339,4
+UA,Upleta,WR,Gujarat,C,17,2,21.74692,70.28243,4
+UGR,Ugar Khurd,SWR,Karnataka,C,16,2,16.66971,74.82213,4
+UHL,Una Himachal,NR,Himachal Pradesh,C,17,2,31.47878,76.27566,4
+UR,Umdanagar,SCR,Andhra Pradesh,C,18,2,17.26293,78.39314,4
+UREN,Uren,ECR,Jharkhand,C,22,2,25.17124,86.2142,4
+VAPM,Valapattanam,SR,Kerala,C,18,2,11.92773,75.34637,4
+VDA,Vasad Jn,WR,Gujarat,C,23,2,22.45235,73.05999,4
+VDE,Vedayapalem,SCR,Andhra Pradesh,C,22,2,14.40448,79.95711,4
+VEER,Veer,KR,Maharashtra,C,24,2,18.1134,73.33008,4
+VID,Vilavade,KR,Maharashtra,C,16,2,16.78559,73.61932,4
+VJP,Vijay Pur,WCR,Rajasthan,C,24,2,24.49317,77.16241,4
+VKR,Venkatnagra,SECR,Madhya Pradesh,C,21,2,22.92327,81.87219,4
+VMD,Vadlamannadu,SCR,Andhra Pradesh,C,24,2,16.30018,81.09888,4
+VNA,Varangaon,CR,Maharashtra,C,18,2,21.00971,75.90066,4
+VS,Vishvamitri,WR,Gujarat,C,24,2,22.28393,73.17866,4
+VYA,Vyara,WR,Gujarat,C,20,2,21.11814,73.38385,4
+WPR,Wanparti Road,SCR,Andhra Pradesh,C,15,2,16.38205,77.88515,4
+WRS,Waris Aleganj,ECR,Bihar,C,19,2,25.01543,85.64218,4
+WSA,Wadsa,SECR,Maharashtra,C,16,2,20.6242,79.96351,4
+YP,Errupalem,SCR,Andhra Pradesh,C,24,2,16.82537,80.47105,4
+ABKP,Ambikapur,SECR,Chhattisgarh,C,18,2,23.13703,83.14511,3
+ASH,Aishbagh,NER,Uttar Pradesh,C,17,2,26.83739,80.90961,3
+BATL,Baihatola,SECR,Madhya Pradesh,C,20,2,23.2312,82.05862,3
+BAZ,Baran,WCR,Rajasthan,C,19,2,25.09677,76.50513,3
+BEM,Budaun,NER,Uttar Pradesh,C,15,2,28.02749,79.13602,3
+BFR,Bekal Fort,SR,Kerala,C,23,2,12.38552,75.04279,3
+BHI,Baheri,NER,Uttar Pradesh,C,23,2,28.77739,79.50032,3
+BHME,Bhandaridah,ECR,Jharkhand,C,22,2,23.75667,86.0551,3
+BKO,Bindki Road,NR,Uttar Pradesh,C,21,2,26.11656,80.58056,3
+BKRO,Bokaro Thermal,ECR,Jharkhand,C,19,2,23.78515,85.87558,3
+BRH,Baikunthpur Rd,SECR,Chhattisgarh,C,20,2,23.31729,82.52988,3
+BRMO,Bermo,ECR,Jharkhand,C,20,2,23.7725,85.95589,3
+BRND,Boridand,SECR,Madhya Pradesh,C,16,2,23.2678,82.17876,3
+BSC,Bulandshahr,NR,Uttar Pradesh,C,15,2,28.39192,77.84824,3
+BSPR,Bishrampur,SECR,Chhattisgarh,C,17,2,23.17918,82.98289,3
+BUX,Bhandak,CR,Maharashtra,C,19,2,20.08426,79.11253,3
+BVRM,Bhimavaram Junction,SCR,Andhra Pradesh,C,16,2,16.5431,81.53834,3
+BWI,Bilwai,NR,Uttar Pradesh,C,16,2,26.15897,82.66518,3
+BWL,Bawal,NWR,Haryana,C,23,2,28.07028,76.5724,3
+CHL,Chola,NR,Uttar Pradesh,C,18,2,28.31217,77.72941,3
+CIL,Chilbila Jn,NR,Uttar Pradesh,C,20,2,25.94733,82.00424,3
+CNPR,Chainpur,ECR,Jharkhand,C,20,2,23.72982,85.58293,3
+CW,Chainwa,NER,Bihar,C,22,2,26.02212,84.4965,3
+DAL,Daliganj,NER,Uttar Pradesh,C,22,2,26.87538,80.92748,3
+DHW,Dhariwal,NR,Punjab,C,17,2,31.94911,75.32156,3
+DIL,Dilawarnagar,NER,Uttar Pradesh,C,23,2,26.96019,80.66747,3
+DMNJ,Damanjodi,ECoR,Orissa,C,18,2,18.76777,82.86577,3
+DMRX,Dumri Halt,ECR,Jharkhand,C,23,2,25.24594,86.0284,3
+DNN,Dina Nagar,NR,Punjab,C,19,2,32.13479,75.46735,3
+DRSN,Dhurwasin,SECR,Madhya Pradesh,C,16,2,23.12905,81.84564,3
+FSP,Fateh Singhpura,WCR,Rajasthan,C,22,2,26.82161,77.14696,3
+FTG,Fursatganj,NR,Uttar Pradesh,C,15,2,26.24452,81.41565,3
+GK,Gola Gokaranath,NER,Uttar Pradesh,C,22,2,28.08465,80.47547,3
+GOC,Ponmalai Golden Rock,SR,Tamil Nadu,C,15,2,10.79184,78.70976,3
+GRA,Gharaunda,NR,Haryana,C,17,2,29.54164,76.96575,3
+GRD,Giridih,ER,Jharkhand,C,21,2,24.18226,86.31465,3
+GVN,Godavari,SCR,Andhra Pradesh,C,24,2,17.00771,81.77083,3
+HRV,Harrad,SECR,Madhya Pradesh,C,19,2,23.16114,81.90404,3
+HSI,Harsauli,NWR,Rajasthan,C,16,2,27.86485,76.61519,3
+JTB,Jagatbela,NER,Uttar Pradesh,C,17,2,26.77222,83.2785,3
+KCJ,Kasimpur,NR,Uttar Pradesh,C,23,2,26.25719,81.53994,3
+KEM,Kem,CR,Maharashtra,C,22,2,18.17751,75.27463,3
+KHH,Kichha,NER,Uttar Pradesh,C,16,2,28.91343,79.51975,3
+KKJ,Kakori,NER,Uttar Pradesh,C,18,2,26.88545,80.79835,3
+KLTR,Kalmitar,SECR,Chhattisgarh,C,17,2,22.23425,82.05763,3
+KURJ,Khajuraho,NCR,Madhya Pradesh,C,16,2,24.79698,79.89002,3
+KUU,Kuhuri,ECoR,Orissa,C,23,2,19.85999,85.3527,3
+KZK,Kazhakuttam,SR,Kerala,C,21,2,8.55585,76.87224,3
+LMP,Lakhimpur,NER,Uttar Pradesh,C,16,2,27.94741,80.77763,3
+MBS,Madhosingh,NER,Uttar Pradesh,C,21,2,25.24993,82.55228,3
+MCS,Mancheswar,ECoR,Orissa,C,19,2,20.32186,85.84487,3
+MLY,Maula Ali,SCR,Andhra Pradesh,C,15,2,17.44041,78.55054,3
+MNJ,Manoharganj,NR,Uttar Pradesh,C,19,2,25.52499,81.55907,3
+MOTC,Motichur,NR,Uttarakhand,C,16,2,29.98115,78.17768,3
+MQX,Meralgram,ECR,Jharkhand,C,17,2,24.19691,83.70963,3
+MZH,Mauhari,SECR,Madhya Pradesh,C,23,2,23.11866,81.76946,3
+NDU,Nadauj,ECR,Bihar,C,22,2,25.29654,85.01734,3
+NDW,Nadwan,ECR,Bihar,C,16,2,25.39669,85.06567,3
+NPS,Napasar,NWR,Rajasthan,C,23,2,27.98094,73.56399,3
+NRL,Neral,CR,Maharashtra,C,20,2,19.02711,73.31896,3
+PAD,Pardi,WR,Gujarat,C,23,2,20.51315,72.92431,3
+PBW,Pantnagar,NER,Uttarakhand,C,22,2,29.01771,79.51778,3
+PDKN,Pedakakani Halt,SCR,Andhra Pradesh,C,18,2,16.34324,80.48615,3
+PEP,Phephna Jn,NER,Uttar Pradesh,C,20,2,25.77031,84.05132,3
+PES,Phesar,ECR,Bihar,C,20,2,24.84549,84.41808,3
+PLJE,Phulwartanr,SER,Jharkhand,C,22,2,23.77515,86.22658,3
+RBD,Rahimabad,NER,Uttar Pradesh,C,17,2,26.99934,80.60064,3
+RBZ,Rambhaddarpur,ECR,Bihar,C,18,2,25.97717,85.86518,3
+RDUM,Rampur Dumra,ECR,Bihar,C,17,2,25.33086,86.00064,3
+RMC,Ram Chaura Road,NR,Uttar Pradesh,C,17,2,25.60949,81.68695,3
+RRME,Ranchi Road,ECR,Jharkhand,C,16,2,23.66599,85.5116,3
+SAT,Sant Road,WR,Gujarat,C,15,2,22.79639,73.8004,3
+SDT,Sadat,NER,Uttar Pradesh,C,24,2,25.67331,83.30838,3
+SEU,Sendra,NWR,Rajasthan,C,15,2,26.07797,74.19414,3
+SILO,Silao,ECR,Bihar,C,23,2,25.0786,85.43464,3
+SJN,Sanjan,WR,Gujarat,C,15,2,20.19165,72.82059,3
+SJT,Shujaatpur,NR,Uttar Pradesh,C,22,2,25.60561,81.40193,3
+SLY,Samalpatti,SWR,Tamil Nadu,C,18,2,12.31159,78.48403,3
+SNGP,Singhpur,SECR,Madhya Pradesh,C,20,2,23.25396,81.40751,3
+SRNT,Sarnath,NER,Uttar Pradesh,C,17,2,25.376,83.03263,3
+STP,Sitapur,NER,Uttar Pradesh,C,19,2,27.55873,80.69776,3
+SVHE,Sisvinhalli,SWR,Karnataka,C,19,2,15.43004,75.31936,3
+TGU,Tarigoppula,SCR,Andhra Pradesh,C,20,2,16.48568,80.83631,3
+TKRI,Tikiri,ECoR,Orissa,C,18,2,19.17767,83.09911,3
+TSR,Tsunduru,SCR,Andhra Pradesh,C,20,2,16.1575,80.58649,3
+UJH,Ujhani,NER,Uttar Pradesh,C,23,2,27.99524,79.01491,3
+UKL,Uttukuli,SR,Tamil Nadu,C,19,2,11.15649,77.44862,3
+ULD,Achalda,NCR,Uttar Pradesh,C,18,2,26.70195,79.40439,3
+VVM,Viravasaram,SCR,Andhra Pradesh,C,16,2,16.54212,81.63254,3
+YL,Yeola,SCR,Maharashtra,C,18,2,20.04319,74.50325,3
+AAM,Angadippuram,SR,Kerala,C,16,2,10.97949,76.20734,2
+ABD,Ambli Road,WR,Gujarat,C,16,2,23.05437,72.49404,2
+ABI,Ambaturai,SR,Tamil Nadu,C,24,2,10.27223,77.92447,2
+ABSA,Ambassa,NFR,Tripura,C,15,2,23.93051,91.86078,2
+ADR,Mandi Adampur,NWR,Haryana,C,19,2,29.28314,75.46885,2
+ADTL,Adhartal,WCR,Madhya Pradesh,C,23,2,23.22739,79.97227,2
+AFR,Asafpur,NR,Uttar Pradesh,C,24,2,28.40555,78.90596,2
+AGA,Agra City,NCR,Uttar Pradesh,C,16,2,27.19457,78.01578,2
+AGTL,Agartala,NFR,Tripura,C,16,2,23.79242,91.27848,2
+AIG,Algawan,NER,Uttar Pradesh,C,18,2,27.7006,79.96324,2
+ALB,Alia Bada,WR,Gujarat,C,20,2,22.44677,70.21037,2
+AMSA,Ammasandra,SWR,Karnataka,C,24,2,13.26457,76.71149,2
+ANA,Aslana,WCR,Madhya Pradesh,C,17,2,23.86052,79.31949,2
+ANAS,Anas,WR,Gujarat,C,16,2,22.86601,74.42151,2
+ANF,Anandapuram,SWR,Karnataka,C,17,2,14.07332,75.20916,2
+ANK,Ankai,SCR,Maharashtra,C,23,2,20.15103,74.46976,2
+ANPR,Anpara,ECR,Uttar Pradesh,C,15,2,24.21739,82.76617,2
+ANVR,Anand Vihar,NR,Delhi NCT,C,18,2,28.64861,77.31402,2
+ANY,Arumuganeri,SR,Tamil Nadu,C,16,2,8.57914,78.09184,2
+ARD,Amarda Road,SER,Orissa,C,16,2,21.73426,87.10237,2
+ARW,Ahraura Road,NER,Uttar Pradesh,C,24,2,25.1965,83.01888,2
+ASAF,Asifabad Road,SECR,Maharashtra,C,15,2,19.25668,79.41672,2
+ATMO,Aithal,NR,Uttarakhand,C,18,2,29.80793,78.04362,2
+ATNR,Awatar Nagar,NER,Bihar,C,24,2,25.7644,84.95677,2
+ATT,Atari,NR,Punjab,C,21,2,31.59493,74.60724,2
+AVD,Avadi,SR,Tamil Nadu,C,15,2,13.11825,80.10052,2
+AVN,Anavardikhanpet,SR,Tamil Nadu,C,19,2,13.0505,79.56735,2
+AVRD,Aravali Road,KR,Maharashtra,C,24,2,17.31653,73.53816,2
+AYRN,Akshaywat Rai Nagar,ECR,Bihar,C,19,2,25.68877,85.31541,2
+BAGL,Baragopal,NER,Bihar,C,20,2,25.76509,84.90676,2
+BAKA,Banka,?,Bihar,C,20,2,24.8659,86.91169,2
+BANE,Basni,NWR,Rajasthan,C,21,2,26.22296,73.01064,2
+BAO,Banmor,NCR,Madhya Pradesh,C,16,2,26.35556,78.09893,2
+BARL,Baral,NR,Uttar Pradesh,C,23,2,28.49409,77.80998,2
+BBA,Babrala,NR,Uttar Pradesh,C,24,2,28.26649,78.40341,2
+BBGN,Barua Bamungaon,NFR,Assam,C,16,2,26.66216,93.94469,2
+BBN,Barbil,SER,Odisha,C,23,2,22.10458,85.36906,2
+BDBA,Badabandha Road,ECoR,Orissa,C,23,2,20.27672,86.51995,2
+BDCR,Bhadrachalam Road,SCR,Andhra Pradesh,C,22,2,17.55036,80.61602,2
+BDH,Bhedia,ER,West Bengal,C,18,2,23.58664,87.71181,2
+BDHY,Budhi,NR,Jammu and Kashmir,C,19,2,32.44043,75.43293,2
+BDM,Badami,SWR,Karnataka,C,23,2,15.95892,75.6767,2
+BDU,Badnapur,SCR,Maharashtra,C,16,2,19.87398,75.72248,2
+BDWA,Badhwa Bara,SECR,Madhya Pradesh,C,23,2,23.29393,81.28637,2
+BDWL,Biradhwal,NWR,Rajasthan,C,24,2,29.17412,73.89652,2
+BDY,Buddireddippati,SWR,Tamil Nadu,C,21,2,12.04466,78.31275,2
+BEG,Behtagokul,NER,Uttar Pradesh,C,18,2,27.53043,80.05485,2
+BET,Bareth,WCR,Madhya Pradesh,C,20,2,23.91495,77.99968,2
+BEY,B Cement Nagar,SCR,Andhra Pradesh,C,15,2,15.48632,78.19541,2
+BF,Bagetar,NFR,Assam,C,24,2,,,2
+BFD,Borhat,NFR,Assam,C,18,2,27.16426,95.27751,2
+BGPL,Baghuapal,ECoR,Orissa,C,15,2,21.04222,86.01317,2
+BGQ,Bhongaon,NCR,Uttar Pradesh,C,22,2,27.25904,79.16572,2
+BGSF,Bisugirsharif,SCR,Andhra Pradesh,C,21,2,18.34812,79.4836,2
+BGUA,Baiguda,ECoR,Orissa,C,21,2,18.82704,82.96579,2
+BHBK,Bodhadi Bujrug,SCR,Maharashtra,C,15,2,19.49628,78.19525,2
+BHD,Badli,NR,Delhi NCT,C,22,2,28.7468,77.13774,2
+BHKD,Bhurkunda,SER,Jharkhand,C,21,2,23.63756,85.37215,2
+BHLE,Barahat,ER,Bihar,C,22,2,24.9206,87.01008,2
+BHT,Bhattu,NWR,Haryana,C,23,2,29.38732,75.34013,2
+BHTA,Bhatiya,WR,Gujarat,C,17,2,22.08815,69.28036,2
+BHTN,Bhitoni,WCR,Madhya Pradesh,C,17,2,23.14273,79.67401,2
+BIJR,Bijoor,KR,Karnataka,C,24,2,13.8222,74.64205,2
+BIK,Bhira Kheri,NER,Uttar Pradesh,C,20,2,28.3348,80.48613,2
+BIO,Bordi,WR,Gujarat,C,19,2,22.86649,74.3471,2
+BIX,Bhind,NCR,Madhya Pradesh,C,17,2,26.5889,78.77744,2
+BIY,Bardoli,WR,Gujarat,C,21,2,21.13424,73.10589,2
+BJF,Bijni,NFR,Assam,C,22,2,26.49797,90.70783,2
+BJMD,Bara Jamda,SER,Jharkhand,C,15,2,22.16653,85.41239,2
+BJQ,Baghora,WCR,Madhya Pradesh,C,20,2,24.13588,78.26034,2
+BJR,Barrajpur,NR,Uttar Pradesh,C,24,2,26.68517,80.13868,2
+BKJ,Barkur,KR,Karnataka,C,17,2,13.47746,74.75968,2
+BKSL,Bikram Shila,CR,Maharashtra,C,17,2,25.30004,87.30022,2
+BLAX,Barlai,WR,Madhya Pradesh,C,23,2,22.89416,75.96211,2
+BLMK,Bhalumaska,ECoR,Orissa,C,15,2,19.32813,83.2943,2
+BLMR,Bhalukmara,NFR,Assam,C,18,2,26.68553,94.14371,2
+BLND,Bolinna Doaba,NR,Punjab,C,19,2,31.34286,75.65697,2
+BLPR,Badulipar,NFR,Assam,C,22,2,26.64682,93.87913,2
+BLU,Bilhaur,NR,Uttar Pradesh,C,16,2,26.839,80.06038,2
+BLW,Balawali,NR,Uttar Pradesh,C,19,2,29.62743,78.11243,2
+BMF,Basmat,SCR,Maharashtra,C,16,2,19.33347,77.15178,2
+BMLL,Bamla,NWR,Haryana,C,22,2,28.83246,76.24408,2
+BMR,Bikrampur,WCR,Madhya Pradesh,C,21,2,23.08223,79.58632,2
+BNE,Bohani,WCR,Madhya Pradesh,C,19,2,22.91375,78.91598,2
+BNI,Budni,WCR,Madhya Pradesh,C,18,2,22.78711,77.68128,2
+BNP,Bhanapur,SWR,Karnataka,C,16,2,15.38695,76.03642,2
+BNWC,Bhiwani City,NWR,Haryana,C,24,2,28.8257,76.1443,2
+BOD,Bangrod,WR,Madhya Pradesh,C,21,2,23.39822,75.12415,2
+BOG,Bhairongarh,WR,Madhya Pradesh,C,18,2,23.14492,74.77606,2
+BP,Barrackpore,ER,West Bengal,C,19,2,22.76107,88.37143,2
+BPO,Baripada,SER,Orissa,C,22,2,21.92274,86.73709,2
+BQQ,Bakhleta,WCR,Madhya Pradesh,C,22,2,23.84638,79.96972,2
+BQR,Bhilai Nagar,SECR,Chhattisgarh,C,19,2,21.20134,81.33435,2
+BRGT,Bheraghat,WCR,Madhya Pradesh,C,18,2,23.16977,79.79788,2
+BRK,Bahraich,NER,Uttar Pradesh,C,21,2,27.58154,81.60752,2
+BSDP,Bhusandpur,ECoR,Orissa,C,21,2,19.95179,85.47648,2
+BSPN,Bassi Pathanam,NR,Punjab,C,20,2,30.68846,76.40967,2
+BSPX,Banspani,SER,Orissa,C,15,2,22.00024,85.42341,2
+BSTP,Basantapur,ECoR,Orissa,C,19,2,21.54877,85.67659,2
+BSZ,Bharwa Sumerpur,NCR,Uttar Pradesh,C,21,2,25.82541,80.16742,2
+BTG,Basharatganj,NR,Uttar Pradesh,C,24,2,28.28801,79.2852,2
+BTPD,Bethampurdi,SCR,Andhra Pradesh,C,20,2,17.54399,80.57366,2
+BTQ,Betnoti,SER,Orissa,C,18,2,21.74134,86.84352,2
+BTRA,Banthra,NER,Uttar Pradesh,C,20,2,27.92924,79.82818,2
+BTV,Baitarani Road,ECoR,Orissa,C,16,2,20.987,86.23539,2
+BUT,Baytu,NWR,Rajasthan,C,15,2,25.89754,71.76868,2
+BVN,Biswan,NER,Uttar Pradesh,C,21,2,27.48948,80.99046,2
+BVNR,Bhavani Nagar,CR,Maharashtra,C,24,2,17.15689,74.31295,2
+BVP,Bhavanagar Para,WR,Gujarat,C,23,2,21.77089,72.11868,2
+BWR,Barwa Sagar,NCR,Uttar Pradesh,C,20,2,25.35185,78.73163,2
+BXK,Bandarkhal,NFR,Assam,C,15,2,25.06978,92.80072,2
+BXM,Belrayan,NER,Uttar Pradesh,C,24,2,28.37938,80.91527,2
+BXP,Barpathar,NFR,Assam,C,19,2,26.27456,93.89967,2
+BYD,Byadgi,SWR,Karnataka,C,17,2,14.69972,75.4901,2
+BZN,Bagnan,SER,West Bengal,C,23,2,22.46251,87.97071,2
+BZO,Barsola,NR,Haryana,C,22,2,29.39438,76.23171,2
+CAF,Chanda Fort,SECR,Maharashtra,C,22,2,19.94006,79.31226,2
+CBN,Chit Baragaon,NER,Uttar Pradesh,C,17,2,25.74411,84.00154,2
+CBSA,Chaibasa,SER,Jharkhand,C,24,2,22.56049,85.81234,2
+CE,Chharodi,WR,Gujarat,C,19,2,23.04912,72.25092,2
+CHZ,Charlapalli,SCR,Andhra Pradesh,C,20,2,17.45767,78.60562,2
+CKB,Chauth Ka Barwara,WCR,Rajasthan,C,22,2,26.05133,76.14905,2
+CKR,Chikodi Road,SWR,Karnataka,C,21,2,16.36905,74.76949,2
+CLDR,Chilikidara,ECoR,Orissa,C,16,2,21.24302,85.82711,2
+CMA,Cinnamara,NFR,Assam,C,18,2,26.71553,94.16943,2
+CNE,Chandranathpur,NFR,Assam,C,18,2,24.98496,92.71666,2
+CNS,Chuchura,ER,West Bengal,C,24,2,22.89019,88.3695,2
+CPDR,Chhipadohar,ECR,Jharkhand,C,22,2,23.81333,84.20238,2
+CPN,Champaner Rd Jn,WR,Gujarat,C,18,2,22.54192,73.39338,2
+CQA,Cherukara,SR,Kerala,C,22,2,10.92923,76.22812,2
+CSB,Shivaji Bridge,NR,Delhi NCT,C,22,2,28.6341,77.22661,2
+CTND,Chettinad,SR,Tamil Nadu,C,18,2,10.16061,78.77592,2
+CUPJ,Cuddalore Port,SR,Tamil Nadu,C,19,2,11.71512,79.76629,2
+CUX,Chaura,ECR,Jharkhand,C,23,2,24.9189,86.28706,2
+CVR,Chorvad Road,WR,Gujarat,C,20,2,21.0552,70.29073,2
+DARA,Dara,WCR,Rajasthan,C,16,2,24.83261,76.00578,2
+DAS,Dhasa Jn,WR,Gujarat,C,22,2,21.78254,71.51801,2
+DBEC,Devbaloda Charoda,SECR,Chhattisgarh,C,20,2,21.21335,81.45049,2
+DBY,Digboi,NFR,Assam,C,20,2,27.38348,95.61698,2
+DCA,Damchara,NFR,Assam,C,22,2,25.01266,92.74967,2
+DDCE,Dundi,WCR,Madhya Pradesh,C,24,2,23.55785,80.21666,2
+DDP,Daudpur,NER,Bihar,C,18,2,25.90709,84.59143,2
+DEB,Debagram,ER,West Bengal,C,19,2,23.68528,88.30681,2
+DEG,Delang,ECoR,Orissa,C,16,2,20.03847,85.76695,2
+DEHR,Dehu Road,CR,Maharashtra,C,21,2,18.68018,73.73417,2
+DGI,Dungri,WR,Gujarat,C,19,2,20.68734,72.94912,2
+DGU,Digaru,NFR,Assam,C,18,2,26.17331,91.97786,2
+DHA,Dheena,NER,Uttar Pradesh,C,21,2,25.35439,83.42307,2
+DHPR,Dappar,NR,Punjab,C,19,2,30.51764,76.80751,2
+DIA,Didwana,NWR,Rajasthan,C,19,2,27.40611,74.55766,2
+DISA,Disa,WR,Gujarat,C,19,2,24.23713,72.1796,2
+DJA,Daotuhaja,NFR,Assam,C,17,2,25.2275,93.16216,2
+DJI,Dhoraji,WR,Gujarat,C,16,2,21.72217,70.44478,2
+DKE,Dihakho,NFR,Assam,C,23,2,25.42791,93.12659,2
+DKO,Devakottai Road,SR,Tamil Nadu,C,15,2,10.03761,78.76175,2
+DL,Daladi,WR,Gujarat,C,18,2,22.58507,71.0693,2
+DLB,Daulatabad,SCR,Maharashtra,C,21,2,19.91637,75.21049,2
+DLGN,Dhalgaon,CR,Maharashtra,C,16,2,17.12097,74.98871,2
+DLQ,Dalelnagar,NR,Uttar Pradesh,C,21,2,27.11854,80.41962,2
+DMG,Domingarh,NER,Uttar Pradesh,C,22,2,26.76525,83.34199,2
+DMR,Dharmanagar,NFR,Tripura,C,21,2,24.36695,92.16825,2
+DMW,Dalmau Junction,NR,Uttar Pradesh,C,18,2,26.07525,81.05365,2
+DNM,Dhanmandal,ECoR,Orissa,C,15,2,20.68781,86.11228,2
+DNRE,Dhanauri,ECR,Jharkhand,C,23,2,25.17197,86.15918,2
+DNT,Dantan,?,West Bengal,C,18,2,21.93038,87.28405,2
+DOD,Dhodhar,WR,Madhya Pradesh,C,23,2,23.77074,75.10355,2
+DPL,Danauli Phlwria,ECR,Bihar,C,16,2,25.42047,86.24941,2
+DPS,Dangoaposi,SER,Jharkhand,C,16,2,22.16796,85.59273,2
+DSNB,Darsana Border,?,Bangladesh,C,22,2,,,2
+DTC,Ditokcherra,NFR,Assam,C,24,2,25.09054,92.79872,2
+DTL,Darritola,SECR,Chhattisgarh,C,23,2,23.28964,82.39575,2
+DUBH,Dubaha,ECR,Bihar,C,22,2,25.94878,85.61711,2
+DUJ,Dubrajpur,ER,West Bengal,C,17,2,23.80336,87.37897,2
+DUSI,Dusi,ECoR,Andhra Pradesh,C,24,2,18.36997,83.85768,2
+DVM,Dalbhumgarh,SER,Orissa,C,21,2,22.50629,86.55192,2
+DWG,Dewanganj,WCR,Madhya Pradesh,C,16,2,23.42977,77.59287,2
+DWLE,Dhauni,ER,Bihar,C,16,2,25.01033,86.99304,2
+DXG,Dharangaon,CR,Maharashtra,C,23,2,21.00645,75.28609,2
+ELM,Elimala,SR,Kerala,C,17,2,12.06869,75.23085,2
+FAN,Fatehnagar,NWR,Rajasthan,C,22,2,24.81828,74.09578,2
+FDN,Faridabad New Town,NR,Delhi NCT,C,16,2,28.37625,77.30937,2
+FGR,Fatehgarh,NCR,Uttar Pradesh,C,17,2,27.36961,79.62159,2
+FGSB,Fatehgarh Sahib,NR,Punjab,C,17,2,30.65073,76.38812,2
+FHT,Farah Town,WCR,Uttar Pradesh,C,17,2,27.31818,77.75809,2
+FM,Kacheguda Falaknuma,SCR,Andhra Pradesh,C,21,2,17.3322,78.47448,2
+FYZ,Faizullapur,NR,Uttar Pradesh,C,24,2,25.86921,80.89335,2
+GADH,Goaldih,?,Orissa,C,24,2,21.72632,85.54626,2
+GANL,Ghanauli,NR,Punjab,C,22,2,31.02599,76.59214,2
+GAP,Gurpa,ECR,Bihar,C,17,2,24.56254,85.29708,2
+GBP,Gulabpura,NWR,Rajasthan,C,24,2,25.9028,74.65595,2
+GDX,Ghoksadanga,NFR,West Bengal,C,20,2,26.42289,89.27801,2
+GEA,Ghatera,WCR,Madhya Pradesh,C,20,2,23.82939,79.67339,2
+GED,Guledagudda Rd,SWR,Karnataka,C,22,2,16.06952,75.69566,2
+GGR,Gangrar,NWR,Rajasthan,C,22,2,25.06128,74.62476,2
+GGT,Ghunghuti,SECR,Madhya Pradesh,C,24,2,23.34364,81.18624,2
+GH,Ghughuli,NER,Uttar Pradesh,C,20,2,27.05395,83.71377,2
+GHJ,Gursahaiganj,NCR,Uttar Pradesh,C,21,2,27.1188,79.73203,2
+GJH,Goldinganj,NER,Bihar,C,22,2,25.75417,84.82725,2
+GKK,Gokak Road,SWR,Karnataka,C,17,2,16.20516,74.73884,2
+GLGT,Golaghat,NFR,Assam,C,18,2,26.50863,93.96119,2
+GMD,Guramkhedi,WCR,Madhya Pradesh,C,21,2,22.68221,78.07782,2
+GMDN,Girimaidan,SER,West Bengal,C,15,2,22.34048,87.30615,2
+GMH,Gamharia,SER,Jharkhand,C,18,2,22.79689,86.10279,2
+GNGD,Gangadharpur,ECoR,Orissa,C,22,2,19.81567,85.29324,2
+GOA,Gohad Road,NCR,Madhya Pradesh,C,24,2,26.48042,78.43915,2
+GOP,Gop Jam,WR,Gujarat,C,20,2,22.05397,69.90809,2
+GPD,Gummidipundi,SR,Tamil Nadu,C,18,2,13.40963,80.12343,2
+GRKN,Gorakhnath,ECoR,Orissa,C,19,2,20.30816,86.2601,2
+GRO,Gurra,WCR,Madhya Pradesh,C,21,2,22.63207,77.86729,2
+GUG,Garh Jaipur,SER,West Bengal,C,20,2,23.41614,86.14246,2
+GVD,Gholvad,WR,Maharashtra,C,15,2,20.08688,72.73799,2
+GVI,Garividi,ECoR,Andhra Pradesh,C,20,2,18.27327,83.53084,2
+GW,Girwar,WCR,Madhya Pradesh,C,19,2,23.83819,78.93631,2
+GWV,Gowdavalli,SCR,Andhra Pradesh,C,22,2,17.60954,78.46819,2
+HAR,Hamirpur Road,NCR,Uttar Pradesh,C,23,2,26.01651,80.19069,2
+HCNR,Harichandanpur,ECoR,Orissa,C,24,2,21.32848,85.79539,2
+HDA,Hirnoda,NWR,Rajasthan,C,21,2,26.88534,75.32746,2
+HDE,Hardas Bigha,?,Bihar,C,18,2,25.49692,85.32767,2
+HDK,Handia Khas,NER,Uttar Pradesh,C,19,2,25.35747,82.18941,2
+HDL,Hodal,NCR,Uttar Pradesh,C,16,2,27.88615,77.38869,2
+HDU,Hardua,WCR,Madhya Pradesh,C,24,2,23.91505,80.28341,2
+HLAR,Hole Alur,SWR,Karnataka,C,23,2,15.81959,75.64646,2
+HLX,Hilara,NFR,Assam,C,23,2,24.95177,92.62051,2
+HLZ,Haldia,SER,West Bengal,C,18,2,22.04528,88.06589,2
+HMG,Hamirgarh,NWR,Rajasthan,C,18,2,25.18726,74.61694,2
+HN,Hathbandh,SECR,Chhattisgarh,C,23,2,21.63222,81.84623,2
+HNS,Hansi,NWR,Haryana,C,20,2,29.08828,75.94724,2
+HOJ,Hamitonganj,NFR,West Bengal,C,22,2,26.68891,89.41684,2
+HP,Haripur,NWR,Rajasthan,C,19,2,26.0124,74.02493,2
+HPLE,Hatpuraini,ER,Bihar,C,19,2,25.15583,86.98507,2
+HPO,Hasanpur Road,ECR,Bihar,C,21,2,25.71477,86.18537,2
+HSP,Hasanparthi Rd,SCR,Andhra Pradesh,C,23,2,18.07826,79.50185,2
+HSX,Hoshiarpur,NR,Punjab,C,18,2,31.52407,75.90558,2
+HTL,Hatikhali,NFR,Assam,C,23,2,25.61107,93.09085,2
+ICL,Ichauli,NCR,Uttar Pradesh,C,17,2,25.52096,80.17883,2
+IDR,Indi Road,SWR,Karnataka,C,19,2,17.21129,75.91962,2
+IGU,Irugur,SR,Tamil Nadu,C,24,2,11.0172,77.06913,2
+IMGE,Ismailpur,ECR,Bihar,C,24,2,24.81552,84.72343,2
+ISA,Isarda,WCR,Rajasthan,C,24,2,26.17052,76.03064,2
+ISH,Isarwara,WCR,Madhya Pradesh,C,18,2,23.92721,78.54899,2
+ITA,Itola,WR,Gujarat,C,23,2,22.14989,73.15675,2
+JAL,Jawali,NWR,Rajasthan,C,24,2,25.46272,73.39687,2
+JDB,Jagdalpur,ECoR,Chhattisgarh,C,24,2,19.066,82.01376,2
+JDH,Jam Jodhpur Jn,WR,Gujarat,C,15,2,21.90666,70.03139,2
+JGD,Jagadishpur,ER,Jharkhand,C,22,2,24.27303,86.52517,2
+JGN,Jagraon,NR,Punjab,C,24,2,30.8012,75.47276,2
+JGNR,Jogendranagar,NFR,Tripura,C,22,2,23.81216,91.31046,2
+JKA,Jakhvada,WR,Gujarat,C,17,2,23.08721,72.13538,2
+JKPR,Jakhapura,ECoR,Orissa,C,22,2,20.91782,86.06534,2
+JMK,Jamunamukh,NFR,Assam,C,16,2,26.10819,92.74131,2
+JNR,Janakpur Road,ECR,Bihar,C,19,2,26.46791,85.70086,2
+JOA,Janwal,SCR,Maharashtra,C,21,2,18.55964,76.75515,2
+JRLI,Jaroli,?,Orissa,C,19,2,21.95277,85.41929,2
+JRNA,Jirania,NFR,Tripura,C,21,2,23.82737,91.43199,2
+JSR,Jasra,NCR,Uttar Pradesh,C,17,2,25.28,81.77462,2
+JSV,Jarandeshwar,CR,Maharashtra,C,21,2,17.75077,74.07732,2
+JUJA,Jujumura,SER,Orissa,C,21,2,21.23934,84.13461,2
+JYP,Jeypore,?,Orissa,C,21,2,18.89637,82.55468,2
+KAL,Kallai,SR,Tamil Nadu,C,17,2,9.97729,78.67031,2
+KAN,Khana Jn,ER,West Bengal,C,18,2,23.32058,87.76955,2
+KAR,Karna,NR,Uttar Pradesh,C,17,2,27.32161,80.19623,2
+KART,Kiratpur Sahib,NR,Punjab,C,19,2,31.18681,76.5633,2
+KASR,Kanas Road,ECoR,Orissa,C,20,2,20.06205,85.7428,2
+KAYR,Kayar,?,Maharashtra,C,18,2,19.90643,78.90729,2
+KBN,Karbigwan,NR,Uttar Pradesh,C,19,2,26.2005,80.50263,2
+KBRV,Kanjari Boriyav,WR,Gujarat,C,17,2,22.61485,72.92154,2
+KCA,Kuchman,NER,Uttar Pradesh,C,17,2,25.31888,83.21503,2
+KCC,Krishna Canal,SCR,Andhra Pradesh,C,21,2,16.47715,80.60455,2
+KCD,Kurichedu,SCR,Andhra Pradesh,C,23,2,15.91339,79.57218,2
+KCI,Kallkiri,SCR,Andhra Pradesh,C,17,2,13.64363,78.80113,2
+KDHA,Karchha,WR,Madhya Pradesh,C,23,2,23.10482,75.90984,2
+KDJR,Kendujhargarh,ECoR,Orissa,C,20,2,21.66029,85.62691,2
+KDNL,Kadaynallur,SR,Tamil Nadu,C,16,2,9.08539,77.3632,2
+KDRP,Kandarpur,ECoR,Orissa,C,18,2,20.39653,86.0174,2
+KEA,Katra,NR,Uttar Pradesh,C,15,2,26.84299,82.20494,2
+KEG,Karengi,NR,Uttar Pradesh,C,15,2,28.34684,79.04135,2
+KEK,Karkheli,SCR,Maharashtra,C,18,2,18.94457,77.7382,2
+KER,Kirihrapur,NER,Uttar Pradesh,C,19,2,26.0455,83.73706,2
+KGX,Kanginhal,SWR,Karnataka,C,22,2,15.44782,75.71904,2
+KH,Kahiliya,NER,Uttar Pradesh,C,16,2,27.7759,79.96014,2
+KHBJ,Khanna Banjari,WCR,Madhya Pradesh,C,23,2,23.89709,80.82272,2
+KHD,Khodiyar,WR,Gujarat,C,17,2,23.15655,72.54824,2
+KHM,Kusmhi,NER,Uttar Pradesh,C,16,2,26.72824,83.45384,2
+KHRK,Kharak,NWR,Haryana,C,21,2,28.83755,76.30869,2
+KIS,Kapilas Road,ECoR,Orissa,C,22,2,20.55855,85.99393,2
+KJY,Khurja City,NR,Uttar Pradesh,C,21,2,28.25245,77.84116,2
+KJZ,Karonji,SECR,Chhattisgarh,C,16,2,23.28248,82.92301,2
+KKB,Karak Bel,WCR,Madhya Pradesh,C,16,2,22.99232,79.34126,2
+KKGM,Kakirigumma,ECoR,Orissa,C,18,2,18.92338,83.00731,2
+KKPM,Kallakkudi Plgh,SR,Tamil Nadu,C,19,2,10.96612,78.94876,2
+KKTA,Kollikhutaha,ER,Bihar,C,24,2,25.18966,86.98783,2
+KKU,Kanakpura,NWR,Rajasthan,C,17,2,26.92883,75.70256,2
+KLJ,Kamalganj,NCR,Uttar Pradesh,C,16,2,27.29266,79.62083,2
+KLP,Kotalpukur,ER,West Bengal,C,24,2,24.74114,87.82372,2
+KLPG,Kamalpurgram,SECR,Chhattisgarh,C,16,2,23.16623,83.0803,2
+KLPM,Kailasapuram,SR,Tamil Nadu,C,15,2,8.84739,77.99461,2
+KLRS,Kolaras,WCR,Madhya Pradesh,C,19,2,25.22493,77.59041,2
+KLU,Kalluru,SCR,Andhra Pradesh,C,19,2,14.92447,77.58142,2
+KLYT,Kolayat,NWR,Rajasthan,C,21,2,27.83532,72.95507,2
+KMJ,Kaimganj,NCR,Uttar Pradesh,C,23,2,27.54098,79.32722,2
+KML,Kamtaul,ECR,Bihar,C,24,2,26.33735,85.80862,2
+KMNR,Kamalnagar,SCR,Karnataka,C,17,2,18.24064,77.17884,2
+KN,Kadalundi,SR,Kerala,C,24,2,11.13348,75.82803,2
+KNL,Kalanwali,NWR,Haryana,C,21,2,29.83506,74.97985,2
+KNLS,Kanalas Jn,WR,Gujarat,C,15,2,22.31996,69.89655,2
+KNP,Khanapur,SWR,Karnataka,C,24,2,15.63793,74.49976,2
+KOLR,Kolnur,SCR,Andhra Pradesh,C,16,2,18.49632,79.41991,2
+KPRD,Kalyanpur Road,ECR,Bihar,C,20,2,25.27556,86.58064,2
+KQI,Kalachand,NFR,Assam,C,22,2,25.33905,93.13312,2
+KRA,Karepalli,SCR,Andhra Pradesh,C,17,2,17.51141,80.27186,2
+KRIH,Korai Halt,ECoR,Orissa,C,17,2,20.95942,86.17599,2
+KRLI,Kurali,NR,Punjab,C,19,2,30.83501,76.57193,2
+KRS,Karisath,ECR,Bihar,C,23,2,25.54949,84.56314,2
+KRSA,Kharsaliya,WR,Gujarat,C,17,2,22.70509,73.55448,2
+KRSL,Krishnashilla,ECR,Uttar Pradesh,C,21,2,24.15503,82.7685,2
+KRY,Kadiri,SCR,Andhra Pradesh,C,19,2,14.11479,78.16559,2
+KSC,Kashi Chak,ECR,Bihar,C,16,2,25.0708,85.71875,2
+KSTA,Kastha,ECR,Bihar,C,22,2,24.80248,84.92175,2
+KTGA,Keutguda,ECoR,Orissa,C,23,2,19.30347,83.36807,2
+KTKL,Kotli Kalan,NR,Punjab,C,20,2,30.0411,75.29755,2
+KTM,Kutralam,SR,Tamil Nadu,C,16,2,11.06983,79.55739,2
+KTO,Katora,SECR,Chhattisgarh,C,16,2,23.31159,82.71122,2
+KTRH,Katareah,CR,Maharashtra,C,19,2,25.40049,87.19484,2
+KTRR,Kathara Road,NCR,Uttar Pradesh,C,20,2,26.31001,80.22874,2
+KUF,Kaurha,NR,Uttar Pradesh,C,20,2,27.46268,80.10268,2
+KUGT,Kumarghat,NFR,Tripura,C,17,2,24.15063,92.03483,2
+KUPR,Khurdpur,NR,Punjab,C,20,2,31.42485,75.72317,2
+KUTI,Khumtai,NFR,Assam,C,17,2,26.6264,93.86427,2
+KWE,Khurial,NFR,Bihar,C,21,2,25.49111,87.82686,2
+KXJ,Karimganj Junction,NFR,Assam,C,22,2,24.86072,92.37377,2
+KYOP,Kottapalli,SCR,Andhra Pradesh,C,21,2,18.54027,79.40386,2
+KYX,Karhiya Bhadeli,WCR,Madhya Pradesh,C,15,2,23.85846,79.50456,2
+KZB,Kurumbur,SR,Tamil Nadu,C,24,2,8.58575,78.03964,2
+KZY,Kayalpattinam,SR,Tamil Nadu,C,15,2,8.56691,78.09973,2
+LAU,Ladnun,NWR,Rajasthan,C,24,2,27.64255,74.4056,2
+LDA,Lidhora Khurd,WCR,Madhya Pradesh,C,15,2,23.85297,78.87232,2
+LEDO,Ledo,NFR,Assam,C,20,2,27.28843,95.72537,2
+LHLL,Lahli,NWR,Haryana,C,16,2,28.85432,76.44534,2
+LJR,Lanjigarh Road,ECoR,Orissa,C,15,2,19.94342,83.40034,2
+LLGM,Leliguma,ECoR,Orissa,C,21,2,19.30401,83.2083,2
+LLJ,LalGanj,NR,Uttar Pradesh,C,22,2,26.17239,80.97317,2
+LMO,Liliya Mota,WR,Gujarat,C,16,2,21.54032,71.37286,2
+LNR,Luni Richha,WR,Madhya Pradesh,C,24,2,23.66039,75.51367,2
+LNT,Lingti,?,Maharashtra,C,18,2,19.86677,78.90133,2
+LOA,Lorha,WCR,Madhya Pradesh,C,18,2,23.58123,80.75161,2
+LSX,Loisingha,SECR,Chhattisgarh,C,17,2,20.85267,83.51408,2
+LXA,Lakswa,NFR,Assam,C,19,2,27.00464,94.84398,2
+MAGH,Manikgarh,SECR,Maharashtra,C,16,2,19.78769,79.39853,2
+MANU,Manu,NFR,Tripura,C,19,2,23.98819,91.99893,2
+MD,Madar,NWR,Rajasthan,C,17,2,26.46501,74.68723,2
+MDL,Mandal,NWR,Rajasthan,C,15,2,25.43963,74.59396,2
+MDVL,Mandavalli,SCR,Andhra Pradesh,C,18,2,16.51881,81.16074,2
+MFL,Misrauli,NR,Uttar Pradesh,C,21,2,26.11437,81.8484,2
+MGE,Migrendisa,NFR,Assam,C,22,2,25.17124,93.06156,2
+MGF,Mandagere,SWR,Karnataka,C,18,2,12.73016,76.37891,2
+MGG,Mangliya Gaon,WR,Madhya Pradesh,C,18,2,22.81507,75.91805,2
+MGX,Mailongdisa,NFR,Assam,C,22,2,,,2
+MHQ,Mahuda,SER,Jharkhand,C,21,2,23.74748,86.27078,2
+MHV,Mahuva Jn,WR,Gujarat,C,23,2,21.09412,71.75601,2
+MID,Madhi,WR,Gujarat,C,24,2,21.14567,73.24268,2
+MIH,Mihrawan,NR,Uttar Pradesh,C,23,2,25.87118,82.69433,2
+MIN,Mihinpurwa,NER,Uttar Pradesh,C,24,2,28.02734,81.38447,2
+MINA,Miyana,WCR,Madhya Pradesh,C,19,2,24.85653,77.47216,2
+MJL,Majhowlia,ECR,Bihar,C,18,2,26.80277,84.61914,2
+MJN,Makum Junction,NFR,Assam,C,18,2,27.48574,95.44096,2
+MK,Miranpur Katra,NER,Uttar Pradesh,C,17,2,28.03708,79.67481,2
+MKDI,Makudi,SECR,Maharashtra,C,22,2,19.59256,79.44826,2
+MLAR,Malanpur,NCR,Madhya Pradesh,C,22,2,26.41312,78.27281,2
+MLB,Modnimb,CR,Maharashtra,C,23,2,17.91655,75.40554,2
+MLG,Malhargarh,WR,Madhya Pradesh,C,16,2,24.26562,74.97267,2
+MLGH,Mandalgarh,WCR,Rajasthan,C,19,2,25.19418,75.08094,2
+MLTR,Melattur,SR,Kerala,C,17,2,11.06543,76.27281,2
+MMB,Mahmudabad Avadh,NER,Uttar Pradesh,C,23,2,27.28829,81.1144,2
+MMD,Maheshmunda,ER,Jharkhand,C,17,2,24.23242,86.38903,2
+MME,Mul Marora,SECR,Maharashtra,C,16,2,20.05347,79.65828,2
+MMS,Mandasa Road,ECoR,Andhra Pradesh,C,20,2,18.84063,84.49411,2
+MMZ,Mandamari,SECR,Maharashtra,C,23,2,18.97127,79.47015,2
+MND,Munderwa,?,Uttar Pradesh,C,24,2,26.77643,82.90337,2
+MNQ,Mainpuri,NCR,Uttar Pradesh,C,15,2,27.21651,79.03477,2
+MNTT,Mulanturutti,SR,Kerala,C,18,2,9.90158,76.38967,2
+MOGA,Moga,NR,Punjab,C,16,2,30.8173,75.16847,2
+MOI,Mori Bera,NWR,Rajasthan,C,18,2,25.03557,73.13631,2
+MOL,Muli Road,WR,Gujarat,C,20,2,22.67656,71.43486,2
+MPL,Madanapalle Road,SCR,Andhra Pradesh,C,17,2,13.64444,78.55442,2
+MPLM,Marthipalayam,SR,Tamil Nadu,C,15,2,11.02158,78.02336,2
+MQ,Mannargudi,SR,Tamil Nadu,C,20,2,10.67454,79.45564,2
+MQO,Munroturuttu,SR,Kerala,C,15,2,8.995,76.61191,2
+MQS,Malsian Shahkot,NR,Punjab,C,17,2,31.11029,75.35476,2
+MQU,Murukkampuzha,SR,Kerala,C,15,2,8.61363,76.83025,2
+MRBL,Muribahal,SECR,Chhattisgarh,C,15,2,20.38589,83.0167,2
+MRG,Margherita,NFR,Assam,C,19,2,27.28932,95.6726,2
+MRND,Morinda,NR,Punjab,C,23,2,30.79152,76.50246,2
+MSDN,Masudan,ECR,Bihar,C,22,2,25.23527,86.35788,2
+MST,Masit,NR,Uttar Pradesh,C,15,2,27.26993,80.25791,2
+MTHP,Mithapur,WR,Gujarat,C,15,2,22.4116,69.00869,2
+MTP,Mettupalayam,SR,Tamil Nadu,C,18,2,11.29973,76.93453,2
+MTPR,Raimehatpur,NR,Himachal Pradesh,C,21,2,31.40575,76.32431,2
+MUGR,Manuguru,SCR,Andhra Pradesh,C,22,2,17.92527,80.79903,2
+MULK,Mulki,KR,Karnataka,C,23,2,13.06852,74.80496,2
+MUPA,Mupa,NFR,Assam,C,18,2,25.36869,93.12275,2
+MUW,Mathurapur,ER,Jharkhand,C,16,2,24.38652,86.63169,2
+MVI,Morbi,WR,Gujarat,C,15,2,22.82534,70.82928,2
+MWH,Malwan,NR,Uttar Pradesh,C,16,2,26.01725,80.68559,2
+MWT,Marwar Lohwat,NWR,Rajasthan,C,15,2,26.98126,72.58927,2
+MXT,Malakpet Kacheguda,SCR,Andhra Pradesh,C,23,2,17.3754,78.49424,2
+MYD,Manderdisa,NFR,Assam,C,17,2,25.70732,93.12311,2
+MYY,Mayyanad,SR,Kerala,C,23,2,8.83776,76.64733,2
+NAN,Nandgaon Road,KR,Maharashtra,C,20,2,16.38745,73.73056,2
+NANA,Nana,NWR,Rajasthan,C,20,2,24.9259,73.1101,2
+NANR,Naranpur,ECoR,Orissa,C,19,2,21.61721,85.63787,2
+NAS,Nasrala,NR,Punjab,C,23,2,31.49798,75.84641,2
+NB,Nimbhora,CR,Maharashtra,C,15,2,21.16078,75.97519,2
+NEO,Neora,ECR,Bihar,C,15,2,25.57459,84.98652,2
+NGE,Nagar,SECR,Chhattisgarh,C,19,2,23.31509,82.45916,2
+NIL,Nilambur Road,SR,Kerala,C,18,2,11.27881,76.25478,2
+NKW,Nilakantheswar,ECoR,Orissa,C,20,2,21.42607,85.79822,2
+NLI,Namli,WR,Madhya Pradesh,C,22,2,23.45552,75.06716,2
+NLKR,Nilokheri,NR,Haryana,C,20,2,29.83149,76.92549,2
+NMGY,Numaligarh,NFR,Assam,C,17,2,26.60118,93.86571,2
+NMK,Nim Ka Thana,NWR,Rajasthan,C,18,2,27.74157,75.77969,2
+NMP,Nimpura,SER,West Bengal,C,22,2,22.3324,87.26469,2
+NNGL,Naya Nangal,NR,Punjab,C,17,2,31.37896,76.35421,2
+NNL,Narnaul,NWR,Haryana,C,20,2,28.0444,76.12313,2
+NNP,Nanpara Junction,NER,Uttar Pradesh,C,20,2,27.85989,81.51259,2
+NOMD,Noamundi,SER,Jharkhand,C,22,2,22.15311,85.51368,2
+NPRD,Nagpur Road,SECR,Chhattisgarh,C,22,2,23.27938,82.34905,2
+NRDP,Nagireddipalli,SCR,Andhra Pradesh,C,19,2,17.42225,78.93999,2
+NRG,Nergundi,ECoR,Orissa,C,18,2,20.53838,85.95908,2
+NRGR,Naranjipur,WR,Madhya Pradesh,C,18,2,23.04714,76.00916,2
+NRM,Nurmahal,NR,Punjab,C,19,2,31.08159,75.60143,2
+NRO,Nakodar Junction,NR,Punjab,C,17,2,31.1117,75.47561,2
+NRPA,Narayanpur Anant,ECR,Bihar,C,21,2,26.08905,85.40912,2
+NRR,Nagarur,SCR,Andhra Pradesh,C,17,2,15.54233,77.31318,2
+NRS,Nagaria Sadat,NER,Uttar Pradesh,C,21,2,28.55018,79.20556,2
+NUJ,Nujella,SCR,Andhra Pradesh,C,22,2,16.3866,81.0224,2
+NWR,Niwar,WCR,Madhya Pradesh,C,24,2,23.72046,80.36959,2
+NYG,Nayagarh,?,Orissa,C,16,2,21.83961,85.43334,2
+NZT,Nazareth,SR,Tamil Nadu,C,22,2,8.564,77.97627,2
+OML,Omalur,SWR,Tamil Nadu,C,15,2,11.73855,78.04678,2
+OPL,Uppal,SCR,Andhra Pradesh,C,18,2,18.18341,79.48098,2
+PASA,Parashshala,SR,Kerala,C,16,2,8.33984,77.16549,2
+PBKS,Pamba Kovil Shandy,SR,Tamil Nadu,C,16,2,9.13054,77.431,2
+PBM,Pamban Jn,SR,Tamil Nadu,C,16,2,9.27973,79.21348,2
+PBP,Pembarti,SCR,Andhra Pradesh,C,15,2,17.6923,79.11616,2
+PCH,Pachhapur,SWR,Karnataka,C,23,2,16.09314,74.67217,2
+PCN,Panch Pipila,WR,Madhya Pradesh,C,15,2,23.06329,74.73755,2
+PCV,Palakkodu,SWR,Tamil Nadu,C,18,2,12.29742,78.07207,2
+PDD,Padubidri,KR,Karnataka,C,21,2,13.19703,74.76817,2
+PDL,Pendekallu,SCR,Andhra Pradesh,C,24,2,15.37451,77.64736,2
+PDR,Payagpur,NER,Uttar Pradesh,C,23,2,27.40707,81.77619,2
+PDRD,Pindra Road,NER,Uttar Pradesh,C,16,2,25.49705,82.85116,2
+PEC,Pencharthal,NFR,Tripura,C,24,2,24.19622,92.10823,2
+PEH,Pathardih Junction,ECR,Jharkhand,C,21,2,23.67552,86.43456,2
+PFT,Pothahi,ECR,Bihar,C,16,2,25.48661,85.09864,2
+PGTN,Palghat Town,SR,Kerala,C,19,2,10.77539,76.65217,2
+PIL,Piler,SCR,Andhra Pradesh,C,24,2,13.66235,78.9275,2
+PJ,Peppeganj,NER,Uttar Pradesh,C,18,2,26.93057,83.29444,2
+PKQ,Pattikkad,SR,Kerala,C,16,2,11.02063,76.23179,2
+PLC,Phalodi Junction,NWR,Rajasthan,C,23,2,27.12479,72.36674,2
+PLK,Palia Kalan,NER,Uttar Pradesh,C,24,2,28.42664,80.58239,2
+PLMD,Pilamedu,SR,Tamil Nadu,C,24,2,11.03324,76.99957,2
+PMKT,Pimpalkhuti,CR,Maharashtra,C,24,2,19.82947,78.58102,2
+PMN,Paman,NCR,Uttar Pradesh,C,23,2,26.35993,80.08042,2
+PMU,Parmanandpur,ECR,Bihar,C,19,2,25.74129,85.13395,2
+PNF,Pangaon,SCR,Maharashtra,C,16,2,18.63429,76.63532,2
+PNSA,Punsia,ER,Bihar,C,21,2,24.95317,87.00375,2
+POZ,Potul,SCR,Maharashtra,C,17,2,19.91857,75.12178,2
+PPZ,Peddempet,SCR,Andhra Pradesh,C,19,2,18.80267,79.42682,2
+PQL,Pindlai,SCR,Andhra Pradesh,C,21,2,17.92519,79.45471,2
+PRDP,Paradip,ECoR,Orissa,C,24,2,20.28036,86.62014,2
+PRH,Powerpet,SCR,Andhra Pradesh,C,17,2,16.71319,81.1066,2
+PRNR,Porjanpur,?,Orissa,C,17,2,21.78914,85.52137,2
+PRT,Panruti,SR,Tamil Nadu,C,22,2,11.77324,79.55515,2
+PRY,Paraiya,ECR,Bihar,C,15,2,24.80946,84.85079,2
+PS,Paras,SCR,Maharashtra,C,20,2,20.72452,76.81587,2
+PSD,Parsoda,SCR,Maharashtra,C,22,2,19.9537,74.87514,2
+PTH,Patranga,NER,Uttar Pradesh,C,20,2,26.82501,81.62587,2
+PTKP,Potkapalli,SCR,Andhra Pradesh,C,18,2,18.42906,79.46445,2
+PTRE,Patara,NCR,Uttar Pradesh,C,23,2,26.23217,80.20345,2
+PUN,Pundi,ECoR,Andhra Pradesh,C,18,2,18.66592,84.37068,2
+PVD,Peddavadiapudi,SCR,Andhra Pradesh,C,22,2,16.41421,80.61265,2
+PYOL,Payyoli,SR,Kerala,C,19,2,11.51672,75.61759,2
+QSR,Kansrao,NR,Uttarakhand,C,15,2,30.07857,78.1418,2
+RAG,Raigir,SCR,Andhra Pradesh,C,20,2,17.55088,78.9412,2
+RBA,Rambha,ECoR,Orissa,C,15,2,19.53796,85.09408,2
+RCTC,Raghunathpur,ECoR,Orissa,C,24,2,20.35168,86.14961,2
+RECH,Rechni Road,SECR,Maharashtra,C,21,2,19.14054,79.45189,2
+REN,Ren,NWR,Rajasthan,C,18,2,26.7888,74.07446,2
+RGPM,Raghavapuram,SCR,Andhra Pradesh,C,19,2,18.68124,79.41119,2
+RGS,Ringas Junction,NWR,Rajasthan,C,21,2,27.37338,75.5636,2
+RHMA,Rahama,ECoR,Orissa,C,17,2,20.2986,86.40522,2
+RJPM,Rajapalayam,SR,Tamil Nadu,C,17,2,9.4524,77.56103,2
+RKSH,Rishikesh,NR,Uttarakhand,C,19,2,30.10717,78.2875,2
+RLA,Rajula Jn,WR,Gujarat,C,17,2,21.1037,71.47925,2
+RLO,Rayalcheruvu,SCR,Andhra Pradesh,C,22,2,15.05596,77.82104,2
+RMJK,Ram Nagar J K,NR,Jammu and Kashmir,C,16,2,32.86353,75.14543,2
+RMN,Raman,NWR,Punjab,C,23,2,29.95983,74.96209,2
+RNGG,Rangaliting,NFR,Assam,C,18,2,26.65642,93.91829,2
+RNH,Runkhera,WR,Madhya Pradesh,C,20,2,23.41385,75.1888,2
+RNV,Raniwara,NWR,Rajasthan,C,16,2,24.75045,72.20429,2
+ROI,Reoti,NER,Uttar Pradesh,C,18,2,25.83389,84.37469,2
+RS,Risia,NER,Uttar Pradesh,C,22,2,27.68882,81.60551,2
+RTI,Raoti,WR,Madhya Pradesh,C,17,2,23.18357,74.87867,2
+RTP,Ratanpura,NER,Uttar Pradesh,C,16,2,25.92192,83.74447,2
+RUB,Rasulabad,?,Uttar Pradesh,C,20,2,25.827,80.97709,2
+RUL,Rauli,ECoR,Orissa,C,16,2,19.23027,83.16728,2
+RUR,Ranpur,WR,Gujarat,C,18,2,22.35987,71.7173,2
+RVKH,Ravindrakhani,SCR,Andhra Pradesh,C,19,2,18.93659,79.4614,2
+RWH,Rowriah Sdg,NFR,Assam,C,20,2,26.72189,94.17244,2
+RWO,Ranavav,WR,Gujarat,C,21,2,21.69821,69.72608,2
+RYP,Rayanapad,SCR,Andhra Pradesh,C,21,2,16.5775,80.56294,2
+RYS,Rasuriya,NER,Uttar Pradesh,C,23,2,28.26396,79.47446,2
+SAC,Sanichara,NCR,Madhya Pradesh,C,15,2,26.36337,78.19837,2
+SAI,Sarai,ECR,Bihar,C,18,2,25.77996,85.27661,2
+SANR,Sardarnagar,NER,Uttar Pradesh,C,15,2,26.70086,83.49405,2
+SAO,Sagoni,WCR,Madhya Pradesh,C,15,2,23.8119,79.81144,2
+SASN,Sas Nagar Mohali,NR,Punjab,C,17,2,30.66613,76.73995,2
+SAV,Savda,CR,Maharashtra,C,20,2,21.11112,75.91066,2
+SBE,Sorbhog Jn,NFR,Assam,C,23,2,26.49429,90.88828,2
+SBM,Sonbarsa Kacheri,ECR,Bihar,C,22,2,25.79381,86.59566,2
+SBRA,Sarbahara,SECR,Madhya Pradesh,C,21,2,22.7105,81.91043,2
+SCC,Sitapur Cant,NER,Uttar Pradesh,C,22,2,27.55947,80.69878,2
+SCQ,Sham Chaurasi,NR,Punjab,C,16,2,31.45851,75.76642,2
+SCT,Sengottai,SR,Tamil Nadu,C,23,2,8.98741,77.24185,2
+SDF,Sudsar,NWR,Rajasthan,C,23,2,28.01236,73.78579,2
+SDMD,Sudamdih,SER,West Bengal,C,15,2,23.65448,86.44032,2
+SDNR,Seydunganallur,SR,Tamil Nadu,C,19,2,8.63936,77.83499,2
+SED,Shedbal,SWR,Karnataka,C,23,2,16.72029,74.75277,2
+SGAM,Sareigram,WCR,Madhya Pradesh,C,19,2,24.03964,82.20561,2
+SGD,Songadh,WR,Gujarat,C,23,2,21.72894,71.88676,2
+SGDM,Sigadam,ECoR,Andhra Pradesh,C,24,2,18.3606,83.68144,2
+SGDP,Sagadapata,ECoR,Orissa,C,19,2,21.24469,85.9094,2
+SGRM,Singaram,ECoR,Orissa,C,15,2,19.11093,83.105,2
+SIHO,Siho,ECR,Bihar,C,18,2,26.00841,85.50594,2
+SJQ,Surajpur Road,SECR,Chhattisgarh,C,17,2,23.28923,82.88015,2
+SKND,Sukinda Road,ECoR,Orissa,C,19,2,20.97127,86.05375,2
+SKPI,Sikarpai,ECoR,Orissa,C,20,2,19.3919,83.3201,2
+SKR,Sakhpur,WR,Gujarat,C,19,2,21.749,69.83324,2
+SKTN,Shakti Nagar,ECR,Uttar Pradesh,C,16,2,24.1229,82.70473,2
+SLF,Silli,SER,Jharkhand,C,18,2,23.35156,85.82813,2
+SLNA,Salauna,ECR,Bihar,C,21,2,25.60348,86.26028,2
+SLT,Silaut,ECR,Bihar,C,15,2,26.04893,85.44338,2
+SMBL,Simbhooli,NR,Uttar Pradesh,C,17,2,28.76519,77.98347,2
+SMI,Sitamarhi Jn,ECR,Bihar,C,23,2,26.59437,85.50471,2
+SML,Shimla,NR,Himachal Pradesh,C,15,2,31.10279,77.15993,2
+SMPA,Shampura,WCR,Rajasthan,C,19,2,25.22294,75.23311,2
+SMPR,Shri Madhopur,NWR,Rajasthan,C,17,2,27.45763,75.59829,2
+SMRR,Sumreri,WCR,Madhya Pradesh,C,16,2,24.00695,78.39941,2
+SNK,Sindkheda,CR,Maharashtra,C,19,2,21.23402,74.73537,2
+SNKL,Sankarankovil,SR,Tamil Nadu,C,20,2,9.17654,77.52592,2
+SNTD,Santaldih,SER,West Bengal,C,16,2,23.59666,86.48312,2
+SNV,Sondad,SECR,Maharashtra,C,15,2,21.07984,80.09415,2
+SNX,Saneh Road,NR,Uttar Pradesh,C,16,2,29.68965,78.4494,2
+SONI,Soni,NCR,Madhya Pradesh,C,21,2,26.52731,78.55523,2
+SPC,Sitapur City,NER,Uttar Pradesh,C,23,2,27.58361,80.67969,2
+SPDR,Sheoprasadnager,SECR,Chhattisgarh,C,16,2,23.30363,82.78986,2
+SPK,Sapekhati,NFR,Assam,C,18,2,27.11042,95.16092,2
+SQF,Sukritipur,NFR,Assam,C,18,2,24.91308,92.58285,2
+SQL,Sontalai,WCR,Madhya Pradesh,C,18,2,22.61302,77.94977,2
+SRF,Sagar Jambagaru,SWR,Karnataka,C,17,2,14.14273,75.15471,2
+SRGT,Surendranagar Gate,WR,Gujarat,C,15,2,22.73456,71.63605,2
+SRNK,Soron,NER,Uttar Pradesh,C,20,2,27.88335,78.74846,2
+SRNR,Sriramnagar,SCR,Andhra Pradesh,C,18,2,16.30657,77.86589,2
+SRPJ,Swarupganj,NWR,Rajasthan,C,18,2,24.65817,72.93193,2
+SRUR,Sirpur Town,SECR,Maharashtra,C,17,2,19.47906,79.56042,2
+SRY,Sirari,ECR,Bihar,C,24,2,25.13285,85.95259,2
+SSR,Sareri,NWR,Rajasthan,C,21,2,25.69756,74.62411,2
+STBJ,Sitabanji,ECoR,Orissa,C,19,2,21.5002,85.79053,2
+STPD,Sitafal Mandi,SCR,Andhra Pradesh,C,17,2,17.42834,78.52029,2
+SUA,Sardiha,SER,West Bengal,C,23,2,22.38061,87.12365,2
+SUD,Sudhani,NFR,Bihar,C,23,2,25.72785,87.87949,2
+SUJH,Sujangarh,NWR,Rajasthan,C,15,2,27.70876,74.46366,2
+SVKD,Savar Kundla,WR,Gujarat,C,24,2,21.33508,71.31267,2
+SVKS,Sivakasi,SR,Tamil Nadu,C,21,2,9.46332,77.78924,2
+SVPR,Srivilliputtur,SR,Tamil Nadu,C,15,2,9.4975,77.64494,2
+SVV,Srivaikuntam,SR,Tamil Nadu,C,22,2,8.62248,77.90632,2
+SVX,Savarda,KR,Maharashtra,C,16,2,17.40501,73.51553,2
+SWC,Shivrampur,NCR,Uttar Pradesh,C,15,2,25.21938,80.82678,2
+SYC,Sarai Chandi,NR,Uttar Pradesh,C,16,2,25.53942,81.97958,2
+TCN,Tiruchendur,SR,Tamil Nadu,C,19,2,8.50177,78.11712,2
+TDN,Tiruparankndrm,SR,Tamil Nadu,C,21,2,9.87945,78.06596,2
+TDP,Todarpur,NER,Uttar Pradesh,C,19,2,27.5796,80.02003,2
+TETA,Telta,NFR,Bihar,C,16,2,25.80658,87.84221,2
+TGP,Tuljapur,CR,Maharashtra,C,16,2,20.8007,78.80824,2
+TGRL,Tangiriapal,ECoR,Orissa,C,23,2,21.16408,85.92581,2
+THUR,Thuria,WR,Madhya Pradesh,C,24,2,23.83317,75.55457,2
+TIA,Tilaya,ECR,Bihar,C,22,2,24.822,85.4011,2
+TIHU,Tihu,NFR,Assam,C,16,2,26.47132,91.2677,2
+TL,Tiloniya,NWR,Rajasthan,C,23,2,26.65267,74.93419,2
+TLGP,Talguppa,SWR,Karnataka,C,21,2,14.21401,74.91409,2
+TLJ,Taljhari,ER,Jharkhand,C,20,2,25.08235,87.74169,2
+TLMR,Teliamura,NFR,Tripura,C,16,2,23.86125,91.61773,2
+TLU,Tarlupadu,SCR,Andhra Pradesh,C,24,2,15.66054,79.21946,2
+TMKA,Tomka,ECoR,Orissa,C,19,2,21.10733,85.97535,2
+TMX,Timmapur,SCR,Andhra Pradesh,C,15,2,17.16935,78.28834,2
+TPF,Tarapith Road,ER,West Bengal,C,17,2,24.12653,87.75221,2
+TPTN,Tiruchirapali Town,SR,Tamil Nadu,C,19,2,10.82908,78.70283,2
+TPY,Tadakalpudi,SCR,Andhra Pradesh,C,15,2,17.53016,80.53221,2
+TQA,Takia,NR,Uttar Pradesh,C,18,2,26.31168,80.78202,2
+TQN,Tikunia,NER,Uttar Pradesh,C,19,2,28.37882,80.98122,2
+TR,Taru,SCR,Maharashtra,C,24,2,20.06888,74.59077,2
+TSA,Tisua,NER,Uttar Pradesh,C,15,2,28.13658,79.58629,2
+TSF,Tahsil Fatehpur,NER,Uttar Pradesh,C,20,2,27.16845,81.20397,2
+TSI,Tenkasi Jn,SR,Tamil Nadu,C,24,2,8.96399,77.30734,2
+TSK,Tinsukia Junction,NFR,Assam,C,23,2,27.4864,95.35637,2
+TTB,Titabar,NFR,Assam,C,24,2,26.60205,94.19976,2
+TTL,Tiruttangal,SR,Tamil Nadu,C,16,2,9.4773,77.81089,2
+TWB,Talwandi,NR,Punjab,C,23,2,30.86136,74.92363,2
+TWG,Twining Ganj,NER,Uttar Pradesh,C,24,2,25.56877,84.21802,2
+UAA,Uppala,SR,Kerala,C,18,2,12.6698,74.90649,2
+UDM,Undasa Madhawpu,WR,Madhya Pradesh,C,19,2,23.08704,75.97927,2
+UDR,Amdara Road,WCR,Madhya Pradesh,C,20,2,24.0995,80.5779,2
+UKA,Ukhra,ER,West Bengal,C,19,2,23.65369,87.23254,2
+UKR,Udalkachar,SECR,Madhya Pradesh,C,17,2,23.28724,82.29192,2
+ULL,Ullal,SR,Karnataka,C,24,2,12.79132,74.85478,2
+URL,Unjalur,SR,Tamil Nadu,C,24,2,11.12798,77.87584,2
+UTA,Umar Tali,NR,Uttar Pradesh,C,18,2,27.08699,80.47347,2
+UTL,Utarlai,NWR,Rajasthan,C,23,2,25.78834,71.44364,2
+VAA,Bhaga Junction,SER,Jharkhand,C,18,2,23.72333,86.40556,2
+VARD,Vaikam Road,SR,Kerala,C,22,2,9.77765,76.47461,2
+VDL,Vithisvarankol,SR,Tamil Nadu,C,20,2,11.19583,79.70378,2
+VKA,Verka Junction,NR,Punjab,C,19,2,31.6657,74.93167,2
+VLR,Vellore Cant,SR,Tamil Nadu,C,16,2,12.91072,79.12749,2
+VNB,Vaniyambalam,SR,Kerala,C,21,2,11.18846,76.26051,2
+VRG,Vikramnagar,WR,Madhya Pradesh,C,18,2,23.16219,75.81775,2
+VRH,Virbhadra,NR,Uttarakhand,C,17,2,30.07451,78.25186,2
+VYK,Vilayatkalan Rd,WCR,Madhya Pradesh,C,16,2,23.70892,80.6101,2
+WANI,Wani,CR,Maharashtra,C,24,2,20.06638,78.96264,2
+WC,Wadhwan City,WR,Gujarat,C,16,2,22.70293,71.67236,2
+WDA,Wadrengdisa,NFR,Assam,C,22,2,25.26397,93.17753,2
+WDR,Wadiaram,SCR,Andhra Pradesh,C,23,2,17.97261,78.45542,2
+WIRR,Wirur,SECR,Maharashtra,C,15,2,19.64129,79.43057,2
+WTJ,Jam Wanthali,WR,Gujarat,C,20,2,22.42941,70.3218,2
+WZJ,Wazerganj,ECR,Bihar,C,20,2,24.81312,85.22564,2
+YLG,Yalvigi,SWR,Karnataka,C,18,2,15.03425,75.4094,2
+ABFC,Ambari Falakata,NFR,West Bengal,C,21,2,26.64155,88.51059,1
+ABLE,Ambale,CR,Maharashtra,C,19,2,18.39872,74.17151,1
+ADF,Adina,ER,Jharkhand,C,19,2,25.1144,88.12318,1
+AGR,Amargarh,WR,Madhya Pradesh,C,19,2,23.08069,74.74704,1
+APN,Ayodhyapattanam,SWR,Tamil Nadu,C,23,2,11.67139,78.23364,1
+ARGD,Arigada,ECR,Jharkhand,C,21,2,23.64346,85.46648,1
+ASV,Asarva Jn,WR,Gujarat,C,18,2,23.04398,72.61294,1
+ATU,Attur,SWR,Tamil Nadu,C,24,2,11.59479,78.59209,1
+BANI,Bani,NR,Uttar Pradesh,C,23,2,26.22749,81.62094,1
+BILD,Bildi,WR,Madhya Pradesh,C,24,2,23.22552,74.91854,1
+BJ,Bahjoi,NR,Uttar Pradesh,C,22,2,28.4015,78.63151,1
+BLD,Bhilad,WR,Gujarat,C,18,2,20.27532,72.88745,1
+BLG,Bilhar Ghat,NR,Uttar Pradesh,C,22,2,26.68131,82.269,1
+BLGT,Balurghat,NFR,West Bengal,C,18,2,25.23265,88.75764,1
+BMU,Bamhrauli,NER,Uttar Pradesh,C,17,2,25.44494,81.74164,1
+BNBH,Bani Bihar,ECoR,Orissa,C,19,2,20.29261,85.85265,1
+BNDP,Buniadpur,NFR,West Bengal,C,24,2,25.38627,88.40209,1
+BPRH,Balpur Halt,SECR,Chhattisgarh,C,20,2,22.11514,82.69414,1
+BQP,Bighapur,NR,Uttar Pradesh,C,18,2,26.35515,80.69345,1
+BRPT,Birapatti,NER,Uttar Pradesh,C,19,2,25.39891,82.91727,1
+BRU,Bhairoganj,ECR,Bihar,C,17,2,27.15142,84.2424,1
+BRUD,Barud,WCR,Madhya Pradesh,C,21,2,22.05214,76.81409,1
+BTJ,Bishnathganj,NR,Uttar Pradesh,C,18,2,25.8019,81.93538,1
+BVL,Bikkavolu,SCR,Andhra Pradesh,C,20,2,16.96932,82.03115,1
+BWSN,Bijwasan,NR,Delhi NCT,C,18,2,28.5367,77.05129,1
+CAG,Chhabra Gugor,WCR,Rajasthan,C,18,2,24.68034,76.85099,1
+CHA,Chawapall,NR,Punjab,C,24,2,30.75946,76.12746,1
+CHR,Chilkahar,NER,Uttar Pradesh,C,18,2,25.82699,83.96531,1
+CHRM,Chirmiri,SECR,Chhattisgarh,C,15,2,23.18949,82.34955,1
+CHSM,Chinna Salem,SR,Tamil Nadu,C,18,2,11.63106,78.87382,1
+CTR,Chatra,ER,West Bengal,C,20,2,24.37285,87.84926,1
+DAVM,Dhanuvachapuram,SR,Kerala,C,15,2,8.3788,77.12435,1
+DER,Dadri,NR,Uttar Pradesh,C,18,2,28.53794,77.53742,1
+DKT,Dhulkot,NR,Haryana,C,16,2,30.39569,76.78753,1
+DLPH,Daulatpur Hat,NFR,West Bengal,C,20,2,25.32611,88.33279,1
+DNEA,Danea,ECR,Jharkhand,C,22,2,23.79913,85.65833,1
+DNRP,Dungarpur,NWR,Rajasthan,C,24,2,23.86718,73.69546,1
+DOTL,Deotala,NFR,West Bengal,C,18,2,25.27433,88.29421,1
+DRLA,Daurala,NR,Uttar Pradesh,C,23,2,29.11402,77.70616,1
+EKI,Eklakhi,ER,Jharkhand,C,17,2,25.16787,88.09949,1
+ETP,Ettapur Road,SWR,Tamil Nadu,C,22,2,11.65101,78.46855,1
+GAD,Gevra Road,SECR,Chhattisgarh,C,20,2,22.34852,82.64566,1
+GANG,Gangaganj,NR,Uttar Pradesh,C,22,2,26.29146,81.20142,1
+GLH,Gulaothi,NR,Uttar Pradesh,C,22,2,28.58296,77.8018,1
+GMAN,Gumani,ER,West Bengal,C,20,2,24.79895,87.80528,1
+GRMP,Gangarampur,NFR,West Bengal,C,17,2,25.3904,88.51645,1
+GRX,Gaura,NR,Uttar Pradesh,C,20,2,25.74937,82.09177,1
+GUH,Guldhar,NR,Uttar Pradesh,C,23,2,28.70375,77.45579,1
+GZO,Gazole,NFR,West Bengal,C,24,2,25.22498,88.19888,1
+HMT,Himmatnagar,WR,Gujarat,C,24,2,23.59165,72.96036,1
+HRW,Harrawala,NR,Uttarakhand,C,16,2,30.26089,78.09771,1
+HZR,Hafizpur,NR,Uttar Pradesh,C,20,2,28.67165,77.78583,1
+IKK,Ikkar,NR,Uttarakhand,C,16,2,29.89199,78.1,1
+ISM,Ismaila Haryana,NR,Haryana,C,21,2,28.79698,76.74656,1
+JAN,Jarangdih,ECR,Jharkhand,C,24,2,23.76955,85.92881,1
+JGJ,Jagesharganj,NR,Uttar Pradesh,C,15,2,26.02764,81.92887,1
+JGR,Jaswantnagar,NCR,Uttar Pradesh,C,21,2,26.87298,78.89373,1
+JLN,Jakhalaun,WCR,Madhya Pradesh,C,24,2,24.54736,78.34191,1
+JOL,Jogal,?,Orissa,C,23,2,21.69644,86.88271,1
+JPD,Jalalpur Dhai,?,Uttar Pradesh,C,18,2,26.0212,81.13598,1
+JRG,Jugpura,?,Orissa,C,16,2,21.66879,86.9128,1
+JRMG,Jairamnagar,SECR,Chhattisgarh,C,24,2,22.03434,82.29651,1
+JRR,Jugaur,NER,Uttar Pradesh,C,24,2,26.88192,81.08856,1
+JYM,Jai Samand Road,NWR,Rajasthan,C,20,2,24.22064,73.86827,1
+KAP,Kalianpur,NCR,Uttar Pradesh,C,24,2,26.50349,80.25289,1
+KCO,Kachhia Bridge,NER,Uttar Pradesh,C,15,2,27.94417,78.8638,1
+KCV,Krishnachandrapur,SER,Orissa,C,21,2,21.82461,86.82005,1
+KIP,Khalilpur,NR,Haryana,C,15,2,28.27486,76.67836,1
+KJG,Karajgi,SWR,Karnataka,C,24,2,14.85143,75.40764,1
+KKAH,Kankaha,NER,Uttar Pradesh,C,21,2,26.61887,81.00758,1
+KMDR,Karimuddin Pur,NER,Uttar Pradesh,C,24,2,25.70037,83.86058,1
+KNPR,Kendrapara Road,ECoR,Orissa,C,20,2,20.49848,85.91744,1
+KON,Kudalnagar,SR,Tamil Nadu,C,15,2,9.94488,78.10867,1
+KPNA,Kapan,SECR,Chhattisgarh,C,15,2,22.02602,82.49483,1
+KPV,Kashipur,NER,Uttarakhand,C,18,2,29.20498,78.96071,1
+KSJF,Kasganj Mg,NER,Uttar Pradesh,C,22,2,27.80127,78.64517,1
+KSP,Kishanpur,ECR,Bihar,C,16,2,25.92535,85.84038,1
+KTHD,Kothari Road,SECR,Chhattisgarh,C,23,2,22.15696,82.70858,1
+KTSH,Kotmi Sonan Hlt,SECR,Chhattisgarh,C,17,2,22.02416,82.36021,1
+KVG,Kuneanganj,NR,Uttar Pradesh,C,19,2,26.39566,81.13642,1
+KYM,Kadiyan,SCR,Andhra Pradesh,C,17,2,16.91434,81.83267,1
+KYT,Kailahat,NER,Uttar Pradesh,C,19,2,25.15522,82.94758,1
+KZTW,Kulitturai West,SR,Tamil Nadu,C,19,2,8.32373,77.20979,1
+LKKA,Lal Kuan,NER,Uttarakhand,C,15,2,,,1
+LMNR,Lakshmibai Nagar,WR,Madhya Pradesh,C,20,2,22.7423,75.85853,1
+MAM,Mangal Mahudi,WR,Gujarat,C,22,2,22.83578,74.05849,1
+MANG,Mahanagar,NFR,West Bengal,C,24,2,25.24708,88.2511,1
+MBF,Munabao,NWR,Rajasthan,C,18,2,25.74261,70.27654,1
+MBP,Mohibullapur,NER,Uttar Pradesh,C,23,2,26.90923,80.93892,1
+MDGR,Manendragarh,SECR,Madhya Pradesh,C,23,2,23.21975,82.19773,1
+MEM,Mau Aimma,NR,Uttar Pradesh,C,24,2,25.69832,81.91377,1
+MGLP,Mangolpuri,NR,Delhi NCT,C,18,2,28.68325,77.09057,1
+MHT,Manjhi,NER,Bihar,C,23,2,25.82849,84.58476,1
+MKRH,Mallickpur Hat,NFR,West Bengal,C,20,2,25.3257,88.67643,1
+ML,Malhour,NER,Uttar Pradesh,C,15,2,26.85345,81.04048,1
+MLJ,Mohanlalganj,NER,Uttar Pradesh,C,17,2,26.68703,80.98409,1
+MLNH,Malancha,NFR,West Bengal,C,21,2,25.36872,88.58607,1
+MMH,Mahadanapuram,SR,Tamil Nadu,C,16,2,10.95371,78.29918,1
+MOP,Mohitnagar,NFR,West Bengal,C,19,2,26.53055,88.66965,1
+MPU,Medapadu,SCR,Andhra Pradesh,C,22,2,17.00509,82.09613,1
+MPY,Murarpur,ER,Bihar,C,16,2,25.23276,86.88691,1
+MRE,Manauri,NR,Uttar Pradesh,C,19,2,25.47017,81.66249,1
+MRHT,Moranhat,NFR,Assam,C,17,2,27.18298,94.91931,1
+MRN,Morwani,WR,Madhya Pradesh,C,20,2,23.27649,74.97797,1
+MRTL,Mirthal,NR,Punjab,C,17,2,32.1129,75.60848,1
+NDJ,Nandganj,NER,Uttar Pradesh,C,24,2,25.54457,83.39687,1
+NSU,Nisui,NR,Uttar Pradesh,C,15,2,28.29093,79.23645,1
+OMLF,Old Malda,ER,Jharkhand,C,24,2,25.05317,88.14372,1
+PLI,Pettaivayatalai,SR,Tamil Nadu,C,22,2,10.89867,78.49511,1
+PNDM,Pennadam,SR,Tamil Nadu,C,23,2,11.39796,79.21998,1
+PPR,Pipar Road Jn,NWR,Rajasthan,C,23,2,26.45285,73.4487,1
+PRDL,Paradol,SECR,Madhya Pradesh,C,16,2,23.25057,82.18848,1
+PRI,Pathri,NR,Uttarakhand,C,24,2,29.852,78.07651,1
+PTKD,Patharkandi,NFR,Assam,C,20,2,24.60451,92.31911,1
+PYD,Palliyadi,SR,Tamil Nadu,C,24,2,8.26515,77.25968,1
+RBK,Reoti Bahora Khera,NR,Uttar Pradesh,C,23,2,28.31871,79.10705,1
+RDDE,Rathdhana,NR,Delhi NCT,C,20,2,28.90413,77.05915,1
+RG,Rajghat Narora,NR,Uttar Pradesh,C,18,2,28.23566,78.35359,1
+RMF,Ramna,ECR,Jharkhand,C,16,2,24.23975,83.60571,1
+RMPB,Rampur Bazar,NFR,West Bengal,C,16,2,25.35876,88.60611,1
+RMR,Ramnagar,NER,Uttarakhand,C,18,2,29.39022,79.12224,1
+RUM,Rupamau,NR,Uttar Pradesh,C,23,2,26.23021,81.32535,1
+SAGR,Shrirajnagar,NR,Uttar Pradesh,C,20,2,26.52263,81.07784,1
+SD,Sidhauli,NER,Uttar Pradesh,C,19,2,27.281,80.83759,1
+SDBH,Sindri Block Hut,ECR,Jharkhand,C,17,2,23.69294,86.44709,1
+SDGM,Sardargram,WR,Gujarat,C,20,2,23.07076,72.64199,1
+SFH,Safedabad,NER,Uttar Pradesh,C,21,2,26.89786,81.1166,1
+SGBJ,Surgaon Banjari,WCR,Madhya Pradesh,C,24,2,21.94611,76.54421,1
+SHNG,Shivnagar,NR,Uttar Pradesh,C,22,2,26.33631,81.88261,1
+SIPR,Sihapar,?,Uttar Pradesh,C,21,2,26.7579,83.16487,1
+SIQ,Sarkoni,NR,Uttar Pradesh,C,24,2,25.64311,82.75212,1
+SIW,Shirravde,CR,Maharashtra,C,19,2,17.36068,74.15735,1
+SLJ,Sakrigali Jn,NFR,Bihar,C,24,2,25.24336,87.71597,1
+SNL,Sanahwal,NR,Punjab,C,18,2,30.83744,75.9795,1
+SNRR,Sansarpur,WCR,Madhya Pradesh,C,16,2,23.67897,80.34731,1
+SOP,Shiupur,NER,Uttar Pradesh,C,19,2,25.35542,82.94697,1
+SOW,Suhsarai,ECR,Bihar,C,16,2,25.27395,85.53003,1
+SRBA,Saragbundia,SECR,Chhattisgarh,C,16,2,22.2123,82.73232,1
+SRN,Soron,NER,Uttar Pradesh,C,23,2,27.88369,78.7488,1
+STJT,Sathajagat,ECR,Bihar,C,22,2,25.63101,85.86779,1
+SWE,Siwaith,NR,Uttar Pradesh,C,17,2,25.57704,81.86926,1
+SXT,Salem Town,SWR,Tamil Nadu,C,23,2,11.66005,78.1621,1
+SYWN,Saiyid Sarawan,NR,Uttar Pradesh,C,15,2,25.49498,81.61379,1
+TELO,Telo,SER,Jharkhand,C,17,2,23.81104,86.13389,1
+THA,Tehta,ECR,Bihar,C,22,2,25.11307,84.98502,1
+TKH,Thakurtola,SER,Orissa,C,18,2,21.65199,86.97072,1
+TLKH,Talakhajuri,NR,Uttar Pradesh,C,22,2,26.17693,81.73613,1
+UTR,Utrahtia,NER,Uttar Pradesh,C,23,2,26.76306,80.97403,1
+VGE,Valappadi G Hlt,SWR,Tamil Nadu,C,15,2,11.65462,78.40045,1
+VGN,Vangaon,WR,Maharashtra,C,15,2,19.88284,72.76319,1
+VHGN,Wihirgaon,SECR,Maharashtra,C,24,2,19.72505,79.44082,1
+VPN,Vidyapatinagar,ECR,Bihar,C,20,2,25.60197,85.80234,1
+VPO,Bhupia Mau,NR,Uttar Pradesh,C,20,2,25.87522,81.97029,1
+VRB,Vishrambag,CR,Maharashtra,C,19,2,16.85057,74.60223,1
+VVB,Viveka Vihar,NR,Delhi NCT,C,19,2,28.67332,77.31951,1
+VYN,Vyasnagar,NER,Uttar Pradesh,C,21,2,25.29701,83.07135,1
+ZW,Zawar,NWR,Rajasthan,C,20,2,24.35862,73.73196,1

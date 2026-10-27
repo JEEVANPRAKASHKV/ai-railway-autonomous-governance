@@ -36,6 +36,7 @@ class TrainRecommendation(BaseModel):
     duration_hours: float
     available_classes: List[str]
     fare_estimate_inr: float
+    fare_class: str = Field(default="", description="Class the fare is for (the preferred class, or the cheapest offered)")
     punctuality_score: float = Field(..., description="Historical on-time score (0.0 to 1.0)")
     comfort_score: float = Field(..., description="Coach cleanliness & amenities score (0.0 to 1.0)")
     composite_score: float = Field(..., description="Multi-factor weighted match score (0.0 to 1.0)")

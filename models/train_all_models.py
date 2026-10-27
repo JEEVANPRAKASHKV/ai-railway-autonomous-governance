@@ -366,7 +366,7 @@ def train_fare_predictor() -> Dict:
 
     feature_cols = [
         "base_fare", "class_enc", "days_to_departure",
-        "demand_index", "tatkal_flag", "season_factor",
+        "demand_index", "flexi_flag", "tatkal_flag", "season_factor",
         "route_popularity", "month", "day_of_week", "is_peak_season",
     ]
     save_feature_columns("fare_predictor", feature_cols)
