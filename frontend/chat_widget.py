@@ -78,28 +78,47 @@ def ask(q: str) -> None:
     hist.append({"role": "assistant", "res": res})
 
 
+ROUTE_LABELS = {"tool": "From booking records", "knowledge": "", "smalltalk": "", "offtopic": "Outside my scope",
+                "no_match": "No verified answer", "language": "English only"}
+
+
 def _answer(idx: int, res: dict) -> None:
     if not res or "response" not in res:
         detail = (res or {}).get("error", "") if isinstance(res, dict) else ""
         st.warning(f"Sorry, I couldn't answer that right now. {esc(str(detail)[:160])}")
         return
     st.markdown(res["response"].replace("\n", "  \n"))
-    faith = float(res.get("faithfulness_score") or 0)
-    flag = res.get("hallucination_flag")
-    chips = [badge(res.get("answered_by") or "policy engine", "mute")]
-    if res.get("answered_by") != "language guard":
-        chips.append(badge(f"Grounded {faith:.0%}" if not flag else f"Weak grounding {faith:.0%}", "warn" if flag else "ok"))
-    if res.get("escalation_recommended"):
-        chips.append(badge("Escalated to a human", "warn"))
-    st.markdown(" ".join(chips), unsafe_allow_html=True)
-    chunks = res.get("retrieved_contexts") or []
+    route = res.get("route", "")
+    by = res.get("answered_by") or ""
+    chips = []
+    if route == "knowledge":
+        if by.startswith("verified"):
+            chips.append(badge("Verified answer", "ok"))
+        else:
+            faith = float(res.get("faithfulness_score") or 0)
+            chips.append(badge(by, "mute"))
+            chips.append(badge(f"Checked against verified rules · {faith:.0%}", "ok"))
+        if res.get("match_score") is not None and res["match_score"] < 0.40:
+            chips.append(badge("Closest match", "warn"))
+    elif ROUTE_LABELS.get(route):
+        chips.append(badge(ROUTE_LABELS[route], "warn" if route in ("no_match", "offtopic") else "mute"))
+    if chips:
+        st.markdown(" ".join(chips), unsafe_allow_html=True)
+    chunks = [c for c in (res.get("retrieved_contexts") or []) if route in ("knowledge", "tool")]
     if chunks:
         with st.expander(f"Sources ({len(chunks)})"):
-            for ch in chunks:
-                st.markdown(f'**{esc(ch.get("source_file"))}** · match {ch.get("similarity_score", 0):.2f}')
-                st.caption(ch.get("text", "")[:320])
+            for ch in chunks[:3]:
+                st.markdown(f'**{esc(ch.get("source_file"))}**')
+                links = [u for u in (ch.get("sources") or []) if str(u).startswith("http")]
+                refs = [u for u in (ch.get("sources") or []) if not str(u).startswith("http")]
+                for u in links[:3]:
+                    st.markdown(f"- [{esc(u.split('/')[2])}]({u})")
+                for r_ in refs[:2]:
+                    st.caption(r_)
+            if res.get("kb_version"):
+                st.caption(f"Railway rules verified on {res['kb_version']}. Rules change — confirm on irctc.co.in before you act.")
     audit = (res.get("governance_telemetry") or {}).get("audit_id")
-    if audit and res.get("answered_by") != "language guard":
+    if audit and route in ("knowledge", "tool", "no_match"):
         rated = st.session_state.setdefault("rated", {})
         if audit in rated:
             st.caption(f"Thanks for rating this answer {rated[audit]}/5.")

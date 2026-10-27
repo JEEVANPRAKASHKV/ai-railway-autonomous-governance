@@ -20,9 +20,10 @@ class SupportQueryRequest(BaseModel):
 
 class RetrievedContextChunk(BaseModel):
     chunk_id: str
-    source_file: str
+    source_file: str = Field(..., description="Knowledge-base entry title, or the booking-record tool used")
     text: str
     similarity_score: float
+    sources: List[str] = Field(default_factory=list, description="Where the entry was verified (URLs or references)")
 
 
 class SupportQueryResponse(BaseModel):
@@ -35,5 +36,8 @@ class SupportQueryResponse(BaseModel):
     sentiment: str = Field(default="Neutral", description="'Positive' | 'Neutral' | 'Frustrated'")
     escalation_recommended: bool = Field(default=False, description="True if sentiment frustrated or query unresolved")
     confidence_score: float = Field(default=0.90)
-    answered_by: str = Field(default="", description="Gemini model / rule-based engine / tool that produced the answer")
+    answered_by: str = Field(default="", description="LLM / verified knowledge base / tool that produced the answer")
+    route: str = Field(default="", description="language | tool | smalltalk | offtopic | knowledge | no_match")
+    match_score: Optional[float] = Field(default=None, description="Knowledge-base match confidence (0–1) when retrieval ran")
+    kb_version: str = Field(default="", description="Version (verification date) of the knowledge base used")
     governance_telemetry: Optional[GovernanceBadge] = None

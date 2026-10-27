@@ -1,0 +1,639 @@
+{
+  "version": "2026-10-27",
+  "note": "Verified knowledge base for the Railway Buddy Support Assistant. Rules marked with sources were checked against the cited reports on the 'verified' date. Railway rules change often: re-check entries when IRCTC announces changes, and update 'verified'. Entries in the 'site' category describe this demo application itself.",
+  "entries": [
+    {
+      "id": "site_about",
+      "category": "site",
+      "title": "What Railway Buddy can do",
+      "questions": [
+        "what can you do",
+        "what can i get from this site",
+        "what is this site",
+        "what is this website for",
+        "how does this work",
+        "help",
+        "what services do you offer",
+        "what features are available",
+        "who are you",
+        "what can i ask you",
+        "how can you help me",
+        "what is railway buddy"
+      ],
+      "answer": "Railway Buddy is an AI assistant for Indian Railways travel. You can:\n- Ticket confirmation: see the chance a waitlisted or RAC ticket gets confirmed, the likely berth, and why.\n- Train recommender: find the best train for your budget, timing and travel style.\n- Delay & disruption: get an expected delay, station congestion and better alternatives.\n- AI travel planner: describe a trip in one sentence; it plans it and books only after you approve.\n- Fare forecast: see where the fare is heading and the best day to book.\n- This chat: check a demo PNR (type PNR and a 7-digit number, e.g. PNR 0000001), refunds, cancellations, Tatkal, waitlist and RAC rules.\nThe operations side (AI Governance) shows how every model is monitored. Train data and bookings here are a demo, not live IRCTC data.",
+      "sources": [
+        "Railway Buddy"
+      ]
+    },
+    {
+      "id": "site_official",
+      "category": "site",
+      "title": "Is this the official IRCTC site?",
+      "questions": [
+        "is this the official irctc site",
+        "is this irctc",
+        "can i book a real ticket here",
+        "is this booking real",
+        "is my booking real",
+        "is this data real",
+        "are these real trains"
+      ],
+      "answer": "No. Railway Buddy is an independent demo project, not IRCTC or Indian Railways. Train data, PNRs and bookings here are simulated, so nothing you book is a real ticket. To book or manage real tickets use irctc.co.in or the IRCTC Rail Connect app. The railway rules this chat explains are checked against official announcements and news reports.",
+      "sources": [
+        "Railway Buddy"
+      ]
+    },
+    {
+      "id": "site_pnr_demo",
+      "category": "site",
+      "title": "Checking a PNR in this chat",
+      "questions": [
+        "check my pnr here",
+        "how do i check pnr in this chat",
+        "can you check my pnr",
+        "pnr lookup"
+      ],
+      "answer": "Type PNR followed by the 7-digit number, for example: PNR 0000001. The chat shows the train, class, status at chart preparation and any refund. These are demo booking records. For a real ticket, check the status on irctc.co.in, the IRCTC app, NTES, or by calling 139.",
+      "sources": [
+        "Railway Buddy"
+      ]
+    },
+    {
+      "id": "site_planner",
+      "category": "site",
+      "title": "Planning and booking a trip here",
+      "questions": [
+        "how do i book a ticket here",
+        "plan my trip",
+        "how does the travel planner work",
+        "can you book for me",
+        "how to use the ai planner"
+      ],
+      "answer": "Open AI Travel Planner and describe your trip in one sentence, e.g. \"Pune to Delhi tomorrow under ₹1500, reach before 10 AM\". The agents search direct trains and one-change connections, check confirmation odds, delays and fares, and propose a plan. Nothing is booked until you press Approve, and bookings in this demo are simulated.",
+      "sources": [
+        "Railway Buddy"
+      ]
+    },
+    {
+      "id": "advance_booking",
+      "category": "rules",
+      "title": "How far in advance you can book",
+      "questions": [
+        "how many days in advance can i book",
+        "advance reservation period",
+        "when does booking open",
+        "how early can i book a train ticket",
+        "booking window",
+        "can i book 120 days in advance",
+        "arp",
+        "how many days before the journey can i book",
+        "can i book 90 days before",
+        "booking opens how many days before travel"
+      ],
+      "answer": "Reserved train tickets can be booked up to 60 days in advance, not counting the day of the journey. This has applied since 1 November 2024; it was 120 days before that. Online bookings in the first 15 minutes after booking opens need an Aadhaar-authenticated IRCTC account (since 1 October 2025).",
+      "sources": [
+        "https://onmanorama.com/news/india/2024/10/17/indian-railways-advance-reservation-period-train-journey.amp.html",
+        "https://www.outlooktraveller.com/News/indian-railways-new-rule-aadhaar-verification-compulsory-for-early-reservations"
+      ]
+    },
+    {
+      "id": "aadhaar_booking",
+      "category": "rules",
+      "title": "Aadhaar authentication for booking",
+      "questions": [
+        "do i need aadhaar to book",
+        "aadhaar authentication irctc",
+        "aadhaar for tatkal",
+        "otp for tatkal booking",
+        "aadhaar verification for ticket booking",
+        "is aadhaar mandatory"
+      ],
+      "answer": "Online Tatkal booking on IRCTC needs an Aadhaar-authenticated account (since 1 July 2025), and Tatkal bookings also need an Aadhaar OTP, including at counters and through agents (since 15 July 2025). For general reserved tickets, Aadhaar authentication is needed only to book online in the first 15 minutes after booking opens (since 1 October 2025); counter bookings are not affected.",
+      "sources": [
+        "https://www.outlooktraveller.com/amp/story/News/indian-railways-announces-new-rules-starting-may-1",
+        "https://www.outlooktraveller.com/News/indian-railways-new-rule-aadhaar-verification-compulsory-for-early-reservations"
+      ]
+    },
+    {
+      "id": "tatkal_timing",
+      "category": "rules",
+      "title": "Tatkal booking timings",
+      "questions": [
+        "when does tatkal booking open",
+        "tatkal timings",
+        "tatkal booking time",
+        "what time can i book tatkal",
+        "tatkal opens at",
+        "how to book tatkal"
+      ],
+      "answer": "Tatkal booking opens one day before the journey (not counting the journey day): 10:00 AM for AC classes and 11:00 AM for non-AC classes such as Sleeper. Authorised agents cannot book Tatkal in the first 30 minutes (10:30 AM for AC, 11:30 AM for non-AC). Online Tatkal needs an Aadhaar-authenticated IRCTC account and OTP.",
+      "sources": [
+        "https://www.outlooktraveller.com/amp/story/News/indian-railways-announces-new-rules-starting-may-1"
+      ]
+    },
+    {
+      "id": "tatkal_refund",
+      "category": "rules",
+      "title": "Refund on cancelling a Tatkal ticket",
+      "questions": [
+        "can i get money back if i cancel a tatkal ticket",
+        "tatkal cancellation refund",
+        "is tatkal refundable",
+        "cancel tatkal ticket",
+        "tatkal refund rules"
+      ],
+      "answer": "No refund is given when you cancel a confirmed Tatkal ticket. If your Tatkal ticket is waitlisted or RAC, you can cancel it and get a refund after the clerkage charge is deducted. A fully waitlisted Tatkal e-ticket is cancelled automatically after chart preparation with a full refund. Exceptions such as a cancelled train, or a train late by more than 3 hours (claim through TDR), still apply.",
+      "sources": [
+        "IRCTC refund rules (long-standing; confirm on irctc.co.in)"
+      ]
+    },
+    {
+      "id": "premium_tatkal",
+      "category": "rules",
+      "title": "Premium Tatkal",
+      "questions": [
+        "what is premium tatkal",
+        "premium tatkal fare",
+        "difference between tatkal and premium tatkal"
+      ],
+      "answer": "Premium Tatkal is a Tatkal quota on selected trains where the fare is dynamic: it rises as seats fill. It opens at the same time as Tatkal (10:00 AM AC, 11:00 AM non-AC, one day before the journey). Confirmed Premium Tatkal tickets are not refundable on cancellation. Check irctc.co.in for which trains offer it.",
+      "sources": [
+        "IRCTC Premium Tatkal scheme (confirm on irctc.co.in)"
+      ]
+    },
+    {
+      "id": "cancel_confirmed",
+      "category": "rules",
+      "title": "Cancellation charges for a confirmed ticket",
+      "questions": [
+        "how much money will be deducted if i cancel",
+        "cancellation charges",
+        "refund if i cancel my confirmed ticket",
+        "cancel ticket 2 days before journey",
+        "how much refund on cancellation",
+        "cancellation rules",
+        "what if i cancel my ticket",
+        "missed my train refund",
+        "cancel 3ac ticket refund",
+        "cancel close to departure",
+        "last minute cancellation refund",
+        "cancel a few hours before the train leaves"
+      ],
+      "answer": "New cancellation rules apply from April 2026 (phased in 1–15 April), per passenger on a confirmed ticket:\n- More than 72 hours before departure: only a flat cancellation charge (earlier ₹240 for 1A/EC, ₹200 for 2A, ₹180 for 3A/CC/3E, ₹120 for Sleeper, ₹60 for Second Sitting, plus GST on AC classes; check IRCTC for the current amount).\n- 72 to 24 hours before: 25% of the fare is deducted.\n- 24 to 8 hours before: 50% is deducted.\n- Less than 8 hours before departure: no refund.\nCounter tickets can now be cancelled at any railway reservation counter.",
+      "sources": [
+        "https://www.newsonair.gov.in/railways-minister-ashwini-vaishnaw-launches-five-reforms-in-railways-52-reforms-in-52-weeks-drive",
+        "https://www.goodreturns.in/news/indian-railways-ticket-cancellation-rules-changed-from-april-2026-no-refund-if-cancelled-within-8hrs-1498351.html",
+        "https://www.confirmtkt.com/Booking/cancellation-rules.html"
+      ]
+    },
+    {
+      "id": "cancel_rac_wl",
+      "category": "rules",
+      "title": "Cancelling an RAC or waitlisted ticket",
+      "questions": [
+        "cancel rac ticket",
+        "cancel waitlist ticket",
+        "refund on cancelling waitlisted ticket",
+        "clerkage charge",
+        "rac cancellation charges"
+      ],
+      "answer": "An RAC or waitlisted ticket can be cancelled online up to 30 minutes before departure. Only a clerkage charge is deducted: ₹60 per passenger (₹30 in Second Sitting), plus GST for AC classes. A waitlisted e-ticket that is still waitlisted after the chart is prepared is cancelled automatically with a full refund. These clerkage amounts are from the rules before April 2026; confirm on irctc.co.in.",
+      "sources": [
+        "https://www.confirmtkt.com/Booking/cancellation-rules.html",
+        "https://www.republicworld.com/india/general-news/missed-your-train-when-irctc-gives-full-refund-and-when-it-doesnt-new-cancellation-rules-2026-explained"
+      ]
+    },
+    {
+      "id": "wl_not_confirmed",
+      "category": "rules",
+      "title": "Waitlisted ticket not confirmed",
+      "questions": [
+        "what happens if my waitlisted ticket is not confirmed",
+        "wl ticket not confirmed refund",
+        "can i travel on a waitlisted ticket",
+        "waitlist ticket after chart",
+        "will i get refund if my waiting ticket is not confirmed",
+        "can waitlisted passengers board the train",
+        "still on waiting list after chart preparation",
+        "chart prepared and ticket still waitlisted",
+        "what happens to a waitlisted e-ticket after charting"
+      ],
+      "answer": "If your e-ticket is still fully waitlisted when the chart is prepared, it is cancelled automatically and the full fare is refunded to your original payment method; you do not need to do anything. Waitlisted passengers are not allowed to travel in reserved (Sleeper or AC) coaches. If even one passenger on the ticket is confirmed or RAC, the ticket stays valid for everyone on it.",
+      "sources": [
+        "https://www.republicworld.com/india/general-news/missed-your-train-when-irctc-gives-full-refund-and-when-it-doesnt-new-cancellation-rules-2026-explained",
+        "https://gulfnews.com/world/asia/india/indian-railways-announces-tougher-travel-rules-new-reservation-guidelines-and-penalties-1.500115332"
+      ]
+    },
+    {
+      "id": "waitlist_types",
+      "category": "rules",
+      "title": "Waitlist types: GNWL, RLWL, PQWL, TQWL",
+      "questions": [
+        "what is gnwl",
+        "what does rlwl mean",
+        "what is pqwl",
+        "what is tqwl",
+        "types of waiting list",
+        "which waitlist confirms faster",
+        "what is rswl"
+      ],
+      "answer": "GNWL (General Waitlist): booked from the train's origin or nearby stations; the most common type and the most likely to confirm. RLWL (Remote Location Waitlist): booked from important intermediate stations; confirms less often. PQWL (Pooled Quota Waitlist): a shared quota for short journeys between intermediate stations; confirmation chances are usually low. TQWL (Tatkal Waitlist): waitlist in the Tatkal quota. RSWL (Roadside Station Waitlist): for small stations near the origin.",
+      "sources": [
+        "Indian Railways reservation system (long-standing)"
+      ]
+    },
+    {
+      "id": "rac",
+      "category": "rules",
+      "title": "What RAC means",
+      "questions": [
+        "what is rac",
+        "rac ticket meaning",
+        "can i travel on rac ticket",
+        "rac berth",
+        "reservation against cancellation"
+      ],
+      "answer": "RAC means Reservation Against Cancellation. You can board and travel, but two RAC passengers share one side-lower berth (seating). If confirmed passengers cancel or do not turn up, the TTE allots RAC passengers a full berth. An RAC e-ticket is not cancelled at chart preparation.",
+      "sources": [
+        "Indian Railways reservation system (long-standing)"
+      ]
+    },
+    {
+      "id": "waitlist_cap",
+      "category": "rules",
+      "title": "Limit on waitlisted tickets",
+      "questions": [
+        "how many waiting tickets are issued",
+        "waitlist limit",
+        "waiting list cap",
+        "why can't i book waitlist ticket"
+      ],
+      "answer": "Indian Railways caps waitlisted tickets per train: up to 60% of berths in AC classes and up to 30% in non-AC classes (revised in June 2025 from an earlier 25% cap). Once the cap is reached, no more waitlisted tickets are issued for that class.",
+      "sources": [
+        "https://www.theweek.in/wire-updates/national/2025/06/29/del48-rail-enhances-waiting-list.html"
+      ]
+    },
+    {
+      "id": "chart_time",
+      "category": "rules",
+      "title": "When the reservation chart is prepared",
+      "questions": [
+        "when is the reservation chart prepared",
+        "chart preparation time",
+        "when will my ticket status be final",
+        "at what time is the chart prepared",
+        "chart timing"
+      ],
+      "answer": "For trains leaving their origin between 5 AM and 2 PM, the first reservation chart is prepared by 8 PM on the previous day. For other trains it is prepared at least 10 hours before departure (this replaced the earlier 8-hour rule in December 2025). A second chart is prepared closer to departure for berths that become vacant.",
+      "sources": [
+        "https://trak.in/stories/reservation-chart-will-be-created-10-hours-before-train-departure/",
+        "https://www.thehitavada.com/Encyc/2025/12/27/now-railway-reservation-charts-to-be-ready-one-day-in-advance.html"
+      ]
+    },
+    {
+      "id": "train_late",
+      "category": "rules",
+      "title": "Refund when the train is running late",
+      "questions": [
+        "my train is running late can i get a refund",
+        "train delayed 3 hours refund",
+        "refund if train is late",
+        "train late more than 3 hours",
+        "can i cancel because train is delayed"
+      ],
+      "answer": "If your train is running more than 3 hours late and you decide not to travel, you can get a full refund. For an e-ticket, file a TDR on IRCTC before the train actually leaves your boarding station; once it has left, the claim is not accepted.",
+      "sources": [
+        "https://www.republicworld.com/india/general-news/missed-your-train-when-irctc-gives-full-refund-and-when-it-doesnt-new-cancellation-rules-2026-explained"
+      ]
+    },
+    {
+      "id": "train_cancelled",
+      "category": "rules",
+      "title": "Refund when the train is cancelled",
+      "questions": [
+        "my train got cancelled will i get a refund",
+        "train cancelled refund",
+        "refund for cancelled train",
+        "railways cancelled my train"
+      ],
+      "answer": "If Indian Railways cancels the train, you get a full refund. For e-tickets the refund is automatic, with no cancellation charge and no need to file anything. For counter tickets, claim the refund at a reservation counter.",
+      "sources": [
+        "https://www.republicworld.com/india/general-news/missed-your-train-when-irctc-gives-full-refund-and-when-it-doesnt-new-cancellation-rules-2026-explained"
+      ]
+    },
+    {
+      "id": "tdr",
+      "category": "rules",
+      "title": "Filing a TDR",
+      "questions": [
+        "how do i file a tdr",
+        "what is tdr",
+        "ticket deposit receipt",
+        "how to claim refund through tdr",
+        "file tdr online"
+      ],
+      "answer": "A TDR (Ticket Deposit Receipt) is how you claim a refund when normal cancellation does not apply, for example when the train is more than 3 hours late and you did not travel, or AC failed in your coach. For an e-ticket: log in to IRCTC, go to My Transactions, choose File TDR, select the ticket and the reason, and submit within the time limit shown for that reason. The refund goes to your original payment method once the Railways approve it.",
+      "sources": [
+        "IRCTC e-ticket TDR process (confirm time limits on irctc.co.in)"
+      ]
+    },
+    {
+      "id": "refund_time",
+      "category": "rules",
+      "title": "How long a refund takes",
+      "questions": [
+        "how long does a refund take",
+        "when will i get my refund",
+        "refund not received yet",
+        "refund status",
+        "money not refunded",
+        "refund taking too long"
+      ],
+      "answer": "Refunds for e-tickets go back to the payment method you used. They usually reach you within a few working days, depending on your bank or card. You can track the status on IRCTC under My Transactions, then Ticket Refund History. If it is delayed, raise a complaint through Rail Madad (139 or railmadad.indianrailways.gov.in) or IRCTC customer care with your PNR.",
+      "sources": [
+        "IRCTC refund process (confirm on irctc.co.in)"
+      ]
+    },
+    {
+      "id": "boarding_change",
+      "category": "rules",
+      "title": "Changing your boarding station",
+      "questions": [
+        "can i change my boarding station",
+        "change boarding point",
+        "board from a different station",
+        "change boarding station online"
+      ],
+      "answer": "Yes. Since April 2026 you can change the boarding station up to 30 minutes before the train's departure, online (IRCTC website or app, Booked Ticket History) or at a reservation counter. It is allowed once per ticket, only for confirmed or RAC tickets, not waitlisted ones. Earlier this had to be done at least 24 hours before departure.",
+      "sources": [
+        "https://oga-prod.angelone.in/news/market-updates/irctc-introduces-flexible-boarding-point-changes-from-april-1-2026",
+        "https://www.newsonair.gov.in/railways-minister-ashwini-vaishnaw-launches-five-reforms-in-railways-52-reforms-in-52-weeks-drive"
+      ]
+    },
+    {
+      "id": "id_proof",
+      "category": "rules",
+      "title": "Identity proof while travelling",
+      "questions": [
+        "which id proof should i carry",
+        "id proof for train travel",
+        "is aadhaar valid id on train",
+        "what documents do i need to travel",
+        "identity card for e ticket",
+        "documents required for train journey"
+      ],
+      "answer": "On an e-ticket, at least one passenger must carry an original photo ID. Accepted IDs include: Aadhaar card (or mAadhaar/DigiLocker), Voter ID, Passport, PAN card, Driving Licence, a photo ID card issued by central or state government, a student ID with photo from a recognised school or college, a nationalised bank passbook with photo, or a credit card with photo. Show the ticket SMS or e-ticket on your phone together with the ID.",
+      "sources": [
+        "Indian Railways ID rules for e-tickets (long-standing; confirm on irctc.co.in)"
+      ]
+    },
+    {
+      "id": "lost_ticket",
+      "category": "rules",
+      "title": "Lost ticket",
+      "questions": [
+        "i lost my ticket what should i do",
+        "lost train ticket",
+        "duplicate ticket",
+        "lost my e ticket",
+        "ticket lost during journey"
+      ],
+      "answer": "For an e-ticket you do not need a duplicate: show the booking SMS or e-ticket on your phone with an original photo ID. If you lose a counter (paper) ticket, apply for a duplicate at the reservation office. Fees under older published rules were ₹50 (Sleeper/Second class) or ₹100 (other classes) before chart preparation, and about 50% of the fare after the chart; RAC tickets lost after chart preparation do not get a duplicate. Check current fees at the counter.",
+      "sources": [
+        "https://www.thebetterindia.com/157116/irctc-rules-lost-train-ticket-duplicate-news/"
+      ]
+    },
+    {
+      "id": "senior_citizen",
+      "category": "rules",
+      "title": "Senior citizen concession",
+      "questions": [
+        "is there any concession for senior citizens",
+        "senior citizen discount",
+        "senior citizen fare",
+        "concession for elderly",
+        "senior citizen ticket discount restored",
+        "discount for people above 60",
+        "old age concession on train fare"
+      ],
+      "answer": "The fare concession for senior citizens was withdrawn on 20 March 2020 and, as of our last check (October 2026), has not been restored, despite repeated reports that it might return. Senior citizens can still get lower-berth preference: men aged 60+, women aged 45+ and pregnant women are given lower berths when available.",
+      "sources": [
+        "https://newschecker.in/fact-check/senior-citizen-concession-railways-false",
+        "https://www.outlookmoney.com/retirement/news/railways-earned-rs-8913-crore-additional-revenue-in-five-years-by-withdrawing-senior-citizen-concessions",
+        "https://navbharatlive.com/business/union-budget-2026-restoration-of-senior-citizen-railway-ticket-concessions-status-update-1541871.html/amp"
+      ]
+    },
+    {
+      "id": "lower_berth",
+      "category": "rules",
+      "title": "Getting a lower berth",
+      "questions": [
+        "how to get a lower berth",
+        "lower berth for my elderly mother",
+        "can i book a lower berth",
+        "lower berth for senior citizen",
+        "lower berth for pregnant women"
+      ],
+      "answer": "Choose Lower as the berth preference when booking; it is allotted only if available. Men aged 60+, women aged 45+ and pregnant women get lower-berth preference automatically from a reserved lower-berth quota. You can also tick \"Book only if lower berth is allotted\", so the booking does not go through without one.",
+      "sources": [
+        "Indian Railways lower berth quota (long-standing; confirm on irctc.co.in)"
+      ]
+    },
+    {
+      "id": "children",
+      "category": "rules",
+      "title": "Tickets for children",
+      "questions": [
+        "do children need a ticket",
+        "child ticket rules",
+        "ticket for 5 year old",
+        "infant ticket train",
+        "half ticket for child",
+        "kids fare"
+      ],
+      "answer": "Children under 5 travel free without a separate berth or seat (no ticket needed). Children aged 5 to 11 pay the full adult fare if you book a berth or seat for them, or half fare if you choose no berth or seat. From age 12 the full adult fare applies.",
+      "sources": [
+        "Indian Railways child fare rules (in force since 2016; confirm on irctc.co.in)"
+      ]
+    },
+    {
+      "id": "luggage",
+      "category": "rules",
+      "title": "Luggage allowance",
+      "questions": [
+        "how much luggage can i carry",
+        "luggage allowance",
+        "baggage limit in train",
+        "extra luggage charges",
+        "how many kg allowed in sleeper"
+      ],
+      "answer": "Free luggage allowance per passenger: AC First Class 70 kg, AC 2-tier 50 kg, AC 3-tier and AC Chair Car 40 kg, Sleeper 40 kg, Second Class 35 kg. Extra luggage should be booked in advance at the station's parcel or luggage office. Luggage found in excess without booking can be charged at a higher rate.",
+      "sources": [
+        "Indian Railways luggage rules (long-standing; confirm on indianrail.gov.in)"
+      ]
+    },
+    {
+      "id": "ladies_quota",
+      "category": "rules",
+      "title": "Ladies quota",
+      "questions": [
+        "is there a ladies quota",
+        "seats for women",
+        "female passenger quota",
+        "women travelling alone berth",
+        "ladies quota booking"
+      ],
+      "answer": "Yes. Most long-distance trains reserve a small number of berths (usually in Sleeper class, and in some trains in AC 3-tier) as a Ladies quota for women travelling alone or with children under 12. Select the Ladies (LD) quota when booking. Women aged 45+ also get lower-berth preference.",
+      "sources": [
+        "Indian Railways quota rules (long-standing; confirm on irctc.co.in)"
+      ]
+    },
+    {
+      "id": "name_transfer",
+      "category": "rules",
+      "title": "Transferring a ticket to someone else",
+      "questions": [
+        "can i transfer my ticket to my brother",
+        "transfer ticket to family member",
+        "change passenger name",
+        "give my ticket to someone else",
+        "name change on ticket"
+      ],
+      "answer": "A confirmed ticket can be transferred once to a family member (father, mother, brother, sister, son, daughter, husband or wife). Apply in writing at a reservation office at least 24 hours before departure, with ID proof of the new passenger and proof of the relationship. Tickets cannot be transferred to friends or others.",
+      "sources": [
+        "Indian Railways name transfer rules (long-standing; confirm at a reservation office)"
+      ]
+    },
+    {
+      "id": "check_pnr",
+      "category": "rules",
+      "title": "Checking PNR status (real tickets)",
+      "questions": [
+        "how do i check my pnr status",
+        "pnr status",
+        "where can i see my ticket status",
+        "check ticket confirmation status",
+        "pnr enquiry"
+      ],
+      "answer": "For a real ticket, check PNR status on irctc.co.in or the IRCTC Rail Connect app (Booked Ticket History), on the National Train Enquiry System (NTES), or by calling 139. In this demo chat you can type PNR followed by a 7-digit demo number, e.g. PNR 0000001.",
+      "sources": [
+        "Indian Railways / IRCTC"
+      ]
+    },
+    {
+      "id": "classes",
+      "category": "rules",
+      "title": "Train classes (1A, 2A, 3A, SL...)",
+      "questions": [
+        "what is the difference between 2a and 3a",
+        "what is 1a",
+        "what does sl mean",
+        "train class types",
+        "what is 3e",
+        "what is cc and ec",
+        "which class is best"
+      ],
+      "answer": "1A (AC First Class): lockable coupés, the most comfortable. 2A (AC 2-tier): two berths each side with curtains, more space. 3A (AC 3-tier): three berths each side, the common AC choice. 3E (AC 3-tier Economy): like 3A with slightly smaller berths and lower fares. SL (Sleeper): non-AC three-tier berths, the cheapest sleeping class. CC (AC Chair Car) and EC (Executive Chair Car): seats for day trains. 2S (Second Sitting): non-AC reserved seats.",
+      "sources": [
+        "Indian Railways (long-standing)"
+      ]
+    },
+    {
+      "id": "food",
+      "category": "rules",
+      "title": "Food on the train",
+      "questions": [
+        "does the train have food",
+        "can i order meals on the train",
+        "e catering",
+        "food order in train",
+        "pantry car",
+        "how to order food on train"
+      ],
+      "answer": "Many long-distance trains have a pantry car, and on Rajdhani, Shatabdi, Duronto and Vande Bharat trains meals can be included when you book. On most trains you can also order food from restaurants at upcoming stations through IRCTC eCatering (website or app), delivered to your seat with your PNR. For complaints about food quality, use Rail Madad (139).",
+      "sources": [
+        "IRCTC eCatering (confirm on ecatering.irctc.co.in)"
+      ]
+    },
+    {
+      "id": "helpline",
+      "category": "rules",
+      "title": "Railway helplines and complaints",
+      "questions": [
+        "what is the irctc helpline number",
+        "railway complaint number",
+        "rail madad",
+        "customer care number",
+        "how to complain about train",
+        "emergency help on train"
+      ],
+      "answer": "Call 139 (Rail Madad) for train enquiries, complaints, security and medical help during the journey, or use the Rail Madad app or railmadad.indianrailways.gov.in. For booking, payment or refund issues with IRCTC, contact IRCTC customer care through irctc.co.in. In an emergency on board, tell the TTE or coach attendant as well.",
+      "sources": [
+        "https://railmadad.indianrailways.gov.in"
+      ]
+    },
+    {
+      "id": "ticketless",
+      "category": "rules",
+      "title": "Travelling without a ticket",
+      "questions": [
+        "what is the penalty for travelling without a ticket",
+        "fine for ticketless travel",
+        "caught without ticket",
+        "travel in sleeper with general ticket penalty"
+      ],
+      "answer": "Travelling without a valid ticket, or in a higher class than your ticket, is penalised: you pay the fare for the journey plus a penalty (a minimum of ₹250). Waitlisted passengers found in reserved coaches can be treated as ticketless.",
+      "sources": [
+        "Indian Railways Act penalty provisions (long-standing)"
+      ]
+    },
+    {
+      "id": "offline_booking",
+      "category": "rules",
+      "title": "Booking without internet",
+      "questions": [
+        "can i book a ticket without internet",
+        "book ticket at counter",
+        "railway reservation counter",
+        "offline ticket booking",
+        "book through agent"
+      ],
+      "answer": "Yes. You can book at any Passenger Reservation System (PRS) counter at railway stations, or through an authorised IRCTC agent. Counter Tatkal bookings also need an Aadhaar OTP (since July 2025), and counter tickets can now be cancelled at any reservation counter.",
+      "sources": [
+        "https://www.outlooktraveller.com/amp/story/News/indian-railways-announces-new-rules-starting-may-1",
+        "https://www.newsonair.gov.in/railways-minister-ashwini-vaishnaw-launches-five-reforms-in-railways-52-reforms-in-52-weeks-drive"
+      ]
+    },
+    {
+      "id": "upgrade",
+      "category": "rules",
+      "title": "Upgrading your class",
+      "questions": [
+        "can i upgrade from sleeper to 3ac",
+        "class upgrade",
+        "upgrade my ticket",
+        "auto upgradation",
+        "how to get upgraded to ac"
+      ],
+      "answer": "When booking, you can opt in to auto-upgradation: if higher-class berths remain vacant at chart preparation, you may be moved up at no extra cost. During the journey, if berths are vacant in a higher class, you can ask the TTE to upgrade you by paying the fare difference.",
+      "sources": [
+        "Indian Railways auto-upgradation scheme (long-standing)"
+      ]
+    },
+    {
+      "id": "partial_cancel",
+      "category": "rules",
+      "title": "Cancelling some passengers on a ticket",
+      "questions": [
+        "can i cancel only one passenger from my booking",
+        "partial cancellation",
+        "cancel one person ticket",
+        "remove a passenger from ticket"
+      ],
+      "answer": "Yes. On IRCTC, open Booked Ticket History, choose the ticket and select only the passengers you want to cancel. Cancellation charges apply per cancelled passenger under the normal time windows; the others keep their berths.",
+      "sources": [
+        "IRCTC e-ticket cancellation (long-standing)"
+      ]
+    }
+  ]
+}

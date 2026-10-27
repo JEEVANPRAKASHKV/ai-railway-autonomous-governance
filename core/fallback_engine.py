@@ -214,9 +214,20 @@ class FallbackEngine:
     # ── Customer Support ──────────────────────────────────────────────────────
 
     def support_query(self, query: str, language: str = "en") -> LLMResponse:
-        """TF-IDF similarity search over FAQ corpus. Returns best-match answer."""
-        _load_faq()
+        """Best answer from the verified support knowledge base (data/knowledge/support_kb.json).
+        The legacy FAQ / static answers below are only used if the knowledge base cannot be loaded."""
         t0 = time.perf_counter()
+        try:
+            from modules.m6_support_assistant.rag_indexer import rag_indexer
+            hits = rag_indexer.retrieve(query, top_k=1)
+            if hits and hits[0][1] >= 0.24:
+                return LLMResponse(content=hits[0][0]["text"], mode="fallback", latency_ms=(time.perf_counter() - t0) * 1000)
+            if rag_indexer.entries:
+                return LLMResponse(content="I don't have a verified answer for that. Please call 139 (Rail Madad) or check irctc.co.in.",
+                                   mode="fallback", latency_ms=(time.perf_counter() - t0) * 1000)
+        except Exception:
+            pass
+        _load_faq()
 
         curated = self._static_support_response(query)
         has_curated = not curated.startswith("Thank you for your query. For specific railway inquiries")
@@ -248,17 +259,17 @@ class FallbackEngine:
             w in q for w in ("tatkal", "waitlist", "waiting list", "wl ", "rac", "not confirmed")
         ) and any(w in q for w in ("confirmed", "charge", "fee", "3a", "2a", "1a", "sl", "sleeper", "hours", "days", "before departure")):
             return (
-                "Cancelling a confirmed (non-Tatkal) ticket: more than 48 hours before departure the flat fee is "
-                "₹240 (1A/EC), ₹200 (2A/CC), ₹180 (3A), ₹120 (SL) or ₹60 (2S). From 12–48 hours before departure "
-                "25% of the fare is charged, from 4–12 hours 50%, and there is no refund within 4 hours of departure. "
-                "Cancel before chart preparation."
+                "Cancelling a confirmed (non-Tatkal) ticket (rules from April 2026): more than 72 hours before departure only a flat fee "
+                "applies; 72 to 24 hours before, 25% of the fare is deducted; 24 to 8 hours before, 50%; and there is no refund "
+                "within 8 hours of departure. "
+                ""
             )
         # Train cancelled / badly delayed by Railways → automatic full refund
         if re.search(r"\btrain\b.{0,25}\bcancel|cancelled train|canceled train|train (is |was )?(very )?(late|delayed)", q) and re.search(r"refund|money|paisa|wapas", q):
             return (
                 "If Railways cancels your train, you get a full refund automatically with no cancellation charges — it is credited "
                 "to the original payment method within about 7 days. If the train runs more than 3 hours late you can also cancel "
-                "for a full refund (file a TDR within 72 hours on irctc.co.in for a partial journey not performed)."
+                "for a full refund by filing a TDR on irctc.co.in before the train leaves your boarding station."
             )
         # Waitlisted ticket that did not confirm by chart preparation → automatic full refund
         if (re.search(r"\b(waitlist\w*|waiting list|wl)\b", q) or "not confirmed" in q) and re.search(r"refund|chart|cancel|money|paisa|wapas", q):
@@ -295,7 +306,7 @@ class FallbackEngine:
                 "All passenger trains carry first-aid boxes, and railway doctors can be arranged at the next scheduled halt."
             )
         if "pnr" in q:
-            return "To check your PNR status, visit the IRCTC website or the National Train Enquiry System (NTES). PNR status is updated 4 hours before departure."
+            return "To check your PNR status, visit the IRCTC website or the National Train Enquiry System (NTES). The reservation chart is prepared by 8 PM the previous day for morning trains, otherwise at least 10 hours before departure."
         if "cancel" in q or "refund" in q:
             return "Cancellation refunds depend on how many hours before departure you cancel. AC classes attract a cancellation fee of ₹240 (1A), ₹200 (2A), ₹180 (3A). SL class: ₹120. Tatkal tickets are non-refundable."
         if "tatkal" in q:
@@ -303,7 +314,7 @@ class FallbackEngine:
         if "waitlist" in q or "wl" in q or "rac" in q:
             return "WL (Waitlist) tickets may get confirmed when other passengers cancel. RAC (Reservation Against Cancellation) ensures you get a seat but may share a berth. Confirmation probability depends on class, quota, and days to departure."
         if "fare" in q or "price" in q:
-            return "Indian Railway fares vary by class, distance, train type, and season. Dynamic pricing applies to premium trains (Rajdhani, Shatabdi). Book 90–120 days in advance for best fares."
+            return "Indian Railway fares vary by class, distance, train type, and season. Dynamic pricing applies to premium trains (Rajdhani, Shatabdi). Bookings open 60 days in advance."
         return "Thank you for your query. For specific railway inquiries, please consult the IRCTC portal at www.irctc.co.in or call the 24x7 RailMadad helpline at 139. I am currently answering using certified IRCTC policy guidelines."
 
     # ── Travel Planner ────────────────────────────────────────────────────────

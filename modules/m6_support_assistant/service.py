@@ -1,18 +1,30 @@
 """
 modules/m6_support_assistant/service.py
 ======================================
-Inference service for Module 6: Customer Support Assistant (English).
-Tools first (PNR status, refunds, train suggestions), then RAG over IRCTC policy text,
-hallucination faithfulness audit, and sentiment-triggered escalation.
+Module 6: Customer Support Assistant (English).
+
+Every question takes exactly one route, and the reply says which (`route`, `answered_by`):
+
+  language   → non-English text gets an English-only notice
+  tool       → PNR status / refund tracking from booking records, train suggestions from the timetable
+  smalltalk  → greetings and thanks get a short reply and what the assistant can do
+  offtopic   → questions with nothing to do with railways or this site get a polite scope reply
+  knowledge  → the verified knowledge base (data/knowledge/support_kb.json) answers:
+                 · with an LLM configured (Sarvam AI → Gemini), the model writes the reply ONLY from the matched
+                   entries; if the hallucination monitor flags the draft, or no model answers, the verified entry
+                   text is returned word for word instead
+                 · without an LLM, the verified entry text is returned word for word
+  no_match   → nothing in the knowledge base matches well: say so, suggest the closest topics and point to 139
+
+Nothing here invents a rule, an amount or an action that did not happen.
 """
 
 from __future__ import annotations
 
 import logging
 import re
-from typing import Any, Dict, List, Optional, Set
+from typing import Any, Dict, List, Optional, Set, Tuple
 
-from core.config import settings
 from core.llm_router import llm_router
 from governance.audit_store import audit_store
 from governance.context import report_inference
@@ -27,9 +39,38 @@ from modules.m6_support_assistant.schema import (
 
 logger = logging.getLogger(__name__)
 
-NON_LATIN = re.compile(r"[^\x00-\x7F\u00A0-\u024F\u2000-\u206F\u20B9]")   # anything outside English text (₹ allowed)
+NON_LATIN = re.compile(r"[^\x00-\x7F -ɏ -⁯₹]")   # anything outside English text (₹ allowed)
 ENGLISH_ONLY_REPLY = ("I can help in English only. Please type your question in English — for example "
                       "\"What is the refund if my waitlist ticket is not confirmed?\" or \"What is the status of PNR 0000001?\"")
+
+# Retrieval confidence (best-phrasing score, 0–1), calibrated on tests/data/support_eval.json
+CONFIDENT = 0.40     # answer directly
+POSSIBLE = 0.24      # answer, but say which topic we matched and offer alternatives
+
+SMALLTALK = re.compile(r"^\s*(hi+|hello+|hey+|hiya|namaste|good\s+(morning|afternoon|evening|night)|thanks?( you)?|"
+                       r"thank\s*u|thx|ty|ok(ay)?|cool|great|nice|bye|goodbye|see you)\b[\s!.,?]*(there|so much|a lot|"
+                       r"that was (helpful|useful|great)|bot|buddy)?[\s!.,?]*$", re.I)
+RAIL_WORDS = re.compile(
+    r"\b(trains?|tickets?|pnr|rail\w*|irctc|berths?|coach(es)?|stations?|tatkal|refunds?|cancel\w*|book\w*|journey|"
+    r"travel\w*|fares?|seats?|chart|rac|wait\w*|wl|gnwl|rlwl|pqwl|tqwl|rswl|tte|platforms?|luggage|baggage|food|meals?|"
+    r"tdr|boarding|aadhaar|senior|ladies|women|quota|sleeper|[123]a|[23]ac|ac|class(es)?|upgrade\w*|passengers?|"
+    r"concession|discount|elderly|pregnant|helpline|complain\w*|139|id|identity|child(ren)?|kids?|infant|lost|fine|penalty|delay\w*|late|"
+    r"reserv\w*|catering|pantry|e-?ticket|counter|agent|premium|status|madad|chair car|rajdhani|shatabdi|duronto|"
+    r"vande|express|route|planner)\b", re.I)
+SITE_WORDS = re.compile(r"\b(what (can|are|do) you|who are you|how (can|do|will) you help|help me|^help\b|"
+                        r"this (site|website|app|page|chat|bot|tool)|chat ?bot|assistant|railway buddy|features?|"
+                        r"services?|how does (it|this) work|is this (real|official|live))", re.I)
+
+FRUSTRATION_KEYWORDS: Set[str] = {
+    "scam", "cheat", "worst", "horrible", "refund not received", "money deducted", "fraud", "harassment", "stolen",
+    "useless", "pathetic", "lost money", "disgusting", "terrible", "angry", "fed up",
+}
+SMALLTALK_REPLY = ("Hello! I can answer questions about Indian Railways tickets and travel: refunds and cancellation charges, "
+                   "Tatkal, waitlist and RAC, chart timing, boarding changes, ID proof, luggage and more. You can also check "
+                   "a demo PNR (type PNR 0000001) or ask for trains between two cities, e.g. \"trains from Delhi to Mumbai\".")
+THANKS_REPLY = "You're welcome! Ask me anything else about your journey, tickets or refunds."
+OFFTOPIC_REPLY = ("I can only help with Indian Railways travel and this app: tickets, refunds, cancellations, Tatkal, waitlist "
+                  "and RAC, PNR status, train options and rules. Please ask me something about your train journey.")
 
 
 def is_english(query: str) -> bool:
@@ -41,193 +82,151 @@ def is_english(query: str) -> bool:
     return foreign / max(1, len(letters)) < 0.2
 
 
-FRUSTRATION_KEYWORDS: Set[str] = {
-    "scam", "cheat", "worst", "horrible", "refund not received", "money deducted",
-    "fraud", "complaint", "harassment", "stolen", "useless", "pathetic", "lost money",
-}
+def classify(query: str) -> str:
+    """Route before retrieval: 'smalltalk', 'offtopic' or 'question'."""
+    q = query.strip()
+    if SMALLTALK.match(q):
+        return "smalltalk"
+    if not RAIL_WORDS.search(q) and not SITE_WORDS.search(q):
+        return "offtopic"
+    return "question"
 
 
 class SupportAssistantService:
-    """Service to handle passenger queries (English) using grounded RAG and hallucination checks."""
+    """Grounded support assistant over the verified knowledge base, with booking-record tools."""
 
     def _detect_sentiment(self, query: str) -> str:
         low = query.lower()
-        for kw in FRUSTRATION_KEYWORDS:
-            if kw in low:
-                return "Frustrated"
-        if any(w in low for w in ["thank", "thanks", "great", "helpful", "good", "excellent"]):
+        if any(kw in low for kw in FRUSTRATION_KEYWORDS):
+            return "Frustrated"
+        if any(w in low for w in ["thank", "thanks", "great", "helpful", "excellent"]):
             return "Positive"
         return "Neutral"
 
-    def _compute_faithfulness(self, response_text: str, context_text: str) -> float:
-        """Measure token/entity overlap between synthesized response and grounding context."""
-        resp_tokens = set(re.findall(r"\b[a-zA-Z0-9]{3,}\b", response_text.lower()))
-        ctx_tokens = set(re.findall(r"\b[a-zA-Z0-9]{3,}\b", context_text.lower()))
+    # ── LLM-written answer from the matched entries only ──────────────────────
+    def _llm_answer(self, query: str, hits: List[Tuple[Dict[str, Any], float]]) -> Tuple[Optional[str], str, str]:
+        """Returns (answer or None, answered_by, context_text)."""
+        context = "\n\n".join(f"[{i + 1}] {h['title']}\n{h['text']}" for i, (h, _) in enumerate(hits))
+        system = (
+            "You are the Railway Buddy support assistant for Indian Railways passengers. Answer the passenger's question "
+            "using ONLY the verified knowledge below. Do not add rules, amounts, times or dates that are not in it. "
+            "If the knowledge does not answer the question, say you don't have that information and suggest calling 139 "
+            "or checking irctc.co.in. Reply in clear, simple English, in at most 120 words, without headings, "
+            "and do not mention 'knowledge', 'context' or entry numbers.\n\n"
+            f"VERIFIED KNOWLEDGE:\n{context}"
+        )
+        resp = llm_router.complete(prompt=query, system_prompt=system, temperature=0.2, max_tokens=400, task="support")
+        if resp.mode == "fallback" or not resp.content.strip():
+            return None, "", context
+        label = {"sarvam": f"Sarvam AI ({resp.model})", "gemini": f"Gemini ({resp.model})",
+                 "azure_openai": "Azure OpenAI"}.get(resp.mode, resp.mode)
+        return resp.content.strip(), label, context
 
-        if not resp_tokens:
-            return 0.85
-
-        # Fraction of response substantive tokens supported by context
-        intersection = resp_tokens.intersection(ctx_tokens)
-        overlap = len(intersection) / len(resp_tokens)
-        # Scaled score: baseline 0.50 + 0.50 * overlap
-        score = min(0.99, max(0.40, 0.45 + (overlap * 0.55)))
-        return round(float(score), 3)
+    def _verify(self, query: str, answer: str, docs: List[str]) -> Tuple[float, bool]:
+        """Hallucination monitor on an LLM draft → (faithfulness, flagged)."""
+        try:
+            from governance.hallucination_monitor import hallucination_monitor
+            ev = hallucination_monitor.evaluate(module_id="m6_support_assistant", query=query, response=answer, context_docs=docs)
+            faith = round(float(ev.get("faithfulness_score") or 0.0), 3)
+            return faith, ev.get("severity") in ("WARNING", "CRITICAL")
+        except Exception as e:
+            logger.debug(f"[M6] hallucination check skipped: {e}")
+            return 0.5, False
 
     @governance_hook("m6_support_assistant", endpoint="/api/v1/support/query")
     def query(self, request: SupportQueryRequest) -> SupportQueryResponse:
-        """Process passenger query through grounded RAG pipeline and validate against hallucination."""
-        lang = "en"
-        if not is_english(request.query):
-            report_inference(prediction="english_only_notice", version="language guard")
-            return SupportQueryResponse(
-                answered_by="language guard", query=request.query, response=ENGLISH_ONLY_REPLY,
-                detected_language="unsupported", faithfulness_score=1.0, hallucination_flag=False,
-                retrieved_contexts=[], sentiment="Neutral", escalation_recommended=False, confidence_score=1.0)
-
-        sentiment = self._detect_sentiment(request.query)
-        escalate = bool(sentiment == "Frustrated")
-
-        # ── Step 1: Retrieve Grounding Context ────────────────────────────────
-        retrieval_query = request.query
-        retrieved_raw = rag_indexer.retrieve(retrieval_query, top_k=3)
-        retrieved_contexts: List[RetrievedContextChunk] = []
-        combined_context_text = ""
-
-        for chunk_dict, sim_score in retrieved_raw:
-            retrieved_contexts.append(
-                RetrievedContextChunk(
-                    chunk_id=chunk_dict.get("chunk_id", "chunk-0"),
-                    source_file=chunk_dict.get("source_file", "knowledge_base"),
-                    text=chunk_dict.get("text", "")[:300],
-                    similarity_score=sim_score,
-                )
-            )
-            combined_context_text += "\n" + chunk_dict.get("text", "")
-
-        top_sim = retrieved_contexts[0].similarity_score if retrieved_contexts else 0.0
-        answered_by = "rule-based policy engine"
+        q = request.query.strip()
+        sentiment = self._detect_sentiment(q)
+        escalate = sentiment == "Frustrated"
+        contexts: List[RetrievedContextChunk] = []
+        faithfulness, flagged = 1.0, False
         tool_meta: Dict[str, Any] = {}
+        match_score: Optional[float] = None
 
-        # ── Step 1b: Tools first — PNR status / refund tracking, train suggestions ──
-        tool_out = support_tools.pnr_record(request.query)
-        if tool_out is None:
-            rt = support_tools.route(retrieval_query)
-            if rt:
-                tool_out = support_tools.train_suggestions(*rt)
-        if tool_out is not None:
-            answer_text, record_text, tool_meta = tool_out
-            retrieved_contexts = [RetrievedContextChunk(chunk_id=tool_meta.get("tool", "tool"),
-                                                        source_file=f"tool:{tool_meta.get('tool')}",
-                                                        text=record_text[:300], similarity_score=1.0)]
-            combined_context_text = record_text
-            top_sim = 1.0
-
-        # Check for direct curated domain policy match
-        from core.fallback_engine import fallback_engine
-        curated_policy = fallback_engine._static_support_response(retrieval_query)
-        has_curated_policy = not curated_policy.startswith("Thank you for your query. For specific railway inquiries")
-
-        if tool_out is not None:
-            final_answer = answer_text
-            if support_tools.wants_planning(request.query):
-                final_answer += "\nTo plan the whole journey and book after your approval, use the AI Travel Planner."
-            faithfulness, hallucination_flag = 1.0, False
-            answered_by = f"tool: {tool_meta.get('tool')}"
-            has_curated_policy = False
-        elif top_sim < 0.15 and not has_curated_policy:
-            # Low relevance to any FAQ chunk and no known policy topic
-            final_answer = (
-                "We could not find an authoritative match for your specific query in the current IRCTC policy knowledge base. "
-                "For accurate guidance, please visit www.irctc.co.in or contact the 24x7 RailMadad helpline at 139."
-            )
-            combined_context_text = final_answer
-            faithfulness = 0.58
-            hallucination_flag = True
-        elif top_sim < 0.20 and has_curated_policy:
-            # Query matches a specific railway rule (e.g., ticket transfer to family, luggage allowance)
-            final_answer = curated_policy
-            combined_context_text = curated_policy
-            faithfulness = 0.94
-            hallucination_flag = False
+        # 1 ── language
+        if not is_english(q):
+            route, answer, answered_by = "language", ENGLISH_ONLY_REPLY, "language guard"
+            detected = "unsupported"
         else:
-            # ── Step 2: Synthesize Response via LLMRouter ─────────────────────────
-            system_prompt = (
-                "You are RailSeva AI, the official intelligent passenger assistant for Indian Railways. "
-                "Answer user questions clearly and concisely (under 120 words) strictly based on the following verified IRCTC policy context. "
-                "Always reply in clear, simple English. "
-                "If the context does not contain the answer, say so and point to irctc.co.in or RailMadad 139 — never guess amounts or rules.\n"
-                f"Grounding Context:\n{combined_context_text}\n"
-            )
+            detected = "en"
+            tool_out = support_tools.pnr_record(q)
+            if tool_out is None:
+                rt = support_tools.route(q)
+                if rt:
+                    tool_out = support_tools.train_suggestions(*rt)
+            kind = classify(q)
 
-            llm_resp = llm_router.complete(prompt=retrieval_query, system_prompt=system_prompt, task="support")
-            final_answer = llm_resp.content
-            answered_by = {"sarvam": f"Sarvam AI ({llm_resp.model})", "gemini": f"Gemini ({llm_resp.model})",
-                           "azure_openai": "Azure OpenAI"}.get(llm_resp.mode, "rule-based policy engine")
-
-            # ── Step 3: Hallucination & Faithfulness Audit ────────────────────────
-            faithfulness = self._compute_faithfulness(final_answer, combined_context_text)
-            hallucination_flag = bool(faithfulness < settings.governance_hallucination_threshold)
-
-        # ── Pillar 4: Record in Governance Hallucination Monitor ───────────────
-        try:
-            from governance.hallucination_monitor import hallucination_monitor
-            context_docs = ([combined_context_text] if tool_out is not None else
-                            [c.text for c in retrieved_contexts] if retrieved_contexts else [combined_context_text])
-            if has_curated_policy:   # verified rule text is part of the knowledge base the answer is grounded in
-                context_docs = context_docs + [curated_policy]
-            eval_res = hallucination_monitor.evaluate(
-                module_id="m6_support_assistant",
-                query=request.query,
-                response=final_answer,
-                context_docs=context_docs,
-            )
-            if eval_res.get("faithfulness_score") is not None:
-                faithfulness = round(float(eval_res["faithfulness_score"]), 3)
-            hallucination_flag = eval_res.get("severity") in ("WARNING", "CRITICAL") if eval_res.get("severity") else hallucination_flag
-        except Exception as hm_err:
-            logger.debug(f"[M6 Governance] Hallucination evaluation notice: {hm_err}")
-
-        if hallucination_flag:
-            logger.warning(
-                f"[M6 Governance] Low faithfulness detected ({faithfulness:.2f} < {settings.governance_hallucination_threshold}). "
-                "Adding safety disclaimer to prevent ungrounded hallucinations."
-            )
-            final_answer += (
-                "\n\n[Official Disclaimer]: Please verify current rules directly on irctc.co.in or call 139 "
-                "as automated policy interpretation may vary during live chart preparation."
-            )
+            # 2 ── tools: booking records and timetable
+            if tool_out is not None:
+                answer, record, tool_meta = tool_out
+                if support_tools.wants_planning(q):
+                    answer += "\nTo plan the whole journey and book after your approval, use the AI Travel Planner."
+                route, answered_by = "tool", f"tool: {tool_meta.get('tool')}"
+                contexts = [RetrievedContextChunk(chunk_id=tool_meta.get("tool", "tool"), source_file=f"Booking records ({tool_meta.get('tool')})",
+                                                  text=record[:300], similarity_score=1.0)]
+            # 3 ── greetings / thanks
+            elif kind == "smalltalk":
+                route, answered_by = "smalltalk", "assistant"
+                answer = THANKS_REPLY if re.search(r"\b(thank|thx|ty)\b", q, re.I) else SMALLTALK_REPLY
+            # 4 ── off-topic
+            elif kind == "offtopic":
+                route, answered_by, answer = "offtopic", "assistant", OFFTOPIC_REPLY
+            else:
+                # 5 ── verified knowledge base
+                hits = rag_indexer.retrieve(q, top_k=3)
+                best, score = (hits[0] if hits else (None, 0.0))
+                match_score = score
+                contexts = [RetrievedContextChunk(chunk_id=h["chunk_id"], source_file=h["title"], text=h["text"][:300],
+                                                  similarity_score=s, sources=h.get("sources", []))
+                            for h, s in hits if s >= POSSIBLE] or []
+                if best is None or score < POSSIBLE:
+                    route, answered_by = "no_match", "knowledge base"
+                    near = [h["title"] for h, s in hits[:3] if s >= 0.12]
+                    answer = ("I don't have a verified answer for that yet, so I won't guess. "
+                              + (f"Related topics I can help with: {', '.join(near)}. " if near else "")
+                              + "For anything else, call 139 (Rail Madad) or check irctc.co.in.")
+                    contexts = []
+                else:
+                    route = "knowledge"
+                    use = [(h, s) for h, s in hits if s >= POSSIBLE] or [(best, score)]
+                    draft, label, ctx = (None, "", "")
+                    if llm_router.has_llm:
+                        draft, label, ctx = self._llm_answer(q, use if score < CONFIDENT else use[:2])
+                    if draft:
+                        faithfulness, flagged = self._verify(q, draft, [h["text"] for h, _ in use])
+                    if draft and not flagged:
+                        answer, answered_by = draft, label
+                    else:
+                        # verbatim verified answer: no model, the model was unavailable, or its draft was flagged
+                        answer = best["text"]
+                        answered_by = ("verified answer (model draft rejected)" if draft else "verified knowledge base")
+                        faithfulness, flagged = 1.0, False
+                    if score < CONFIDENT:
+                        alt = [h["title"] for h, s in hits[1:3] if s >= POSSIBLE]
+                        answer = (f"I think you're asking about {best['title'].lower()}.\n\n{answer}"
+                                  + (f"\n\nIf not, I can also help with: {', '.join(alt)}." if alt else ""))
 
         if escalate:
-            final_answer += (
-                "\n\n[Escalation Advisory]: We noticed you have an urgent grievance. "
-                "Your complaint ticket has been flagged for human railway officer review. You can also dial RailMadad at 139."
-            )
+            answer += ("\n\nI'm sorry about the trouble. To raise a formal complaint, call 139 or use Rail Madad "
+                       "(railmadad.indianrailways.gov.in) with your PNR — I can't file complaints myself.")
 
-        # ── Conversation audit (compliance) + register for satisfaction feedback ──
-        report_inference(prediction="answered", version=answered_by)
+        report_inference(prediction=route, version=answered_by)
         try:
             audit_store.append("conversation", {
-                "session_id": request.session_id, "user_id": request.user_id, "language": lang,
-                "query": request.query[:500], "answer": final_answer[:1200], "answered_by": answered_by,
-                "sources": [c.source_file for c in retrieved_contexts], "faithfulness": faithfulness,
-                "hallucination_flag": hallucination_flag, "sentiment": sentiment, "escalated": escalate,
-                "tool": tool_meta or None,
+                "session_id": request.session_id, "user_id": request.user_id, "route": route,
+                "query": q[:500], "answer": answer[:1200], "answered_by": answered_by,
+                "sources": [c.chunk_id for c in contexts], "match_score": match_score, "faithfulness": faithfulness,
+                "hallucination_flag": flagged, "sentiment": sentiment, "escalated": escalate,
+                "kb_version": rag_indexer.version, "tool": tool_meta or None,
             }, module="m6_support_assistant", ref=request.session_id or "", actor="passenger")
         except Exception:
             pass
 
         return SupportQueryResponse(
-            answered_by=answered_by,
-            query=request.query,
-            response=final_answer,
-            detected_language=lang,
-            faithfulness_score=faithfulness,
-            hallucination_flag=hallucination_flag,
-            retrieved_contexts=retrieved_contexts,
-            sentiment=sentiment,
-            escalation_recommended=escalate,
-            confidence_score=round(faithfulness, 2),
+            answered_by=answered_by, query=request.query, response=answer, detected_language=detected,
+            faithfulness_score=faithfulness, hallucination_flag=flagged, retrieved_contexts=contexts,
+            sentiment=sentiment, escalation_recommended=escalate, confidence_score=round(faithfulness, 2),
+            route=route, match_score=match_score, kb_version=rag_indexer.version,
         )
 
 
