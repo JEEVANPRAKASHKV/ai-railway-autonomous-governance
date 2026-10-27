@@ -6,7 +6,7 @@ Multi-agent travel planner with a mandatory Human-in-the-Loop (HITL) approval ga
 A coordinator runs specialised agents, each a small, auditable unit with its own trace entry:
 
   SecurityAgent   prompt-injection / instruction-override screening (blocks, never "sanitises")
-  IntentAgent     natural language → constraints (rules first; Gemini fills gaps when configured;
+  IntentAgent     natural language → constraints (rules first; the configured LLM (Sarvam AI / Gemini) fills gaps;
                   every value is validated against the station list / calendar)
   RouteAgent      direct trains + one-change connections, with real date-times (multi-day aware)
   PricingAgent    dynamic fare per leg from the governed Fare model (M5)
@@ -237,23 +237,24 @@ class IntentAgent:
     def _llm_fill(self, query: str, c: Dict[str, Any], trace: _Trace) -> None:
         try:
             from core.llm_router import llm_router
-            if not llm_router.is_gemini:
+            if not llm_router.has_llm:
                 return
             trace.tool()
             resp = llm_router.complete(
                 prompt=f"Request: {query}\nReturn JSON with keys origin_city and destination_city (city names in English, or null).",
                 system_prompt="You extract travel details. Reply with a single JSON object and nothing else.",
                 temperature=0.0, max_tokens=120)
-            if resp.mode != "gemini":
+            if resp.mode == "fallback":
                 return
+            via = {"sarvam": "Sarvam AI", "gemini": "Gemini", "azure_openai": "Azure OpenAI"}.get(resp.mode, resp.mode)
             txt = re.search(r"\{.*\}", resp.content, re.S)
             data = json.loads(txt.group(0)) if txt else {}
             src = self._station(str(data.get("origin_city") or ""))
             dst = self._station(str(data.get("destination_city") or ""))
             if src and not c["source"]:
-                c["source"], c["method"] = src, "rules + Gemini"
+                c["source"], c["method"] = src, f"rules + {via}"
             if dst and not c["destination"]:
-                c["destination"], c["method"] = dst, "rules + Gemini"
+                c["destination"], c["method"] = dst, f"rules + {via}"
         except Exception as e:
             logger.debug(f"[IntentAgent] LLM assist skipped: {e}")
 

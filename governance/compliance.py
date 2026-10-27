@@ -94,6 +94,18 @@ def run_checks() -> dict:
     out.append(_check("ROB-1", "Robustness", "Poor-quality inputs are blocked before inference",
                       "PASS", f"{len(dq)} violation(s) seen, {blocked} blocked with HTTP 422"))
 
+    from core.llm_router import llm_router
+    ls = llm_router.status()
+    chain = " → ".join(ls.get("providers", []) + ["rule-based engine"])
+    out.append(_check("ROB-2", "Robustness", "Language engine fails over instead of failing (provider chain + rules)",
+                      "PASS", f"order: {chain}; {ls.get('fallback_used', 0)} request(s) answered by the rule-based engine"))
+    spend, budget = float(ls.get("spend_today_inr") or 0), float(ls.get("daily_budget_inr") or 0)
+    out.append(_check("COS-1", "Cost control", "Paid LLM spend is capped by a daily budget",
+                      "PASS" if budget > 0 else "WARN",
+                      f"₹{spend:.2f} spent today of a ₹{budget:.0f} cap" + (" — cap reached, paid providers paused until tomorrow"
+                                                                             if ls.get("budget_reached") else "")
+                      if budget > 0 else "LLM_DAILY_BUDGET_INR is 0 — spend is not capped"))
+
     summary = {s: sum(1 for c in out if c["status"] == s) for s in ("PASS", "WARN", "FAIL")}
     return {"timestamp": datetime.now(timezone.utc).isoformat(), "summary": summary,
             "overall": "FAIL" if summary["FAIL"] else "WARN" if summary["WARN"] else "PASS", "checks": out}

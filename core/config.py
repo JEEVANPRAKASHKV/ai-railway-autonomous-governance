@@ -12,6 +12,15 @@ from pydantic import Field
 
 
 class PlatformSettings(BaseSettings):
+    # ── Sarvam AI (Indian LLM; OpenAI-compatible chat completions) ──────────
+    sarvam_api_key: str = Field(default="", alias="SARVAM_API_KEY")
+    sarvam_model: str = Field(default="sarvam-105b", alias="SARVAM_MODEL")
+    sarvam_base_url: str = Field(default="https://api.sarvam.ai", alias="SARVAM_BASE_URL")
+
+    # ── LLM routing & spend control ──────────────────────────────────────────
+    llm_provider_order: str = Field(default="sarvam,gemini,azure_openai", alias="LLM_PROVIDER_ORDER")
+    llm_daily_budget_inr: float = Field(default=50.0, alias="LLM_DAILY_BUDGET_INR")
+
     # ── Google Gemini ────────────────────────────────────────────────────────
     gemini_api_key: str = Field(default="", alias="GEMINI_API_KEY")
     gemini_model: str = Field(default="gemini-3.5-flash-lite", alias="GEMINI_MODEL")
@@ -52,6 +61,12 @@ class PlatformSettings(BaseSettings):
 
     # ── Computed Properties ────────────────────────────────────────────────────
     @property
+    def sarvam_available(self) -> bool:
+        """Returns True if SARVAM_API_KEY is configured and non-placeholder."""
+        key = self.sarvam_api_key.strip()
+        return bool(len(key) > 10 and not key.lower().startswith(("your-", "sk_your", "<")))
+
+    @property
     def gemini_available(self) -> bool:
         """Returns True if GEMINI_API_KEY is configured and non-placeholder."""
         key = self.gemini_api_key.strip()
@@ -69,18 +84,24 @@ class PlatformSettings(BaseSettings):
         )
 
     @property
+    def llm_providers(self) -> list:
+        """Configured LLM providers in failover order (LLM_PROVIDER_ORDER), e.g. ['sarvam', 'gemini']."""
+        available = {"sarvam": self.sarvam_available, "gemini": self.gemini_available,
+                     "azure_openai": self.azure_available}
+        order = [p.strip().lower() for p in self.llm_provider_order.split(",") if p.strip()]
+        order += [p for p in ("sarvam", "gemini", "azure_openai") if p not in order]
+        return [p for p in order if available.get(p)]
+
+    @property
     def llm_available(self) -> bool:
-        """Returns True if either Gemini or Azure OpenAI is configured."""
-        return self.gemini_available or self.azure_available
+        """Returns True if any external LLM provider is configured."""
+        return bool(self.llm_providers)
 
     @property
     def llm_mode(self) -> str:
-        """Returns active LLM provider mode: 'gemini', 'azure_openai', or 'fallback'."""
-        if self.gemini_available:
-            return "gemini"
-        if self.azure_available:
-            return "azure_openai"
-        return "fallback"
+        """Primary LLM provider: 'sarvam', 'gemini', 'azure_openai', or 'fallback' (rule-based engine)."""
+        providers = self.llm_providers
+        return providers[0] if providers else "fallback"
 
     # ── Path helpers ───────────────────────────────────────────────────────────
     @property

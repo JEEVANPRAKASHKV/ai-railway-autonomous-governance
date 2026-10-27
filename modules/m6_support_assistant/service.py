@@ -162,8 +162,8 @@ class SupportAssistantService:
 
             llm_resp = llm_router.complete(prompt=retrieval_query, system_prompt=system_prompt, task="support")
             final_answer = llm_resp.content
-            answered_by = f"Gemini ({llm_resp.model})" if llm_resp.mode == "gemini" else (
-                "Azure OpenAI" if llm_resp.mode == "azure_openai" else "rule-based policy engine")
+            answered_by = {"sarvam": f"Sarvam AI ({llm_resp.model})", "gemini": f"Gemini ({llm_resp.model})",
+                           "azure_openai": "Azure OpenAI"}.get(llm_resp.mode, "rule-based policy engine")
 
             # ── Step 3: Hallucination & Faithfulness Audit ────────────────────────
             faithfulness = self._compute_faithfulness(final_answer, combined_context_text)

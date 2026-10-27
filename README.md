@@ -11,8 +11,8 @@
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Streamlit-1D4ED8?logo=streamlit&logoColor=white)](https://ai-railway-governance.streamlit.app)
 [![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/API-FastAPI-009688?logo=fastapi&logoColor=white)](#-api-reference)
-[![Gemini](https://img.shields.io/badge/LLM-Google%20Gemini-4285F4?logo=googlegemini&logoColor=white)](#-llm-layer--gemini-first-never-crashes)
-[![Tests](https://img.shields.io/badge/tests-81%20passing-2E7D32)](#-testing)
+[![LLM](https://img.shields.io/badge/LLM-Sarvam%20AI%20%E2%86%92%20Gemini-4285F4)](#-llm-layer--sarvam-ai-first-never-crashes)
+[![Tests](https://img.shields.io/badge/tests-91%20passing-2E7D32)](#-testing)
 [![Docker](https://img.shields.io/badge/Docker-ready-2496ED?logo=docker&logoColor=white)](#-deployment)
 
 [Live Demo](https://ai-railway-governance.streamlit.app) ·
@@ -36,7 +36,7 @@
 6. [The AI Governance Layer](#-the-ai-governance-layer)
 7. [Security, Privacy & Compliance](#-security-privacy--compliance)
 8. [Architecture](#-architecture)
-9. [LLM Layer — Gemini-first, never crashes](#-llm-layer--gemini-first-never-crashes)
+9. [LLM Layer — Sarvam AI first, never crashes](#-llm-layer--sarvam-ai-first-never-crashes)
 10. [Quick Start](#-quick-start)
 11. [Configuration](#-configuration)
 12. [Deployment](#-deployment)
@@ -67,7 +67,7 @@
 | **Governed by default** | `@governance_hook` wraps every service: data-quality gate → circuit breaker → inference → telemetry, drift, fairness, performance registration and audit — in the model's own feature space. |
 | **Measured on reality** | Every prediction gets an audit id; real outcomes reported against it drive live accuracy / MAE / FPR / CSAT metrics, concept-drift alerts and retraining data. |
 | **Human in the loop** | Nothing is booked without passenger approval; no model reaches 100 % of traffic without an admin approval. Risk-reducing actions (rollback, stopping a canary) run immediately. |
-| **Never crashes** | Gemini model chain → rule-based engine; circuit breakers shed load with a fast 503; the app works with no API key at all. |
+| **Never crashes** | Sarvam AI → Gemini → rule-based engine failover; circuit breakers shed load with a fast 503; the app works with no API key at all. |
 | **Honest** | No synthetic telemetry is injected; demo-only outcomes are labelled `simulated`; weak models are not dressed up (see limitations). |
 
 ---
@@ -87,7 +87,7 @@ A suggested 5-minute tour:
 | 5 | **Control Tower → Chaos lab** | **Normal traffic** → nothing drifts. **Shifted traffic** → drift on all models. | Input drift with KS p-values and corrected PSI; user-behaviour shift; incidents with evidence. |
 | 6 | **Control Tower → Chaos lab** | **Normal outcomes**, then **Concept drift**, then **Run governance cycle** | *Live quality* turns red → supervisor retrains with the new outcomes → challenger serves a **10 % canary** → approval request under *Needs attention* → **Approve** → hot-swap. |
 | 7 | **AI Governance → Fraud & Bot Shield** | *Scalper bot* scenario | Risk score, SHAP evidence, alert feed, live false-positive / false-negative rates (also in the tower's *Security & fraud* section). |
-| 8 | **Control Tower → Compliance & audit** | Scroll down | 12 live compliance checks with evidence, hash-chain verification, masked audit log. |
+| 8 | **Control Tower → Compliance & audit** | Scroll down | 14 live compliance checks with evidence, hash-chain verification, masked audit log. |
 
 ---
 
@@ -103,9 +103,9 @@ How each requirement of the problem statement maps to working code (all verified
 | **1 · Ticket** — confirmation probability, berth, history trends, confidence & explainability, monitor accuracy & auto-retrain | XGBoost P(Confirmed/RAC/WL) + SHAP · berth split from comparable confirmed bookings · confirmation / RAC / WL / cancellation rates and by-month trend from `pnr_history.csv` · live accuracy from reported final status → `PERFORMANCE_DEGRADED` → retraining |
 | **2 · Recommender** — budget, duration, availability, class, history, punctuality, preferences; relevance, bias, rationale, optimisation | Persona-weighted ranker on fare, duration, **historical confirmation rate** (availability), comfort, punctuality · personalised from `user_profiles.csv` (`user_id`) · arrival-deadline preference · per-factor contributions · affordability DIR audit · **hit@3 / MRR** from chosen trains · **online weight learning** from choices · **one-change connections** when a corridor has few direct trains |
 | **3 · Delay** — arrival & departure delay, congestion, alerts, alternatives, confidence & explainability; drift, real-time accuracy, retraining | LightGBM arrival + origin-departure delay · station congestion from `congestion_logs.csv` history · climatology weather · 80 % interval and P(>60 min) from residuals · SHAP minutes · alert list · same-corridor alternatives · live MAE from actual delays |
-| **4 · Planner** — conversational, search & compare, optimise under constraints, recommend, book after approval, multi-agent; validate, monitor, audit, detect abnormal behaviour | Security → Intent (rules + optional Gemini, validated) → Route (direct + one-change connections, multi-day aware) → Fare (M5) / Odds (M1) / Delay (M3) agents → Optimiser → **Validator** → HITL gate (idempotent, expiring, strict) · AgentMonitor: injections, tool-call budget, latency, rejection streaks → `AGENT_ANOMALY` · trace + audit trail |
+| **4 · Planner** — conversational, search & compare, optimise under constraints, recommend, book after approval, multi-agent; validate, monitor, audit, detect abnormal behaviour | Security → Intent (rules + optional LLM, validated) → Route (direct + one-change connections, multi-day aware) → Fare (M5) / Odds (M1) / Delay (M3) agents → Optimiser → **Validator** → HITL gate (idempotent, expiring, strict) · AgentMonitor: injections, tool-call budget, latency, rejection streaks → `AGENT_ANOMALY` · trace + audit trail |
 | **5 · Fare** — fare movement, demand surge, booking window, savings; accuracy, anomalies, explanations | XGBoost curve from today to departure · surge onset · best day · booking-window / class / cheaper-train savings · **pricing-anomaly guard** vs historical ratios (`PRICING_ANOMALY`) · SHAP ₹ drivers · live MAPE from fares paid |
-| **6 · Support** — PNR, booking, refunds, cancellation, recommendations, planning; hallucination, quality, satisfaction, auditability | PNR status & **refund tracking** tools · train-suggestion tool (calls M2) · planner hand-off · RAG + Gemini · faithfulness with numeric-fact and **contradiction** checks · CSAT ratings · every turn in the audit trail |
+| **6 · Support** — PNR, booking, refunds, cancellation, recommendations, planning; hallucination, quality, satisfaction, auditability | PNR status & **refund tracking** tools · train-suggestion tool (calls M2) · planner hand-off · RAG + Sarvam AI (Gemini failover) · faithfulness with numeric-fact and **contradiction** checks · CSAT ratings · every turn in the audit trail |
 | **7 · Fraud** — bots, suspicious transactions, account misuse, anomalous patterns, risk score; FP/FN, model updates, explainable alerts | XGBoost bot / suspicious / legitimate · **IsolationForest** novel-pattern detector · **account-misuse** signals (sessions & accounts per network, networks per account) · SHAP per alert · alert feed · **FPR / FNR** from analyst verdicts · retraining with labelled verdicts · rate limiting |
 
 </details>
@@ -147,6 +147,12 @@ How each requirement of the problem statement maps to working code (all verified
 
 ---
 
+### UI design rules
+
+An industrial, data-dense transit dashboard: every page header is an Indian Railways station name board (signal-yellow plate, black code box such as `M1` or `GOV`); everything else is white panels separated by `1px solid #ddd` rules — no gradients, no shadows, no rounded cards. Numbers, times, train IDs, ₹ amounts and audit IDs use **IBM Plex Mono**; text uses **Archivo**. Colour carries status only (signal green / amber / red). Tokens and components live in `frontend/ui.py`; Streamlit's own theme in `.streamlit/config.toml`.
+
+---
+
 ## 🚆 Passenger AI Services
 
 | # | Service | Endpoint | Model / method | Governance |
@@ -156,7 +162,7 @@ How each requirement of the problem statement maps to working code (all verified
 | 3 | **Delay & Disruption** | `POST /api/v1/predict/delay` | LightGBM + residual intervals + SHAP | MAE vs actual delay, KS / PSI drift |
 | 4 | **AI Travel Planner** | `POST /api/v1/agent/plan` · `/confirm` · `/reject` · `GET /agent/metrics` | Multi-agent coordinator + validator + HITL | Injection guard, tool budget, anomaly monitor, approval rate |
 | 5 | **Fare Forecast** | `POST /api/v1/predict/fare` | XGBoost curve + SHAP | MAPE vs fare paid, pricing-anomaly guard |
-| 6 | **Support Assistant** (floating chat) | `POST /api/v1/support/query` | Tools + RAG + Gemini · English only | Grounding / contradiction monitor, CSAT, conversation audit |
+| 6 | **Support Assistant** (floating chat) | `POST /api/v1/support/query` | Tools + RAG + Sarvam AI / Gemini · English only | Grounding / contradiction monitor, CSAT, conversation audit |
 | 7 | **Fraud & Bot Shield** (under *AI Governance*) | `POST /api/v1/security/score` · `GET /security/alerts` | XGBoost + IsolationForest + misuse rules | FPR / FNR from analyst verdicts · *Security & fraud* section in the Control Tower |
 
 ---
@@ -176,7 +182,7 @@ The **Governance Control Tower** is one scrollable page: *Needs attention → Pi
 | 🚨 **RCA** | `rca_engine.py` | De-duplicated incidents with evidence, 5-Why, upstream / downstream dependency tracing, playbooks. |
 | 🔄 **Lifecycle** | `lifecycle_manager.py` | Real retraining (serialised), fixed hold-out, min-gain rule, live canary, approval-gated promotion, rollback, persisted state. |
 | 🤖 **Supervisor** | `supervisor_agent.py` | Closed loop each 30 s (see below); HITL queue; durable action log. |
-| 📜 **Audit & compliance** | `audit_store.py` · `compliance.py` | Hash-chained SQLite trail with PII masking; 12 live checks with evidence. |
+| 📜 **Audit & compliance** | `audit_store.py` · `compliance.py` | Hash-chained SQLite trail with PII masking; 14 live checks with evidence (incl. LLM failover and spend cap). |
 
 ### The closed loop
 
@@ -240,7 +246,7 @@ flowchart LR
 └──────┬───────────────────────────────┬──────────────────────────────┬────────┘
        │ telemetry & model features      │ audit id → outcomes           │ LLM
 ┌──────▼───────────────┐  ┌────────────▼───────────┐  ┌─────────────────▼──────┐
-│ Telemetry bus         │  │ Performance monitor     │  │ Gemini chain → rules   │
+│ Telemetry bus         │  │ Performance monitor     │  │ Sarvam → Gemini → rules│
 │ Drift · Bias · Health │  │ (concept drift, canary) │  └────────────────────────┘
 │ Hallucination · RCA   │  └────────────┬───────────┘
 └──────┬───────────────┘               │
@@ -254,15 +260,22 @@ On Streamlit Cloud both tiers run in **one container** (`streamlit_app.py` start
 
 ---
 
-## 🤖 LLM Layer — Gemini-first, never crashes
+## 🤖 LLM Layer — Sarvam AI first, never crashes
 
-The Support Assistant (and the planner's intent agent, when rules can't resolve a city) use **Google Gemini** over plain HTTPS:
+The Support Assistant (and the planner's intent agent, when rules can't resolve a city) use a **multi-provider router**. Providers with a key are tried in order; the rule-based engine always answers last:
 
 ```
-GEMINI_MODEL (if current)  →  gemini-3.5-flash-lite  →  gemini-3.1-flash-lite  →  gemini-3.8-flash  →  rule-based engine
+Sarvam AI (sarvam-105b)  →  Google Gemini (model chain)  →  Azure OpenAI (optional)  →  rule-based engine
 ```
 
-Retired models are skipped; a `404`/`429` cools down only that model; if all fail the rule-based engine answers with the same schema. Every answer is scored by the hallucination monitor, and the live engine shows in the sidebar and `GET /api/health → llm`. All predictive models run locally.
+- **Sarvam AI** — India-built LLM, OpenAI-compatible chat completions (`/v1/chat/completions`). Reasoning is switched off for short, grounded support answers (faster and cheaper). Cost ≈ ₹15 / ₹60 per 1M input / output tokens, so one support answer is roughly ₹0.03–0.05.
+- **Failover** — a `429`/`5xx`/network error cools that provider down and the next one answers; a bad key pauses it for 5 minutes instead of failing every request. Gemini keeps its own model chain (retired models skipped).
+- **Cost control** — every call's tokens are priced in ₹; once `LLM_DAILY_BUDGET_INR` (default ₹50) is spent, paid providers pause until the next day and the next provider / rules answer. This protects credits on a public demo.
+- **Governance** — the Control Tower's *Model health* section shows the failover order, per-provider success rate, latency, tokens and ₹ spend, with a **Test LLM engines** button; compliance checks ROB-2 (failover) and COS-1 (spend cap); every answer is still scored by the hallucination monitor and labelled with the engine that wrote it.
+
+**Check your keys** without starting the app: `python scripts/check_llm.py` — it tests each provider, asks the Support Assistant one real question end to end, and shows the engine, grounding score, latency and ₹ cost (keys are never printed).
+
+All predictive models (ticket, delay, fare, fraud) run locally — no LLM is involved in them.
 
 ---
 
@@ -292,7 +305,9 @@ Environment variables / `.env` (locally) or **Secrets** (Streamlit Cloud). See `
 
 | Variable | Default | Purpose |
 |---|---|---|
-| `GEMINI_API_KEY` · `GEMINI_MODEL` | — · `gemini-3.5-flash-lite` | Gemini for support answers / intent assist. |
+| `SARVAM_API_KEY` · `SARVAM_MODEL` | — · `sarvam-105b` | Primary LLM for support answers / intent assist. |
+| `LLM_PROVIDER_ORDER` · `LLM_DAILY_BUDGET_INR` | `sarvam,gemini,azure_openai` · `50` | Failover order; daily ₹ cap for paid providers (0 = no cap). |
+| `GEMINI_API_KEY` · `GEMINI_MODEL` | — · `gemini-3.5-flash-lite` | Failover LLM (free tier). |
 | `RB_OPERATOR_KEY` · `RB_ADMIN_KEY` | development keys | Role keys for governance actions — **set them in any shared deployment**. |
 | `RB_STATE_DIR` | `./runtime` | Where the audit trail (SQLite) lives. |
 | `RB_ALLOWED_ORIGINS` | `http://localhost:8501` | CORS allow-list. |
@@ -306,7 +321,7 @@ Environment variables / `.env` (locally) or **Secrets** (Streamlit Cloud). See `
 
 | Target | How |
 |---|---|
-| **Streamlit Community Cloud** (live demo) | Main file `streamlit_app.py`; optional Secrets: `GEMINI_API_KEY`, `RB_OPERATOR_KEY`, `RB_ADMIN_KEY`. |
+| **Streamlit Community Cloud** (live demo) | Main file `streamlit_app.py`; optional Secrets: `SARVAM_API_KEY`, `GEMINI_API_KEY`, `LLM_DAILY_BUDGET_INR`, `RB_OPERATOR_KEY`, `RB_ADMIN_KEY`. |
 | **Docker (single container)** | `docker build -t railway-buddy . && docker run -p 8501:8501 railway-buddy` |
 | **Docker Compose (API + UI)** | `docker compose up --build` — governance state persists in the `governance-state` volume. |
 | **Render / any PaaS** | Build `pip install -r requirements.txt`; start `streamlit run streamlit_app.py --server.port $PORT --server.address 0.0.0.0`. |
@@ -353,7 +368,7 @@ Training data is **synthetic**; metrics describe the simulator, not real Indian 
 - In the demo, ground-truth outcomes come from passenger feedback boxes or the *simulated* outcome generator; production would connect chart-preparation, running-status and payment systems to `POST /governance/outcomes`.
 - Retraining uses the bundled datasets plus labelled outcomes collected in memory; a production setup would use a feature store and scheduled pipelines.
 - Single-node: SQLite and in-process monitors. Scaling to millions of interactions needs a shared database / message bus (e.g. Postgres + Kafka) and horizontally scaled API workers — the service boundaries are already in place.
-- The Gemini free tier is rate-limited; the rule-based engine answers when it is exhausted.
+- LLM answers depend on the Sarvam credit balance and the Gemini free tier; when both are unavailable (or the daily ₹ cap is reached) the rule-based engine answers.
 
 ---
 
@@ -379,7 +394,7 @@ Generated by `data/generate_synthetic_data.py`.
 
 ```bash
 pip install -r requirements-dev.txt
-pytest -q          # 81 tests (API, governance, and a headless run of every Streamlit page)
+pytest -q          # 91 tests (API, governance, and a headless run of every Streamlit page)
 ```
 
 `tests/test_audit_fixes.py` pins every audit finding: no drift on in-distribution traffic, weather raises delay, injection variants blocked, unknown cities clarified, idempotent / strict approval gate, connection search, RBAC, approval-gated promotion, 422 on bad inputs, contradiction and invented-amount detection, outcome loop and degradation, audit tamper detection, PII masking, circuit breaker 503, fare curve dates, PNR tool, honest "no route" message, compliance report.
@@ -399,7 +414,7 @@ ai-railway-autonomous-governance/
 │                      performance_monitor.py · bias_auditor.py · hallucination_monitor.py · rca_engine.py
 │                      lifecycle_manager.py · supervisor_agent.py · audit_store.py · compliance.py
 │                      traffic_simulator.py · outcome_simulator.py · report_generator.py · telemetry_bus.py
-├── core/              config · schemas · seasonality · llm_router (Gemini chain) · fallback_engine
+├── core/              config · schemas · seasonality · llm_router (Sarvam → Gemini → rules, ₹ spend cap) · fallback_engine
 ├── models/            train_all_models.py · artifacts/ · registry/model_registry.json
 ├── data/              generate_synthetic_data.py · raw/
 ├── docs/screenshots/
@@ -416,7 +431,7 @@ ai-railway-autonomous-governance/
 | **Backend** | FastAPI · Uvicorn · Pydantic v2 |
 | **ML** | XGBoost · LightGBM · scikit-learn (IsolationForest) · SHAP |
 | **Statistics** | SciPy KS test · corrected PSI · residual prediction intervals |
-| **LLM** | Google Gemini (REST chain) · optional Azure OpenAI · TF-IDF RAG · rule-based fallback |
+| **LLM** | Sarvam AI (sarvam-105b) · Google Gemini (REST chain) · optional Azure OpenAI · TF-IDF RAG · rule-based fallback |
 | **Governance** | Custom telemetry bus, performance monitor, circuit breaker, RCA, lifecycle manager, supervisor agent |
 | **Ops** | SQLite hash-chained audit store · psutil · Docker / Compose · GitHub Actions |
 

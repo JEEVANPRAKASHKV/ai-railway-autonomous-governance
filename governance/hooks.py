@@ -364,7 +364,10 @@ def governance_hook(module_name: str, endpoint: str = ""):
                         drift_flag=drift_flag,
                         bias_flag=bias_flag,
                         hallucination_flag=hallucination_flag,
-                        llm_mode=settings.llm_mode,
+                        # Engine shown on the receipt: what actually answered for the support assistant, the configured
+                        # LLM for the planner's intent agent, and nothing for pure ML models (no LLM involved).
+                        llm_mode=(str(served_version) if module_name == "m6_support_assistant" and served_version
+                                  else settings.llm_mode if module_name == "m4_travel_planner" else "ml"),
                         audit_id=audit_id,
                     )
                     object.__setattr__(result, "governance_telemetry", badge)

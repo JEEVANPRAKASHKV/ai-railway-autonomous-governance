@@ -11,7 +11,7 @@ from typing import Any, Dict, List, Union
 import plotly.graph_objects as go
 import streamlit as st
 
-from frontend.ui import style_fig
+from frontend.ui import NEG, POS, style_fig
 
 
 def _fmt(v: float, metric: str) -> str:
@@ -61,10 +61,10 @@ def render_shap_chart(
     vals = [t["contribution"] for t in top]
     fig = go.Figure(go.Bar(
         x=vals, y=labels, orientation="h",
-        marker=dict(color=["#2563EB" if v >= 0 else "#F97316" for v in vals]),
+        marker=dict(color=[POS if v >= 0 else NEG for v in vals]),
         text=[_fmt(v, target_metric) for v in vals], textposition="auto",
     ))
     fig.update_layout(title=dict(text=f"<b>{title}</b>", font=dict(size=14)),
-                      xaxis_title=f"{target_metric}  (blue ↑ raises, orange ↓ lowers)")
+                      xaxis_title=f"{target_metric}  (black raises, gold lowers)")
     style_fig(fig, height=max(240, len(labels) * 34 + 70))
     st.plotly_chart(fig, width="stretch")

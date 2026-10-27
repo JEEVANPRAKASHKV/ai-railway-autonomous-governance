@@ -29,7 +29,7 @@ import streamlit as st
 
 from frontend import passenger, tower
 from frontend.chat_widget import render_chat_widget
-from frontend.ui import BRAND, api_post, backend_online, engine_label, inject_theme
+from frontend.ui import BRAND, api_post, backend_online, engine_label, esc, footer, inject_theme
 
 ASSETS = Path(__file__).resolve().parent / "assets"
 
@@ -37,7 +37,7 @@ st.set_page_config(
     page_title=f"{BRAND} — AI Railway Travel & Governance",
     page_icon=str(ASSETS / "icon.svg") if (ASSETS / "icon.svg").exists() else "🚆",
     layout="wide",
-    initial_sidebar_state="expanded",
+    initial_sidebar_state="auto",
     menu_items={"About": f"{BRAND}: AI-powered railway travel with an autonomous AI governance layer."},
 )
 
@@ -79,14 +79,14 @@ def _tower():
     tower.tower(PAGES)
 
 
-PAGES["home"] = st.Page(_home, title="Home", icon="🏠", url_path="home", default=True)
-PAGES["ticket"] = st.Page(passenger.ticket, title="Ticket Confirmation", icon="🎫", url_path="ticket")
-PAGES["recommend"] = st.Page(passenger.recommend, title="Train Recommender", icon="🚆", url_path="trains")
-PAGES["delay"] = st.Page(passenger.delay, title="Delay & Disruption", icon="⏱️", url_path="delay")
-PAGES["planner"] = st.Page(passenger.planner, title="AI Travel Planner", icon="🧭", url_path="planner")
-PAGES["fare"] = st.Page(passenger.fare, title="Fare Forecast", icon="💰", url_path="fares")
-PAGES["tower"] = st.Page(_tower, title="Governance Control Tower", icon="🏛️", url_path="governance-tower")
-PAGES["fraud"] = st.Page(passenger.fraud, title="Fraud & Bot Shield", icon="🛡️", url_path="security")
+PAGES["home"] = st.Page(_home, title="Home", icon=":material/home:", url_path="home", default=True)
+PAGES["ticket"] = st.Page(passenger.ticket, title="Ticket Confirmation", icon=":material/confirmation_number:", url_path="ticket")
+PAGES["recommend"] = st.Page(passenger.recommend, title="Train Recommender", icon=":material/train:", url_path="trains")
+PAGES["delay"] = st.Page(passenger.delay, title="Delay & Disruption", icon=":material/schedule:", url_path="delay")
+PAGES["planner"] = st.Page(passenger.planner, title="AI Travel Planner", icon=":material/route:", url_path="planner")
+PAGES["fare"] = st.Page(passenger.fare, title="Fare Forecast", icon=":material/currency_rupee:", url_path="fares")
+PAGES["tower"] = st.Page(_tower, title="Governance Control Tower", icon=":material/monitor_heart:", url_path="governance-tower")
+PAGES["fraud"] = st.Page(passenger.fraud, title="Fraud & Bot Shield", icon=":material/shield:", url_path="security")
 
 nav = st.navigation(
     {
@@ -98,19 +98,13 @@ nav = st.navigation(
 with st.sidebar:
     online = backend_online()
     st.markdown(
-        f'<div style="background:#F3F7FE;border:1px solid #D9E4F5;border-radius:12px;padding:10px 12px;font-size:.8rem;margin-top:8px">'
-        f'<div style="font-weight:700;color:#0A2463;margin-bottom:4px">System status</div>'
-        f'{"🟢 All services online" if online else "🔴 Backend starting…"}<br>'
-        f'<span style="color:#5B6B82">Engine: {engine_label()}</span></div>',
+        '<div class="rb-status">'
+        f'<div><span class="k">Services</span><b>{"● online" if online else "○ starting"}</b></div>'
+        f'<div><span class="k">Language engine</span><span>{esc(engine_label())}</span></div>'
+        '<div><span class="k">Help</span><span>chat button, bottom-right</span></div></div>',
         unsafe_allow_html=True,
     )
-    st.caption("💬 Need help? Use the chat button at the bottom-right of any page.")
 
 nav.run()
 render_chat_widget()
-
-st.markdown(
-    f'<div class="rb-foot">🚆 <b>{BRAND}</b> · AI-powered railway travel with autonomous AI governance<br>'
-    "FastAPI · Streamlit · XGBoost · LightGBM · SHAP · SciPy</div>",
-    unsafe_allow_html=True,
-)
+footer()

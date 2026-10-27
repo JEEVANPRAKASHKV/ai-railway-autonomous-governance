@@ -543,3 +543,23 @@ def verify_audit() -> Dict[str, Any]:
 def get_compliance() -> Dict[str, Any]:
     from governance.compliance import run_checks
     return run_checks()
+
+
+# ── LLM engine (Sarvam AI → Gemini → Azure → rule-based) ──────────────────────
+
+@router.get("/llm", summary="LLM engine status: provider order, health, latency, tokens and ₹ spend vs daily budget")
+def get_llm_status() -> Dict[str, Any]:
+    from core.llm_router import llm_router
+    return llm_router.status()
+
+
+@router.post("/llm/test", summary="Send a tiny test request to every configured LLM provider  [operator]")
+def test_llm_providers(who: Principal = OPERATOR) -> Dict[str, Any]:
+    from core.llm_router import llm_router
+    results = llm_router.probe()
+    audit_store.append("governance_action", {"action_type": "LLM_PROVIDER_TEST",
+                                             "results": [{k: r.get(k) for k in ("provider", "ok", "model", "latency_ms", "error")}
+                                                         for r in results]},
+                       module="llm_router", actor=who.actor)
+    return {"providers": results, "configured": llm_router.providers,
+            "message": None if results else "No LLM provider is configured — set SARVAM_API_KEY (or GEMINI_API_KEY)."}

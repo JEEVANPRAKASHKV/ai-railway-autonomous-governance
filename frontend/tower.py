@@ -21,7 +21,7 @@ import plotly.graph_objects as go
 import streamlit as st
 
 from frontend.ui import (
-    API_BASE, api_get, api_post, badge, callout, engine_label, esc, gauge, hero, inject_theme,
+    POS, TONE_BAR, API_BASE, api_get, api_post, badge, callout, engine_label, esc, hero, inject_theme, meter,
     kpi, kpi_row, rows_card, section, style_fig, tone_for,
 )
 
@@ -79,7 +79,7 @@ ANCHORS = [
 def tower(pages: Dict[str, Any] = None) -> None:
     inject_theme("tower")
     hero(
-        "🏛️ AI Governance Control Tower",
+        "AI Governance Control Tower",
         "AI agents watching AI. Every model behind Railway Buddy is monitored for health, drift, bias and hallucination — "
         "problems are diagnosed, explained and fixed automatically, with humans approving the high-risk moves.",
         ["Autonomous supervisor", "Root-cause analysis", "Auto-retrain & rollback", "Full audit trail"],
@@ -87,12 +87,63 @@ def tower(pages: Dict[str, Any] = None) -> None:
 
     top1, top2, top3 = st.columns([1.2, 1.2, 3])
     live = top1.toggle("Live auto-refresh", value=False, help="Refresh every 10 seconds")
-    if top2.button("🔄 Refresh now", width="stretch"):
+    if top2.button("Refresh now", width="stretch"):
         st.rerun()
     top3.caption(f"Engine: **{engine_label()}** · API: `{API_BASE}` · Last updated {datetime.now(timezone.utc).strftime('%H:%M:%S UTC')}")
 
     body = st.fragment(run_every=10 if live else None)(_tower_body)
     body(pages or {})
+
+
+LLM_LABELS = {"sarvam": "Sarvam AI", "gemini": "Gemini", "azure_openai": "Azure OpenAI", "fallback": "Built-in engine"}
+
+
+def _llm_engine_panel() -> None:
+    """LLM engine health & spend: provider failover order, per-provider success/latency/tokens, ₹ vs daily budget."""
+    llm = api_get("/governance/llm") or {}
+    if not llm:
+        return
+    providers = llm.get("providers") or []
+    per = llm.get("per_provider") or {}
+    spend, budget = float(llm.get("spend_today_inr") or 0), float(llm.get("daily_budget_inr") or 0)
+    req, ok = int(llm.get("requests") or 0), int(llm.get("llm_ok") or 0)
+    chain = " → ".join([LLM_LABELS.get(p, p) for p in providers] + ["Built-in engine"])
+    st.markdown(f"**LLM engine** — failover order: {esc(chain)}")
+    kpi_row([
+        ("Primary engine", esc(LLM_LABELS.get(llm.get("mode", "fallback"), llm.get("mode"))),
+         esc((per.get(llm.get("mode")) or {}).get("model") or "rule-based"), "ok" if providers else ""),
+        ("Answered by an LLM", f"{ok}/{req}" if req else "—", f'{llm.get("fallback_used", 0)} fell back to rules',
+         "ok" if not req or ok == req else "warn"),
+        ("Spend today", f"₹{spend:,.2f}", f"daily budget ₹{budget:,.0f}" + (" · reached" if llm.get("budget_reached") else ""),
+         "bad" if llm.get("budget_reached") else "warn" if budget and spend > 0.8 * budget else "ok"),
+        ("Last answer", esc(LLM_LABELS.get(llm.get("last_provider") or "", "—")),
+         f'{llm.get("last_latency_ms") or 0:.0f} ms' if llm.get("last_latency_ms") else "", ""),
+    ])
+    if per:
+        _df([{"Provider": v.get("label"), "Model": v.get("model"), "Calls": v.get("calls"), "Success %": v.get("success_pct"),
+              "Avg latency ms": v.get("avg_latency_ms"), "Tokens in / out": f'{v.get("tokens_in", 0):,} / {v.get("tokens_out", 0):,}',
+              "Cost ₹": v.get("cost_inr"), "Status": "cooling down" if v.get("cooling_down") else "ready",
+              "Last error": v.get("last_error") or ""} for p, v in per.items()])
+    c1, c2 = st.columns([1, 3])
+    if c1.button("Test LLM engines", key="llm_test", width="stretch",
+                 help="Sends a tiny request to every configured provider (costs a fraction of a paisa)."):
+        with st.spinner("Contacting each provider…"):
+            st.session_state["llm_probe"] = api_post("/governance/llm/test", {}, timeout=60)
+    probe = st.session_state.get("llm_probe")
+    if probe:
+        if probe.get("error"):
+            c2.error(probe["error"])
+        elif not probe.get("providers"):
+            c2.info(probe.get("message") or "No LLM provider configured.")
+        for r in probe.get("providers") or []:
+            if r.get("ok"):
+                c2.success(f'{r["label"]} ({r.get("model")}) answered in {r.get("latency_ms", 0):.0f} ms — "{r.get("reply", "")}"')
+            else:
+                c2.error(f'{r["label"]}: {r.get("error")}')
+    if not providers:
+        st.caption("No LLM key is configured, so the built-in rule-based engine answers. Add SARVAM_API_KEY "
+                   "(or GEMINI_API_KEY) to `.env` locally or to the app's Secrets on Streamlit Cloud.")
+    st.markdown("<div style='height:8px'></div>", unsafe_allow_html=True)
 
 
 def _tower_body(pages: Dict[str, Any]) -> None:
@@ -129,26 +180,21 @@ def _tower_body(pages: Dict[str, Any]) -> None:
     n_open = rca_sum.get("open_incidents", len(incidents))
 
     # ── Command centre ───────────────────────────────────────────────────────
-    g, k = st.columns([1, 2.2], gap="large")
+    g, k = st.columns([1, 2.6], gap="small")
     with g:
-        color = "#059669" if score >= 80 else "#D97706" if score >= 60 else "#DC2626"
-        st.plotly_chart(gauge(score, "Governance score", "", color=color,
-                              steps=[(0, 60, "#FEE2E2"), (60, 80, "#FEF3C7"), (80, 100, "#D1FAE5")], height=220),
-                        width="stretch")
+        st.markdown(meter(score, "Governance score", "/ 100", tone="ok" if score >= 80 else "warn" if score >= 60 else "bad",
+                          decimals=0), unsafe_allow_html=True)
     with k:
         kpi_row([
             ("Platform", esc(status.title()), f"{len(modules)} of 7 modules reporting", tone_for(status)),
             ("Inferences", f'{health.get("total_requests", 0):,}', f'{health.get("overall_error_rate_pct", 0):.2f}% errors',
              "ok" if health.get("overall_error_rate_pct", 0) < 5 else "bad"),
             ("Open incidents", n_open, f'{rca_sum.get("critical_incidents", 0)} critical', "ok" if n_open == 0 else "bad" if rca_sum.get("critical_incidents") else "warn"),
-        ])
-        st.markdown("<div style='height:10px'></div>", unsafe_allow_html=True)
-        kpi_row([
             ("Drifting models", len(drifting), f"of {len(drift)} monitored", "ok" if not drifting else "bad"),
             ("Retraining queue", len(retrain_q), "awaiting retrain", "ok" if not retrain_q else "warn"),
             ("Supervisor", "Active" if dash.get("supervisor_running") else "Idle", f'{dash.get("hitl_pending_count", 0)} approvals pending',
              "ok" if dash.get("supervisor_running") else "warn"),
-        ])
+        ], cols=3)
 
     st.markdown('<div class="rb-anchors">' + "".join(f'<a href="#{a}" target="_self">{t}</a>' for a, t in ANCHORS) + "</div>",
                 unsafe_allow_html=True)
@@ -188,23 +234,25 @@ def _tower_body(pages: Dict[str, Any]) -> None:
                 evtxt = (f' · live {esc(ev.get("metric"))}: champion {esc(ev.get("champion", {}).get(ev.get("metric")))} '
                          f'vs challenger {esc(ev.get("challenger", {}).get(ev.get("metric")))}')
             c1, c2, c3 = st.columns([4, 1, 1])
-            c1.markdown(f'<div class="rb-card" style="border-left:4px solid #F59E0B;margin:0">{badge("Approval needed", "warn")} '
+            c1.markdown(f'<div class="rb-card" style="border-left:4px solid #A35F00;margin:0">{badge("Approval needed", "warn")} '
                         f'<b>Promote {esc(mname(pl.get("model_id", "")))} {esc(pl.get("version", ""))} to 100% traffic</b> '
                         f'<span class="rb-sub">(from {esc(pl.get("from_version", "—"))}) · requested by {esc(req.get("requested_by", ""))} · '
                         f'{esc(req.get("request_id"))}{evtxt}</span></div>', unsafe_allow_html=True)
-            if c2.button("✅ Approve", key=f'ap_{req["request_id"]}', width="stretch"):
+            if c2.button("Approve", key=f'ap_{req["request_id"]}', width="stretch"):
                 r = api_post("/governance/supervisor/hitl/decide", {"request_id": req["request_id"], "approved": True})
                 if r and r.get("error"):
                     st.error(r["error"])
                 st.rerun()
-            if c3.button("❌ Reject", key=f'rj_{req["request_id"]}', width="stretch"):
+            if c3.button("Reject", key=f'rj_{req["request_id"]}', width="stretch"):
                 api_post("/governance/supervisor/hitl/decide", {"request_id": req["request_id"], "approved": False})
                 st.rerun()
     if not items and not hitl:
         callout("<b>All clear.</b> No incidents, drift, bias flags or SLA breaches. The supervisor keeps watching.", "ok", "✅")
-    for tone, title, text, link in items[:8]:
-        st.markdown(f'<div class="rb-card" style="padding:10px 16px;margin-bottom:6px;border-left:4px solid {"#EF4444" if tone == "bad" else "#F59E0B" if tone == "warn" else "#60A5FA"}">'
-                    f'{badge(title, tone)} &nbsp;{esc(text)} <span class="rb-sub" style="float:right">{link}</span></div>', unsafe_allow_html=True)
+    if items:
+        st.markdown('<div class="rb-list">' + "".join(
+            f'<div class="rb-row" style="border-left:4px solid {TONE_BAR.get(tone, "#000")}">'
+            f'<span class="k">{badge(title, tone)} &nbsp;{esc(text)}</span><span class="rb-sub">{esc(link)}</span></div>'
+            for tone, title, text, link in items[:8]) + "</div>", unsafe_allow_html=True)
     if len(items) > 8:
         st.caption(f"+ {len(items) - 8} more — see the sections below.")
 
@@ -225,12 +273,9 @@ def _tower_body(pages: Dict[str, Any]) -> None:
         ("🔄", "Model lifecycle", "RETRAINING" if retrain_q else "HEALTHY", f'{lifecycle.get("total_model_versions", 0)} versions · {len(retrain_q)} queued'),
         ("🤖", "Supervisor agent", "ACTIVE" if dash.get("supervisor_running") else "IDLE", f"{len(actions)} recent autonomous actions"),
     ]
-    for row in (pillars[:4], pillars[4:]):
-        cols = st.columns(4)
-        for col, (ico, t, st_, m) in zip(cols, row):
-            col.markdown(f'<div class="rb-pillar"><div class="h"><span>{ico} {t}</span>{badge(st_.replace("_", " ").title())}</div>'
-                         f'<div class="m">{esc(m)}</div></div>', unsafe_allow_html=True)
-        st.markdown("<div style='height:8px'></div>", unsafe_allow_html=True)
+    st.markdown('<div class="rb-grid" style="--n:4">' + "".join(
+        f'<div class="rb-pillar"><div class="h"><span>{t}</span>{badge(st_.replace("_", " ").capitalize())}</div>'
+        f'<div class="m">{esc(m)}</div></div>' for _ico, t, st_, m in pillars) + "</div>", unsafe_allow_html=True)
 
     # ── 1 Incidents & RCA ───────────────────────────────────────────────────
     section("Incidents & root-cause analysis", "Faults are correlated, explained with 5-Why reasoning and paired with a remediation playbook.", "incidents", "1")
@@ -262,7 +307,7 @@ def _tower_body(pages: Dict[str, Any]) -> None:
                     st.markdown(f"{i}. {w}")
             with b:
                 callout(f'<b>Remediation playbook</b><br>{esc(inc.get("remediation_playbook", ""))}', "info", "💡")
-                if st.button("✅ Mark resolved", key=f'res_{inc["incident_id"]}'):
+                if st.button("Mark resolved", key=f'res_{inc["incident_id"]}'):
                     api_post(f'/governance/incidents/{inc["incident_id"]}/resolve')
                     st.rerun()
     if len(incidents) > 10:
@@ -273,7 +318,7 @@ def _tower_body(pages: Dict[str, Any]) -> None:
         st.rerun()
     hist = [h for h in (api_get("/governance/incidents/history/all", {"n": 40}) or []) if h.get("resolved")]
     if hist:
-        with st.expander(f"✔️ Recently resolved incidents ({len(hist)})"):
+        with st.expander(f"Recently resolved incidents ({len(hist)})"):
             _df([{"Resolved": _ts(h.get("resolved_at")), "Module": mname(h.get("module_id", "")),
                   "Incident": h.get("primary_event_type", "").replace("_", " ").title(), "How": h.get("resolution", "")}
                  for h in reversed(hist[-12:])])
@@ -289,7 +334,7 @@ def _tower_body(pages: Dict[str, Any]) -> None:
             rows.append({"Module": mname(p_["module_id"]), "Outcome measured": p_.get("outcome"),
                          "Outcomes": p_.get("n_outcomes", 0), "Live": ", ".join(f"{k}={v}" for k, v in m.items() if v is not None) or "—",
                          "Baseline": str(p_.get("baseline")) if p_.get("baseline") is not None else (
-                             "FPR ≤ 12% · FNR ≤ 15%" if p_["module_id"] == "m7_fraud_detector" else "—"), "Status": "🔴 degraded" if p_.get("degraded") else ("⏳ waiting" if p_.get("n_outcomes", 0) < 30 else "✅ ok"),
+                             "FPR ≤ 12% · FNR ≤ 15%" if p_["module_id"] == "m7_fraud_detector" else "—"), "Status": "degraded" if p_.get("degraded") else ("waiting" if p_.get("n_outcomes", 0) < 30 else "ok"),
                          "Why": p_.get("status_reason", ""), "Sources": ", ".join(p_.get("sources", []))})
         _df(rows)
         canaries = [(p_, v) for p_ in perf for v in (p_.get("by_version") or {}) if len(p_.get("by_version") or {}) > 1]
@@ -310,6 +355,7 @@ def _tower_body(pages: Dict[str, Any]) -> None:
                  ("Threads", res_.get("process_threads", "—"), "API process", ""),
                  ("Open circuits", len(open_cb), "requests shed fast (503) while open", "ok" if not open_cb else "bad")])
         st.markdown("<div style='height:8px'></div>", unsafe_allow_html=True)
+    _llm_engine_panel()
     if modules:
         rows = []
         for mid, s in modules.items():
@@ -317,15 +363,15 @@ def _tower_body(pages: Dict[str, Any]) -> None:
                          "Avg ms": s.get("avg_latency_ms", 0), "P95 ms": s.get("p95_ms", 0), "P99 ms": s.get("p99_ms", 0),
                          "CPU ms/req": s.get("avg_cpu_ms", 0), "Uptime %": s.get("uptime_pct", 100),
                          "Circuit": s.get("circuit_state", "—"), "Times opened": s.get("circuit_opened_count", 0),
-                         "SLA": "✅" if not any(x["module_id"] == mid for x in sla_bad) else "🔴"})
+                         "SLA": "ok" if not any(x["module_id"] == mid for x in sla_bad) else "breach"})
         l, r = st.columns([1.5, 1])
         with l:
             _df(rows)
         with r:
             names = [mname(m) for m in modules]
             p95 = [modules[m].get("p95_ms", 0) for m in modules]
-            fig = go.Figure(go.Bar(x=p95, y=names, orientation="h", marker_color="#3B82F6", text=[f"{v:.0f} ms" for v in p95], textposition="auto"))
-            fig.add_vline(x=3000, line_dash="dash", line_color="#DC2626", annotation_text="SLA 3000 ms")
+            fig = go.Figure(go.Bar(x=p95, y=names, orientation="h", marker_color=POS, text=[f"{v:.0f} ms" for v in p95], textposition="auto"))
+            fig.add_vline(x=3000, line_dash="dash", line_color="#B3141B", annotation_text="SLA 3000 ms")
             fig.update_layout(title="<b>P95 latency vs SLA</b>")
             style_fig(fig, 300)
             st.plotly_chart(fig, width="stretch")
@@ -368,11 +414,11 @@ def _tower_body(pages: Dict[str, Any]) -> None:
             if feats:
                 rows = [{"Feature": f["feature"].replace("_", " ").title(), "KS statistic": f.get("ks_statistic"), "PSI": f.get("psi"),
                          "PSI level": f.get("psi_severity"), "Mean shift %": f.get("mean_shift_pct"),
-                         "Drift": "🔴 yes" if f.get("drift_detected") else "✅ no"} for f in feats]
+                         "Drift": "yes" if f.get("drift_detected") else "no"} for f in feats]
                 _df(rows)
                 fig = go.Figure(go.Bar(x=[r["Feature"] for r in rows], y=[r["PSI"] or 0 for r in rows],
-                                       marker_color=["#DC2626" if r["Drift"].startswith("🔴") else "#60A5FA" for r in rows]))
-                fig.add_hline(y=0.2, line_dash="dash", line_color="#DC2626", annotation_text="PSI 0.20 = significant")
+                                       marker_color=["#B3141B" if r["Drift"] == "yes" else POS for r in rows]))
+                fig.add_hline(y=0.2, line_dash="dash", line_color="#B3141B", annotation_text="PSI 0.20 = significant")
                 fig.update_layout(title="<b>Population Stability Index per feature</b>")
                 style_fig(fig, 240)
                 st.plotly_chart(fig, width="stretch")
@@ -393,7 +439,7 @@ def _tower_body(pages: Dict[str, Any]) -> None:
                     continue
                 ch = "; ".join(f'{c["category"]}: {c["baseline_pct"]}% → {c["live_pct"]}%' for c in f.get("largest_changes", []))
                 rows.append({"Service": mname(b_["model_id"]), "Field": f["field"], "PSI": f.get("psi"),
-                             "Shift": "🔴 yes" if f.get("shift_detected") else "✅ no", "Largest changes": ch})
+                             "Shift": "yes" if f.get("shift_detected") else "no", "Largest changes": ch})
         if rows:
             _df(rows)
         else:
@@ -411,7 +457,7 @@ def _tower_body(pages: Dict[str, Any]) -> None:
                 for a in b.get("attributes_audited", []):
                     rows.append({"Protected attribute": a["attribute"].replace("_", " ").title(), "DIR": a.get("dir"), "DPD": a.get("dpd"),
                                  "EOD": a.get("eod"), "Groups": ", ".join(f'{g} (n={m.get("n_samples", "?")})' for g, m in a.get("groups", {}).items()),
-                                 "Result": "✅ fair" if not a.get("adverse_impact") else "⚠️ review"})
+                                 "Result": "fair" if not a.get("adverse_impact") else "review"})
                 _df(rows)
     else:
         callout("No fairness observations yet. Passenger requests carry protected attributes (senior citizen, divyangjan, gender); "
@@ -428,7 +474,7 @@ def _tower_body(pages: Dict[str, Any]) -> None:
     if recent:
         rows = [{"Time": _ts(e.get("timestamp", "")), "Query": (e.get("query") or "")[:70], "Faithfulness": round(e.get("faithfulness_score", 0), 2),
                  "Quality score": round(e.get("composite_score", 0), 2), "Contradictions": len(e.get("contradictions_detected") or []),
-                 "Blocked": "🔴 yes" if e.get("quarantine") else "✅ no", "Severity": e.get("severity", "—")} for e in recent]
+                 "Blocked": "yes" if e.get("quarantine") else "no", "Severity": e.get("severity", "—")} for e in recent]
         _df(rows)
     else:
         st.caption("Ask the Support Assistant a question to populate this table.")
@@ -447,12 +493,12 @@ def _tower_body(pages: Dict[str, Any]) -> None:
         rows.append({"Model": mname(mid), "Production": prod.get(mid, "—"),
                      "Canary": f'{can["version"]} @ {can["traffic_pct"]}%' if can else "—",
                      "Versions": st_.get("total_versions", 0), "Key metrics": ", ".join(f"{k}: {v}" for k, v in list(met.items())[:3]) or "—",
-                     "Retrain queued": "⚠️ yes" if mid in retrain_q else "no"})
+                     "Retrain queued": "yes" if mid in retrain_q else "no"})
     _df(rows)
     l1, l2 = st.columns(2)
     with l1:
         with st.container(border=True):
-            st.markdown("**🔁 Retrain a model**")
+            st.markdown("**Retrain a model**")
             rm = st.selectbox("Model", mids, format_func=mname, key="rt_model") if mids else None
             if st.button("Retrain now", disabled=not mids, key="rt_btn", width="stretch"):
                 with st.spinner("Retraining on fresh data and evaluating against the champion…"):
@@ -470,7 +516,7 @@ def _tower_body(pages: Dict[str, Any]) -> None:
             if rm and chal.get(rm):
                 st.caption(f'Challenger **{chal[rm]}** serves 10% of live traffic as a canary.')
                 p1, p2 = st.columns(2)
-                if p1.button("🚀 Request promotion", key="pr_btn", width="stretch",
+                if p1.button("Request promotion", key="pr_btn", width="stretch",
                              help="Promotion to 100% traffic is risk-increasing, so it waits for an admin approval (see Needs attention)."):
                     r = api_post("/governance/lifecycle/promote", {"model_id": rm})
                     if r and r.get("success"):
@@ -479,7 +525,7 @@ def _tower_body(pages: Dict[str, Any]) -> None:
                         st.rerun()
                     else:
                         st.error((r or {}).get("error", "Request failed."))
-                if p2.button("⏹ Stop canary", key="sc_btn", width="stretch"):
+                if p2.button("Stop canary", key="sc_btn", width="stretch"):
                     r = api_post("/governance/lifecycle/canary/stop", {"model_id": rm})
                     (st.success if r and r.get("success") else st.error)(r.get("stopped_version", r.get("error", "")) if r else "failed")
                     st.rerun()
@@ -498,7 +544,7 @@ def _tower_body(pages: Dict[str, Any]) -> None:
     if rh:
         st.markdown("**Retraining history** — every run is kept, accepted or not, with the reason")
         _df([{"When": _ts(h.get("at")), "Model": mname(h.get("model_id", "")), "Version": h.get("version", "—"),
-              "Trigger": h.get("reason", ""), "Decision": "✅ canary" if h.get("accepted") else ("❌ failed" if h.get("failed") else "kept champion"),
+              "Trigger": h.get("reason", ""), "Decision": "canary" if h.get("accepted") else ("failed" if h.get("failed") else "kept champion"),
               "Why": h.get("why", ""), "Production rows used": h.get("production_rows_used", 0),
               "Seconds": h.get("train_seconds")} for h in reversed(rh)])
 
@@ -542,7 +588,7 @@ def _tower_body(pages: Dict[str, Any]) -> None:
         callout("No security alerts yet. Score a session in the Fraud & Bot Shield, or send <b>Shifted traffic</b> from the Chaos lab "
                 "(it includes bot-like sessions).", "info", "🛡️")
     if pages.get("fraud"):
-        st.page_link(pages["fraud"], label="Open the Fraud & Bot Shield to score and investigate a session", icon="🛡️")
+        st.page_link(pages["fraud"], label="Open the Fraud & Bot Shield to score and investigate a session", icon=":material/shield:")
 
     # ── 10 Reports & audit ──────────────────────────────────────────────────
     section("Compliance, reports & audit trail", "Live ethical-AI checks with evidence, a tamper-evident audit trail that survives restarts, "
@@ -554,10 +600,10 @@ def _tower_body(pages: Dict[str, Any]) -> None:
         kpi_row([("Compliance checks", f'{sm.get("PASS", 0)} pass', f'{sm.get("WARN", 0)} warn · {sm.get("FAIL", 0)} fail', tone_for(comp.get("overall", ""))),
                  ("Audit chain", "Intact" if ver.get("intact") else "BROKEN", f'{ver.get("entries_checked", 0):,} entries verified', "ok" if ver.get("intact") else "bad"),
                  ("Audit storage", "Durable" if ver.get("durable") else "Memory", "SQLite, hash-chained", "ok" if ver.get("durable") else "warn")])
-        _df([{"Check": c["check"], "Principle": c["principle"], "Status": {"PASS": "✅ pass", "WARN": "⚠️ warn", "FAIL": "🔴 fail"}[c["status"]],
+        _df([{"Check": c["check"], "Principle": c["principle"], "Status": {"PASS": "pass", "WARN": "warn", "FAIL": "fail"}[c["status"]],
               "Evidence": c["evidence"]} for c in comp.get("checks", [])])
     rc1, rc2 = st.columns([1, 3])
-    if rc1.button("📋 Generate report", width="stretch", type="primary"):
+    if rc1.button("Generate report", width="stretch", type="primary"):
         with st.spinner("Auditing all pillars…"):
             rep = api_post("/governance/supervisor/report")
         if rep and "report_id" in rep:
@@ -575,16 +621,16 @@ def _tower_body(pages: Dict[str, Any]) -> None:
              ("\n".join(f"- {f}" for f in rep.get("critical_flags", [])) or "None") + "\n\n## Recommendations\n" + \
              "\n".join(f'{r_["priority"]}. [{r_["urgency"]}] {r_["action"]}' for r_ in rep.get("recommendations", []))
         d1, d2, _ = st.columns([1, 1, 3])
-        d1.download_button("⬇ Markdown", md, f'{rep["report_id"]}.md', width="stretch")
-        d2.download_button("⬇ JSON", json.dumps(rep, indent=2, default=str), f'{rep["report_id"]}.json', width="stretch")
-    with st.expander("🗄️ Durable audit log (personal data masked)"):
+        d1.download_button("Markdown", md, f'{rep["report_id"]}.md', width="stretch")
+        d2.download_button("JSON", json.dumps(rep, indent=2, default=str), f'{rep["report_id"]}.json', width="stretch")
+    with st.expander("Durable audit log (personal data masked)"):
         kind = st.selectbox("Entry type", ["governance_action", "hitl_request", "hitl_decision", "booking", "conversation",
                                             "feedback", "inference", "plan_rejected"], key="aud_kind")
         al = api_get("/governance/audit/log", {"kind": kind, "limit": 25}) or {}
         st.caption("Entries by type: " + ", ".join(f"{k}: {v:,}" for k, v in (al.get("counts") or {}).items()))
         _df([{"Time": _ts(e["ts"]), "Module": mname(e.get("module") or ""), "Ref": e.get("ref"), "Actor": e.get("actor"),
               "Payload": json.dumps(e.get("payload"), default=str)[:160], "Hash": e.get("hash", "")[:12]} for e in al.get("entries", [])])
-    with st.expander("📜 Live telemetry stream (most recent governed events)"):
+    with st.expander("Live telemetry stream (most recent governed events)"):
         if events:
             ev = pd.DataFrame(events).tail(25).iloc[::-1]
             cols = [c for c in ["timestamp", "module", "event_type", "severity", "latency_ms", "confidence_score", "schema_valid", "event_id"] if c in ev]
@@ -600,7 +646,7 @@ def _tower_body(pages: Dict[str, Any]) -> None:
     c1, c2 = st.columns(2, gap="large")
     with c1:
         with st.container(border=True):
-            st.markdown("**🚦 Generate live traffic**")
+            st.markdown("**Generate live traffic**")
             st.caption("Normal = replays held-out historical requests (should NOT drift). Shifted = very long waitlists, storms, "
                        "last-minute bookings and bot sessions (should drift).")
             n = st.slider("Passenger sessions", 20, 120, 60, step=10, key="sim_n")
@@ -610,7 +656,7 @@ def _tower_body(pages: Dict[str, Any]) -> None:
                 st.success(f"{done} governed inferences recorded.")
                 time.sleep(0.6)
                 st.rerun()
-            if b.button("⚠️ Shifted traffic", width="stretch", key="sim_drift",
+            if b.button("Shifted traffic", width="stretch", key="sim_drift",
                         help="Longer waitlists, bad weather, bot-like sessions → should trigger drift detection"):
                 done = simulate_traffic(n, drifted=True)
                 st.warning(f"{done} inferences recorded with shifted input distributions.")
@@ -618,7 +664,7 @@ def _tower_body(pages: Dict[str, Any]) -> None:
                 st.rerun()
     with c2:
         with st.container(border=True):
-            st.markdown("**💥 Inject a fault**")
+            st.markdown("**Inject a fault**")
             mod = st.selectbox("Target module", list(MODULE_NAMES), format_func=mname, key="ch_mod")
             kind = st.selectbox("Fault", [("latency_spike", "Latency spike (5 s responses)"), ("error_surge", "Error surge (8 failures)"),
                                           ("drift_simulation", "Data drift event")], format_func=lambda x: x[1], key="ch_kind")
@@ -637,7 +683,7 @@ def _tower_body(pages: Dict[str, Any]) -> None:
     o1, o2 = st.columns(2, gap="large")
     with o1:
         with st.container(border=True):
-            st.markdown("**📬 Report outcomes (simulated ground truth)**")
+            st.markdown("**Report outcomes (simulated ground truth)**")
             st.caption("Gives every recent prediction its 'real' outcome. Normal = the world behaves as the models learned. "
                        "Concept drift = same inputs, different outcomes (e.g. delays now much longer) → quality drops → "
                        "the supervisor retrains with these outcomes and starts a canary.")
@@ -647,14 +693,14 @@ def _tower_body(pages: Dict[str, Any]) -> None:
                 st.success(f'{(r or {}).get("total", 0)} outcomes recorded.')
                 time.sleep(0.5)
                 st.rerun()
-            if b.button("⚠️ Concept drift", width="stretch", key="out_drift"):
+            if b.button("Concept drift", width="stretch", key="out_drift"):
                 r = api_post("/governance/outcomes/simulate", {"mode": "concept_drift"})
                 st.warning(f'{(r or {}).get("total", 0)} outcomes recorded under a changed world.')
                 time.sleep(0.5)
                 st.rerun()
     with o2:
         with st.container(border=True):
-            st.markdown("**🤖 Run the supervisor now**")
+            st.markdown("**Run the supervisor now**")
             st.caption("The supervisor runs every 30 seconds on its own; this triggers one cycle immediately.")
             if st.button("Run governance cycle", width="stretch", key="cyc", type="primary"):
                 with st.spinner("Supervisor is checking every pillar…"):

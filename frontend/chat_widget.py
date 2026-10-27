@@ -15,43 +15,40 @@ import streamlit as st
 from frontend.ui import api_post, badge, esc, send_outcome
 
 QUICK_QUESTIONS = [
-    ("🔎 PNR status", "What is the status of PNR 0000001 and my refund?"),
-    ("💸 Waitlist refund", "What happens if my waitlist ticket is not confirmed at chart preparation? Will I get a full refund?"),
-    ("⚡ Tatkal rules", "What are the Tatkal booking timings and is there a refund if I cancel a Tatkal ticket?"),
-    ("🚆 Delhi → Mumbai trains", "Which trains from Delhi to Mumbai?"),
+    ("PNR status", "What is the status of PNR 0000001 and my refund?"),
+    ("Waitlist refund", "What happens if my waitlist ticket is not confirmed at chart preparation? Will I get a full refund?"),
+    ("Tatkal rules", "What are the Tatkal booking timings and is there a refund if I cancel a Tatkal ticket?"),
+    ("Delhi → Mumbai trains", "Which trains from Delhi to Mumbai?"),
 ]
 
 WIDGET_CSS = """
 <style>
-/* Floating launcher, bottom-right on every page */
+/* Floating launcher, bottom-right on every page: a black round button with a signal-yellow ring */
 .st-key-rb_chat_fab { position: fixed !important; right: 28px; bottom: 26px; z-index: 999990; width: auto !important; }
 .st-key-rb_chat_fab button {
-  width: 62px !important; height: 62px !important; min-height: 62px; padding: 0 !important; border-radius: 50% !important;
-  background: linear-gradient(135deg, #2563EB 0%, #0B3B8C 100%) !important; color: #fff !important; border: 3px solid #fff !important;
-  box-shadow: 0 10px 28px -6px rgba(29, 78, 216, .65), 0 2px 6px rgba(11, 31, 58, .25) !important;
-  display: flex; align-items: center; justify-content: center; transition: transform .15s ease, box-shadow .15s ease;
+  width: 60px !important; height: 60px !important; min-height: 60px; padding: 0 !important; border-radius: 50% !important;
+  background: #000 !important; color: #F5C400 !important; border: 3px solid #F5C400 !important; outline: 1px solid #000;
+  display: flex; align-items: center; justify-content: center;
 }
-.st-key-rb_chat_fab button:hover { transform: translateY(-2px) scale(1.04); box-shadow: 0 14px 32px -6px rgba(29, 78, 216, .8) !important; }
-.st-key-rb_chat_fab button p { font-size: 28px !important; line-height: 1 !important; margin: 0 !important; }
+.st-key-rb_chat_fab button:hover { background: #F5C400 !important; border-color: #000 !important; }
+.st-key-rb_chat_fab button p { font-size: 26px !important; line-height: 1 !important; margin: 0 !important; color: inherit !important; }
 .st-key-rb_chat_fab button [data-testid="stIconMaterial"], .st-key-rb_chat_fab button svg { display: none !important; }
 .st-key-rb_chat_fab::before {
-  content: "Need help? Ask me"; position: absolute; right: 74px; bottom: 17px; white-space: nowrap;
-  background: #0A2463; color: #fff; font-size: .76rem; font-weight: 700; padding: 6px 11px; border-radius: 999px;
-  box-shadow: 0 6px 16px -6px rgba(10, 36, 99, .6); pointer-events: none; opacity: .95;
+  content: "Help — ask a question"; position: absolute; right: 72px; bottom: 17px; white-space: nowrap;
+  background: #000; color: #F5C400; font-size: .78rem; font-weight: 700; padding: 5px 10px; border: 1px solid #000; pointer-events: none;
 }
-.st-key-rb_chat_fab:hover::before { opacity: 1; }
 /* Chat panel inside the popover */
 .st-key-rb_chat_panel { width: min(400px, calc(100vw - 48px)); }
-.rb-chat-head { display: flex; gap: 10px; align-items: center; padding: 2px 2px 10px; border-bottom: 1px solid #D9E4F5; margin-bottom: 8px; }
-.rb-chat-head .av { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; font-size: 19px;
-  background: linear-gradient(135deg, #2563EB, #0B3B8C); color: #fff; flex: none; }
-.rb-chat-head .t { font-weight: 800; color: #0A2463; line-height: 1.15; }
-.rb-chat-head .s { font-size: .74rem; color: #5B6B82; }
-.rb-chat-head .on { width: 8px; height: 8px; border-radius: 50%; background: #10B981; display: inline-block; margin-right: 4px; }
-.st-key-rb_chat_panel [data-testid="stChatMessage"] { padding: 6px 8px; }
+.rb-chat-head { display: flex; gap: 10px; align-items: stretch; margin: -2px 0 8px; border: 2px solid #000; }
+.rb-chat-head .av { width: 40px; display: grid; place-items: center; font-size: 18px; background: #F5C400; border-right: 2px solid #000; flex: none; }
+.rb-chat-head .t { font-weight: 800; color: #000; line-height: 1.15; padding-top: 5px; }
+.rb-chat-head .s { font-size: .74rem; color: #555; padding-bottom: 5px; }
+.rb-chat-head .on { width: 8px; height: 8px; background: #13703A; display: inline-block; margin-right: 5px; }
+.st-key-rb_chat_panel [data-testid="stChatMessage"] { padding: 6px 4px; }
 .st-key-rb_chat_panel [data-testid="stChatMessageContent"] p { font-size: .9rem; }
-.st-key-rb_chat_panel .rb-badge { font-size: .66rem; padding: 2px 8px; }
-.st-key-rb_chat_panel .stButton > button { font-size: .78rem; padding: 4px 8px; min-height: 0; }
+.st-key-rb_chat_panel h1, .st-key-rb_chat_panel h2, .st-key-rb_chat_panel h3, .st-key-rb_chat_panel h4 { font-size: .95rem !important; font-weight: 800; margin: 6px 0 2px !important; padding: 0 !important; line-height: 1.3; }
+.st-key-rb_chat_panel .rb-badge { font-size: .68rem; padding: 1px 6px; }
+.st-key-rb_chat_panel .stButton > button { font-size: .8rem; padding: 4px 8px; min-height: 0; justify-content: flex-start; }
 @media (max-width: 640px) {
   .st-key-rb_chat_fab { right: 16px; bottom: 16px; }
   .st-key-rb_chat_fab::before { display: none; }
@@ -97,7 +94,7 @@ def _answer(idx: int, res: dict) -> None:
     st.markdown(" ".join(chips), unsafe_allow_html=True)
     chunks = res.get("retrieved_contexts") or []
     if chunks:
-        with st.expander(f"📚 Sources ({len(chunks)})"):
+        with st.expander(f"Sources ({len(chunks)})"):
             for ch in chunks:
                 st.markdown(f'**{esc(ch.get("source_file"))}** · match {ch.get("similarity_score", 0):.2f}')
                 st.caption(ch.get("text", "")[:320])
@@ -122,7 +119,7 @@ def render_chat_widget() -> None:
         with st.popover("💬"):
             with st.container(key="rb_chat_panel"):
                 st.markdown(
-                    '<div class="rb-chat-head"><div class="av">🚆</div><div><div class="t">Railway Buddy Support</div>'
+                    '<div class="rb-chat-head"><div class="av" style="font-family:var(--mono);font-weight:700;font-size:.9rem">M6</div><div><div class="t">Railway Buddy Support</div>'
                     '<div class="s"><span class="on"></span>Online · PNR, refunds, Tatkal &amp; RAC rules · English</div></div></div>',
                     unsafe_allow_html=True)
 
@@ -139,8 +136,8 @@ def render_chat_widget() -> None:
                 with log:
                     if not hist:
                         st.markdown(
-                            '<div style="text-align:center;padding:14px 6px 8px"><div style="font-size:1.8rem">👋</div>'
-                            '<b style="color:#0A2463">Hi! How can I help with your journey?</b>'
+                            '<div style="padding:6px 2px 8px">'
+                            '<b>How can I help with your journey?</b>'
                             '<div class="rb-sub">Ask in English, or pick a question below. Answers come from booking '
                             'records and official IRCTC policy, and are checked for accuracy.</div></div>',
                             unsafe_allow_html=True)
@@ -148,12 +145,12 @@ def render_chat_widget() -> None:
                             st.button(lbl, key=f"rb_qq{i}", width="stretch", on_click=_queue, args=(qq,))
                     for idx, m in enumerate(hist):
                         if m["role"] == "user":
-                            with st.chat_message("user", avatar="🧑"):
+                            with st.chat_message("user", avatar=":material/person:"):
                                 st.markdown(m["text"])
                         else:
-                            with st.chat_message("assistant", avatar="🚆"):
+                            with st.chat_message("assistant", avatar=":material/train:"):
                                 _answer(idx, m["res"])
                 if hist:
                     c1, c2 = st.columns([1, 1])
-                    c1.button("🧹 New conversation", key="rb_chat_clear", width="stretch", on_click=_clear)
+                    c1.button("New conversation", key="rb_chat_clear", width="stretch", on_click=_clear)
                     c2.caption("Urgent? Call RailMadad **139**")

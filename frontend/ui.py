@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import html
 import os
+import re
 from typing import Any, Dict, List, Optional, Sequence
 
 import requests
@@ -83,37 +84,54 @@ def backend_online() -> bool:
 
 
 # ──────────────────────────────────────────────────────────────────────────────
-# Palette
+# Design tokens — industrial transit dashboard
+#   One bold element: the page header is an Indian Railways station name board
+#   (signal-yellow plate, heavy black type, black code box like a platform sign).
+#   Everything else is quiet: white panels, 1px #ddd rules, no radius, no shadow,
+#   monospace for every number, time, train ID, amount and audit ID.
 # ──────────────────────────────────────────────────────────────────────────────
 
 BRAND = "Railway Buddy"
 
-# One blue per screen: (accent, deep, soft tint)
-ACCENTS: Dict[str, tuple] = {
-    "home":      ("#1D4ED8", "#1E3A8A", "#DBEAFE"),
-    "ticket":    ("#2563EB", "#1E40AF", "#DBEAFE"),
-    "recommend": ("#0284C7", "#075985", "#E0F2FE"),
-    "delay":     ("#0891B2", "#155E75", "#CFFAFE"),
-    "planner":   ("#4F46E5", "#3730A3", "#E0E7FF"),
-    "fare":      ("#0EA5E9", "#0369A1", "#E0F2FE"),
-    "support":   ("#3B82F6", "#1D4ED8", "#DBEAFE"),
-    "fraud":     ("#1E40AF", "#172554", "#DBEAFE"),
-    "tower":     ("#0B3B8C", "#0A2463", "#DBEAFE"),
+INK = "#000000"        # text, primary buttons, board type
+BOARD = "#F5C400"      # station name-board yellow — headers and the active nav item only
+CANVAS = "#F0F0EE"     # page background
+PANEL = "#FFFFFF"      # panels, tables
+RULE = "#DDDDDD"       # every separation line
+MUTED = "#555555"      # secondary text
+SIG_GREEN, SIG_AMBER, SIG_RED = "#13703A", "#A35F00", "#B3141B"
+
+SANS = "'Archivo', 'Helvetica Neue', Arial, sans-serif"
+MONO = "'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace"
+
+# Kept for compatibility with pages that call inject_theme(screen); every screen shares one palette now.
+SCREEN_CODES: Dict[str, str] = {
+    "home": "RB", "ticket": "M1", "recommend": "M2", "delay": "M3", "planner": "M4",
+    "fare": "M5", "support": "M6", "fraud": "M7", "tower": "GOV",
 }
 
 TONES = {  # status tones -> (fg, bg, border)
-    "ok":    ("#047857", "#ECFDF5", "#A7F3D0"),
-    "warn":  ("#B45309", "#FFFBEB", "#FDE68A"),
-    "bad":   ("#B91C1C", "#FEF2F2", "#FECACA"),
-    "info":  ("#1D4ED8", "#EFF6FF", "#BFDBFE"),
-    "mute":  ("#475569", "#F1F5F9", "#E2E8F0"),
+    "ok":    (SIG_GREEN, "#EAF3EC", "#9CC7A8"),
+    "warn":  (SIG_AMBER, "#FBF1E1", "#E2B877"),
+    "bad":   (SIG_RED, "#FBEAEA", "#E3A0A3"),
+    "info":  ("#1F1F1F", "#F4F4F2", RULE),
+    "mute":  (MUTED, "#F4F4F2", RULE),
 }
+TONE_BAR = {"ok": SIG_GREEN, "warn": SIG_AMBER, "bad": SIG_RED}
 
-CHART_BLUES = ["#1D4ED8", "#0EA5E9", "#6366F1", "#0891B2", "#60A5FA", "#1E3A8A"]
+# Chart series: black, dark gold, grey, signal green, signal red, light grey
+CHART_COLORS = ["#111111", "#B08900", "#7A7A7A", SIG_GREEN, SIG_RED, "#B5B5B5"]
+CHART_BLUES = CHART_COLORS          # old name, still imported in places
+POS, NEG = "#111111", "#B08900"     # explanation bars: raises / lowers
 
 
 def esc(x: Any) -> str:
     return html.escape(str(x))
+
+
+def mono(x: Any) -> str:
+    """Wrap a number / time / ID so it renders in the monospace face."""
+    return f'<span class="rb-mono">{esc(x)}</span>'
 
 
 def tone_for(status: str) -> str:
@@ -134,120 +152,182 @@ def tone_for(status: str) -> str:
 # Theme
 # ──────────────────────────────────────────────────────────────────────────────
 
-def inject_theme(screen: str = "home") -> None:
-    accent, deep, soft = ACCENTS.get(screen, ACCENTS["home"])
-    st.markdown(
-        f"""
+_CSS = """
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
-:root {{
-  --accent: {accent}; --deep: {deep}; --soft: {soft};
-  --ink: #0B1F3A; --muted: #5B6B82; --line: #D9E4F5; --bg: #F3F7FE; --card: #FFFFFF;
-}}
-html, body, [class*="css"], .stApp {{ font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: var(--ink); }}
-.stApp {{ background: var(--bg); }}
-header[data-testid="stHeader"] {{ background: transparent; }}
-.block-container {{ padding-top: 1.4rem; padding-bottom: 3rem; max-width: 1240px; }}
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
+:root {
+  --ink: #000000; --board: #F5C400; --canvas: #F0F0EE; --panel: #FFFFFF; --rule: #DDDDDD; --muted: #555555;
+  --green: #13703A; --amber: #A35F00; --red: #B3141B;
+  --sans: 'Archivo', 'Helvetica Neue', Arial, sans-serif; --mono: 'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
+  /* legacy names used by inline styles in the pages */
+  --accent: #000000; --deep: #000000; --soft: #DDDDDD;
+}
+html, body, .stApp, [class*="css"], .stMarkdown, button, input, textarea, select { font-family: var(--sans); }
+.stApp { background: var(--canvas); color: var(--ink); }
+.stApp *, .stApp *::before, .stApp *::after { box-shadow: none !important; text-shadow: none !important; }
+header[data-testid="stHeader"] { background: transparent; }
+.block-container { padding-top: 3.2rem; padding-bottom: 3rem; max-width: 1320px; }
+code, .rb-mono, [data-testid="stMetricValue"], .stDataFrame { font-family: var(--mono) !important; font-variant-numeric: tabular-nums; }
+.rb-mono { letter-spacing: -0.01em; }
+.stApp code { color: var(--ink) !important; background: #EDEDEA !important; border-radius: 0 !important; padding: 0 4px; }
+:focus-visible { outline: 2px solid var(--ink) !important; outline-offset: 1px; }
 
 /* Sidebar */
-section[data-testid="stSidebar"] {{ background: #FFFFFF; border-right: 1px solid var(--line); }}
-section[data-testid="stSidebar"] .block-container {{ padding-top: 1rem; }}
-.rb-brand {{ display:flex; align-items:center; gap:10px; padding: 4px 4px 14px; }}
-.rb-logo {{ width:40px; height:40px; border-radius:12px; display:grid; place-items:center; font-size:22px;
-  background: linear-gradient(135deg,#2563EB,#0B3B8C); color:#fff; box-shadow: 0 6px 16px rgba(37,99,235,.35); }}
-.rb-name {{ font-weight:800; font-size:1.15rem; line-height:1.1; color:#0A2463; }}
-.rb-tag {{ font-size:.72rem; color: var(--muted); }}
-.rb-nav-label {{ font-size:.68rem; letter-spacing:.09em; text-transform:uppercase; color:#7C8DA6; font-weight:700; margin:14px 4px 4px; }}
+section[data-testid="stSidebar"] { background: var(--panel); border-right: 1px solid var(--rule); }
+section[data-testid="stSidebar"] [data-testid="stSidebarNavLink"] { border-radius: 0; border-left: 3px solid transparent; padding-left: 10px; }
+section[data-testid="stSidebar"] [data-testid="stSidebarNavLink"]:hover { background: #F4F4F2; }
+section[data-testid="stSidebar"] [data-testid="stSidebarNavLink"][aria-current="page"] { background: var(--board); border-left-color: var(--ink); }
+section[data-testid="stSidebar"] [data-testid="stSidebarNavLink"][aria-current="page"] span { color: var(--ink); font-weight: 700; }
+section[data-testid="stSidebar"] [data-testid="stNavSectionHeader"] { color: var(--muted); font-weight: 700; font-size: .8rem; border-top: 1px solid var(--rule); padding-top: 10px; }
+.rb-status { border: 1px solid var(--rule); background: var(--panel); font-size: .8rem; margin-top: 8px; }
+.rb-status > div { padding: 6px 10px; border-bottom: 1px solid var(--rule); display: flex; justify-content: space-between; gap: 8px; }
+.rb-status > div:last-child { border-bottom: 0; }
+.rb-status .k { color: var(--muted); }
 
-/* Hero */
-.rb-hero {{ border-radius: 20px; padding: 26px 30px; color:#fff; margin-bottom: 18px; position:relative; overflow:hidden;
-  background: linear-gradient(120deg, var(--deep) 0%, var(--accent) 100%);
-  box-shadow: 0 14px 34px -14px var(--accent); }}
-.rb-hero:after {{ content:""; position:absolute; right:-60px; top:-60px; width:260px; height:260px; border-radius:50%;
-  background: radial-gradient(circle, rgba(255,255,255,.22), transparent 65%); }}
-.rb-hero h1 {{ margin:0; font-size:1.75rem; font-weight:800; letter-spacing:-.01em; color:#fff; }}
-.rb-hero p {{ margin:6px 0 0; font-size:.98rem; color: rgba(255,255,255,.88); max-width: 760px; }}
-.rb-hero .rb-chips {{ margin-top:14px; display:flex; flex-wrap:wrap; gap:8px; }}
-.rb-chip {{ background: rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.28); padding:4px 11px; border-radius:999px; font-size:.76rem; font-weight:600; }}
+/* Station name-board header (the one bold element) */
+.rb-board { border: 2px solid var(--ink); background: var(--panel); margin-bottom: 14px; }
+.rb-board .plate { background: var(--board); display: flex; align-items: stretch; border-bottom: 2px solid var(--ink); }
+.rb-board .plate h1 { margin: 0; padding: 12px 18px 10px; font-family: var(--sans); font-weight: 900; font-size: 1.85rem;
+  letter-spacing: -0.015em; line-height: 1.1; color: var(--ink); flex: 1; }
+.rb-board .plate .code { background: var(--ink); color: var(--board); font-family: var(--mono); font-weight: 700; font-size: 1.35rem;
+  display: flex; align-items: center; padding: 0 18px; min-width: 64px; justify-content: center; }
+.rb-board .desc { padding: 10px 18px; font-size: .95rem; color: #1F1F1F; max-width: 80ch; line-height: 1.45; }
+.rb-board .spec { display: flex; flex-wrap: wrap; border-top: 1px solid var(--rule); }
+.rb-board .spec span { padding: 6px 12px; font-size: .78rem; color: var(--muted); border-right: 1px solid var(--rule); }
 
-/* Cards */
-.rb-card {{ background: var(--card); border:1px solid var(--line); border-radius:16px; padding:18px 20px;
-  box-shadow: 0 1px 2px rgba(11,31,58,.04), 0 8px 24px -16px rgba(11,31,58,.18); margin-bottom: 12px; }}
-.rb-card h4 {{ margin:0 0 4px; font-size:1rem; font-weight:700; color: var(--deep); }}
-.rb-sub {{ color: var(--muted); font-size:.84rem; }}
-.rb-kpi {{ background: var(--card); border:1px solid var(--line); border-radius:14px; padding:14px 16px; min-height:104px; box-sizing:border-box;
-  border-top: 3px solid var(--accent); }}
-.rb-kpi .l {{ font-size:.7rem; letter-spacing:.07em; text-transform:uppercase; color:var(--muted); font-weight:700; }}
-.rb-kpi .v {{ font-size:1.65rem; font-weight:800; color: var(--deep); line-height:1.25; }}
-.rb-kpi .s {{ font-size:.76rem; color: var(--muted); }}
-.rb-kpi.ok {{ border-top-color:#10B981; }} .rb-kpi.warn {{ border-top-color:#F59E0B; }} .rb-kpi.bad {{ border-top-color:#EF4444; }}
+/* Panels */
+.rb-card { background: var(--panel); border: 1px solid var(--rule); padding: 14px 16px; margin-bottom: 10px; }
+.rb-card h4 { margin: 0 0 6px; font-size: 1rem; font-weight: 800; color: var(--ink); }
+.rb-sub { color: var(--muted); font-size: .85rem; }
+
+/* Stat cells: a single strip with shared borders */
+.rb-grid { display: grid; grid-template-columns: repeat(var(--n, 4), minmax(0, 1fr)); border-top: 1px solid var(--rule); border-left: 1px solid var(--rule); background: var(--panel); margin-bottom: 10px; }
+.rb-grid > .rb-kpi { border: 0; border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin: 0; }
+.rb-kpi { background: var(--panel); border: 1px solid var(--rule); padding: 10px 14px 11px; min-height: 92px; box-sizing: border-box; border-left: 4px solid transparent !important; }
+.rb-grid > .rb-kpi { border-left: 4px solid transparent !important; }
+.rb-kpi.ok { border-left-color: var(--green) !important; } .rb-kpi.warn { border-left-color: var(--amber) !important; } .rb-kpi.bad { border-left-color: var(--red) !important; }
+.rb-kpi .l { font-size: .8rem; color: var(--muted); font-weight: 600; }
+.rb-kpi .v { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 1.55rem; font-weight: 600; color: var(--ink); line-height: 1.3; letter-spacing: -0.02em; }
+.rb-kpi .v.txt { font-family: var(--sans); font-weight: 800; letter-spacing: -0.01em; }
+.rb-kpi .s { font-size: .76rem; color: var(--muted); }
+@media (max-width: 760px) { .rb-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .rb-thead { display: none; } }
 
 /* Section headings */
-.rb-sec {{ display:flex; align-items:flex-end; justify-content:space-between; gap:12px; margin: 30px 0 10px; padding-bottom:8px;
-  border-bottom: 2px solid var(--soft); }}
-.rb-sec {{ flex-wrap: wrap; }}
-.rb-sec > div:first-child {{ flex: none; }}
-.rb-sec .t {{ font-size:1.18rem; font-weight:800; color: var(--deep); white-space: nowrap; }}
-.rb-sec .d {{ font-size:.84rem; color: var(--muted); flex: 1 1 320px; text-align: right; }}
-.rb-sec .n {{ background: var(--accent); color:#fff; border-radius:8px; font-size:.72rem; font-weight:800; padding:2px 8px; margin-right:8px; }}
+.rb-sec { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 4px 16px; margin: 26px 0 10px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--ink); }
+.rb-sec > div:first-child { flex: none; }
+.rb-sec .t { font-size: 1.15rem; font-weight: 800; color: var(--ink); white-space: nowrap; }
+.rb-sec .d { font-size: .84rem; color: var(--muted); flex: 1 1 320px; text-align: right; }
+.rb-sec .n { font-family: var(--mono); background: var(--ink); color: var(--board); font-size: .8rem; font-weight: 700; padding: 1px 7px; margin-right: 10px; }
 
 /* Badges & callouts */
-.rb-badge {{ display:inline-flex; align-items:center; gap:5px; padding:3px 10px; border-radius:999px; font-size:.74rem; font-weight:700; border:1px solid; white-space:nowrap; }}
-.rb-call {{ border-radius:12px; padding:12px 16px; font-size:.92rem; border:1px solid; margin: 8px 0; }}
+.rb-badge { display: inline-flex; align-items: center; gap: 5px; padding: 1px 8px; font-size: .75rem; font-weight: 600; border: 1px solid; white-space: nowrap; }
+.rb-call { padding: 9px 14px; font-size: .92rem; border: 1px solid var(--rule); border-left: 4px solid; margin: 8px 0; background: var(--panel); color: #1F1F1F; }
+.rb-call b { color: var(--ink); }
 
-/* Stat rows inside cards */
-.rb-row {{ display:flex; justify-content:space-between; gap:10px; padding:7px 0; border-bottom:1px dashed var(--line); font-size:.9rem; }}
-.rb-row:last-child {{ border-bottom:0; }} .rb-row .k {{ color: var(--muted); }} .rb-row .v {{ font-weight:700; color:var(--ink); text-align:right; }}
+/* Key/value rows */
+.rb-row { display: flex; justify-content: space-between; gap: 10px; padding: 6px 0; border-bottom: 1px solid var(--rule); font-size: .9rem; }
+.rb-row:last-child { border-bottom: 0; }
+.rb-row .k { color: #1F1F1F; } .rb-row .v { font-family: var(--mono); font-weight: 600; color: var(--ink); text-align: right; }
+.rb-list { border: 1px solid var(--rule); background: var(--panel); margin-bottom: 10px; }
+.rb-list .rb-row { padding: 8px 12px; align-items: center; }
+
+/* Train result row (recommender) */
+.rb-tkt { display: grid; grid-template-columns: 44px minmax(0, 2fr) auto auto auto auto minmax(90px, 1fr); align-items: stretch; }
+.rb-tkt > div { padding: 9px 12px; border-right: 1px solid var(--rule); font-size: .9rem; white-space: nowrap; }
+.rb-tkt > div:nth-child(2) { white-space: normal; }
+.rb-tkt > div:last-child { border-right: 0; }
+.rb-tkt .rk { font-family: var(--mono); font-weight: 700; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; }
+.rb-tkt .rk.top { background: var(--board); }
+.rb-tkt .fare { font-size: 1.3rem; font-weight: 600; text-align: right; display: flex; align-items: center; justify-content: flex-end; }
+@media (max-width: 760px) { .rb-tkt { grid-template-columns: 40px 1fr 1fr; } .rb-tkt > div { border-bottom: 1px solid var(--rule); } }
+
+/* Dense tables */
+.rb-table { width: 100%; border-collapse: collapse; background: var(--panel); border: 1px solid var(--rule); font-size: .86rem; margin-bottom: 10px; }
+.rb-table th { background: var(--ink); color: var(--board); text-align: left; font-weight: 700; font-size: .78rem; padding: 6px 10px; }
+.rb-table td { border-top: 1px solid var(--rule); padding: 6px 10px; vertical-align: top; }
+.rb-table td.m, .rb-table th.m { font-family: var(--mono); white-space: nowrap; }
+.rb-table .r { text-align: right; }
+.rb-table tr:hover td { background: #FAFAF8; }
 
 /* Pillar tiles */
-.rb-pillar {{ background:#fff; border:1px solid var(--line); border-radius:14px; padding:12px 14px; min-height:98px; box-sizing:border-box; }}
-.rb-pillar .h {{ display:flex; justify-content:space-between; align-items:center; gap:6px; font-weight:700; font-size:.88rem; color:var(--deep); }}
-.rb-pillar .m {{ font-size:.78rem; color:var(--muted); margin-top:6px; min-height:2.2em; }}
-.rb-dot {{ width:9px; height:9px; border-radius:50%; display:inline-block; }}
+.rb-pillar { background: var(--panel); padding: 10px 12px; min-height: 84px; box-sizing: border-box; border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+.rb-pillar .h { display: flex; justify-content: space-between; align-items: center; gap: 6px; font-weight: 700; font-size: .88rem; color: var(--ink); }
+.rb-pillar .m { font-size: .78rem; color: var(--muted); margin-top: 6px; }
 
-/* Anchor nav */
-.rb-anchors {{ position:sticky; top:48px; z-index:50; background: rgba(243,247,254,.92); backdrop-filter: blur(8px);
-  padding:8px 0; display:flex; flex-wrap:wrap; gap:8px; border-bottom:1px solid var(--line); margin-bottom:6px; }}
-.rb-anchors a {{ text-decoration:none; font-size:.76rem; font-weight:700; color: var(--deep); background:#fff; border:1px solid var(--line);
-  padding:4px 11px; border-radius:999px; }}
-.rb-anchors a:hover {{ background: var(--accent); color:#fff; border-color: var(--accent); }}
+/* Readout meter (replaces gauges) */
+.rb-meter { background: var(--panel); border: 1px solid var(--rule); padding: 12px 14px; }
+.rb-meter .l { font-size: .85rem; color: var(--muted); font-weight: 600; }
+.rb-meter .val { font-family: var(--mono); font-size: 2.6rem; font-weight: 600; line-height: 1.15; letter-spacing: -0.03em; color: var(--ink); }
+.rb-meter .val small { font-size: 1.1rem; color: var(--muted); margin-left: 4px; }
+.rb-meter .bar { display: grid; grid-template-columns: repeat(20, 1fr); gap: 2px; margin: 8px 0 4px; }
+.rb-meter .bar i { height: 12px; background: #E6E6E3; display: block; }
+.rb-meter .scale { display: flex; justify-content: space-between; font-family: var(--mono); font-size: .72rem; color: var(--muted); }
+
+/* Anchor nav (Control Tower) */
+.rb-anchors { position: sticky; top: 46px; z-index: 50; background: var(--canvas); display: flex; flex-wrap: wrap;
+  border: 1px solid var(--rule); border-right: 0; margin: 10px 0 6px; }
+.rb-anchors a { text-decoration: none; font-size: .78rem; font-weight: 600; color: var(--ink); background: var(--panel);
+  border-right: 1px solid var(--rule); padding: 5px 10px; }
+.rb-anchors a:hover { background: var(--board); }
+
+/* Departure-board service table (home) */
+[class*="st-key-svcrow"] { border: 1px solid var(--rule); border-top: 0; background: var(--panel); padding: 8px 10px 0; margin-top: -1rem; }
+[class*="st-key-svcrow"] [data-testid="stHorizontalBlock"] { align-items: center; gap: 12px; }
+[class*="st-key-svcrow"]:hover { background: #FAFAF8; }
+.rb-thead { display: grid; grid-template-columns: var(--cols); gap: 12px; background: var(--ink); color: var(--board);
+  font-size: .8rem; font-weight: 700; padding: 6px 10px; border: 1px solid var(--ink); margin-bottom: 14px; }
 
 /* Streamlit widgets */
-div[data-testid="stMetric"] {{ background:#fff; border:1px solid var(--line); border-radius:14px; padding:12px 16px; border-top:3px solid var(--accent); }}
-div[data-testid="stMetricValue"] {{ color: var(--deep); font-weight:800; }}
-div[data-testid="stMetricLabel"] p {{ color: var(--muted); font-weight:600; }}
-.stButton > button, .stFormSubmitButton > button, .stDownloadButton > button {{ border-radius:11px; font-weight:700; border:1px solid var(--line); }}
-.stButton > button[kind="primary"], .stFormSubmitButton > button[kind="primaryFormSubmit"], .stDownloadButton > button {{
-  background: var(--accent); color:#fff; border-color: var(--accent); }}
-.stButton > button[kind="primary"]:hover, .stFormSubmitButton > button[kind="primaryFormSubmit"]:hover {{ background: var(--deep); border-color: var(--deep); color:#fff; }}
-.stFormSubmitButton > button[kind="secondaryFormSubmit"] {{ background:#fff; color: var(--deep); border:1px solid var(--line); }}
-.stFormSubmitButton > button[kind="secondaryFormSubmit"]:hover {{ border-color: var(--accent); color: var(--accent); }}
-div[data-testid="stForm"] {{ background:#fff; border:1px solid var(--line); border-radius:16px; padding:18px 20px; }}
-div[data-testid="stExpander"] {{ background:#fff; border:1px solid var(--line); border-radius:14px; }}
-div[data-testid="stVerticalBlockBorderWrapper"] {{ border-radius:16px; }}
-.stTabs [data-baseweb="tab-list"] {{ gap:6px; }}
-.stTabs [data-baseweb="tab"] {{ background:#fff; border:1px solid var(--line); border-radius:10px 10px 0 0; padding:6px 14px; }}
-.stTabs [aria-selected="true"] {{ background: var(--accent); color:#fff !important; }}
-.stTabs [aria-selected="true"] p {{ color:#fff !important; }}
-.stProgress > div > div > div > div {{ background: var(--accent); }}
-section[data-testid="stSidebar"] div[role="radiogroup"] label {{ padding:7px 10px; border-radius:10px; width:100%; }}
-section[data-testid="stSidebar"] div[role="radiogroup"] label:hover {{ background: var(--soft); }}
-.rb-foot {{ text-align:center; color:#7C8DA6; font-size:.78rem; margin-top:42px; padding-top:16px; border-top:1px solid var(--line); }}
+div[data-testid="stMetric"] { background: var(--panel); border: 1px solid var(--rule); padding: 10px 14px; }
+div[data-testid="stMetricValue"] { color: var(--ink); }
+.stButton > button, .stFormSubmitButton > button, .stDownloadButton > button, [data-testid="stPageLink"] a {
+  border-radius: 0 !important; font-weight: 600; border: 1px solid var(--ink) !important; background: var(--panel); color: var(--ink); }
+.stButton > button:hover, .stFormSubmitButton > button:hover, .stDownloadButton > button:hover, [data-testid="stPageLink"] a:hover {
+  background: var(--board) !important; color: var(--ink) !important; border-color: var(--ink) !important; }
+.stButton > button[kind="primary"], .stFormSubmitButton > button[kind="primaryFormSubmit"] { background: var(--ink); color: #fff; }
+.stButton > button[kind="primary"] p, .stFormSubmitButton > button[kind="primaryFormSubmit"] p { color: #fff; }
+.stButton > button[kind="primary"]:hover p, .stFormSubmitButton > button[kind="primaryFormSubmit"]:hover p { color: var(--ink); }
+div[data-testid="stForm"] { background: var(--panel); border: 1px solid var(--rule); border-radius: 0; padding: 14px 16px; }
+div[data-testid="stExpander"] details { background: var(--panel); border: 1px solid var(--rule); border-radius: 0; }
+div[data-testid="stVerticalBlockBorderWrapper"], [data-testid="stContainer"] { border-radius: 0; }
+div[data-baseweb="input"], div[data-baseweb="select"] > div, div[data-baseweb="textarea"], [data-testid="stNumberInputContainer"] { border-radius: 0 !important; }
+input, textarea, [data-baseweb="select"] div { font-variant-numeric: tabular-nums; }
+.stTabs [data-baseweb="tab-list"] { gap: 0; border-bottom: 1px solid var(--ink); }
+.stTabs [data-baseweb="tab"] { background: var(--panel); border: 1px solid var(--rule); border-bottom: 0; border-radius: 0; padding: 6px 14px; }
+.stTabs [aria-selected="true"] { background: var(--board); }
+[data-testid="stChatMessage"] { border-radius: 0; border-bottom: 1px solid var(--rule); background: transparent; }
+[data-testid="stChatMessageAvatarUser"], [data-testid="stChatMessageAvatarAssistant"], [data-testid*="stChatMessageAvatar"] { border-radius: 0; }
+[data-testid="stPopoverBody"] { border-radius: 0 !important; border: 2px solid var(--ink) !important; }
+[data-testid="stDataFrame"] { border: 1px solid var(--rule); }
+.rb-foot { color: var(--muted); font-size: .78rem; margin-top: 36px; padding-top: 10px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
 </style>
-        """,
-        unsafe_allow_html=True,
-    )
+"""
+
+
+def inject_theme(screen: str = "home") -> None:
+    st.session_state["_rb_screen"] = screen
+    st.markdown(_CSS, unsafe_allow_html=True)
 
 
 # ──────────────────────────────────────────────────────────────────────────────
 # Building blocks
 # ──────────────────────────────────────────────────────────────────────────────
 
-def hero(title: str, subtitle: str, chips: Sequence[str] = ()) -> None:
-    chip_html = "".join(f'<span class="rb-chip">{esc(c)}</span>' for c in chips)
+_LEADING_SYMBOLS = re.compile(r"^[^\w(]+", re.UNICODE)
+
+
+def hero(title: str, subtitle: str, chips: Sequence[str] = (), code: Optional[str] = None) -> None:
+    """Station name-board header: yellow plate with the page name, black code box, a plain description and a spec strip."""
+    clean = _LEADING_SYMBOLS.sub("", title).strip() or title
+    code = code or SCREEN_CODES.get(st.session_state.get("_rb_screen", ""), "")
+    spec = "".join(f"<span>{esc(c)}</span>" for c in chips)
     st.markdown(
-        f'<div class="rb-hero"><h1>{title}</h1><p>{subtitle}</p>'
-        f'{"<div class=rb-chips>" + chip_html + "</div>" if chips else ""}</div>',
+        f'<div class="rb-board"><div class="plate"><h1>{esc(clean)}</h1>'
+        f'{f"<div class=code>{esc(code)}</div>" if code else ""}</div>'
+        f'<div class="desc">{subtitle}</div>'
+        f'{"<div class=spec>" + spec + "</div>" if chips else ""}</div>',
         unsafe_allow_html=True,
     )
 
@@ -259,22 +339,25 @@ def badge(text: str, tone: Optional[str] = None) -> str:
 
 
 def callout(text: str, tone: str = "info", icon: str = "") -> None:
-    fg, bg, bd = TONES.get(tone, TONES["info"])
-    st.markdown(
-        f'<div class="rb-call" style="color:{fg};background:{bg};border-color:{bd}">{icon + " " if icon else ""}{text}</div>',
-        unsafe_allow_html=True,
-    )
+    fg, _, _ = TONES.get(tone, TONES["info"])
+    bar = TONE_BAR.get(tone, INK)
+    # icons are accepted for compatibility but not drawn: the coloured edge carries the status
+    st.markdown(f'<div class="rb-call" style="border-left-color:{bar}">{text}</div>',
+                unsafe_allow_html=True)
 
 
 def kpi(label: str, value: Any, sub: str = "", tone: str = "") -> str:
+    # numbers, times and IDs in monospace; words ("Healthy", "Likely WL") in the sans face
+    plain = re.sub(r"<[^>]+>", "", str(value))
+    kind = "" if re.search(r"\d", plain) or plain.strip() in ("—", "-") else " txt"
     return (f'<div class="rb-kpi {tone}"><div class="l">{esc(label)}</div>'
-            f'<div class="v">{value}</div><div class="s">{sub}</div></div>')
+            f'<div class="v{kind}">{value}</div><div class="s">{sub}</div></div>')
 
 
-def kpi_row(items: Sequence[tuple]) -> None:
-    cols = st.columns(len(items))
-    for col, it in zip(cols, items):
-        col.markdown(kpi(*it), unsafe_allow_html=True)
+def kpi_row(items: Sequence[tuple], cols: Optional[int] = None) -> None:
+    """One strip (or grid, with `cols`) of stat cells sharing their borders — data-dense, no gaps."""
+    cells = "".join(kpi(*it) for it in items)
+    st.markdown(f'<div class="rb-grid" style="--n:{cols or len(items)}">{cells}</div>', unsafe_allow_html=True)
 
 
 def section(title: str, desc: str = "", anchor: str = "", num: str = "") -> None:
@@ -293,20 +376,40 @@ def rows_card(title: str, rows: Sequence[tuple], note: str = "") -> None:
                 unsafe_allow_html=True)
 
 
+def meter(value: float, label: str, suffix: str = "%", lo: float = 0, hi: float = 100, tone: str = "",
+          decimals: int = 1) -> str:
+    """Readout instead of a gauge: big monospace value and a 20-segment bar in the signal colour."""
+    v = float(value or 0)
+    frac = 0.0 if hi == lo else max(0.0, min(1.0, (v - lo) / (hi - lo)))
+    lit = int(round(frac * 20))
+    color = TONE_BAR.get(tone, INK)
+    segs = "".join(f'<i style="background:{color}"></i>' if i < lit else "<i></i>" for i in range(20))
+    num = f"{v:.{decimals}f}" if decimals else f"{v:.0f}"
+    return (f'<div class="rb-meter"><div class="l">{esc(label)}</div>'
+            f'<div class="val">{num}<small>{esc(suffix.strip())}</small></div>'
+            f'<div class="bar" role="img" aria-label="{esc(label)}: {num}{esc(suffix)}">{segs}</div>'
+            f'<div class="scale"><span>{lo:g}</span><span>{hi:g}</span></div></div>')
+
+
 def style_fig(fig, height: int = 280):
-    """Apply the light blue chart theme to any Plotly figure."""
+    """Plotly theme: white panel, light grid, sans titles, monospace tick labels."""
     fig.update_layout(
         height=height,
-        paper_bgcolor="rgba(0,0,0,0)",
-        plot_bgcolor="#FFFFFF",
-        font=dict(family="Plus Jakarta Sans, sans-serif", color="#0B1F3A", size=12),
-        margin=dict(l=10, r=14, t=36, b=10),
-        colorway=CHART_BLUES,
-        xaxis=dict(gridcolor="#E6EEF9", zerolinecolor="#C9D8EE"),
-        yaxis=dict(gridcolor="#E6EEF9", zerolinecolor="#C9D8EE"),
+        paper_bgcolor=PANEL,
+        plot_bgcolor=PANEL,
+        font=dict(family=SANS, color=INK, size=12),
+        title_font=dict(family=SANS, size=14, color=INK),
+        margin=dict(l=10, r=14, t=40, b=10),
+        colorway=CHART_COLORS,
+        xaxis=dict(gridcolor="#EEEEEE", zerolinecolor="#999999", linecolor=RULE, tickfont=dict(family=MONO, size=11)),
+        yaxis=dict(gridcolor="#EEEEEE", zerolinecolor="#999999", linecolor=RULE, tickfont=dict(family=SANS, size=12)),
         legend=dict(orientation="h", y=-0.28),
+        hoverlabel=dict(font_family=MONO, bgcolor=PANEL, bordercolor=INK),
     )
     return fig
+
+
+LLM_LABELS = {"sarvam": "Sarvam AI", "gemini": "Gemini", "azure_openai": "Azure OpenAI", "fallback": "Built-in smart engine"}
 
 
 def engine_label() -> str:
@@ -314,23 +417,27 @@ def engine_label() -> str:
     try:
         h = requests.get(f"{API_BASE}/api/health", timeout=3).json() or {}
         llm = h.get("llm") or {}
-        if h.get("llm_mode") == "gemini":
-            if llm.get("last_model"):
-                return f"Gemini · {llm['last_model']}"
-            if llm.get("fallback_used") and not llm.get("gemini_ok"):
-                return "Gemini unreachable · built-in engine"
-            return "Gemini connected"
-        if h.get("llm_mode") == "azure_openai":
-            return "Azure OpenAI"
+        mode = h.get("llm_mode") or llm.get("mode") or "fallback"
+        if mode == "fallback":
+            return LLM_LABELS["fallback"]
+        if llm.get("budget_reached"):
+            return f"{LLM_LABELS.get(mode, mode)} · daily budget reached, built-in engine"
+        last = llm.get("last_provider")
+        if last:
+            return f"{LLM_LABELS.get(last, last)} · {llm.get('last_model') or ''}".rstrip(" ·")
+        if llm.get("fallback_used") and not llm.get("llm_ok"):
+            return f"{LLM_LABELS.get(mode, mode)} unreachable · built-in engine"
+        model = ((llm.get("per_provider") or {}).get(mode) or {}).get("model") or ""
+        return f"{LLM_LABELS.get(mode, mode)} · {model}".rstrip(" ·") + " (ready)"
     except Exception:
         pass
-    return "Built-in smart engine"
+    return LLM_LABELS["fallback"]
 
 
 def footer() -> None:
     st.markdown(
-        f'<div class="rb-foot">🚆 <b>{BRAND}</b> · AI-powered railway travel with autonomous AI governance<br>'
-        'FastAPI · Streamlit · XGBoost · LightGBM · SHAP · SciPy</div>',
+        f'<div class="rb-foot"><span><b>{BRAND}</b> — AI-assisted railway travel with an autonomous governance layer</span>'
+        '<span>FastAPI · Streamlit · XGBoost · LightGBM · SHAP · SciPy</span></div>',
         unsafe_allow_html=True,
     )
 
@@ -383,18 +490,6 @@ def label_for(mapping: Dict[str, str], code: str, default_index: int = 0) -> str
     return list(mapping.keys())[default_index]
 
 
-def gauge(value: float, title: str, suffix: str = "%", lo: float = 0, hi: float = 100,
-          steps: Optional[List[tuple]] = None, color: Optional[str] = None, height: int = 230):
-    import plotly.graph_objects as go
-    steps = steps or [(lo, (lo + hi) * 0.4, "#E0ECFF"), ((lo + hi) * 0.4, (lo + hi) * 0.75, "#BFD7FF"), ((lo + hi) * 0.75, hi, "#93BBFF")]
-    fig = go.Figure(go.Indicator(
-        mode="gauge+number", value=value, title={"text": title, "font": {"size": 14, "color": "#5B6B82"}},
-        number={"suffix": suffix, "font": {"size": 34, "color": "#0A2463"}},
-        gauge={"axis": {"range": [lo, hi], "tickcolor": "#94A3B8"},
-               "bar": {"color": color or "#1D4ED8", "thickness": 0.3},
-               "bgcolor": "#fff", "borderwidth": 0,
-               "steps": [{"range": [a, b], "color": c} for a, b, c in steps]},
-    ))
-    fig.update_layout(height=height, margin=dict(l=34, r=40, t=46, b=6), paper_bgcolor="rgba(0,0,0,0)",
-                      font=dict(family="Plus Jakarta Sans, sans-serif"))
-    return fig
+def gauge(value: float, title: str, suffix: str = "%", lo: float = 0, hi: float = 100, *_, **__) -> str:
+    """Deprecated: gauges were replaced by monospace readouts. Returns meter() HTML."""
+    return meter(value, title, suffix, lo, hi)

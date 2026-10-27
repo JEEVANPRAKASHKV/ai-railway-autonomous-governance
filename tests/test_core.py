@@ -18,7 +18,7 @@ from core.schemas import TelemetryEvent
 def test_platform_settings():
     """Verify platform settings load default values properly."""
     assert os.path.exists(settings.project_root)
-    assert settings.llm_mode in ["gemini", "azure_openai", "fallback"]
+    assert settings.llm_mode in ["sarvam", "gemini", "azure_openai", "fallback"]
     assert settings.fastapi_port == 8000
     assert settings.streamlit_port == 8501
 
@@ -27,6 +27,7 @@ def test_llm_router_fallback(monkeypatch):
     """Verify LLMRouter functions in fallback mode without exceptions."""
     from core.llm_router import LLMRouter
     from core.config import settings
+    monkeypatch.setattr(settings, "sarvam_api_key", "")
     monkeypatch.setattr(settings, "gemini_api_key", "")
     monkeypatch.setattr(settings, "azure_openai_key", "")
     router = LLMRouter()

@@ -24,7 +24,7 @@ class GovernanceBadge(BaseModel):
     drift_flag: bool = False
     bias_flag: bool = False
     hallucination_flag: bool = False
-    llm_mode: str = "fallback"          # "azure_openai" | "fallback"
+    llm_mode: str = "fallback"          # "sarvam" | "gemini" | "azure_openai" | "fallback"
     audit_id: str = ""
     timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
@@ -87,7 +87,7 @@ class SupervisorAlert(BaseModel):
 
 class LLMResponse(BaseModel):
     content: str
-    mode: Literal["gemini", "azure_openai", "fallback"]
+    mode: Literal["sarvam", "gemini", "azure_openai", "fallback"]
     model: str = ""
     tokens_used: int = 0
     latency_ms: float = 0.0

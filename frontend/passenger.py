@@ -20,8 +20,8 @@ import streamlit as st
 from frontend.components.shap_chart import render_shap_chart
 from frontend.components.telemetry_badge import render_telemetry_badge
 from frontend.ui import (
-    api_get, api_post, badge, callout, esc, gauge, hero, inject_theme, kpi, kpi_row,
-    label_for, load_reference, rows_card, section, send_outcome, style_fig,
+    NEG, POS, TONE_BAR, api_get, api_post, badge, callout, esc, hero, inject_theme, kpi, kpi_row,
+    label_for, load_reference, meter, mono, rows_card, section, send_outcome, style_fig,
 )
 
 CLASSES = ["3A", "2A", "1A", "SL", "CC"]
@@ -42,7 +42,7 @@ def _setter(values: Dict[str, Any], run_flag: str):
 
 def presets(items: List[tuple], run_flag: str, key: str) -> None:
     """Row of one-click scenario buttons. items = [(label, {state_key: value})]."""
-    st.caption("⚡ Try a ready-made scenario")
+    st.caption("Try a ready-made scenario")
     cols = st.columns(len(items))
     for i, (col, (label, vals)) in enumerate(zip(cols, items)):
         col.button(label, key=f"{key}_p{i}", width="stretch", on_click=_setter(vals, run_flag))
@@ -60,7 +60,7 @@ def outcome_box(key: str, res: Dict[str, Any], label: str, kind: str, **kw: Any)
     audit = (res.get("governance_telemetry") or {}).get("audit_id")
     if not audit:
         return
-    with st.expander(f"📬 {label}"):
+    with st.expander(f"{label}"):
         st.caption("Real outcomes let the governance layer measure live accuracy, spot concept drift and retrain "
                    "the model. They are stored in the audit trail against this prediction's audit id.")
         c1, c2 = st.columns([2, 1])
@@ -79,90 +79,94 @@ def outcome_box(key: str, res: Dict[str, Any], label: str, kind: str, **kw: Any)
 
 def _empty(msg: str) -> None:
     st.markdown(
-        f'<div class="rb-card" style="text-align:center;padding:46px 20px;color:#5B6B82">'
-        f'<div style="font-size:2.2rem">🧭</div><div style="font-weight:700;color:#0A2463;margin-top:6px">{msg}</div>'
-        f'<div class="rb-sub">Fill in the details and press the button to see your result.</div></div>',
+        f'<div class="rb-card" style="padding:28px 20px;border-style:dashed">'
+        f'<div style="font-weight:700">{msg}</div>'
+        f'<div class="rb-sub">Fill in the details on the left and run it — or pick a ready-made scenario above.</div></div>',
         unsafe_allow_html=True,
     )
 
 
 # ──────────────────────────────────────────────────────────────────────────────
-# Home
+# Home — a departure board of services
 # ──────────────────────────────────────────────────────────────────────────────
 
+# (code, page key, module id, name, what it answers)
 SERVICES = [
-    ("🎫", "Ticket Confirmation", "Will my waitlist ticket confirm? Probability, berth and the reasons why.", "ticket"),
-    ("🚆", "Train Recommender", "Best train for your budget, time and travel style — fairness-audited.", "recommend"),
-    ("⏱️", "Delay & Disruption", "Delay forecast, station congestion and smarter alternatives.", "delay"),
-    ("🧭", "AI Travel Planner", "Tell it your trip in plain English. It plans — you approve.", "planner"),
-    ("💰", "Fare Forecast", "Where fares are heading and the cheapest time to book.", "fare"),
+    ("M1", "ticket", "m1_ticket_predictor", "Ticket confirmation", "Will my waitlisted ticket confirm, and which berth?"),
+    ("M2", "recommend", "m2_train_recommender", "Train recommender", "Which train fits my budget, time and travel style?"),
+    ("M3", "delay", "m3_delay_predictor", "Delay & disruption", "How late will it run, and is there a better train?"),
+    ("M4", "planner", "m4_travel_planner", "AI travel planner", "Plan my trip from one sentence — I approve the booking."),
+    ("M5", "fare", "m5_fare_predictor", "Fare forecast", "Where is the fare heading, and when should I book?"),
+    ("M6", None, "m6_support_assistant", "Support assistant", "PNR status, refunds, Tatkal and RAC rules — chat button, bottom-right."),
 ]
 GOVERNANCE = [
-    ("🏛️", "Governance Control Tower", "See how AI agents monitor, explain and fix the models behind these services.", "tower"),
-    ("🛡️", "Fraud & Bot Shield", "Real-time bot, scalper and account-misuse risk scoring with explainable alerts.", "fraud"),
+    ("GOV", "tower", None, "Governance control tower", "Health, drift, live quality, bias, incidents, retraining and audit."),
+    ("M7", "fraud", "m7_fraud_detector", "Fraud & bot shield", "Bot, scalper and account-misuse scoring with evidence."),
 ]
+_BOARD_COLS = [0.55, 3.2, 0.9, 0.9, 1.0, 0.9]
+
+
+def _board(rows: List[tuple], pages: Dict[str, Any], modules: Dict[str, Any], key: str) -> None:
+    cols = " ".join(f"{w}fr" for w in _BOARD_COLS)
+    st.markdown(f'<div class="rb-thead" style="--cols:{cols}">' + "".join(
+        f"<span>{h}</span>" for h in ["Code", "Service", "Requests", "P95 ms", "Status", ""]) + "</div>", unsafe_allow_html=True)
+    for code, page, mid, name, desc in rows:
+        m = modules.get(mid or "", {}) if mid else {}
+        req = m.get("total_requests")
+        p95 = m.get("p95_ms")
+        err = float(m.get("error_rate_pct") or 0)
+        status = ("—" if not m else "Delayed" if (p95 or 0) > 3000 or err >= 5 else "On time")
+        with st.container(key=f"svcrow_{key}_{code}"):
+            c = st.columns(_BOARD_COLS)
+            c[0].markdown(f'<span class="rb-mono" style="font-weight:700">{code}</span>', unsafe_allow_html=True)
+            c[1].markdown(f"**{name}**<br><span class='rb-sub'>{esc(desc)}</span>", unsafe_allow_html=True)
+            c[2].markdown(mono(f"{req:,}" if req is not None else "—"), unsafe_allow_html=True)
+            c[3].markdown(mono(f"{p95:.0f}" if p95 is not None else "—"), unsafe_allow_html=True)
+            c[4].markdown(badge(status, "ok" if status == "On time" else "warn" if status == "Delayed" else "mute"),
+                          unsafe_allow_html=True)
+            if page and pages.get(page):
+                c[5].page_link(pages[page], label="Open")
+            else:
+                c[5].markdown('<span class="rb-sub">Chat button ↘</span>', unsafe_allow_html=True)
 
 
 def home(pages: Dict[str, Any]) -> None:
     inject_theme("home")
     hero(
-        "Hi, I'm Railway Buddy 👋",
-        "Your AI companion for Indian Railways — predicts your ticket, plans your journey, watches delays and fares, "
-        "and keeps you safe. Every answer is monitored by an autonomous AI governance layer.",
-        ["7 AI services", "Explainable predictions", "Human approves every booking", "Governed 24×7"],
+        "Railway Buddy",
+        "Predicts your ticket, plans your journey, watches delays and fares, and answers your questions. "
+        "Every model is monitored live by an autonomous governance layer, and nothing is booked without your approval.",
+        ["7 AI services", "Explanations on every prediction", "Human approval for bookings and model releases"],
     )
 
     dash = api_get("/governance/supervisor/dashboard") or {}
     score = dash.get("governance_score")
-    status = (dash.get("platform_health") or {}).get("platform_status", "—")
+    health = dash.get("platform_health") or {}
+    status = health.get("platform_status", "—")
+    modules = health.get("modules") or {}
     kpi_row([
-        ("AI services online", "7 / 7", "5 tools · support chat · fraud shield", "ok"),
-        ("Platform status", esc(status.title() if status != "—" else status), "Live from Control Tower", "ok" if status == "HEALTHY" else "warn"),
-        ("Governance score", f"{score:.0f}" if score is not None else "—", "out of 100", "ok" if (score or 0) >= 80 else "warn"),
-        ("Bookings", "You approve", "Agents never book on their own", "ok"),
+        ("Platform", esc(status.title() if status != "—" else status), "live from the control tower", "ok" if status == "HEALTHY" else "warn"),
+        ("Governance score", f"{score:.0f}<small style='font-size:.9rem;color:#555'>/100</small>" if score is not None else "—",
+         "health, drift, quality, bias", "ok" if (score or 0) >= 80 else "warn"),
+        ("Requests served", f'{health.get("total_requests", 0):,}', f'{health.get("overall_error_rate_pct", 0):.2f}% errors', ""),
+        ("Open incidents", (dash.get("rca_summary") or {}).get("open_incidents", 0), "handled by the supervisor agent", ""),
     ])
 
-    section("Plan your journey", "Pick a service — each one shows its reasoning, not just an answer.")
-    cards = SERVICES + [("💬", "Support Assistant", "PNR status, refunds, cancellations, Tatkal and RAC rules — "
-                                                      "tap the round 💬 button at the bottom-right of any page.", None)]
-    for row in (cards[:3], cards[3:]):
-        cols = st.columns(3)
-        for col, (icon, title, desc, key) in zip(cols, row):
-            with col:
-                st.markdown(
-                    f'<div class="rb-card" style="height:168px"><div style="font-size:1.6rem">{icon}</div>'
-                    f'<h4 style="margin-top:4px">{title}</h4><div class="rb-sub">{desc}</div></div>',
-                    unsafe_allow_html=True,
-                )
-                if key and st.button("Open →", key=f"home_{key}", width="stretch"):
-                    st.switch_page(pages[key])
-                elif not key:
-                    st.markdown('<div class="rb-sub" style="text-align:center;padding:8px 0">Always one tap away ↘</div>',
-                                unsafe_allow_html=True)
+    section("Travel services", "Live request counts and latency from the governance layer.")
+    _board(SERVICES, pages, modules, "svc")
 
-    section("AI governance", "The operations side: how every model is watched, explained, secured and fixed.")
-    cols = st.columns(2)
-    for col, (icon, title, desc, key) in zip(cols, GOVERNANCE):
-        with col:
-            st.markdown(
-                f'<div class="rb-card" style="background:linear-gradient(135deg,#0A2463,#1D4ED8);border:0;min-height:128px">'
-                f'<div style="font-size:1.6rem">{icon}</div><h4 style="margin-top:4px;color:#fff">{title}</h4>'
-                f'<div class="rb-sub" style="color:#DBEAFE">{desc}</div></div>',
-                unsafe_allow_html=True,
-            )
-            if st.button(f"Open {title} →", key=f"home_{key}", width="stretch", type="primary"):
-                st.switch_page(pages[key])
+    section("Operations", "Where the models are watched, secured and fixed.")
+    _board(GOVERNANCE, pages, modules, "gov")
 
-    section("How Railway Buddy stays trustworthy", "Every prediction passes through the same governance loop.")
-    cols = st.columns(4)
-    for col, (i, t, d) in zip(cols, [
-        ("1", "Validate", "Inputs are checked for quality before any model runs."),
-        ("2", "Predict & explain", "Models return a score, a confidence and the reasons (SHAP)."),
-        ("3", "Monitor", "Latency, drift, bias and hallucination are tracked live."),
-        ("4", "Self-heal", "Agents open incidents, retrain and roll back — humans approve the big moves."),
-    ]):
-        col.markdown(f'<div class="rb-card"><span class="rb-badge" style="color:#1D4ED8;background:#EFF6FF;border-color:#BFDBFE">Step {i}</span>'
-                     f'<h4 style="margin-top:8px">{t}</h4><div class="rb-sub">{d}</div></div>', unsafe_allow_html=True)
+    section("How every prediction is governed", "The same four steps run on every request.")
+    steps = [("1", "Validate", "Inputs are checked before any model runs; bad inputs are refused."),
+             ("2", "Predict & explain", "A score, a confidence and the reasons behind it (SHAP)."),
+             ("3", "Monitor", "Latency, drift, live accuracy, bias and hallucination, all tracked."),
+             ("4", "Self-heal", "Agents open incidents, retrain and roll back; a human approves releases.")]
+    st.markdown('<div class="rb-grid" style="--n:4">' + "".join(
+        f'<div class="rb-kpi"><div class="l"><span class="rb-mono" style="font-weight:700;color:#000">{i}</span> &nbsp;{t}</div>'
+        f'<div class="s" style="margin-top:4px;font-size:.84rem;color:#1F1F1F">{d}</div></div>' for i, t, d in steps) + "</div>",
+        unsafe_allow_html=True)
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -171,16 +175,16 @@ def home(pages: Dict[str, Any]) -> None:
 
 def ticket() -> None:
     inject_theme("ticket")
-    hero("🎫 Ticket Confirmation Predictor",
+    hero("Ticket Confirmation Predictor",
          "Waitlisted or RAC? See the chance your ticket confirms before you travel, the likely berth, and exactly why.",
          ["XGBoost", "SHAP explanations", "Booking & cancellation trends", "Retrained when live accuracy drops"])
     ref = load_reference()
     trains = ref["trains"]
 
     presets([
-        ("🟢 Almost confirmed", {"t_train": label_for(trains, "12951"), "t_cls": "3A", "t_quota": "GN", "t_wl": 2, "t_days": 14}),
-        ("🟠 Tatkal, high WL", {"t_train": label_for(trains, "12951"), "t_cls": "2A", "t_quota": "TQ", "t_wl": 48, "t_days": 2}),
-        ("🔵 Festival rush", {"t_train": label_for(trains, "12301"), "t_cls": "SL", "t_quota": "GN", "t_wl": 180, "t_days": 45}),
+        ("Almost confirmed", {"t_train": label_for(trains, "12951"), "t_cls": "3A", "t_quota": "GN", "t_wl": 2, "t_days": 14}),
+        ("Tatkal, high WL", {"t_train": label_for(trains, "12951"), "t_cls": "2A", "t_quota": "TQ", "t_wl": 48, "t_days": 2}),
+        ("Festival rush", {"t_train": label_for(trains, "12301"), "t_cls": "SL", "t_quota": "GN", "t_wl": 180, "t_days": 45}),
     ], "t_run", "tk")
 
     st.session_state.setdefault("t_wl", 15)
@@ -197,7 +201,7 @@ def ticket() -> None:
             with st.expander("More options"):
                 senior = st.checkbox("Senior citizen (60+)")
                 disab = st.checkbox("Divyangjan quota")
-            go_btn = st.form_submit_button("🔮 Predict confirmation", type="primary", width="stretch")
+            go_btn = st.form_submit_button("Predict confirmation", type="primary", width="stretch")
         st.caption(f"Journey date: **{(date.today() + timedelta(days=days)).strftime('%d %b %Y')}**")
 
     with right:
@@ -218,16 +222,10 @@ def ticket() -> None:
         else:
             p = res["confirmation_probability"]
             tone = "ok" if p >= 0.75 else "warn" if p >= 0.4 else "bad"
-            g1, g2 = st.columns([1.1, 1])
-            g1.plotly_chart(gauge(p * 100, "Chance of confirmation", "%",
-                                  color={"ok": "#059669", "warn": "#D97706", "bad": "#DC2626"}[tone]),
-                            width="stretch")
-            with g2:
-                st.markdown(kpi("Verdict", esc(res.get("pnr_status_prediction", "—")), "", tone), unsafe_allow_html=True)
-                st.markdown("<div style='height:8px'></div>", unsafe_allow_html=True)
-                st.markdown(kpi("Likely berth", esc(res.get("estimated_berth_type", "—")), esc(res.get("berth_estimate_basis", "Indicative estimate"))[:60]), unsafe_allow_html=True)
-                st.markdown("<div style='height:8px'></div>", unsafe_allow_html=True)
-                st.markdown(kpi("Model confidence", f'{res.get("confidence_score", 0):.0%}', "Certainty of this prediction"), unsafe_allow_html=True)
+            st.markdown(meter(p * 100, "Chance of confirmation", "%", tone=tone), unsafe_allow_html=True)
+            kpi_row([("Verdict", esc(res.get("pnr_status_prediction", "—")), "at chart preparation", tone),
+                     ("Likely berth", esc(res.get("estimated_berth_type", "—")), esc(res.get("berth_estimate_basis", "Indicative estimate"))[:60], ""),
+                     ("Model confidence", f'{res.get("confidence_score", 0):.0%}', "certainty of this prediction", "")])
             if res.get("booking_advisory"):
                 callout(f"<b>Advice:</b> {esc(res['booking_advisory'])}", tone, "📢")
 
@@ -240,7 +238,7 @@ def ticket() -> None:
         with b:
             bb = res.get("berth_probability_breakdown") or {}
             if bb:
-                fig = go.Figure(go.Bar(x=list(bb.values()), y=list(bb.keys()), orientation="h", marker_color="#60A5FA",
+                fig = go.Figure(go.Bar(x=list(bb.values()), y=list(bb.keys()), orientation="h", marker_color=POS,
                                        text=[f"{v:.0%}" for v in bb.values()], textposition="auto"))
                 fig.update_layout(title="<b>Berth likelihood</b>")
                 style_fig(fig, 300)
@@ -248,17 +246,16 @@ def ticket() -> None:
         hi = res.get("historical_insights") or {}
         if hi:
             section("Booking & cancellation trends", f'From {hi.get("comparable_bookings", 0):,} comparable past bookings ({esc(hi.get("scope", ""))}).')
-            k = st.columns(4)
-            k[0].markdown(kpi("Confirmed historically", f'{hi.get("historical_confirmed_pct", 0):.0f}%', "of comparable bookings"), unsafe_allow_html=True)
-            k[1].markdown(kpi("Ended in RAC", f'{hi.get("historical_rac_pct", 0):.0f}%', "seat shared, travel allowed"), unsafe_allow_html=True)
-            k[2].markdown(kpi("Stayed waitlisted", f'{hi.get("historical_wl_pct", 0):.0f}%', "auto-refunded"), unsafe_allow_html=True)
-            k[3].markdown(kpi("Cancellation rate", f'{hi.get("cancellation_rate_pct", 0):.0f}%', "passengers who cancelled"), unsafe_allow_html=True)
+            kpi_row([("Confirmed historically", f'{hi.get("historical_confirmed_pct", 0):.0f}%', "of comparable bookings", ""),
+                     ("Ended in RAC", f'{hi.get("historical_rac_pct", 0):.0f}%', "seat shared, travel allowed", ""),
+                     ("Stayed waitlisted", f'{hi.get("historical_wl_pct", 0):.0f}%', "auto-refunded", ""),
+                     ("Cancellation rate", f'{hi.get("cancellation_rate_pct", 0):.0f}%', "passengers who cancelled", "")])
             by_m = hi.get("confirmed_pct_by_month") or {}
             if by_m:
                 months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
                 xs = sorted(int(m) for m in by_m)
                 fig = go.Figure(go.Bar(x=[months[m - 1] for m in xs], y=[by_m.get(m, by_m.get(str(m), 0)) * 100 for m in xs],
-                                       marker_color="#60A5FA"))
+                                       marker_color=POS))
                 fig.update_layout(title="<b>Confirmation rate by travel month</b>", yaxis_title="% confirmed")
                 style_fig(fig, 250)
                 st.plotly_chart(fig, width="stretch")
@@ -278,7 +275,7 @@ def _connections(res: Dict[str, Any]) -> None:
     conns = res.get("connections") or []
     if not conns:
         return
-    st.markdown('<div class="rb-sub" style="margin:10px 0 6px"><b>🔀 One-change connections</b> — useful when few direct '
+    st.markdown('<div class="rb-sub" style="margin:10px 0 6px"><b>One-change connections</b> — useful when few direct '
                 'trains run on this corridor. Plan and book one in the AI Travel Planner.</div>', unsafe_allow_html=True)
     for c in conns:
         legs = " &nbsp;→&nbsp; ".join(
@@ -295,7 +292,7 @@ def _connections(res: Dict[str, Any]) -> None:
 
 def recommend() -> None:
     inject_theme("recommend")
-    hero("🚆 Smart Train Recommender",
+    hero("Smart Train Recommender",
          "The best train for you — balancing fare, speed, punctuality, availability and comfort for your travel style.",
          ["Persona-aware scoring", "Personalised from history", "Learns from your choices", "Fairness audit"])
     stations = load_reference()["stations"]
@@ -315,7 +312,7 @@ def recommend() -> None:
             arrive = c2.selectbox("Arrive by", ARRIVE_BY, help="Trains arriving later are ranked lower")
             uid = st.text_input("Passenger ID (optional, e.g. USR00001)", "",
                                 help="Personalises using that passenger's travel history and usual class / budget.")
-            go_btn = st.form_submit_button("🔍 Find best trains", type="primary", width="stretch")
+            go_btn = st.form_submit_button("Find best trains", type="primary", width="stretch")
     with right:
         if go_btn and stations[o] == stations[d]:
             callout("Origin and destination are the same — pick two different stations.", "warn", "🔁")
@@ -350,16 +347,18 @@ def recommend() -> None:
                     top = r.get("rank") == 1
                     tags = "".join(badge(t, "info") + " " for t in r.get("tags", []))
                     st.markdown(
-                        f'<div class="rb-card" style="{"border:2px solid var(--accent)" if top else ""}">'
-                        f'<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px">'
-                        f'<div><span class="rb-badge" style="color:#fff;background:var(--accent);border-color:var(--accent)">#{r.get("rank")}{" · Best match" if top else ""}</span>'
-                        f' <b style="font-size:1.05rem;color:var(--deep)">{esc(r.get("train_name"))}</b> <span class="rb-sub">{esc(r.get("train_number"))}</span></div>'
-                        f'<div style="font-size:1.4rem;font-weight:800;color:var(--deep)">₹{r.get("fare_estimate_inr", 0):,.0f}</div></div>'
-                        f'<div style="margin:10px 0;font-size:.95rem"><b>{esc(r.get("departure_time"))}</b> {esc(oc)} &nbsp;→&nbsp; '
-                        f'<b>{esc(r.get("arrival_time"))}</b> {esc(dc)} &nbsp;·&nbsp; {r.get("duration_hours", 0):.1f} h &nbsp;·&nbsp; '
-                        f'Punctuality <b>{r.get("punctuality_score", 0):.0%}</b> &nbsp;·&nbsp; Comfort <b>{r.get("comfort_score", 0):.0%}</b> &nbsp;·&nbsp; '
-                        f'Match score <b>{r.get("composite_score", 0):.2f}</b></div>'
-                        f'<div class="rb-sub">💡 {esc(r.get("recommendation_reason"))}</div><div style="margin-top:8px">{tags}</div></div>',
+                        f'<div class="rb-card" style="padding:0;{"border:2px solid #000" if top else ""}">'
+                        f'<div class="rb-tkt">'
+                        f'<div class="rk{" top" if top else ""}">{r.get("rank")}</div>'
+                        f'<div><b>{esc(r.get("train_name"))}</b><br><span class="rb-mono rb-sub">{esc(r.get("train_number"))}</span>'
+                        f'{" &nbsp;" + badge("Best match", "ok") if top else ""}</div>'
+                        f'<div class="rb-mono"><b>{esc(r.get("departure_time"))}</b> {esc(oc)}<br><b>{esc(r.get("arrival_time"))}</b> {esc(dc)}</div>'
+                        f'<div><span class="rb-sub">Duration</span><br><span class="rb-mono">{r.get("duration_hours", 0):.1f} h</span></div>'
+                        f'<div><span class="rb-sub">On time</span><br><span class="rb-mono">{r.get("punctuality_score", 0):.0%}</span></div>'
+                        f'<div><span class="rb-sub">Match</span><br><span class="rb-mono">{r.get("composite_score", 0):.2f}</span></div>'
+                        f'<div class="fare rb-mono">₹{r.get("fare_estimate_inr", 0):,.0f}</div></div>'
+                        f'<div style="padding:8px 14px;border-top:1px solid #ddd"><span class="rb-sub">{esc(r.get("recommendation_reason"))}</span>'
+                        f'<div style="margin-top:6px">{tags}</div></div></div>',
                         unsafe_allow_html=True)
                     fc = r.get("factor_contributions") or {}
                     b1, b2 = st.columns([3, 1])
@@ -383,7 +382,7 @@ def recommend() -> None:
                 w = res.get("weights_used") or {}
                 if w:
                     with st.expander(f"How the score was built (persona weights, learned version {res.get('weights_version', 0)})"):
-                        fig = go.Figure(go.Bar(x=list(w.keys()), y=list(w.values()), marker_color="#38BDF8",
+                        fig = go.Figure(go.Bar(x=list(w.keys()), y=list(w.values()), marker_color=POS,
                                                text=[f"{v:.0%}" for v in w.values()], textposition="auto"))
                         style_fig(fig, 240)
                         st.plotly_chart(fig, width="stretch")
@@ -396,16 +395,16 @@ def recommend() -> None:
 
 def delay() -> None:
     inject_theme("delay")
-    hero("⏱️ Delay & Disruption Predictor",
+    hero("Delay & Disruption Predictor",
          "Know before you leave: expected delay, station congestion, and better trains if things look bad.",
          ["LightGBM", "Arrival & departure delay", "Station congestion history", "SHAP", "Proactive alerts"])
     ref = load_reference()
     trains, stations = ref["trains"], ref["stations"]
 
     presets([
-        ("🟢 Clear day", {"d_train": label_for(trains, "12002"), "d_station": label_for(stations, "BPL"), "d_weather": 0.05, "d_cong": 0.15, "d_auto": False}),
-        ("🟠 Monsoon tracks", {"d_train": label_for(trains, "12951"), "d_station": label_for(stations, "CSTM"), "d_weather": 0.70, "d_cong": 0.65, "d_auto": False}),
-        ("🔴 Dense fog + congestion", {"d_train": label_for(trains, "12301"), "d_station": label_for(stations, "NDLS"), "d_weather": 0.95, "d_cong": 0.90, "d_auto": False}),
+        ("Clear day", {"d_train": label_for(trains, "12002"), "d_station": label_for(stations, "BPL"), "d_weather": 0.05, "d_cong": 0.15, "d_auto": False}),
+        ("Monsoon tracks", {"d_train": label_for(trains, "12951"), "d_station": label_for(stations, "CSTM"), "d_weather": 0.70, "d_cong": 0.65, "d_auto": False}),
+        ("Dense fog + congestion", {"d_train": label_for(trains, "12301"), "d_station": label_for(stations, "NDLS"), "d_weather": 0.95, "d_cong": 0.90, "d_auto": False}),
     ], "d_run", "dl")
 
     left, right = st.columns([1, 1.65], gap="large")
@@ -420,7 +419,7 @@ def delay() -> None:
             stn = st.selectbox("Station", list(stations.keys()), key="d_station")
             jd = st.date_input("Journey date", value=date.today() + timedelta(days=1), min_value=date.today())
             if auto:
-                st.caption("🌦️ Weather and congestion will be estimated from the travel month and this station's history. "
+                st.caption("Weather and congestion will be estimated from the travel month and this station's history. "
                            "Switch the toggle off to set them yourself.")
                 wx, cg = None, None
             else:
@@ -428,7 +427,7 @@ def delay() -> None:
                                help="0 = clear skies · 1 = heavy fog / flooding")
                 cg = st.slider("Station congestion", 0.0, 1.0, step=0.05, key="d_cong",
                                help="0 = empty platforms · 1 = extremely crowded")
-            go_btn = st.form_submit_button("⏱️ Forecast delay", type="primary", width="stretch")
+            go_btn = st.form_submit_button("Forecast delay", type="primary", width="stretch")
     with right:
         if go_btn or st.session_state.pop("d_run", False):
             with st.spinner("Forecasting arrival delay…"):
@@ -447,16 +446,14 @@ def delay() -> None:
             tone = "ok" if mins <= 15 else "warn" if mins <= 60 else "bad"
             ci = res.get("confidence_interval") or {}
             lvl = res.get("congestion_level", "—")
-            c1, c2, c3, c4 = st.columns(4)
-            c1.markdown(kpi("Arrival delay", f"{mins:.0f} min", "At the selected station", tone), unsafe_allow_html=True)
             dep = res.get("departure_delay_minutes")
-            c2.markdown(kpi("Departure delay", f"{dep:.0f} min" if dep is not None else "—", "From the origin"), unsafe_allow_html=True)
-            c3.markdown(kpi("Likely range", f'{ci.get("lower_bound", 0):.0f}–{ci.get("upper_bound", 0):.0f} min',
-                            f'{ci.get("coverage", 0.8):.0%} prediction interval'), unsafe_allow_html=True)
             sci = res.get("station_congestion_index")
-            c4.markdown(kpi("Station congestion", esc(lvl), f'{sci:.0%} · {esc(res.get("congestion_source", ""))}' if sci is not None else "",
-                            {"Low": "ok", "Moderate": "warn"}.get(lvl, "bad")), unsafe_allow_html=True)
-            st.markdown("<div style='height:8px'></div>", unsafe_allow_html=True)
+            kpi_row([("Arrival delay", f"+{mins:.0f}<small style='font-size:.9rem'> min</small>", "at the selected station", tone),
+                     ("Departure delay", f"+{dep:.0f}<small style='font-size:.9rem'> min</small>" if dep is not None else "—", "from the origin", ""),
+                     ("Likely range", f'{ci.get("lower_bound", 0):.0f}–{ci.get("upper_bound", 0):.0f}<small style="font-size:.9rem"> min</small>',
+                      f'{ci.get("coverage", 0.8):.0%} prediction interval', ""),
+                     ("Station congestion", esc(lvl), f'{sci:.0%} · {esc(res.get("congestion_source", ""))}' if sci is not None else "",
+                      {"Low": "ok", "Moderate": "warn"}.get(lvl, "bad"))])
             callout(f"<b>Travel alert:</b> {esc(res.get('proactive_alert', ''))}"
                     + (f" &nbsp;·&nbsp; <b>{res['disruption_probability']:.0%}</b> chance of a delay over 60 min."
                        if res.get("disruption_probability") is not None else ""), tone, "📢")
@@ -469,7 +466,7 @@ def delay() -> None:
                 fig = go.Figure(go.Bar(
                     x=[d.get("impact_minutes", 0) for d in drivers][::-1],
                     y=[f'{d.get("factor", "")} ({d.get("display", d.get("value"))})' for d in drivers][::-1],
-                    orientation="h", marker_color=["#0891B2" if d.get("impact_minutes", 0) >= 0 else "#F97316" for d in drivers][::-1],
+                    orientation="h", marker_color=[POS if d.get("impact_minutes", 0) >= 0 else NEG for d in drivers][::-1],
                     text=[f'{d.get("impact_minutes", 0):+.1f} min' for d in drivers][::-1], textposition="auto"))
                 fig.update_layout(title=f"<b>Why this delay (SHAP)</b> — typical delay {base['impact_minutes']:.0f} min, each bar adds or removes minutes" if base else "<b>Why this delay (SHAP)</b>")
                 style_fig(fig, 60 + 50 * len(drivers))
@@ -479,7 +476,7 @@ def delay() -> None:
                     f'<div class="rb-card"><div style="display:flex;justify-content:space-between;gap:8px"><div>'
                     f'<b style="color:var(--deep)">{esc(a.get("train_name"))}</b> <span class="rb-sub">{esc(a.get("train_number"))}</span><br>'
                     f'<span class="rb-sub">Departs {esc(a.get("departure_time"))} · Arrives {esc(a.get("arrival_time"))}</span><br>'
-                    f'<span class="rb-sub">💡 {esc(a.get("reason"))}</span></div>'
+                    f'<span class="rb-sub">{esc(a.get("reason"))}</span></div>'
                     f'{badge("Saves ~%d min" % a.get("delay_advantage_minutes", 0), "ok")}</div></div>', unsafe_allow_html=True)
             outcome_box("d_out", res, "Report the actual delay", "number", input_label="Actual delay (min)", value=float(mins), step=5.0)
             render_telemetry_badge(res.get("governance_telemetry"))
@@ -511,12 +508,12 @@ def _expiry(ts: Any) -> str:
 
 def planner() -> None:
     inject_theme("planner")
-    hero("🧭 AI Travel Planner",
+    hero("AI Travel Planner",
          "Describe your trip in your own words. A team of AI agents searches trains, checks confirmation odds, delays and fares — "
          "then proposes a plan. <b>Nothing is booked until you approve.</b>",
          ["Multi-agent", "One-change connections", "Validator agent", "Human-in-the-loop booking", "Injection guard"])
 
-    st.caption("💬 Try an example")
+    st.caption("Try an example")
     cols = st.columns(len(EXAMPLES))
     for i, (c, ex) in enumerate(zip(cols, EXAMPLES)):
         c.button(ex if len(ex) < 52 else ex[:50] + "…", key=f"ex{i}", width="stretch",
@@ -528,7 +525,7 @@ def planner() -> None:
         c1, c2, c3 = st.columns([1, 1, 1.2])
         persona = c1.selectbox("Traveller type", PERSONAS)
         budget = c2.number_input("Budget cap ₹ (0 = from message)", 0, 50000, 0, step=500)
-        go_btn = c3.form_submit_button("🤖 Plan my journey", type="primary", width="stretch")
+        go_btn = c3.form_submit_button("Plan my journey", type="primary", width="stretch")
 
     if go_btn:
         with st.spinner("Agents are searching routes and connections, predicting delays and forecasting fares…"):
@@ -556,7 +553,7 @@ def planner() -> None:
             chips.append(f"Arrive before <b>{esc(cons['arrival_before'])}</b>")
         if cons.get("preferred_class"):
             chips.append(f"Class <b>{esc(cons['preferred_class'])}</b>")
-        st.markdown('<div class="rb-sub" style="margin:6px 0 2px">🧠 What the agent understood '
+        st.markdown('<div class="rb-sub" style="margin:6px 0 2px">What the agent understood '
                     f'({esc(cons.get("method", "rules"))}):</div>' + " &nbsp;·&nbsp; ".join(chips), unsafe_allow_html=True)
 
     if status == "BLOCKED":
@@ -574,10 +571,10 @@ def planner() -> None:
     booking = st.session_state.get("booking")
 
     def leg_html(l):
-        return (f'<div class="rb-row"><span class="k">🚆 <b>{esc(l.get("train_name"))}</b> {esc(l.get("train_number"))} · '
-                f'{esc(l.get("source"))} {esc(l.get("departure", "")[11:16])} → {esc(l.get("destination"))} {esc(l.get("arrival", "")[11:16])}'
-                f' <span class="rb-sub">({esc(l.get("arrival", "")[:10])})</span></span>'
-                f'<span class="v">₹{l.get("fare_inr", 0):,.0f} · {l.get("confirmation_probability", 0):.0%} odds · ~{l.get("predicted_delay_minutes", 0):.0f} min</span></div>')
+        return (f'<div class="rb-row"><span class="k"><b>{esc(l.get("train_name"))}</b> <span class="rb-mono">{esc(l.get("train_number"))}</span> · '
+                f'<span class="rb-mono">{esc(l.get("source"))} {esc(l.get("departure", "")[11:16])} → {esc(l.get("destination"))} {esc(l.get("arrival", "")[11:16])}</span>'
+                f' <span class="rb-sub rb-mono">({esc(l.get("arrival", "")[:10])})</span></span>'
+                f'<span class="v">₹{l.get("fare_inr", 0):,.0f} · {l.get("confirmation_probability", 0):.0%} odds · +{l.get("predicted_delay_minutes", 0):.0f} min</span></div>')
 
     section("Your proposed itinerary", f'Request <code>{esc(plan.get("request_id"))}</code>' + _expiry(plan.get("expires_at")))
     exp = rec.get("expected_arrival_with_delay") or ""
@@ -587,11 +584,11 @@ def planner() -> None:
         f'<div style="font-size:1.15rem;font-weight:800;color:var(--deep)">{esc(rec.get("option_id"))} · {esc(rec.get("train_name"))}</div>'
         f'{badge("Approved" if status == "APPROVED" else "Awaiting your approval" if status == "PENDING_APPROVAL" else status, "ok" if status == "APPROVED" else "warn")}</div>'
         f'<div style="display:flex;align-items:center;gap:16px;margin:14px 0;flex-wrap:wrap">'
-        f'<div><div style="font-size:1.5rem;font-weight:800">{esc(rec.get("departure_time"))}</div><div class="rb-sub">{esc(rec.get("source"))} · {esc((rec.get("departure_datetime") or "")[:10])}</div></div>'
+        f'<div><div class="rb-mono" style="font-size:1.6rem;font-weight:600">{esc(rec.get("departure_time"))}</div><div class="rb-sub">{esc(rec.get("source"))} · {esc((rec.get("departure_datetime") or "")[:10])}</div></div>'
         f'<div style="flex:1;min-width:120px;text-align:center"><div class="rb-sub">{rec.get("duration_hours", 0):.1f} h · Class {esc(rec.get("travel_class"))}'
         f'{" · 1 change" if rec.get("changes") else " · direct"}</div>'
-        f'<div style="height:3px;background:linear-gradient(90deg,var(--accent),var(--soft));border-radius:3px;margin:4px 0"></div></div>'
-        f'<div><div style="font-size:1.5rem;font-weight:800">{esc(rec.get("arrival_time"))}</div><div class="rb-sub">{esc(rec.get("destination"))} · {esc((rec.get("arrival_datetime") or "")[:10])}</div></div></div>'
+        f'<div style="border-top:2px dashed #000;margin:6px 0"></div></div>'
+        f'<div><div class="rb-mono" style="font-size:1.6rem;font-weight:600">{esc(rec.get("arrival_time"))}</div><div class="rb-sub">{esc(rec.get("destination"))} · {esc((rec.get("arrival_datetime") or "")[:10])}</div></div></div>'
         + "".join(leg_html(l) for l in rec.get("legs", [])) +
         f'<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">'
         f'{badge("₹%s total" % format(rec.get("estimated_fare_inr", 0), ",.0f"), "info")} '
@@ -602,14 +599,14 @@ def planner() -> None:
 
     a, b = st.columns(2)
     with a:
-        st.markdown('<div class="rb-card"><h4>👍 Why it fits</h4>' + ("".join(f'<div style="padding:4px 0">✅ {esc(p)}</div>' for p in rec.get("pros", [])) or "<div class=rb-sub>—</div>") + "</div>", unsafe_allow_html=True)
+        st.markdown('<div class="rb-card"><h4>Why it fits</h4>' + ("".join(f'<div style="padding:4px 0">{esc(p)}</div>' for p in rec.get("pros", [])) or "<div class=rb-sub>—</div>") + "</div>", unsafe_allow_html=True)
     with b:
-        st.markdown('<div class="rb-card"><h4>⚠️ Keep in mind</h4>' + ("".join(f'<div style="padding:4px 0">• {esc(c)}</div>' for c in rec.get("cons", [])) or '<div style="padding:4px 0">No major concerns</div>') + "</div>", unsafe_allow_html=True)
+        st.markdown('<div class="rb-card"><h4>Keep in mind</h4>' + ("".join(f'<div style="padding:4px 0">• {esc(c)}</div>' for c in rec.get("cons", [])) or '<div style="padding:4px 0">No major concerns</div>') + "</div>", unsafe_allow_html=True)
     callout(f"<b>Agent reasoning:</b> {esc(plan.get('agent_reasoning_summary', ''))}", "info", "🧠")
     val = plan.get("validation") or {}
     if val:
         checks = val.get("checks") or {}
-        st.markdown('<div class="rb-sub" style="margin:4px 0">🔎 Validator agent: '
+        st.markdown('<div class="rb-sub" style="margin:4px 0">Validator agent: '
                     + " ".join(badge(k.replace("_", " "), "ok" if v else "warn") for k, v in checks.items()) + "</div>",
                     unsafe_allow_html=True)
 
@@ -630,7 +627,7 @@ def planner() -> None:
     # Human-in-the-loop gate
     if booking:
         st.markdown(
-            f'<div class="rb-card" style="border:2px solid #10B981;background:#ECFDF5"><h4 style="color:#047857">🎉 Booking prepared</h4>'
+            f'<div class="rb-card" style="border-left:4px solid #13703A"><h4>Booking prepared</h4>'
             f'<div class="rb-row"><span class="k">Booking ID</span><span class="v">{esc(booking.get("booking_id"))}</span></div>'
             f'<div class="rb-row"><span class="k">PNR (demo)</span><span class="v">{esc(booking.get("pnr_number"))}</span></div>'
             f'<div class="rb-row"><span class="k">Berth</span><span class="v">{esc(booking.get("allocated_berth"))}</span></div>'
@@ -645,8 +642,8 @@ def planner() -> None:
             gd = c3.selectbox("Gender", ["M", "F", "O"])
             bp = c4.selectbox("Berth", ["Lower", "Middle", "Upper", "Side Lower", "Side Upper"])
             ok, no = st.columns(2)
-            yes = ok.form_submit_button(f"✅ Approve {rec.get('option_id')} & prepare booking", type="primary", width="stretch")
-            rej = no.form_submit_button("↩️ Reject & re-plan", width="stretch")
+            yes = ok.form_submit_button(f"Approve {rec.get('option_id')} & prepare booking", type="primary", width="stretch")
+            rej = no.form_submit_button("Reject & re-plan", width="stretch")
         if yes:
             r = api_post("/agent/confirm", {"request_id": plan["request_id"], "selected_option_id": rec.get("option_id", "OPT-1"),
                                             "passenger_name": nm, "passenger_age": int(ag), "passenger_gender": gd, "berth_preference": bp})
@@ -666,7 +663,7 @@ def planner() -> None:
     elif status == "REPLANNING":
         callout("Plan rejected. Edit your request above and plan again.", "warn", "↩️")
 
-    with st.expander("🔍 Agent execution trace (audit trail)"):
+    with st.expander("Agent execution trace (audit trail)"):
         for i, step in enumerate(plan.get("execution_trace", []), 1):
             detail = ", ".join(f"{k}: {v}" for k, v in step.items() if k not in ("step", "agent", "status") and v not in (None, [], ""))
             st.markdown(f'**{i}. {esc(step.get("agent", ""))} — {esc(step.get("step"))}** {badge(step.get("status", ""), None)} '
@@ -683,7 +680,7 @@ def planner() -> None:
 
 def fare() -> None:
     inject_theme("fare")
-    hero("💰 Fare Forecast & Booking Window",
+    hero("Fare Forecast & Booking Window",
          "See where the fare is heading, when demand surges, and the smartest day to book.",
          ["XGBoost forecast", "Demand surge detection", "SHAP fare drivers", "Pricing-anomaly guard"])
     trains = load_reference()["trains"]
@@ -695,7 +692,7 @@ def fare() -> None:
             jd = st.date_input("Journey date", value=date.today() + timedelta(days=20), min_value=date.today(),
                                max_value=date.today() + timedelta(days=120))
             tk = st.checkbox("Tatkal quota")
-            go_btn = st.form_submit_button("💰 Forecast fare", type="primary", width="stretch")
+            go_btn = st.form_submit_button("Forecast fare", type="primary", width="stretch")
     with right:
         if go_btn:
             with st.spinner("Forecasting fare trajectory…"):
@@ -709,26 +706,24 @@ def fare() -> None:
             _err(res, "the fare forecast")
         else:
             dem = res.get("demand_level", "—")
-            c1, c2, c3 = st.columns(3)
-            c1.markdown(kpi("Predicted fare", f'₹{res["current_predicted_fare_inr"]:,.0f}', f'Base ₹{res.get("base_fare_inr", 0):,.0f}'), unsafe_allow_html=True)
-            c2.markdown(kpi("Surge", f'{res.get("surge_multiplier", 1):.2f}×', "vs. base fare",
-                            "ok" if res.get("surge_multiplier", 1) < 1.1 else "warn"), unsafe_allow_html=True)
-            c3.markdown(kpi("Demand", esc(dem), "Booking pressure", {"Low": "ok", "Moderate": "ok", "High": "warn"}.get(dem, "bad")), unsafe_allow_html=True)
-            st.markdown("<div style='height:8px'></div>", unsafe_allow_html=True)
+            kpi_row([("Predicted fare", f'₹{res["current_predicted_fare_inr"]:,.0f}', f'base ₹{res.get("base_fare_inr", 0):,.0f}', ""),
+                     ("Surge", f'{res.get("surge_multiplier", 1):.2f}×', "vs. base fare",
+                      "ok" if res.get("surge_multiplier", 1) < 1.1 else "warn"),
+                     ("Demand", esc(dem), "booking pressure", {"Low": "ok", "Moderate": "ok", "High": "warn"}.get(dem, "bad"))])
             callout(f"<b>Best time to book:</b> {esc(res.get('optimal_booking_window', ''))}"
                     + (f" &nbsp;·&nbsp; Demand surge expected from <b>{res['demand_surge_from_days']} days</b> before departure."
                        if res.get("demand_surge_from_days") is not None else ""), "info", "💡")
             if res.get("pricing_anomaly"):
                 callout(f"<b>Pricing check:</b> {esc(res['pricing_anomaly'])} The governance layer logged this for review.", "warn", "🧪")
             if res.get("policy_note"):
-                st.caption("ℹ️ " + esc(res["policy_note"]))
+                st.caption(esc(res["policy_note"]))
             curve = res.get("forecast_curve") or []
             if curve:
                 df = pd.DataFrame(curve)
                 fig = go.Figure(go.Scatter(x=df["days_to_departure"], y=df["predicted_fare_inr"], mode="lines+markers",
-                                           line=dict(color="#0EA5E9", width=3), fill="tozeroy", fillcolor="rgba(14,165,233,.10)",
+                                           line=dict(color=POS, width=2), marker=dict(size=5),
                                            name="Predicted fare"))
-                fig.add_hline(y=res.get("base_fare_inr", 0), line_dash="dash", line_color="#94A3B8",
+                fig.add_hline(y=res.get("base_fare_inr", 0), line_dash="dash", line_color="#7A7A7A",
                               annotation_text="Base fare", annotation_position="bottom right")
                 fig.update_layout(title="<b>Fare vs days before departure</b>", xaxis_title="Days before departure",
                                   yaxis_title="₹", xaxis_autorange="reversed")
@@ -742,7 +737,7 @@ def fare() -> None:
             cols = st.columns(min(3, len(alts)))
             for c, a in zip(cols, alts):
                 c.markdown(f'<div class="rb-card"><div class="rb-sub">{esc(a.get("alternative_type"))}</div>'
-                           f'<div style="font-size:1.4rem;font-weight:800;color:#047857">Save ₹{a.get("potential_savings_inr", 0):,.0f}</div>'
+                           f'<div class="rb-mono" style="font-size:1.35rem;font-weight:600;color:#13703A">Save ₹{a.get("potential_savings_inr", 0):,.0f}</div>'
                            f'<div class="rb-sub">{esc(a.get("description"))}</div></div>', unsafe_allow_html=True)
         if res.get("fare_drivers"):
             section("Why this fare?", "SHAP: how much each factor adds to or removes from the fare, in ₹.")
@@ -758,14 +753,14 @@ def fare() -> None:
 
 def fraud() -> None:
     inject_theme("tower")
-    hero("🛡️ Fraud & Bot Shield",
+    hero("Fraud & Bot Shield",
          "Security operations for the booking platform: every session is scored for bot, scalper and account-misuse risk, "
          "each alert carries its evidence, and analyst verdicts feed live false-positive / false-negative monitoring.",
          ["AI Governance · security", "XGBoost classifier", "Anomaly detection", "Account-misuse checks", "SHAP investigations"])
     presets([
-        ("🟢 Genuine passenger", {"f_rpm": 4.0, "f_pnr": 1, "f_tatkal": False, "f_cap": 0, "f_age": 365, "f_pay": 1, "f_ip": 0.10, "f_bulk": False, "f_sess": "SESS-GENUINE-PASSENGER"}),
-        ("🟠 Fast Tatkal user", {"f_rpm": 35.0, "f_pnr": 4, "f_tatkal": True, "f_cap": 1, "f_age": 45, "f_pay": 2, "f_ip": 0.40, "f_bulk": False, "f_sess": "SESS-TATKAL-FREQUENT"}),
-        ("🔴 Scalper bot", {"f_rpm": 120.0, "f_pnr": 25, "f_tatkal": True, "f_cap": 6, "f_age": 1, "f_pay": 6, "f_ip": 0.85, "f_bulk": True, "f_sess": "SESS-SCALPER-BOTNET-99"}),
+        ("Genuine passenger", {"f_rpm": 4.0, "f_pnr": 1, "f_tatkal": False, "f_cap": 0, "f_age": 365, "f_pay": 1, "f_ip": 0.10, "f_bulk": False, "f_sess": "SESS-GENUINE-PASSENGER"}),
+        ("Fast Tatkal user", {"f_rpm": 35.0, "f_pnr": 4, "f_tatkal": True, "f_cap": 1, "f_age": 45, "f_pay": 2, "f_ip": 0.40, "f_bulk": False, "f_sess": "SESS-TATKAL-FREQUENT"}),
+        ("Scalper bot", {"f_rpm": 120.0, "f_pnr": 25, "f_tatkal": True, "f_cap": 6, "f_age": 1, "f_pay": 6, "f_ip": 0.85, "f_bulk": True, "f_sess": "SESS-SCALPER-BOTNET-99"}),
     ], "f_run", "fr")
 
     for k_, v_ in {"f_rpm": 20.0, "f_pnr": 2, "f_age": 180, "f_pay": 1, "f_cap": 0, "f_tatkal": False,
@@ -785,7 +780,7 @@ def fraud() -> None:
             with st.expander("Session details"):
                 sess = st.text_input("Session ID", key="f_sess")
                 ip = st.slider("Network risk score", 0.0, 1.0, step=0.05, key="f_ip")
-            go_btn = st.form_submit_button("🛡️ Score this session", type="primary", width="stretch")
+            go_btn = st.form_submit_button("Score this session", type="primary", width="stretch")
     with right:
         if go_btn or st.session_state.pop("f_run", False):
             with st.spinner("Classifying session behaviour…"):
@@ -803,30 +798,24 @@ def fraud() -> None:
         else:
             sc, cat, act = res["fraud_risk_score"], res.get("risk_category", "Safe"), res.get("recommended_action", "ALLOW")
             tone = "bad" if cat in ("Bot Detected", "High Risk") else "warn" if cat == "Suspicious" else "ok"
-            g1, g2 = st.columns([1.1, 1])
-            g1.plotly_chart(gauge(sc, "Fraud risk score", " / 100", color={"ok": "#059669", "warn": "#D97706", "bad": "#DC2626"}[tone]),
-                            width="stretch")
-            with g2:
-                st.markdown(kpi("Threat level", esc(cat), "", tone), unsafe_allow_html=True)
-                st.markdown("<div style='height:8px'></div>", unsafe_allow_html=True)
-                msg = {"BLOCK_AND_REPORT": "Block & report", "RATE_LIMIT": "Rate-limit", "STEP_UP_CHALLENGE": "Ask for extra verification", "ALLOW": "Allow"}.get(act, act)
-                st.markdown(kpi("Action taken", msg, "Automated security policy", tone), unsafe_allow_html=True)
+            st.markdown(meter(sc, "Fraud risk score", "/ 100", tone=tone, decimals=0), unsafe_allow_html=True)
+            msg = {"BLOCK_AND_REPORT": "Block & report", "RATE_LIMIT": "Rate-limit", "STEP_UP_CHALLENGE": "Extra verification", "ALLOW": "Allow"}.get(act, act)
+            kpi_row([("Threat level", esc(cat), "model verdict", tone), ("Action taken", msg, "automated security policy", tone)])
     res = st.session_state.get("fr_res")
     if res and "fraud_risk_score" in res:
         inv = res.get("investigation_features") or []
         if inv:
             section("Investigation evidence", "Signals the model examined, flagged by severity.")
-            for it in inv:
-                tone = {"High Anomaly": "bad", "Suspicious": "warn"}.get(it.get("severity"), "ok")
-                st.markdown(f'<div class="rb-row" style="background:#fff;padding:9px 14px;border:1px solid #D9E4F5;border-radius:10px;margin-bottom:6px">'
-                            f'<span class="k">{esc(it.get("description"))}</span><span class="v">{badge(it.get("severity", ""), tone)}</span></div>',
-                            unsafe_allow_html=True)
+            st.markdown('<div class="rb-list">' + "".join(
+                f'<div class="rb-row"><span class="k">{esc(it.get("description"))}</span>'
+                f'<span class="v">{badge(it.get("severity", ""), {"High Anomaly": "bad", "Suspicious": "warn"}.get(it.get("severity"), "ok"))}</span></div>'
+                for it in inv) + "</div>", unsafe_allow_html=True)
         if res.get("shap_risk_drivers"):
             pred = (res.get("incident_dossier") or {}).get("predicted_label", "")
             render_shap_chart(res["shap_risk_drivers"], title=f"Why the model says '{pred}' (SHAP)", target_metric="Impact on that class")
         audit = (res.get("governance_telemetry") or {}).get("audit_id")
         if audit:
-            with st.expander("🕵️ Security analyst verdict (feeds false-positive / false-negative monitoring)"):
+            with st.expander("Security analyst verdict (feeds false-positive / false-negative monitoring)"):
                 c1, c2 = st.columns([2, 1])
                 verdict = c1.selectbox("Confirmed label after investigation", ["legitimate", "suspicious", "bot"], key="fr_verdict")
                 if c2.button("Record verdict", width="stretch"):
@@ -853,11 +842,12 @@ def fraud() -> None:
     ])
     st.markdown("<div style='height:8px'></div>", unsafe_allow_html=True)
     if not alerts:
-        st.caption("No alerts yet — try the 🔴 Scalper bot scenario above.")
-    for a in alerts[:8]:
-        act = str(a.get("action", "")).replace("_", " ").title()
-        st.markdown(f'<div class="rb-row" style="background:#fff;padding:9px 14px;border:1px solid #D9E4F5;border-radius:10px;margin-bottom:6px">'
-                    f'<span class="k"><span class="rb-sub">{esc(str(a.get("at", ""))[11:19])} UTC</span> · <b>{esc(a.get("session_id"))}</b> · '
-                    f'{esc(", ".join(a.get("why", [])[:4]))}</span>'
-                    f'<span class="v">{badge(a.get("category", ""), None)} {badge(act, "mute")} {esc(a.get("risk_score"))}</span></div>',
-                    unsafe_allow_html=True)
+        st.caption("No alerts yet — try the Scalper bot scenario above.")
+    if alerts:
+        body = "".join(
+            f'<tr><td class="m">{esc(str(a.get("at", ""))[11:19])}</td><td class="m">{esc(a.get("session_id"))}</td>'
+            f'<td>{esc(", ".join(a.get("why", [])[:4]))}</td><td>{badge(a.get("category", ""), None)}</td>'
+            f'<td>{esc(str(a.get("action", "")).replace("_", " ").capitalize())}</td><td class="m r">{esc(a.get("risk_score"))}</td></tr>'
+            for a in alerts[:10])
+        st.markdown('<table class="rb-table"><thead><tr><th>Time (UTC)</th><th>Session</th><th>Evidence</th><th>Category</th>'
+                    f'<th>Action</th><th class="r">Risk</th></tr></thead><tbody>{body}</tbody></table>', unsafe_allow_html=True)
