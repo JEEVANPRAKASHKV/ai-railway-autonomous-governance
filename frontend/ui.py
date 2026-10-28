@@ -328,12 +328,33 @@ def inject_theme(screen: str = "home") -> None:
 # ──────────────────────────────────────────────────────────────────────────────
 
 _LEADING_SYMBOLS = re.compile(r"^[^\w(]+", re.UNICODE)
+STAFF_SCREENS = {"tower"}          # governance screens always show the full technical layer
+
+
+def details() -> bool:
+    """Show the AI & governance layer (model names, demo scenarios, SHAP charts, governance receipts, feedback
+    forms)? Off for passengers; railway staff and reviewers switch it on in the sidebar. Governance screens
+    always show it."""
+    return bool(st.session_state.get("rb_details", False)) or st.session_state.get("_rb_screen") in STAFF_SCREENS
+
+
+def why_card(title: str, reasons: Sequence[tuple]) -> None:
+    """Plain-language reasons: [(what, effect, good?)] → a short list a passenger can read in five seconds."""
+    if not reasons:
+        return
+    rows = "".join(
+        f'<div class="rb-row"><span class="k">{esc(what)}</span>'
+        f'<span class="v" style="color:{"var(--green)" if good else "var(--amber)"}">{esc(effect)}</span></div>'
+        for what, effect, good in reasons)
+    st.markdown(f'<div class="rb-card"><h4>{esc(title)}</h4>{rows}</div>', unsafe_allow_html=True)
 
 
 def hero(title: str, subtitle: str, chips: Sequence[str] = (), code: Optional[str] = None) -> None:
     """Station name-board header: yellow plate with the page name, black code box, a plain description and a spec strip."""
     clean = _LEADING_SYMBOLS.sub("", title).strip() or title
     code = code or SCREEN_CODES.get(st.session_state.get("_rb_screen", ""), "")
+    if not details():          # passengers don't need the model / technique strip or module codes
+        chips, code = (), ""
     spec = "".join(f"<span>{esc(c)}</span>" for c in chips)
     st.markdown(
         f'<div class="rb-board"><div class="plate"><h1>{esc(clean)}</h1>'
@@ -398,8 +419,20 @@ PROVENANCE = {
 }
 
 
+_PLAIN_SOURCES = {"timetable": "train times from the 2016 Indian Railways timetable",
+                  "fares": "fares from the official 2025 tariff", "weather": "the live weather forecast",
+                  "outcomes": "estimates learned from past patterns"}
+
+
 def provenance(*keys: str) -> None:
-    """One strip under the header saying which inputs on this screen are real, live or simulated."""
+    """One strip under the header saying which inputs on this screen are real, live or simulated
+    (passengers get a one-line note instead)."""
+    if not details():
+        parts = [_PLAIN_SOURCES[k] for k in keys if k in _PLAIN_SOURCES]
+        if parts:
+            joined = parts[0] if len(parts) == 1 else ", ".join(parts[:-1]) + " and " + parts[-1]
+            st.caption("Uses " + joined + ". Always confirm on IRCTC before you travel.")
+        return
     cells = "".join(f'<span class="{PROVENANCE[k][0]}"><b>{esc(PROVENANCE[k][1])}</b> {esc(PROVENANCE[k][2])}</span>'
                     for k in keys if k in PROVENANCE)
     st.markdown(f'<div class="rb-prov">{cells}</div>', unsafe_allow_html=True)
@@ -465,8 +498,10 @@ def engine_label() -> str:
 
 def footer() -> None:
     st.markdown(
-        f'<div class="rb-foot"><span><b>{BRAND}</b> — AI-assisted railway travel with an autonomous governance layer</span>'
-        '<span>FastAPI · Streamlit · XGBoost · LightGBM · SHAP · SciPy</span></div>',
+        f'<div class="rb-foot"><span><b>{BRAND}</b> — '
+        + ("AI-assisted railway travel with an autonomous governance layer</span>"
+           "<span>FastAPI · Streamlit · XGBoost · LightGBM · SHAP · SciPy</span></div>" if details() else
+           "an independent demo, not IRCTC. Book real tickets on irctc.co.in.</span></div>"),
         unsafe_allow_html=True,
     )
 

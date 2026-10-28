@@ -95,15 +95,23 @@ nav = st.navigation(
     }
 )
 
+if "rb_details" not in st.session_state:          # ?view=staff opens straight into the detailed view
+    st.session_state["rb_details"] = str(st.query_params.get("view", "")).lower() in ("staff", "details", "reviewer")
+
 with st.sidebar:
     online = backend_online()
+    engine = (f'<div><span class="k">Language engine</span><span>{esc(engine_label())}</span></div>'
+              if st.session_state.get("rb_details") else "")
     st.markdown(
         '<div class="rb-status">'
         f'<div><span class="k">Services</span><b>{"● online" if online else "○ starting"}</b></div>'
-        f'<div><span class="k">Language engine</span><span>{esc(engine_label())}</span></div>'
+        f'{engine}'
         '<div><span class="k">Help</span><span>chat button, bottom-right</span></div></div>',
         unsafe_allow_html=True,
     )
+    st.toggle("Staff & reviewer view", key="rb_details",
+              help="Shows the AI and governance layer on the travel pages: model names, demo scenarios, SHAP "
+                   "charts, governance receipts and outcome feedback. Passengers can leave it off.")
 
 nav.run()
 render_chat_widget()

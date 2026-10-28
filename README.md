@@ -12,7 +12,7 @@
 [![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/API-FastAPI-009688?logo=fastapi&logoColor=white)](#-api-reference)
 [![LLM](https://img.shields.io/badge/LLM-Sarvam%20AI%20%E2%86%92%20Gemini-4285F4)](#-llm-layer--sarvam-ai-first-never-crashes)
-[![Tests](https://img.shields.io/badge/tests-133%20passing-2E7D32)](#-testing)
+[![Tests](https://img.shields.io/badge/tests-139%20passing-2E7D32)](#-testing)
 [![Docker](https://img.shields.io/badge/Docker-ready-2496ED?logo=docker&logoColor=white)](#-deployment)
 
 [Live Demo](https://ai-railway-governance.streamlit.app) ·
@@ -76,7 +76,13 @@
 
 **Live app: [https://ai-railway-governance.streamlit.app](https://ai-railway-governance.streamlit.app)** — no sign-in, no setup. The first load warms the platform with a little real traffic.
 
-A suggested 5-minute tour:
+**Two audiences, two views.** Passengers see plain answers: the chance, the delay, the fare and the reasons in
+words. Railway staff and evaluators switch on **Staff & reviewer view** in the sidebar, or open
+[`?view=staff`](https://ai-railway-governance.streamlit.app/?view=staff). That adds the AI and governance layer to every
+travel page: demo scenarios, model names, SHAP charts, governance receipts, outcome-feedback forms, the planner's
+validator checks and the agent trace. The *AI Governance* pages always show everything.
+
+A suggested 5-minute tour (with **Staff & reviewer view** on):
 
 | # | Where | Try this | What to look for |
 |---|---|---|---|
@@ -161,6 +167,17 @@ Every question takes one route, shown under the answer:
 The knowledge base (`data/knowledge/support_kb.json`) holds current rules — 60-day advance booking, the April 2026 cancellation windows (72 h / 24 h / 8 h), the chart timing from December 2025, Aadhaar rules for Tatkal, boarding-point changes up to 30 minutes before departure, the withdrawn senior-citizen concession — each with its sources and a verification date. Accuracy is tested on two held-out question sets (`tests/data/support_eval*.json`, 81 questions): 100% routed correctly; the second set scored 83% before its gaps were fixed, which is the better estimate for brand-new questions.
 
 ### UI design rules
+
+**Passenger view vs staff & reviewer view** (`details()` in `frontend/ui.py`):
+
+| On a travel page | Passenger (default) | Staff & reviewer view |
+|---|---|---|
+| Header | Page name and one plain sentence | Adds module code (`M1`…) and the model / technique strip |
+| Data sources | One-line note ("2016 timetable, official 2025 tariff…") | REAL / LIVE / SIM provenance strip |
+| Demo scenarios | Hidden | One-click prefilled scenarios |
+| Why | 3 plain reasons ("Your waitlist position (WL 15) raises your chance") | SHAP charts, berth split, score breakdowns, persona weights |
+| Delay inputs | Always automatic (live forecast + station history) | Manual weather / congestion sliders available |
+| Governance | Hidden | Governance receipt, outcome feedback, fairness audit, validator checks, agent trace |
 
 An industrial, data-dense transit dashboard: every page header is an Indian Railways station name board (signal-yellow plate, black code box such as `M1` or `GOV`); everything else is white panels separated by `1px solid #ddd` rules — no gradients, no shadows, no rounded cards. Numbers, times, train IDs, ₹ amounts and audit IDs use **IBM Plex Mono**; text uses **Archivo**. Colour carries status only (signal green / amber / red). Tokens and components live in `frontend/ui.py`; Streamlit's own theme in `.streamlit/config.toml`.
 
@@ -435,7 +452,7 @@ Rebuild everything: `python data/real/build_real_network.py && python data/gener
 
 ```bash
 pip install -r requirements-dev.txt
-pytest -q          # 133 tests (API, governance, support accuracy, real-data checks, and a headless run of every Streamlit page)
+pytest -q          # 139 tests (API, governance, support accuracy, real-data checks, and a headless run of every Streamlit page)
 ```
 
 `tests/test_audit_fixes.py` pins every audit finding: no drift on in-distribution traffic, weather raises delay, injection variants blocked, unknown cities clarified, idempotent / strict approval gate, connection search, RBAC, approval-gated promotion, 422 on bad inputs, contradiction and invented-amount detection, outcome loop and degradation, audit tamper detection, PII masking, circuit breaker 503, fare curve dates, PNR tool, honest "no route" message, compliance report.

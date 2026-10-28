@@ -11,12 +11,12 @@ from typing import Any, Dict, Optional
 
 import streamlit as st
 
-from frontend.ui import esc
+from frontend.ui import details, esc
 
 
 def render_telemetry_badge(telemetry: Optional[Dict[str, Any]] = None, **kwargs) -> None:
     d = {**(telemetry or {}), **kwargs}
-    if not d:
+    if not d or not details():      # the receipt is for staff and reviewers, not passengers
         return
     cells = []
     if d.get("latency_ms") is not None:

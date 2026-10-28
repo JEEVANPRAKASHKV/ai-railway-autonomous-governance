@@ -21,7 +21,8 @@ from frontend.components.shap_chart import render_shap_chart
 from frontend.components.telemetry_badge import render_telemetry_badge
 from frontend.ui import (
     NEG, POS, TONE_BAR, api_get, api_post, badge, callout, esc, hero, inject_theme, kpi, kpi_row,
-    halt_labels, label_for, load_reference, meter, mono, provenance, rows_card, section, send_outcome, style_fig,
+    details, halt_labels, label_for, load_reference, meter, mono, provenance, rows_card, section, send_outcome,
+    style_fig, why_card,
 )
 
 CLASSES = ["3A", "2A", "1A", "SL", "CC", "EC", "2S"]
@@ -41,8 +42,10 @@ def _setter(values: Dict[str, Any], run_flag: str):
 
 
 def presets(items: List[tuple], run_flag: str, key: str) -> None:
-    """Row of one-click scenario buttons. items = [(label, {state_key: value})]."""
-    st.caption("Try a ready-made scenario")
+    """Row of one-click demo scenarios for reviewers (hidden in the passenger view). items = [(label, {key: value})]."""
+    if not details():
+        return
+    st.caption("Demo scenarios — prefilled examples for reviewers")
     cols = st.columns(len(items))
     for i, (col, (label, vals)) in enumerate(zip(cols, items)):
         col.button(label, key=f"{key}_p{i}", width="stretch", on_click=_setter(vals, run_flag))
@@ -58,7 +61,7 @@ def _err(result: Any, what: str) -> None:
 def outcome_box(key: str, res: Dict[str, Any], label: str, kind: str, **kw: Any) -> None:
     """'What really happened?' — closes the governance feedback loop for this exact prediction."""
     audit = (res.get("governance_telemetry") or {}).get("audit_id")
-    if not audit:
+    if not audit or not details():
         return
     with st.expander(f"{label}"):
         st.caption("Real outcomes let the governance layer measure live accuracy, spot concept drift and retrain "
@@ -77,11 +80,51 @@ def outcome_box(key: str, res: Dict[str, Any], label: str, kind: str, **kw: Any)
                 st.warning(f"Not recorded: {(r or {}).get('error', 'unknown error')}")
 
 
+_TICKET_WORDS = {
+    "initial_wl_number": lambda v: f"Your waitlist position (WL {int(float(v))})",
+    "season_factor": lambda v: "Peak travel season" if float(v) >= 1.15 else "Normal travel season",
+    "is_peak_season": lambda v: "Holiday / festival period",
+    "class_enc": lambda v: "Your travel class",
+    "quota_enc": lambda v: "Your booking quota",
+    "days_to_departure": lambda v: f"Booking {int(float(v))} days before travel",
+    "month": lambda v: "Month of travel",
+    "day_of_week": lambda v: "Day of the week",
+    "seniority_flag": lambda v: "Senior citizen booking",
+    "disability_flag": lambda v: "Divyangjan quota",
+}
+
+
+def _ticket_reasons(shap: List[Dict[str, Any]]) -> List[tuple]:
+    out = []
+    for e in sorted(shap or [], key=lambda e: -abs(float(e.get("contribution", 0)))):
+        c = float(e.get("contribution", 0))
+        if abs(c) < 0.02 or len(out) >= 3:
+            continue
+        try:
+            what = _TICKET_WORDS.get(e.get("feature"), lambda v: str(e.get("feature_name", "Other")))(e.get("value", 0))
+        except Exception:
+            what = str(e.get("feature_name", "Other"))
+        out.append((what, "raises your chance" if c > 0 else "lowers your chance", c > 0))
+    return out
+
+
+def _delay_reasons(drivers: List[Dict[str, Any]]) -> List[tuple]:
+    out = []
+    for d in drivers or []:
+        m = float(d.get("impact_minutes") or 0)
+        if d.get("feature") == "base_value" or abs(m) < 1.5 or len(out) >= 3:
+            continue
+        what = f'{d.get("factor", "")} ({d.get("display", d.get("value"))})'
+        out.append((what, f"adds about {m:.0f} min" if m > 0 else f"saves about {-m:.0f} min", m <= 0))
+    return out
+
+
 def _empty(msg: str) -> None:
     st.markdown(
         f'<div class="rb-card" style="padding:28px 20px;border-style:dashed">'
         f'<div style="font-weight:700">{msg}</div>'
-        f'<div class="rb-sub">Fill in the details on the left and run it — or pick a ready-made scenario above.</div></div>',
+        f'<div class="rb-sub">Fill in the details on the left and run it'
+        f'{" — or pick a demo scenario above" if details() else ""}.</div></div>',
         unsafe_allow_html=True,
     )
 
@@ -104,6 +147,27 @@ GOVERNANCE = [
     ("M7", "fraud", "m7_fraud_detector", "Fraud & bot shield", "Bot, scalper and account-misuse scoring with evidence."),
 ]
 _BOARD_COLS = [0.55, 3.2, 0.9, 0.9, 1.0, 0.9]
+
+
+def _home_passenger(pages: Dict[str, Any]) -> None:
+    """Passenger home: what you can do here, nothing about models or monitoring."""
+    hero("Railway Buddy",
+         "Check if your waitlisted ticket will confirm, find the right train, see expected delays and the real fare, "
+         "or describe a trip and let the planner work it out. Nothing is booked without your approval.")
+    rows = [(n, d, pg) for _, pg, _, n, d in SERVICES]
+    st.markdown('<div class="rb-thead" style="--cols:3.6fr 0.9fr"><span>What would you like to do?</span><span></span></div>',
+                unsafe_allow_html=True)
+    for name, desc, page in rows:
+        with st.container(key=f"svcrow_p_{name.replace(' ', '_')}"):
+            c = st.columns([3.6, 0.9])
+            c[0].markdown(f"**{name}**<br><span class='rb-sub'>{esc(desc)}</span>", unsafe_allow_html=True)
+            if page and pages.get(page):
+                c[1].page_link(pages[page], label="Open")
+            else:
+                c[1].markdown('<span class="rb-sub">Chat button ↘</span>', unsafe_allow_html=True)
+    st.caption("Train times come from the 2016 Indian Railways timetable and fares from the official 2025 tariff; "
+               "predictions are estimates. This is an independent demo — book real tickets on irctc.co.in. "
+               "Railway staff: switch on **Staff & reviewer view** in the sidebar, or open **AI Governance**.")
 
 
 def _board(rows: List[tuple], pages: Dict[str, Any], modules: Dict[str, Any], key: str) -> None:
@@ -132,6 +196,9 @@ def _board(rows: List[tuple], pages: Dict[str, Any], modules: Dict[str, Any], ke
 
 def home(pages: Dict[str, Any]) -> None:
     inject_theme("home")
+    if not details():
+        _home_passenger(pages)
+        return
     hero(
         "Railway Buddy",
         "Predicts your ticket, plans your journey, watches delays and fares, and answers your questions. "
@@ -238,14 +305,27 @@ def ticket() -> None:
             p = res["confirmation_probability"]
             tone = "ok" if p >= 0.75 else "warn" if p >= 0.4 else "bad"
             st.markdown(meter(p * 100, "Chance of confirmation", "%", tone=tone), unsafe_allow_html=True)
-            kpi_row([("Verdict", esc(res.get("pnr_status_prediction", "—")), "at chart preparation", tone),
-                     ("Likely berth", esc(res.get("estimated_berth_type", "—")), esc(res.get("berth_estimate_basis", "Indicative estimate"))[:60], ""),
-                     ("Model confidence", f'{res.get("confidence_score", 0):.0%}', "certainty of this prediction", "")])
+            cells = [("Verdict", esc(res.get("pnr_status_prediction", "—")), "at chart preparation", tone),
+                     ("Likely berth", esc(res.get("estimated_berth_type", "—")),
+                      esc(res.get("berth_estimate_basis", "Indicative estimate"))[:60] if details() else "if it confirms", "")]
+            if details():
+                cells.append(("Model confidence", f'{res.get("confidence_score", 0):.0%}', "certainty of this prediction", ""))
+            kpi_row(cells)
             if res.get("booking_advisory"):
                 callout(f"<b>Advice:</b> {esc(res['booking_advisory'])}", tone, "📢")
 
     if st.session_state.get("t_res") and "confirmation_probability" in st.session_state["t_res"]:
         res = st.session_state["t_res"]
+        if not details():
+            why_card("Why this chance", _ticket_reasons(res.get("shap_explanation")))
+            hi = res.get("historical_insights") or {}
+            if hi:
+                section("What happened to similar bookings",
+                        f'{hi.get("comparable_bookings", 0):,} past bookings like yours ({esc(hi.get("scope", ""))}).')
+                kpi_row([("Got confirmed", f'{hi.get("historical_confirmed_pct", 0):.0f}%', "seat or berth", ""),
+                         ("Ended in RAC", f'{hi.get("historical_rac_pct", 0):.0f}%', "seat shared, can travel", ""),
+                         ("Stayed waitlisted", f'{hi.get("historical_wl_pct", 0):.0f}%', "cancelled & refunded", "")])
+            return
         section("Why this prediction?", "The factors that moved the probability up or down.")
         a, b = st.columns([1.6, 1])
         with a:
@@ -373,13 +453,19 @@ def recommend() -> None:
                         f'<div class="rb-mono"><b>{esc(r.get("departure_time"))}</b> {esc(r.get("source") or oc)}<br><b>{esc(r.get("arrival_time"))}</b> {esc(r.get("destination") or dc)}</div>'
                         f'<div><span class="rb-sub">Duration</span><br><span class="rb-mono">{r.get("duration_hours", 0):.1f} h</span></div>'
                         f'<div><span class="rb-sub">On time</span><br><span class="rb-mono">{r.get("punctuality_score", 0):.0%}</span></div>'
-                        f'<div><span class="rb-sub">Match</span><br><span class="rb-mono">{r.get("composite_score", 0):.2f}</span></div>'
+                        + (f'<div><span class="rb-sub">Match</span><br><span class="rb-mono">{r.get("composite_score", 0):.2f}</span></div>'
+                           if details() else
+                           f'<div><span class="rb-sub">Confirms</span><br><span class="rb-mono">'
+                           f'{"—" if r.get("confirmation_odds") is None else format(r["confirmation_odds"], ".0%")}</span></div>') +
                         f'<div class="fare rb-mono">₹{r.get("fare_estimate_inr", 0):,.0f}'
                         f'<br><span class="rb-sub" style="font-size:.75rem">{esc(r.get("fare_class", ""))}</span></div></div>'
-                        f'<div style="padding:8px 14px;border-top:1px solid #ddd"><span class="rb-sub">{esc(r.get("recommendation_reason"))}</span>'
-                        f'<div style="margin-top:6px">{tags}</div></div></div>',
+                        f'<div style="padding:8px 14px;border-top:1px solid #ddd">'
+                        + (f'<span class="rb-sub">{esc(r.get("recommendation_reason"))}</span>' if details() else "")
+                        + f'<div style="margin-top:6px">{tags}</div></div></div>',
                         unsafe_allow_html=True)
                     fc = r.get("factor_contributions") or {}
+                    if not details():
+                        continue
                     b1, b2 = st.columns([3, 1])
                     if fc:
                         with b1.expander("Score breakdown"):
@@ -394,6 +480,8 @@ def recommend() -> None:
                         else:
                             st.info((out or {}).get("error", "Choice already recorded."))
                 _connections(res)
+                if not details():
+                    return
                 if dirv >= 0.8:
                     callout(f"<b>Fairness audit passed</b> — Disparate Impact Ratio <b>{dirv:.2f}</b> (≥ 0.80). Rankings give fair exposure across fare tiers.", "ok", "⚖️")
                 else:
@@ -441,15 +529,17 @@ def delay() -> None:
         if stop:
             st.caption(f"Scheduled {'arrival ' + stop[1] if stop[1] else 'departure ' + stop[2]} · "
                        f"{stop[3]:,.0f} km from {ref['stops'][trains[train]][0][0]} (2016 timetable)")
+        # passengers always get the automatic estimate; setting weather / congestion by hand is a reviewer tool
         auto = st.toggle("Estimate weather & congestion automatically", key="d_auto",
                          help="Weather: live Open-Meteo forecast at this station (up to 15 days ahead), otherwise the "
-                              "station's usual weather for that time of year. Congestion: this station's own history.")
+                              "station's usual weather for that time of year. Congestion: this station's own history."
+                         ) if details() else True
         with st.form("delay_form"):
             jd = st.date_input("Journey date", value=date.today() + timedelta(days=1), min_value=date.today(),
                                max_value=date.today() + timedelta(days=60))
             if auto:
-                st.caption("Weather comes from the live forecast for the station and day; congestion from the station's "
-                           "history. Switch the toggle off to set them yourself.")
+                st.caption("Uses the weather forecast for the station on that day and how busy the station usually is"
+                           + (". Switch the toggle off to set them yourself." if details() else "."))
                 wx, cg = None, None
             else:
                 wx = st.slider("Weather severity", 0.0, 1.0, step=0.05, key="d_weather",
@@ -480,19 +570,26 @@ def delay() -> None:
             kpi_row([("Arrival delay", f"+{mins:.0f}<small style='font-size:.9rem'> min</small>", "at the selected station", tone),
                      ("Departure delay", f"+{dep:.0f}<small style='font-size:.9rem'> min</small>" if dep is not None else "—", "from the origin", ""),
                      ("Likely range", f'{ci.get("lower_bound", 0):.0f}–{ci.get("upper_bound", 0):.0f}<small style="font-size:.9rem"> min</small>',
-                      f'{ci.get("coverage", 0.8):.0%} prediction interval', ""),
-                     ("Station congestion", esc(lvl), f'{sci:.0%} · {esc(res.get("congestion_source", ""))}' if sci is not None else "",
+                      f'{ci.get("coverage", 0.8):.0%} prediction interval' if details() else "most likely", ""),
+                     ("Station crowding", esc(lvl),
+                      (f'{sci:.0%} · {esc(res.get("congestion_source", ""))}' if details() else "how busy it usually is")
+                      if sci is not None else "",
                       {"Low": "ok", "Moderate": "warn"}.get(lvl, "bad"))])
             wc = res.get("weather_conditions") or {}
             wline = (f"rain {wc.get('precip_mm', 0):.0f} mm · visibility {wc.get('min_visibility_m', 0) / 1000:.1f} km · "
                      f"wind {wc.get('wind_kmh', 0):.0f} km/h{' · thunderstorm' if wc.get('storm') else ''}") if wc else ""
-            rows_card("Inputs used", [
-                ("Weather", f"{esc(res.get('weather_source', ''))}" + (f" — {esc(wline)}" if wline else "")
-                 + (f" · index {res['weather_index_used']:.1f}/10" if res.get("weather_index_used") is not None else "")),
-                ("Distance from origin", mono("%s km" % format(res.get("distance_from_origin_km") or 0, ",.0f"))
-                 + " · " + esc(res.get("distance_source", ""))),
-                ("Scheduled time", mono(res.get("scheduled_time") or "—")),
-            ])
+            if not details():
+                src = str(res.get("weather_source", ""))
+                st.caption(("Weather forecast for the day: " + wline) if wline and src.startswith("Open-Meteo")
+                           else "Weather: usual conditions for this station at this time of year.")
+            else:
+                rows_card("Inputs used", [
+                    ("Weather", f"{esc(res.get('weather_source', ''))}" + (f" — {esc(wline)}" if wline else "")
+                     + (f" · index {res['weather_index_used']:.1f}/10" if res.get("weather_index_used") is not None else "")),
+                    ("Distance from origin", mono("%s km" % format(res.get("distance_from_origin_km") or 0, ",.0f"))
+                     + " · " + esc(res.get("distance_source", ""))),
+                    ("Scheduled time", mono(res.get("scheduled_time") or "—")),
+                ])
             callout(f"<b>Travel alert:</b> {esc(res.get('proactive_alert', ''))}"
                     + (f" &nbsp;·&nbsp; <b>{res['disruption_probability']:.0%}</b> chance of a delay over 60 min."
                        if res.get("disruption_probability") is not None else ""), tone, "📢")
@@ -500,7 +597,9 @@ def delay() -> None:
                 callout(f"<b>{esc(al.get('title'))}</b> — {esc(al.get('message'))} <i>{esc(al.get('action', ''))}</i>",
                         {"CRITICAL": "bad", "WARNING": "warn"}.get(al.get("severity"), "info"), "🔔")
             drivers = [d for d in (res.get("delay_drivers") or []) if d.get("feature") != "base_value"]
-            if drivers:
+            if drivers and not details():
+                why_card("What drives this delay", _delay_reasons(drivers))
+            elif drivers:
                 base = next((d for d in res["delay_drivers"] if d.get("feature") == "base_value"), None)
                 fig = go.Figure(go.Bar(
                     x=[d.get("impact_minutes", 0) for d in drivers][::-1],
@@ -593,8 +692,9 @@ def planner() -> None:
             chips.append(f"Arrive before <b>{esc(cons['arrival_before'])}</b>")
         if cons.get("preferred_class"):
             chips.append(f"Class <b>{esc(cons['preferred_class'])}</b>")
-        st.markdown('<div class="rb-sub" style="margin:6px 0 2px">What the agent understood '
-                    f'({esc(cons.get("method", "rules"))}):</div>' + " &nbsp;·&nbsp; ".join(chips), unsafe_allow_html=True)
+        how = f' ({esc(cons.get("method", "rules"))})' if details() else ""
+        st.markdown(f'<div class="rb-sub" style="margin:6px 0 2px">What I understood{how}:</div>'
+                    + " &nbsp;·&nbsp; ".join(chips), unsafe_allow_html=True)
 
     if status == "BLOCKED":
         callout(f"<b>Request blocked.</b> {esc(plan.get('agent_reasoning_summary', ''))}", "bad", "🛡️")
@@ -616,7 +716,9 @@ def planner() -> None:
                 f' <span class="rb-sub rb-mono">({esc(l.get("arrival", "")[:10])})</span></span>'
                 f'<span class="v">₹{l.get("fare_inr", 0):,.0f} · {l.get("confirmation_probability", 0):.0%} odds · +{l.get("predicted_delay_minutes", 0):.0f} min</span></div>')
 
-    section("Your proposed itinerary", f'Request <code>{esc(plan.get("request_id"))}</code>' + _expiry(plan.get("expires_at")))
+    section("Your proposed itinerary",
+            (f'Request <code>{esc(plan.get("request_id"))}</code>' if details() else "Held for you")
+            + _expiry(plan.get("expires_at")))
     exp = rec.get("expected_arrival_with_delay") or ""
     st.markdown(
         f'<div class="rb-card" style="border:2px solid var(--accent)">'
@@ -642,9 +744,9 @@ def planner() -> None:
         st.markdown('<div class="rb-card"><h4>Why it fits</h4>' + ("".join(f'<div style="padding:4px 0">{esc(p)}</div>' for p in rec.get("pros", [])) or "<div class=rb-sub>—</div>") + "</div>", unsafe_allow_html=True)
     with b:
         st.markdown('<div class="rb-card"><h4>Keep in mind</h4>' + ("".join(f'<div style="padding:4px 0">• {esc(c)}</div>' for c in rec.get("cons", [])) or '<div style="padding:4px 0">No major concerns</div>') + "</div>", unsafe_allow_html=True)
-    callout(f"<b>Agent reasoning:</b> {esc(plan.get('agent_reasoning_summary', ''))}", "info", "🧠")
+    callout(f"<b>{'Agent reasoning' if details() else 'Summary'}:</b> {esc(plan.get('agent_reasoning_summary', ''))}", "info")
     val = plan.get("validation") or {}
-    if val:
+    if val and details():
         checks = val.get("checks") or {}
         st.markdown('<div class="rb-sub" style="margin:4px 0">Validator agent: '
                     + " ".join(badge(k.replace("_", " "), "ok" if v else "warn") for k, v in checks.items()) + "</div>",
@@ -703,6 +805,8 @@ def planner() -> None:
     elif status == "REPLANNING":
         callout("Plan rejected. Edit your request above and plan again.", "warn", "↩️")
 
+    if not details():
+        return
     with st.expander("Agent execution trace (audit trail)"):
         for i, step in enumerate(plan.get("execution_trace", []), 1):
             detail = ", ".join(f"{k}: {v}" for k, v in step.items() if k not in ("step", "agent", "status") and v not in (None, [], ""))
@@ -764,7 +868,12 @@ def fare() -> None:
         else:
             dem = res.get("demand_level", "—")
             rule = res.get("pricing_rule", "")
-            kpi_row([("Fare", f'₹{res["current_predicted_fare_inr"]:,.0f}', f'standard ₹{res.get("base_fare_inr", 0):,.0f}', ""),
+            fixed_simple = rule == "fixed" and not details()     # a fixed fare needs no surge / demand readouts
+            kpi_row(([("Fare", f'₹{res["current_predicted_fare_inr"]:,.0f}', "total payable", ""),
+                      ("Pricing", "Fixed", "same on any booking day", "ok"),
+                      ("Distance", f'{float((res.get("fare_breakdown") or {}).get("distance_km", 0)):,.0f} km', "for this journey", "")])
+                    if fixed_simple else
+                    [("Fare", f'₹{res["current_predicted_fare_inr"]:,.0f}', f'standard ₹{res.get("base_fare_inr", 0):,.0f}', ""),
                      ("Pricing", {"flexi": "Flexi", "fixed": "Fixed", "tatkal": "Tatkal"}.get(rule, "—"),
                       {"flexi": "rises as seats sell", "fixed": "same on any booking day", "tatkal": "Tatkal charge added"}.get(rule, ""),
                       "ok" if rule == "fixed" else "warn"),
@@ -776,7 +885,7 @@ def fare() -> None:
             callout(f"<b>Best time to book:</b> {esc(res.get('optimal_booking_window', ''))}"
                     + (f" &nbsp;·&nbsp; Demand surge expected from <b>{res['demand_surge_from_days']} days</b> before departure."
                        if res.get("demand_surge_from_days") is not None and rule != "fixed" else ""), "info")
-            if res.get("pricing_anomaly"):
+            if res.get("pricing_anomaly") and details():
                 callout(f"<b>Pricing check:</b> {esc(res['pricing_anomaly'])} The governance layer logged this for review.", "warn")
             if res.get("policy_note"):
                 st.caption(esc(res["policy_note"]))
@@ -795,7 +904,7 @@ def fare() -> None:
                           note="Base fare from the Railway Board TAG 2025 fare tables for this distance. Catering on "
                                "Rajdhani/Duronto/Shatabdi and concessions are not included — confirm on IRCTC.")
             curve = res.get("forecast_curve") or []
-            if curve:
+            if curve and not fixed_simple:
                 df = pd.DataFrame(curve)
                 fig = go.Figure(go.Scatter(x=df["days_to_departure"], y=df["predicted_fare_inr"], mode="lines+markers",
                                            line=dict(color=POS, width=2), marker=dict(size=5),
@@ -818,7 +927,7 @@ def fare() -> None:
                 c.markdown(f'<div class="rb-card"><div class="rb-sub">{esc(a.get("alternative_type"))}</div>'
                            f'<div class="rb-mono" style="font-size:1.35rem;font-weight:600;color:#13703A">Save ₹{a.get("potential_savings_inr", 0):,.0f}</div>'
                            f'<div class="rb-sub">{esc(a.get("description"))}</div></div>', unsafe_allow_html=True)
-        if res.get("fare_drivers"):
+        if res.get("fare_drivers") and details():
             section("Why this fare?", "SHAP: how much each factor adds to or removes from the fare, in ₹.")
             render_shap_chart(res["fare_drivers"], title="Fare drivers (SHAP)", target_metric="₹ impact")
         outcome_box("f_out", res, "Report the fare you actually paid", "number", input_label="Fare paid (₹)",
