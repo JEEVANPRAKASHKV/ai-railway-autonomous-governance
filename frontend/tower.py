@@ -21,7 +21,7 @@ import plotly.graph_objects as go
 import streamlit as st
 
 from frontend.ui import (
-    POS, TONE_BAR, API_BASE, api_get, api_post, badge, callout, engine_label, esc, hero, inject_theme, meter,
+    POS, TONE_BAR, api_base, api_get, api_post, badge, callout, engine_label, esc, hero, inject_theme, meter,
     kpi, kpi_row, rows_card, section, style_fig, tone_for,
 )
 
@@ -89,7 +89,7 @@ def tower(pages: Dict[str, Any] = None) -> None:
     live = top1.toggle("Live auto-refresh", value=False, help="Refresh every 10 seconds")
     if top2.button("Refresh now", width="stretch"):
         st.rerun()
-    top3.caption(f"Engine: **{engine_label()}** · API: `{API_BASE}` · Last updated {datetime.now(timezone.utc).strftime('%H:%M:%S UTC')}")
+    top3.caption(f"Engine: **{engine_label()}** · API: `{api_base()}` · Last updated {datetime.now(timezone.utc).strftime('%H:%M:%S UTC')}")
 
     body = st.fragment(run_every=10 if live else None)(_tower_body)
     body(pages or {})

@@ -12,7 +12,7 @@
 [![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/API-FastAPI-009688?logo=fastapi&logoColor=white)](#-api-reference)
 [![LLM](https://img.shields.io/badge/LLM-Sarvam%20AI%20%E2%86%92%20Gemini-4285F4)](#-llm-layer--sarvam-ai-first-never-crashes)
-[![Tests](https://img.shields.io/badge/tests-119%20passing-2E7D32)](#-testing)
+[![Tests](https://img.shields.io/badge/tests-133%20passing-2E7D32)](#-testing)
 [![Docker](https://img.shields.io/badge/Docker-ready-2496ED?logo=docker&logoColor=white)](#-deployment)
 
 [Live Demo](https://ai-railway-governance.streamlit.app) ·
@@ -332,6 +332,13 @@ Environment variables / `.env` (locally) or **Secrets** (Streamlit Cloud). See `
 
 ## ☁️ Deployment
 
+**Code updates on Streamlit Cloud.** A push is pulled into the running app, but an API process that is already running
+would keep the old code, models and timetable in memory. `streamlit_app.py` therefore runs the API as a child process
+and compares its build fingerprint (`/api/health` → `build`, from `core/build_info.py`: git commit + source and
+reference-data files) with the checkout every 15 s. When they differ it starts an updated API on the next port, switches
+traffic once it is healthy and stops the old one — no manual reboot needed.
+
+
 | Target | How |
 |---|---|
 | **Streamlit Community Cloud** (live demo) | Main file `streamlit_app.py`; optional Secrets: `SARVAM_API_KEY`, `GEMINI_API_KEY`, `LLM_DAILY_BUDGET_INR`, `RB_OPERATOR_KEY`, `RB_ADMIN_KEY`. |
@@ -428,7 +435,7 @@ Rebuild everything: `python data/real/build_real_network.py && python data/gener
 
 ```bash
 pip install -r requirements-dev.txt
-pytest -q          # 119 tests (API, governance, support accuracy, real-data checks, and a headless run of every Streamlit page)
+pytest -q          # 133 tests (API, governance, support accuracy, real-data checks, and a headless run of every Streamlit page)
 ```
 
 `tests/test_audit_fixes.py` pins every audit finding: no drift on in-distribution traffic, weather raises delay, injection variants blocked, unknown cities clarified, idempotent / strict approval gate, connection search, RBAC, approval-gated promotion, 422 on bad inputs, contradiction and invented-amount detection, outcome loop and degradation, audit tamper detection, PII masking, circuit breaker 503, fare curve dates, PNR tool, honest "no route" message, compliance report.

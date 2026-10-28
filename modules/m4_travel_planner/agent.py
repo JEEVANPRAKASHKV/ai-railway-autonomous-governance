@@ -127,9 +127,9 @@ class IntentAgent:
             return CITY_SYNONYMS[t]
         if t in self.stations:
             return self.stations[t]
-        for name, code in self.stations.items():
-            if len(t) >= 4 and name.startswith(t):
-                return code
+        hit = network.resolve(t)          # any real station name, 'Jn'/'Central' optional, small typos allowed
+        if hit:
+            return hit
         return None
 
     def _date(self, low: str, today: date) -> Tuple[Optional[date], str]:
@@ -573,8 +573,16 @@ class TravelPlannerAgent:
         if c["unresolved"]:
             raw = c.get("_raw_route")
             what = " and ".join(c["unresolved"])
-            q = (f"I couldn't match the {what}" + (f" ('{raw[0]}' → '{raw[1]}')" if raw else "") +
-                 " to a station in the timetable. Which station or city do you mean?")
+            names = []
+            if raw:
+                if "origin" in c["unresolved"]:
+                    names.append(raw[0])
+                if "destination" in c["unresolved"]:
+                    names.append(raw[1])
+            hints = [h for nm in names for h in network.suggest(nm)]
+            q = (f"I couldn't match the {what}" + (f" ('{', '.join(names)}')" if names else "") +
+                 " to a station in the timetable. Which station or city do you mean?"
+                 + (f" Did you mean {' or '.join(hints[:3])}?" if hints else ""))
             return self._response(req_id, request, "NEEDS_CLARIFICATION", trace, q, c, question=q)
         if c["source"] == c["destination"]:
             q = "Origin and destination are the same. Where would you like to go?"

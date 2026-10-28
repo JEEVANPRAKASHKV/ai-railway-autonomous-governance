@@ -65,7 +65,8 @@ class SupportTools:
         for name, code in self._stations.items():
             if len(name) > 3 and (t == name or t in name.split()):
                 return code
-        return None
+        from core.network import network
+        return network.resolve(t)        # any real station, common city names, small spelling slips
 
     # ── PNR status & refund tracking ──────────────────────────────────────────
 

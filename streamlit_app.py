@@ -3,19 +3,28 @@ streamlit_app.py
 ────────────────
 Root cloud deployment entrypoint for Streamlit Community Cloud, Render, and Hugging Face.
 Automatically bootstraps the dual-plane architecture:
-1. Launches FastAPI backend in a background daemon thread on 127.0.0.1:8000 (if not already running).
-2. Verifies health and seeds realistic baseline telemetry.
+1. Runs the FastAPI backend as a child process on 127.0.0.1 (first free port from 8000).
+2. Keeps it in step with the code: Streamlit Cloud pulls every push into the running app, but an API that is
+   already running would keep serving the old modules, models and timetable. The API reports a build
+   fingerprint (core/build_info.py); when it no longer matches the checkout, a fresh API is started in the
+   background and traffic switches to it once it is healthy, then the old one is stopped.
 3. Hands execution to the Streamlit Control Tower & Passenger AI Portal.
 """
 
 from __future__ import annotations
 
-import os
-import sys
-import time
-import runpy
+import atexit
 import logging
+import os
+import runpy
+import signal
+import socket
+import subprocess
+import sys
 import threading
+import time
+from typing import Optional
+
 import requests
 
 from dotenv import load_dotenv
@@ -37,19 +46,29 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 if PROJECT_ROOT not in sys.path:
     sys.path.insert(0, PROJECT_ROOT)
 
+from core.build_info import fingerprint  # noqa: E402
+
 logger = logging.getLogger("streamlit_app")
 logging.basicConfig(level=logging.INFO)
 
-BACKEND_URL = os.getenv("BACKEND_URL", "http://127.0.0.1:8000").rstrip("/")
+EXTERNAL_BACKEND = "BACKEND_URL" in os.environ and os.environ.get("RB_BACKEND_MANAGED") != "1"
+CHECK_EVERY_S = 15
 
 
-def _is_backend_alive(url: str = BACKEND_URL) -> bool:
-    """True if the API process answers at all (a 503 'degraded' reply still means it is up)."""
+def _health(url: str) -> Optional[dict]:
+    """The API's /health reply ({} if it answers without JSON), or None if nothing is listening."""
     try:
-        requests.get(f"{url}/api/health", timeout=1.5)
-        return True
+        r = requests.get(f"{url}/api/health", timeout=1.5)
+        try:
+            return r.json() or {}
+        except Exception:
+            return {}
     except Exception:
-        return False
+        return None
+
+
+def _is_backend_alive(url: Optional[str] = None) -> bool:
+    return _health(url or os.environ.get("BACKEND_URL", "http://127.0.0.1:8000")) is not None
 
 
 def _ensure_artifacts() -> None:
@@ -58,8 +77,6 @@ def _ensure_artifacts() -> None:
     Generate the synthetic datasets and train the models once, BEFORE the backend imports
     the services (they load artifacts at import time).
     """
-    import subprocess
-
     raw = os.path.join(PROJECT_ROOT, "data", "raw")
     art = os.path.join(PROJECT_ROOT, "models", "artifacts")
     need_data = not all(
@@ -80,37 +97,108 @@ def _ensure_artifacts() -> None:
                        cwd=PROJECT_ROOT, check=True)
 
 
-def _start_background_backend():
-    """Start uvicorn serving FastAPI in a background daemon thread."""
-    if _is_backend_alive():
-        return
+def _free_port(start: int = 8000) -> int:
+    for port in range(start, start + 100):
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+            try:
+                sock.bind(("127.0.0.1", port))
+                return port
+            except OSError:
+                continue
+    raise RuntimeError("no free port for the API")
 
+
+def _spawn(port: int) -> subprocess.Popen:
+    """Start the API in its own process (so it can be replaced when the code changes)."""
+    _ensure_artifacts()
+    log_dir = os.path.join(PROJECT_ROOT, "runtime")
+    os.makedirs(log_dir, exist_ok=True)
+    log = open(os.path.join(log_dir, f"backend_{port}.log"), "a", encoding="utf-8")
+    proc = subprocess.Popen(
+        [sys.executable, "-m", "uvicorn", "backend.main:app", "--host", "127.0.0.1", "--port", str(port),
+         "--log-level", "warning"],
+        cwd=PROJECT_ROOT, stdout=log, stderr=subprocess.STDOUT, env=os.environ.copy())
+    atexit.register(lambda: proc.poll() is None and proc.terminate())
+    logger.info(f"API starting on port {port} (pid {proc.pid})")
+    return proc
+
+
+def _wait_ready(url: str, proc: subprocess.Popen, build: str, timeout_s: float) -> bool:
+    end = time.time() + timeout_s
+    while time.time() < end:
+        if proc.poll() is not None:
+            return False
+        h = _health(url)
+        if h is not None and (not build or h.get("build") in (build, None)):
+            return True
+        time.sleep(0.5)
+    return False
+
+
+def _use(url: str, proc: subprocess.Popen) -> None:
+    old = os.environ.get("RB_BACKEND_PID")
+    os.environ.update(BACKEND_URL=url, RB_BACKEND_PID=str(proc.pid), RB_BACKEND_MANAGED="1")
+    if old and old != str(proc.pid):
+        def _stop_old(pid: int) -> None:
+            time.sleep(10)                      # let requests already in flight finish
+            try:
+                os.kill(pid, signal.SIGTERM)
+                for _ in range(20):                 # reap it so no zombie is left behind
+                    if os.waitpid(pid, os.WNOHANG)[0]:
+                        break
+                    time.sleep(0.5)
+            except Exception:
+                pass
+        threading.Thread(target=_stop_old, args=(int(old),), daemon=True).start()
+
+
+def _swap(build: str) -> None:
+    """Start an up-to-date API next to the stale one and switch to it once it is healthy."""
     try:
-        import uvicorn
-        _ensure_artifacts()
-        from backend.main import app as fastapi_app
-
-        def _serve():
-            uvicorn.run(fastapi_app, host="127.0.0.1", port=8000, log_level="warning")
-
-        server_thread = threading.Thread(target=_serve, daemon=True, name="FastAPI-Daemon")
-        server_thread.start()
-
-        # Wait up to 10 seconds for backend to become healthy
-        for _ in range(20):
-            time.sleep(0.5)
-            if _is_backend_alive():
-                break
+        port = _free_port(8001)
+        proc = _spawn(port)
+        url = f"http://127.0.0.1:{port}"
+        if _wait_ready(url, proc, build, 240):
+            _use(url, proc)
+            logger.info(f"Switched to the updated API on port {port} (build {build})")
+        else:
+            logger.error("Updated API did not become healthy; still serving the previous one")
+            if proc.poll() is None:
+                proc.terminate()
     except Exception as e:
-        logger.error(f"Failed to launch background FastAPI backend: {e}")
+        logger.error(f"API update failed: {e}")
+    finally:
+        os.environ.pop("RB_BACKEND_SWAP", None)
 
 
-# Initialize background backend once per server process
-if "backend_started" not in os.environ:
-    _start_background_backend()
-    os.environ["backend_started"] = "1"
-elif not _is_backend_alive():
-    _start_background_backend()
+def ensure_backend() -> None:
+    url = os.environ.get("BACKEND_URL", "http://127.0.0.1:8000")
+    if EXTERNAL_BACKEND:                        # someone else runs the API (e.g. docker-compose)
+        return
+    now = time.time()
+    if now - float(os.environ.get("RB_BACKEND_CHECKED", "0")) < CHECK_EVERY_S:
+        return
+    os.environ["RB_BACKEND_CHECKED"] = str(now)
+    build = fingerprint()
+    h = _health(url)
+    if h is None:                               # nothing serving: start one and wait for it
+        try:
+            port = _free_port(8000)
+            proc = _spawn(port)
+            new_url = f"http://127.0.0.1:{port}"
+            if _wait_ready(new_url, proc, build, 240):
+                _use(new_url, proc)
+            else:
+                logger.error("API failed to start; see runtime/backend_*.log")
+        except Exception as e:
+            logger.error(f"Failed to launch the API: {e}")
+    elif h.get("build") != build and not os.environ.get("RB_BACKEND_SWAP"):
+        logger.info(f"Code changed (API build {h.get('build')} → {build}); starting an updated API")
+        os.environ["RB_BACKEND_SWAP"] = "1"
+        threading.Thread(target=_swap, args=(build,), daemon=True, name="api-update").start()
+
+
+ensure_backend()
 
 # Execute frontend app
 frontend_path = os.path.join(PROJECT_ROOT, "frontend", "app.py")

@@ -22,13 +22,17 @@ import streamlit as st
 # Backend access
 # ──────────────────────────────────────────────────────────────────────────────
 
-API_BASE = os.getenv("BACKEND_URL", os.getenv("API_BASE", "http://127.0.0.1:8000")).rstrip("/")
-API_V1 = f"{API_BASE}/api/v1"
+def api_base() -> str:
+    """Read on every call: the launcher moves the API to a fresh process (and port) after a code update."""
+    return os.getenv("BACKEND_URL", os.getenv("API_BASE", "http://127.0.0.1:8000")).rstrip("/")
+
+
+API_BASE = api_base()   # kept for display / backwards compatibility
 
 
 def api_get(path: str, params: Optional[dict] = None) -> Optional[Any]:
     try:
-        r = requests.get(f"{API_V1}{path}", params=params, timeout=8)
+        r = requests.get(f"{api_base()}/api/v1{path}", params=params, timeout=8)
         r.raise_for_status()
         return r.json()
     except Exception:
@@ -49,7 +53,7 @@ def api_post(path: str, payload: Optional[dict] = None, timeout: int = 30) -> Op
         headers = {"X-API-Key": ADMIN_KEY if path.startswith(_ADMIN_PATHS) else OPERATOR_KEY,
                    "X-Actor": "Control Tower UI"}
     try:
-        r = requests.post(f"{API_V1}{path}", json=payload or {}, timeout=timeout, headers=headers)
+        r = requests.post(f"{api_base()}/api/v1{path}", json=payload or {}, timeout=timeout, headers=headers)
     except Exception as exc:
         return {"error": f"Backend unreachable ({type(exc).__name__}).", "status": 0}
     if r.status_code >= 400:
@@ -78,7 +82,7 @@ def send_outcome(audit_id: Optional[str], actual: Any) -> Optional[dict]:
 
 def backend_online() -> bool:
     try:
-        return requests.get(f"{API_BASE}/api/health", timeout=3).status_code == 200
+        return requests.get(f"{api_base()}/api/health", timeout=3).status_code == 200
     except Exception:
         return False
 
@@ -440,7 +444,7 @@ LLM_LABELS = {"sarvam": "Sarvam AI", "gemini": "Gemini", "azure_openai": "Azure 
 def engine_label() -> str:
     """Which language engine is answering right now (live from the backend /health)."""
     try:
-        h = requests.get(f"{API_BASE}/api/health", timeout=3).json() or {}
+        h = requests.get(f"{api_base()}/api/health", timeout=3).json() or {}
         llm = h.get("llm") or {}
         mode = h.get("llm_mode") or llm.get("mode") or "fallback"
         if mode == "fallback":

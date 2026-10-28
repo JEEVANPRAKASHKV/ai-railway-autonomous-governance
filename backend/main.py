@@ -37,6 +37,7 @@ from backend.routers import (
     support,
     ticket,
 )
+from core.build_info import fingerprint
 from core.config import settings
 from governance.telemetry_bus import telemetry_bus
 
@@ -117,6 +118,7 @@ async def _data_quality(request: Request, exc: DataQualityError) -> JSONResponse
                         "gate, so no unreliable prediction was made.", "violations": exc.violations})
 
 # ── Router Registration ────────────────────────────────────────────────────────
+BUILD = fingerprint()          # code + data + models this process loaded (see core/build_info.py)
 API_V1_PREFIX = "/api/v1"
 app.include_router(ticket.router, prefix=API_V1_PREFIX)
 app.include_router(recommend.router, prefix=API_V1_PREFIX)
@@ -163,6 +165,7 @@ def health_check() -> JSONResponse:
         status_code=200 if status == "healthy" else 503,
         content={
             "status": status,
+            "build": BUILD,
             "models_loaded": models_ready,
             "synthetic_data_ready": data_ready,
             "llm_mode": settings.llm_mode,

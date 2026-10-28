@@ -218,3 +218,41 @@ def test_delay_history_uses_real_halts():
     for r in d.sample(40, random_state=1).itertuples():
         stop = network.stop(r.train_number, r.station_code)
         assert stop is not None and abs(stop["km_from_origin"] - r.distance_from_origin_km) < 0.2
+
+
+# ── Place names → stations (any real station, common names, small typos) ─────
+
+@pytest.mark.parametrize("text,code", [
+    ("kasaragod", "KGQ"), ("Kasargod", "KGQ"), ("kasaragod jn", "KGQ"), ("calicut", "CLT"), ("trichy", "TPJ"),
+    ("sealdah", "SDAH"), ("bandra", "BDTS"), ("mumbai central", "BCT"), ("bhopal jn", "BPL"), ("delhi", "NDLS"),
+    ("NDLS", "NDLS"),
+])
+def test_station_names_resolve(text, code):
+    assert network.resolve(text) == code
+
+
+def test_unknown_place_is_not_guessed_but_suggested():
+    assert network.resolve("xyzabc") is None
+    assert "Kasaragod (KGQ)" in network.suggest("kasaragodu")
+
+
+def test_planner_understands_any_real_station():
+    r = client.post("/api/v1/agent/plan", json={"query": "I want to travel from kasaragod to Delhi tomorrow under ₹1500 "
+                                                         "and reach before 10:00 AM.", "user_id": "USR00002"}).json()
+    opt = r.get("recommended_itinerary") or {}
+    assert r["status"] == "PENDING_APPROVAL" and opt.get("source") == "KGQ"
+    assert opt.get("destination") in network.city_stations("NDLS")
+
+
+def test_build_fingerprint_tracks_code_changes(tmp_path):
+    from core.build_info import fingerprint
+    (tmp_path / "core").mkdir()
+    f = tmp_path / "core" / "x.py"
+    f.write_text("a = 1\n")
+    before = fingerprint(str(tmp_path))
+    f.write_text("a = 22\n")
+    assert fingerprint(str(tmp_path)) != before
+    (tmp_path / "models" / "registry").mkdir(parents=True)
+    after = fingerprint(str(tmp_path))
+    (tmp_path / "models" / "registry" / "lifecycle_state.json").write_text("{}")   # run-time writes don't count
+    assert fingerprint(str(tmp_path)) == after

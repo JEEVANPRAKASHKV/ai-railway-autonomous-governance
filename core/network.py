@@ -16,8 +16,10 @@ Limitations: the timetable is a 2016 snapshot and has no running days, so every 
 
 from __future__ import annotations
 
+import difflib
 import logging
 import os
+import re
 import threading
 from typing import Dict, List, Optional, Set, Tuple
 
@@ -50,6 +52,34 @@ CITY_GROUPS: Dict[str, Set[str]] = {
     "Varanasi": {"BSB", "BSBS", "MUV"},
 }
 _CITY_OF = {code: city for city, codes in CITY_GROUPS.items() for code in codes}
+# City and older / common names → a main station code
+CITY_ALIASES: Dict[str, str] = {
+    "delhi": "NDLS", "new delhi": "NDLS", "mumbai": "CSTM", "bombay": "CSTM", "kolkata": "HWH", "calcutta": "HWH",
+    "chennai": "MAS", "madras": "MAS", "bangalore": "SBC", "bengaluru": "SBC", "hyderabad": "SC",
+    "secunderabad": "SC", "pune": "PUNE", "poona": "PUNE", "ahmedabad": "ADI", "jaipur": "JP", "lucknow": "LKO",
+    "patna": "PNBE", "kanpur": "CNB", "varanasi": "BSB", "benares": "BSB", "banaras": "BSB", "prayagraj": "ALD",
+    "allahabad": "ALD", "agra": "AGC", "bhopal": "BPL", "indore": "INDB", "nagpur": "NGP", "surat": "ST",
+    "vadodara": "BRC", "baroda": "BRC", "rajkot": "RJT", "amritsar": "ASR", "chandigarh": "CDG", "ludhiana": "LDH",
+    "jammu": "JAT", "guwahati": "GHY", "bhubaneswar": "BBS", "puri": "PURI", "ranchi": "RNC", "jamshedpur": "TATA",
+    "visakhapatnam": "VSKP", "vizag": "VSKP", "vijayawada": "BZA", "tirupati": "TPTY", "cochin": "ERS", "kochi": "ERS",
+    "ernakulam": "ERS", "calicut": "CLT", "kozhikode": "CLT", "trivandrum": "TVC", "thiruvananthapuram": "TVC",
+    "kannur": "CAN", "cannanore": "CAN", "trichur": "TCR", "thrissur": "TCR", "palakkad": "PGT", "palghat": "PGT",
+    "kollam": "QLN", "quilon": "QLN", "mangalore": "MAQ", "mangaluru": "MAQ", "goa": "MAO", "madgaon": "MAO",
+    "margao": "MAO", "mysore": "MYS", "mysuru": "MYS", "hubli": "UBL", "hubballi": "UBL", "belgaum": "BGM",
+    "belagavi": "BGM", "coimbatore": "CBE", "madurai": "MDU", "trichy": "TPJ", "tiruchirappalli": "TPJ",
+    "salem": "SA", "erode": "ED", "tirunelveli": "TEN", "kanyakumari": "CAPE", "rameswaram": "RMM",
+    "pondicherry": "PDY", "puducherry": "PDY", "raipur": "R", "bilaspur": "BSP", "jabalpur": "JBP", "gwalior": "GWL",
+    "jhansi": "JHS", "udaipur": "UDZ", "jodhpur": "JU", "ajmer": "AII", "kota": "KOTA", "bikaner": "BKN",
+    "jaisalmer": "JSM", "dehradun": "DDN", "haridwar": "HW", "gorakhpur": "GKP", "darbhanga": "DBG",
+    "gaya": "GAYA", "dhanbad": "DHN", "asansol": "ASN", "siliguri": "NJP", "new jalpaiguri": "NJP",
+    "dibrugarh": "DBRG", "gurgaon": "GGN", "gurugram": "GGN", "warangal": "WL", "cuttack": "CTC",
+    "alappuzha": "ALLP", "pondy": "PDY", "nizamuddin": "NZM", "hazrat nizamuddin": "NZM", "anand vihar": "ANVT",
+    "kurla": "LTT", "lokmanya tilak": "LTT", "ltt": "LTT", "bandra": "BDTS", "bandra terminus": "BDTS",
+    "dadar": "DR", "sealdah": "SDAH", "shalimar": "SHM", "chitpur": "KOAA", "yesvantpur": "YPR", "yeshwantpur": "YPR",
+    "kacheguda": "KCG", "egmore": "MS", "chennai egmore": "MS", "csmt": "CSTM", "cst": "CSTM", "vt": "CSTM",
+}
+_SUFFIX = {"jn", "jct", "junction", "central", "cent", "city", "cantt", "cantonment", "terminus", "terminal",
+           "t", "road", "rd", "halt", "main", "town"}
 HUB_MIN_TRAINS = 60          # stations with at least this many trains halting are interchange candidates
 
 
@@ -129,6 +159,69 @@ class RailNetwork:
             return None
         m = st[st["station_code"] == str(code).strip().upper()]
         return m.iloc[0].to_dict() if len(m) else None
+
+    # ── Station names → codes ────────────────────────────────────────────────
+
+    @staticmethod
+    def _norm(text: str) -> str:
+        return re.sub(r"\s+", " ", re.sub(r"[^a-z ]", " ", str(text).lower())).strip()
+
+    def _name_index(self) -> List[Tuple[str, str]]:
+        """(normalised name, code) for every station — full names and names without 'Jn' / 'Central' / … —
+        busiest stations first."""
+        self._load()
+        if getattr(self, "_names", None) is None:
+            names: List[Tuple[str, str]] = []
+            for r in self.stations.sort_values("trains_halting", ascending=False).itertuples():
+                full = self._norm(r.station_name)
+                base = " ".join(w for w in full.split() if w not in _SUFFIX) or full
+                names += [(full, r.station_code), (base, r.station_code)]
+            self._names = names
+        return self._names
+
+    def resolve(self, text: str) -> Optional[str]:
+        """A station code for a station code, station name, city or common old name — tolerant of 'Jn',
+        'Central' and small spelling slips ('kasargod' → KGQ). None when nothing is close."""
+        self._load()
+        t = self._norm(text)
+        if not t:
+            return None
+        if t in CITY_ALIASES:
+            return CITY_ALIASES[t]
+        if t.upper() in self._station.index:
+            return t.upper()
+        names = self._name_index()
+        tb = " ".join(w for w in t.split() if w not in _SUFFIX) or t
+        for cand in (t, tb):
+            for name, code in names:
+                if name == cand:
+                    return code
+        if len(tb) >= 4:
+            for name, code in names:
+                if name.startswith(tb + " ") or (len(tb) >= 5 and name.startswith(tb)):
+                    return code
+            for name, code in names:                  # 'Kolkata Sealdah', 'Mumbai Bandra Terminus'
+                if name.endswith(" " + tb):
+                    return code
+        if len(tb) >= 5:
+            close = difflib.get_close_matches(tb, [n for n, _ in names] + list(CITY_ALIASES), n=1, cutoff=0.82)
+            if close:
+                return CITY_ALIASES.get(close[0]) or next(c for n, c in names if n == close[0])
+        return None
+
+    def suggest(self, text: str, n: int = 3) -> List[str]:
+        """'Kasaragod (KGQ)'-style suggestions for an unrecognised place name."""
+        t = self._norm(text)
+        names = self._name_index()
+        out: List[str] = []
+        for m in difflib.get_close_matches(t, [x for x, _ in names], n=n * 3, cutoff=0.6):
+            code = next(c for x, c in names if x == m)
+            label = f"{self.station_name(code)} ({code})"
+            if label not in out:
+                out.append(label)
+            if len(out) >= n:
+                break
+        return out
 
     def city_stations(self, code: str) -> Set[str]:
         c = str(code).strip().upper()
